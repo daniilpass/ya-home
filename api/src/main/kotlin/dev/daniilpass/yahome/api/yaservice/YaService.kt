@@ -13,13 +13,13 @@ class YaService {
     private val yaClient = YaClient()
     private val cache = SimpleCache(maxSize = 100L, ttl = Duration.ofMillis(1000))
 
-    fun getHomeInfo(): Mono<HomeInfoResponse> {
+    suspend fun getHomeInfo(): Mono<HomeInfoResponse> {
         return cache.get("getHomeInfo") {
             yaClient.getHomeInfo()
         }
     }
 
-    fun getDeviceInfo(deviceId: String): Mono<Device> {
+    suspend fun getDeviceInfo(deviceId: String): Mono<Device> {
         return cache.get("getDeviceInfo:$deviceId") {
             yaClient.getDeviceInfo(deviceId)
         }

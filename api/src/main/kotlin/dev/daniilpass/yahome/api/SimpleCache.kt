@@ -2,8 +2,9 @@ package dev.daniilpass.yahome.api
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import reactor.core.publisher.Mono
 import java.time.Duration
 
@@ -11,22 +12,29 @@ class SimpleCache(
     maxSize: Long,
     ttl: Duration
 ) {
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
+    private val cacheMutex = Mutex()
     private val cache: Cache<String, Any> =
         Caffeine.newBuilder()
             .maximumSize(maxSize)
             .expireAfterWrite(ttl)
             .build()
 
-    fun <T> get(key: String, getValue: () -> Mono<T>): Mono<T> {
-        val cacheValue: T? = cache.getIfPresent(key) as T?
+    suspend fun <T: Any> get(key: String, getValue: () -> Mono<T>): Mono<T> {
+        // Try to get value from cache
+        var cacheValue: T? = cache.getIfPresent(key) as? T
+        if (cacheValue != null) {
+            return Mono.just(cacheValue)
+        }
 
-        return if (cacheValue != null) {
-            logger.info("FOUND IN CACHE $key")
-            Mono.just(cacheValue)
-        } else {
-            getValue().doOnNext { result ->
-                cache.put(key, result)
+        // Lock, double check cache, otherwise get
+        return cacheMutex.withLock {
+            cacheValue = cache.getIfPresent(key) as? T
+            if (cacheValue != null) {
+                Mono.just(cacheValue!!)
+            } else {
+                Mono.just(getValue().awaitSingle().also {result ->
+                    cache.put(key, result)
+                })
             }
         }
     }
