@@ -1,9 +1,9 @@
 package dev.daniilpass.yahome.api.controllers
 
-import dev.daniilpass.yahome.api.yaclient.YaClient
 import dev.daniilpass.yahome.api.yaclient.entities.device.Device
 import dev.daniilpass.yahome.api.yaclient.entities.device.DeviceAction
 import dev.daniilpass.yahome.api.yaclient.model.DeviceActionResponse
+import dev.daniilpass.yahome.api.yaservice.YaService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,15 +13,15 @@ import reactor.core.publisher.Mono
 
 @RestController
 class DeviceController {
-    val yaClient = YaClient()
+    private val yaService = YaService()
 
     @GetMapping("/devices/{deviceId}")
     fun getDeviceInfo(
         @PathVariable deviceId: String
-    ): Mono<Device> = yaClient.getDeviceInfo(deviceId)
+    ): Mono<Device> = yaService.getDeviceInfo(deviceId)
 
     @PostMapping("/devices/actions")
     fun postDeviceAction(
         @RequestBody deviceAction: DeviceAction
-    ): Mono<DeviceActionResponse> = yaClient.postDeviceAction(deviceAction)
+    ): Mono<DeviceActionResponse> = yaService.postDeviceAction(deviceAction)
 }
