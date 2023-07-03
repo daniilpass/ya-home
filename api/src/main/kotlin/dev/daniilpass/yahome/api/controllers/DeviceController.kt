@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class DeviceController {
-    private val yaService = YaService()
-
+class DeviceController(
+    private val yaService: YaService
+) {
     @GetMapping("/devices/{deviceId}")
     suspend fun getDeviceInfo(
         @PathVariable deviceId: String

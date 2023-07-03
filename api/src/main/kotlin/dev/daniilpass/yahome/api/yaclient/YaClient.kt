@@ -14,17 +14,20 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 
 
-class YaClient {
+class YaClient(
+    baseUrl: String,
+    authToken: String,
+) {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
     private val httpClient: WebClient
 
     init {
         httpClient = WebClient
                 .builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer $TOKEN")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer $authToken")
                 .filters {exchangeFilterFunctions ->
                     exchangeFilterFunctions.add(logRequest())
                 }

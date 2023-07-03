@@ -1,17 +1,22 @@
 package dev.daniilpass.yahome.api.yaservice
 
+import dev.daniilpass.yahome.api.ApiConfigurationProperties
 import dev.daniilpass.yahome.api.SimpleCache
 import dev.daniilpass.yahome.api.yaclient.YaClient
 import dev.daniilpass.yahome.api.yaclient.entities.device.Device
 import dev.daniilpass.yahome.api.yaclient.entities.device.DeviceAction
 import dev.daniilpass.yahome.api.yaclient.model.DeviceActionResponse
 import dev.daniilpass.yahome.api.yaclient.model.HomeInfoResponse
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import java.time.Duration
 
-class YaService {
-    private val yaClient = YaClient()
-    private val cache = SimpleCache(maxSize = 100L, ttl = Duration.ofMillis(1000))
+@Service
+class YaService(
+    properties: ApiConfigurationProperties
+) {
+    private val yaClient = YaClient(properties.baseUrl, properties.authToken)
+    private val cache = SimpleCache(properties.cacheMaxSize, Duration.ofMillis(properties.cacheTtl))
 
     suspend fun getHomeInfo(): Mono<HomeInfoResponse> {
         return cache.get("getHomeInfo") {
