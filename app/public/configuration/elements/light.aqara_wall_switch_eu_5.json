@@ -1,0 +1,24 @@
+{
+    "title": "Выключатель люстра кухня",
+    "entityId": "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 1365,
+        "y": 730
+    },
+    "area": {
+        "bulbsLinePoints": [
+            [1365, 730],
+            [1365, 830]
+        ],
+        "shadowPoints": [
+            [1325, 688],
+            [1404, 688],
+            [1404, 857],
+            [1325, 857]
+        ]
+    },
+    "condition": {}
+}

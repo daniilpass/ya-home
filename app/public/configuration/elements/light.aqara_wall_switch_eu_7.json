@@ -1,0 +1,20 @@
+{
+    "title": "Выключатель в кабинете А",
+    "entityId": "bd5b5118-ed3b-4085-8687-c60271f9aec2",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 1065,
+        "y": 890
+    },
+    "area": {
+        "shadowPoints": [
+            [930, 796],
+            [1240, 796],
+            [1240, 1040],
+            [930, 1040]
+        ]
+    },
+    "condition": {}
+}

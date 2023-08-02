@@ -1,0 +1,22 @@
+{
+    "apiHost": "/api",
+    "apiPollInterval": 500,
+    "apiSyncTimeout": 2000,
+    "mapSrc": "map.png",
+    "elements": {
+        "4d3e0a3b-f544-4a1b-9428-3b5a69551efc": "elements/light.aqara_wall_switch_eu_6.json",
+        "bd5b5118-ed3b-4085-8687-c60271f9aec2": "elements/light.aqara_wall_switch_eu_7.json",
+        "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6": "elements/light.aqara_wall_switch_eu_5.json",
+        "384d283d-c70d-4fc4-beb7-8e13825994ac": "elements/light.aqara_wall_switch_eu.json",
+        "81924c48-3d90-4b9b-95ad-a9df8845b327": "elements/light.aqara_wall_switch_eu_2.json",
+        "735de64f-469d-4078-ad9f-d8ee10e10a53": "elements/light.aqara_wall_switch_eu_3.json",
+        "343f829b-d835-4a74-8215-f9fadae29603": "elements/light.aqara_wall_switch_eu_12.json",
+        "d6e5f3ef-23fd-4655-8a70-e35d1b9c22e6": "elements/light.aqara_wall_switch_eu_15.json",
+        "ef20fa64-8ba2-4951-be45-f8cb95487957": "elements/light.aqara_wall_switch_eu_18.json",
+        "6f779d22-7c74-4622-bf65-1f595eb0b0c2": "elements/light.aqara_wall_switch_eu_13.json",
+        "6ac9a76b-fce3-40d0-9be1-80c9cad59007": "elements/light.aqara_wall_switch_eu_8.json",
+        "a0548812-7e7b-49cf-b233-215c664a21d7": "elements/light.aqara_wall_switch_eu_21.json",
+        "cadeadfa-2e90-4099-920e-fbaaa4215877": "elements/light.aqara_wall_switch_eu_10.json",
+        "ea89825e-9201-4a50-b431-050d6783e561": "elements/ea89825e-9201-4a50-b431-050d6783e561.json"
+    }
+}

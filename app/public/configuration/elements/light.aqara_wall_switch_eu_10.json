@@ -1,0 +1,24 @@
+{
+    "title": "Выключатель свет коридор",
+    "entityId": "cadeadfa-2e90-4099-920e-fbaaa4215877",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 1360,
+        "y": 270
+    },
+    "area": {
+        "bulbsLinePoints": [
+            [1360, 400],
+            [1360, 150]
+        ],
+        "shadowPoints": [
+            [1450, 470],
+            [1314, 470],
+            [1314, 48],
+            [1450, 48]
+        ]
+    },
+    "condition": {}
+}

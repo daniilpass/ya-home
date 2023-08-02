@@ -1,0 +1,24 @@
+{
+    "title": "Выключатель свет туалет",
+    "entityId": "6ac9a76b-fce3-40d0-9be1-80c9cad59007",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 1505,
+        "y": 440
+    },
+    "area": {
+        "shadowPoints": [
+            [1578, 532],
+            [1460, 532],
+            [1460, 306],
+            [1537, 306],
+            [1537, 376],
+            [1636, 376],
+            [1636, 468],
+            [1578, 468]
+        ]
+    },
+    "condition": {}
+}

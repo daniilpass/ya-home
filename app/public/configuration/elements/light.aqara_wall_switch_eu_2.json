@@ -1,0 +1,25 @@
+{
+    "title": "Выключатель левый трэк",
+    "entityId": "81924c48-3d90-4b9b-95ad-a9df8845b327",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 1180,
+        "y": 530
+    },
+    "area": {
+        "bulbsLinePoints": [
+            [1180, 530],
+            [740, 530],
+            [740, 585]
+        ],
+        "shadowPoints": [
+            [618, 470],
+            [1252, 470],
+            [1252, 625],
+            [618, 625]
+        ]
+    },
+    "condition": {}
+}

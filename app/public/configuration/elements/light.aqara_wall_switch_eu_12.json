@@ -1,0 +1,28 @@
+{
+    "title": "Выключатель свет спальня",
+    "entityId": "343f829b-d835-4a74-8215-f9fadae29603",
+    "entity": "light",
+    "type": "state-icon",
+    "icon": "media/icons/lightbulb.svg",
+    "position": {
+        "x": 570,
+        "y": 775
+    },
+    "area": {
+        "bulbsLinePoints": [
+            [570, 775],
+            [570, 920],
+            [440, 920],
+            [440, 590],
+            [570, 590],
+            [570, 775]
+        ],
+        "shadowPoints": [
+            [605, 1037],
+            [280, 1037],
+            [280, 546],
+            [605, 546]
+        ]
+    },
+    "condition": {}
+}
