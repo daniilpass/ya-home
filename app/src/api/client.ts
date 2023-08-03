@@ -40,7 +40,7 @@ class ApiClient {
     }
 
     lightTurnOnOff(entityId: string, value: boolean) {
-        this.request(this.endpoints.action, {
+        return this.request(this.endpoints.action, {
             devices: [{
                 id: entityId,
                 actions: [{
@@ -55,11 +55,11 @@ class ApiClient {
     }
 
     lightTurnOn(entityId: string) {
-        this.lightTurnOnOff(entityId, true);
+        return this.lightTurnOnOff(entityId, true);
     }
 
     lightTurnOff(entityId: string) {
-        this.lightTurnOnOff(entityId, false);
+        return this.lightTurnOnOff(entityId, false);
     }
 
     getHomeState(): Promise<HomeState> {
@@ -68,7 +68,7 @@ class ApiClient {
                 return Object.fromEntries(
                     devices.map(device => {
                         const deviceState = device.capabilities[0]?.state;
-                        const state = deviceState ? `${deviceState.instance}:${deviceState.value}` : null;
+                        const state = deviceState ? `${deviceState.instance}:${deviceState.value}` : undefined;
                         return [
                             device.id,
                             {

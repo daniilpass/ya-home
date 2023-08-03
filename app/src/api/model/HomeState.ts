@@ -1,9 +1,9 @@
 import {Device} from './Device';
 
-type HomeDevice =
+export type HomeDevice =
  & Pick<Device, 'id' | 'name' | 'type'>
  & {
-    state: string | null;
+    state?: string;
  };
 
 export type HomeState = Record<string, HomeDevice>;
