@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель свет коридор",
-    "entityId": "cadeadfa-2e90-4099-920e-fbaaa4215877",
+    "name": "Выключатель свет коридор",
+    "id": "cadeadfa-2e90-4099-920e-fbaaa4215877",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

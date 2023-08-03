@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель люстра кухня",
-    "entityId": "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6",
+    "name": "Выключатель люстра кухня",
+    "id": "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

@@ -1,6 +1,6 @@
 {
-    "title": "Вычключатель свет шкаф в коридоре",
-    "entityId": "a0548812-7e7b-49cf-b233-215c664a21d7",
+    "name": "Вычключатель свет шкаф в коридоре",
+    "id": "a0548812-7e7b-49cf-b233-215c664a21d7",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

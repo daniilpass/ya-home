@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель в кабинете Д",
-    "entityId": "4d3e0a3b-f544-4a1b-9428-3b5a69551efc",
+    "name": "Выключатель в кабинете Д",
+    "id": "4d3e0a3b-f544-4a1b-9428-3b5a69551efc",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

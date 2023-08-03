@@ -1,7 +1,9 @@
+import {Element as MapElement} from "../services/mapService/model/Element";
+
 const CONFIGURATION_ROOT = './configuration';
 const CONFIGURATION_FILE_NAME = 'configuration.json';
 
-interface Configuration {
+export interface Configuration {
     apiHost: string;
     apiPollInterval: number;
     apiSyncTimeout: number;
@@ -9,11 +11,7 @@ interface Configuration {
     elements: Record<string, Element>
 }
 
-interface Element {
-    title: string;
-    entityId: string;
-    entity: string;
-    type: string;
+export type Element = MapElement & {
     icon?: string;
     position: Position;
     area?: Area;

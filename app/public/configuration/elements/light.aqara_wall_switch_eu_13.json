@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель проход в спальне",
-    "entityId": "6f779d22-7c74-4622-bf65-1f595eb0b0c2",
+    "name": "Выключатель проход в спальне",
+    "id": "6f779d22-7c74-4622-bf65-1f595eb0b0c2",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

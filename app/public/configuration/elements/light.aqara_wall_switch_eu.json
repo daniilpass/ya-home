@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель свет кухня",
-    "entityId": "384d283d-c70d-4fc4-beb7-8e13825994ac",
+    "name": "Выключатель свет кухня",
+    "id": "384d283d-c70d-4fc4-beb7-8e13825994ac",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

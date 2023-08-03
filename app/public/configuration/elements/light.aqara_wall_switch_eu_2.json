@@ -1,6 +1,6 @@
 {
-    "title": "Выключатель левый трэк",
-    "entityId": "81924c48-3d90-4b9b-95ad-a9df8845b327",
+    "name": "Выключатель левый трэк",
+    "id": "81924c48-3d90-4b9b-95ad-a9df8845b327",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",

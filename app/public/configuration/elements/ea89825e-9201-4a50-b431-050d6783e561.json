@@ -1,6 +1,6 @@
 {
-    "title": "Люстра в спальне",
-    "entityId": "ea89825e-9201-4a50-b431-050d6783e561",
+    "name": "Люстра в спальне",
+    "id": "ea89825e-9201-4a50-b431-050d6783e561",
     "entity": "light",
     "type": "state-icon",
     "icon": "media/icons/lightbulb.svg",
