@@ -18,7 +18,7 @@ class MapService {
         apiHost: string,
         pollInterval: number = DEFAULT_POLL_INTERVAL,
         syncTimeout: number = DEFAULT_SYNC_TIMEOUT,
-        elements = {},
+        elements: Record<string, Element> = {},
     ) {
         this.api = new ApiClient(apiHost);
         this.pollInterval = pollInterval;
