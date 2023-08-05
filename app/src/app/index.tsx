@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import HomeMap from '../components/HomeMap';
 import {Configuration, loadConfiguration} from '../tools/loadConfiguration';
@@ -6,7 +6,6 @@ import {Configuration, loadConfiguration} from '../tools/loadConfiguration';
 import './style.css';
 
 function App() {
-  const rootRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [configuration, setConfiguration] = useState<Configuration | undefined>(undefined);
 
