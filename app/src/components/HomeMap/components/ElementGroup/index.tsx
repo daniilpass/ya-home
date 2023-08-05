@@ -12,12 +12,12 @@ type Props = {
 }
 
 const ElementGroup: FC<Props> = ({element, data}) => {
-    const {position, icon, area} = element;
-    const {shadowPoints, bulbsLinePoints} = area || {};
+    const {id, position, icon, area} = element;
+    const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
     const {state, substate} = data || {};
     return (
         <g>
-            {shadowPoints && <Shadow points={shadowPoints} state={state} />}
+            {shadowPoints && <Shadow id={id} points={shadowPoints} maskPoints={shadowMaskPoints} state={state} />}
             {bulbsLinePoints && <BulbsLine points={bulbsLinePoints} state={state} />}
             <ElementComponent
                 position={position}

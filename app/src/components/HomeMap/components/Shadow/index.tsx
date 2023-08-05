@@ -6,18 +6,32 @@ import {State} from '../../../../services/mapService/model/State';
 import './styles.css';
 
 type Props = {
+    id: string;
     points: Point[];
+    maskPoints?: Point[];
     state?: string;
 }
 
-const Shadow: FC<Props> = ({points, state}) => {
+const Shadow: FC<Props> = ({id, points, maskPoints, state}) => {
     if (state === State.On) {
         return null;
     }
 
-    const svgPoints = points.flat().join(',');
+    const svgShadowPoints = points.flat().join(',');
+    const svgMaskPoints = maskPoints?.flat().join(',');
+    const maskId = `shadow-mask-${id}`;
+    const mask =  svgMaskPoints && `url(#${maskId})`;
+
     return (
-        <polygon points={svgPoints} className='element-shadow'/>
+        <>
+            <polygon className='element-shadow' points={svgShadowPoints} mask={mask} />
+            {svgMaskPoints && (
+                <mask id={maskId}>
+                    <polygon points={svgShadowPoints} fill='white' />
+                    <polygon points={svgMaskPoints} fill='black' />
+                </mask>
+            )}
+        </>
     )
 }
 
