@@ -1,0 +1,9 @@
+.element {
+    fill: rgb(29, 29, 66);
+    stroke: rgb(128, 128, 128);
+    stroke-width: 2px;
+}
+
+.element-icon path {
+    fill: rgb(128, 128, 128);
+}

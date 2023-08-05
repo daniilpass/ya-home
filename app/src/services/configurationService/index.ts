@@ -1,34 +1,5 @@
-import {Element as MapElement} from "../services/mapService/model/Element";
-
-const CONFIGURATION_ROOT = './configuration';
-const CONFIGURATION_FILE_NAME = 'configuration.json';
-
-export interface Configuration {
-    apiHost: string;
-    apiPollInterval: number;
-    apiSyncTimeout: number;
-    mapSrc: string;
-    elements: Record<string, Element>
-}
-
-export type Element = MapElement & {
-    icon?: string;
-    position: Position;
-    area?: Area;
-}
-
-interface Position {
-    x: number;
-    y: number;
-}
-
-interface Area {
-    bulbsLinePoints?: Point[];
-    shadowPoints?: Point[];
-    shadowMaskPoints?: Point[];
-}
-
-type Point = [number, number];
+import {CONFIGURATION_ROOT, CONFIGURATION_FILE_NAME} from './constants';
+import {Configuration} from './model/Configuration';
 
 export const loadConfiguration = () => {
     return fetch(`${CONFIGURATION_ROOT}/${CONFIGURATION_FILE_NAME}`)
@@ -53,7 +24,7 @@ const loadConfigurationElementsIcon = async (configuration: Configuration) => {
     const cache: Record<string, string> = {};
 
     for (const [id, element] of Object.entries(configuration.elements)) {
-        const iconSrc = element.icon;
+        const iconSrc = element.iconSrc;
         if (iconSrc) {
             configuration.elements[id].icon = cache[iconSrc] 
                 ? cache[iconSrc] 

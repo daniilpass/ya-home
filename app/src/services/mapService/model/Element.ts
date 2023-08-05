@@ -1,4 +1,4 @@
-import {HomeDevice} from '../../../api/model/HomeState';
+import {HomeDevice} from '../../../api/model/HomeDevice';
 import {Substate} from './Substate';
 
 export type Element = HomeDevice & {

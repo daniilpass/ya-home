@@ -1,0 +1,6 @@
+.element-bulbs-line {
+    fill: none;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    stroke: rgb(29, 29, 66);
+}

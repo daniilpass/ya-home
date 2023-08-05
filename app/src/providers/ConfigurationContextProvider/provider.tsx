@@ -5,7 +5,9 @@ import {
     ReactNode,
 } from 'react'
 
-import {Configuration, loadConfiguration} from '../../tools/loadConfiguration';
+
+import {loadConfiguration} from '../../services/configurationService';
+import {Configuration} from '../../services/configurationService/model/Configuration';
 
 import {ConfigurationContext} from './context';
 

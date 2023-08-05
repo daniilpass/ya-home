@@ -1,5 +1,5 @@
 import {createContext} from 'react'
-import {Configuration} from '../../tools/loadConfiguration';
+import {Configuration} from '../../services/configurationService/model/Configuration';
 
 type State = {
     isLoaded: boolean;

@@ -27,7 +27,7 @@ class MapService {
 
     async start() {
         await this.tick();
-        this.pollIntervalId = window.setInterval(this.tick.bind(this), this.pollInterval);
+        // this.pollIntervalId = window.setInterval(this.tick.bind(this), this.pollInterval);
     }
 
     stop() {

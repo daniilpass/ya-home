@@ -1,6 +1,6 @@
 {
     "apiHost": "/api",
-    "apiPollInterval": 500,
+    "apiPollInterval": 5000,
     "apiSyncTimeout": 2000,
     "mapSrc": "media/map.png",
     "elements": {
