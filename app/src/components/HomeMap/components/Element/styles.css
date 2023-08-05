@@ -1,9 +1,23 @@
-.element {
+.element-shape {
     fill: rgb(29, 29, 66);
     stroke: rgb(128, 128, 128);
     stroke-width: 2px;
+    cursor: pointer;
+}
+
+.element--on .element-shape {
+    fill: rgb(228, 235, 117);
+    stroke: none;
+}
+
+.element-icon {
+    pointer-events: none;
 }
 
 .element-icon path {
     fill: rgb(128, 128, 128);
+}
+
+.element--on .element-icon path  {
+    fill: #fff;
 }

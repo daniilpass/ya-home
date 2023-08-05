@@ -28,9 +28,13 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data}) => {
                 <img className="map-layout__image" src={imageSrc} ref={imageRef}></img>
                 <svg className="map-layout__svg">
                     {
-                        Object.entries(elements).map(([id, element]) => (
-                            <ElementGroup key={id} element={element} />
-                        ))
+                        Object.entries(elements).map(([id, element]) => {
+                            return <ElementGroup
+                                key={id}
+                                element={element}
+                                data={data?.[id]}
+                            />
+                        })
                     }
                 </svg>
             </div>

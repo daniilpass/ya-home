@@ -4,3 +4,7 @@
     stroke-linejoin: round;
     stroke: rgb(29, 29, 66);
 }
+
+.element-bulbs-line--on {
+    stroke: rgb(228, 235, 117);
+}

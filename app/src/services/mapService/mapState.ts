@@ -26,7 +26,7 @@ class MapState {
                 return;
             }
 
-            const syncTimeElpased = element.updatedAt !== undefined ? Date.now() - element.updatedAt : 0;           
+            const syncTimeElpased = Date.now() - (element.updatedAt || 0);
 
             if (element.substate !== Substate.Synced &&
                 element.state !== elementUpdate.state &&
