@@ -3,6 +3,7 @@ import cx from 'classnames'
 
 import {Position} from '../../../../services/configurationService/model/Position';
 import {State} from '../../../../services/mapService/model/State';
+import {Substate} from '../../../../services/mapService/model/Substate';
 
 import './styles.css';
 
@@ -22,13 +23,14 @@ const createSvgFromString = (svgString: string) => {
     return div.children[0];
 }
 
-const Element: FC<Props> = ({position, icon, state, onClick}) => {
+const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
     const svgIcon = useMemo(() => {
         return icon && createSvgFromString(icon);
     }, [icon]);
 
     const elementClassName = cx('element', {
-        'element--on': state === State.On
+        'element--on': state === State.On,
+        'element--not-synced': substate !== Substate.Synced,
     });
 
     return (

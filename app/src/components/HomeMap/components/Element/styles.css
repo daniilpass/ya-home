@@ -10,6 +10,13 @@
     stroke: none;
 }
 
+.element--not-synced .element-shape {
+    cursor: default;
+    animation-name: borderblink;
+    animation-duration: .6s;
+    animation-iteration-count: infinite;
+}
+
 .element-icon {
     pointer-events: none;
 }
@@ -20,4 +27,21 @@
 
 .element--on .element-icon path  {
     fill: #fff;
+}
+
+
+/* ANIMATIONS */
+
+@keyframes borderblink {
+    0% {
+        stroke: rgba(128, 128, 128, 1);
+        stroke-width: 0;
+        paint-order: stroke;
+    }
+  
+    100% {
+        stroke: rgba(128, 128, 128, 0);
+        stroke-width: 25px;
+        paint-order: stroke;
+    }
 }
