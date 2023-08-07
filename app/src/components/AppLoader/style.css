@@ -1,0 +1,23 @@
+.app-loader {
+    pointer-events: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+    width: 100vw;
+    height: 100vh;
+    
+    background: linear-gradient(90deg, #9bd0fe, #97cbfe);
+    
+    transition: opacity 1s;
+}
+
+.app-loader--loaded {
+    opacity: 0;
+}

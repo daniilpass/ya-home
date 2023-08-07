@@ -1,8 +1,9 @@
+import {useConfiguration} from '../providers/ConfigurationContextProvider';
+import {useMapService} from '../hooks/useMapService';
+import AppLoader from '../components/AppLoader';
 import HomeMap from '../components/HomeMap';
 
 import './style.css';
-import {useConfiguration} from '../providers/ConfigurationContextProvider';
-import {useMapService} from '../hooks/useMapService';
 
 const App = () => {
     const {isLoaded, configuration} = useConfiguration();
@@ -14,9 +15,7 @@ const App = () => {
 
     return (
         <div id="app" className="container">
-            {!isLoaded && (
-                <div>Loading</div>
-            )}
+            <AppLoader isLoading={!isLoaded} />
             {configuration && (
                 <HomeMap
                     imageSrc={configuration.mapSrc}
