@@ -9,9 +9,10 @@ import ElementComponent from '../Element';
 type Props = {
     element: Element;
     data?: MapElement;
+    onElementClick?: () => void;
 }
 
-const ElementGroup: FC<Props> = ({element, data}) => {
+const ElementGroup: FC<Props> = ({element, data, onElementClick}) => {
     const {id, position, icon, area} = element;
     const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
     const {state, substate} = data || {};
@@ -24,6 +25,7 @@ const ElementGroup: FC<Props> = ({element, data}) => {
                 icon={icon}
                 state={state}
                 substate={substate}
+                onClick={onElementClick}
             />
         </g>
     )

@@ -11,9 +11,10 @@ export type Props = {
     imageSrc: string;
     elements: Record<string, ConfigurationElement>;
     data?: Record<string, MapElement>;
+    onElementClick?: (id: string) => void;
 }
 
-const HomeMap: FC<Props> = ({imageSrc, elements, data}) => {
+const HomeMap: FC<Props> = ({imageSrc, elements, data, onElementClick}) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const imageScale = useResize(wrapperRef, imageRef);
@@ -21,6 +22,10 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data}) => {
     const imageStyle = {
         transform: `scale(${imageScale})`,
     };
+
+    const handleElementClick = (id: string) => {
+        onElementClick && onElementClick(id);
+    }
 
     return (
         <div className="map-wrapper" ref={wrapperRef}>
@@ -33,6 +38,7 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data}) => {
                                 key={id}
                                 element={element}
                                 data={data?.[id]}
+                                onElementClick={() => handleElementClick(id)}
                             />
                         })
                     }

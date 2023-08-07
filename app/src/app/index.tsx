@@ -6,16 +6,23 @@ import {useMapService} from '../hooks/useMapService';
 
 const App = () => {
     const {isLoaded, configuration} = useConfiguration();
-    const data = useMapService();
+    const [data, switchLight] = useMapService();
+
+    const handleElementClick = (id: string) => {
+        switchLight(id);
+    };
 
     return (
         <div id="app" className="container">
-            {!isLoaded && <div>Loading</div>}
+            {!isLoaded && (
+                <div>Loading</div>
+            )}
             {configuration && (
                 <HomeMap
                     imageSrc={configuration.mapSrc}
                     elements={configuration.elements}
                     data={data}
+                    onElementClick={handleElementClick}
                 />
             )}
         </div>

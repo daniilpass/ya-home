@@ -11,6 +11,7 @@ type Props = {
     icon?: string;
     state?: string;
     substate?: string;
+    onClick?: () => void;
 }
 
 export const ELEMENT_RADIUS = 20;
@@ -21,7 +22,7 @@ const createSvgFromString = (svgString: string) => {
     return div.children[0];
 }
 
-const Element: FC<Props> = ({position, icon, state, substate}) => {
+const Element: FC<Props> = ({position, icon, state, onClick}) => {
     const svgIcon = useMemo(() => {
         return icon && createSvgFromString(icon);
     }, [icon]);
@@ -31,7 +32,7 @@ const Element: FC<Props> = ({position, icon, state, substate}) => {
     });
 
     return (
-        <g className={elementClassName}>
+        <g className={elementClassName} onClick={onClick}>
             <circle
                 className='element-shape'
                 cx={position.x}

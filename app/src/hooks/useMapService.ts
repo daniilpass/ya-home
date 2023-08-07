@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import MapService from '../services/mapService';
 import {Element} from '../services/mapService/model/Element';
 import {useConfiguration} from '../providers/ConfigurationContextProvider';
@@ -17,12 +17,19 @@ export const useMapService = () => {
         mapServiceRef.current = new MapService(apiHost, apiPollInterval, apiSyncTimeout, elements);
         mapServiceRef.current.start();
         mapServiceRef.current.onUpdate = (updateData) => {
-            setData(updateData);
+            setData({...updateData});
         }
         return () => {
             mapServiceRef.current?.stop();
         }
     }, [configuration]);
 
-    return data;
+    const switchLight = (id: string) => {
+        mapServiceRef.current?.switchLight(id);
+    };
+
+    return [
+        data,
+        switchLight,
+    ] as const;
 }
