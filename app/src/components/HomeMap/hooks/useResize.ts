@@ -21,8 +21,8 @@ export const useResize = (
 
             const rotateDegree = wrapper.offsetHeight > wrapper.offsetWidth ? 90 : 0;
             const scale = Math.min(
-                wrapper.offsetWidth / (rotateDegree ? image.naturalWidth : image.naturalHeight),
-                wrapper.offsetHeight / (rotateDegree ? image.naturalHeight : image.naturalWidth),
+                wrapper.offsetWidth / (rotateDegree === 0 ? image.naturalWidth : image.naturalHeight),
+                wrapper.offsetHeight / (rotateDegree === 0 ? image.naturalHeight : image.naturalWidth),
             );
 
             setRotateDegree(rotateDegree);
