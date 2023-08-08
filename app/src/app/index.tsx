@@ -14,17 +14,20 @@ const App = () => {
     };
 
     return (
-        <div id="app" className="container">
+        <>
             <AppLoader isLoading={!isLoaded} />
-            {configuration && (
-                <HomeMap
-                    imageSrc={configuration.mapSrc}
-                    elements={configuration.elements}
-                    data={data}
-                    onElementClick={handleElementClick}
-                />
-            )}
-        </div>
+            <div className="app-container">
+                {configuration && (
+                    <HomeMap
+                        imageSrc={configuration.mapSrc}
+                        elements={configuration.elements}
+                        data={data}
+                        onElementClick={handleElementClick}
+                    />
+                )}
+            </div>
+        </>
+        
     );
 }
 
