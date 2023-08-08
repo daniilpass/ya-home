@@ -4,6 +4,7 @@ import cx from 'classnames'
 import {Position} from '../../../../services/configurationService/model/Position';
 import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
+import {useTransformContext} from '../../providers/TransformContextProvider';
 
 import './styles.css';
 
@@ -24,6 +25,8 @@ const createSvgFromString = (svgString: string) => {
 }
 
 const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
+    const {rotateDegree} = useTransformContext();
+
     const svgIcon = useMemo(() => {
         return icon && createSvgFromString(icon);
     }, [icon]);
@@ -33,8 +36,17 @@ const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
         'element--not-synced': substate !== Substate.Synced,
     });
 
+    const elementStyle = {
+        transform: `rotate(${-rotateDegree}deg)`,
+        transformOrigin: `${position.x}px ${position.y}px`,
+    };
+
     return (
-        <g className={elementClassName} onClick={onClick}>
+        <g
+            className={elementClassName}
+            style={elementStyle}
+            onClick={onClick}
+        >
             <circle
                 className='element-shape'
                 cx={position.x}

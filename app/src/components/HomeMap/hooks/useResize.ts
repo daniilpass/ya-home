@@ -8,6 +8,7 @@ export const useResize = (
     imageRef: RefObject<HTMLImageElement>,
 ) => {
     const [scale, setScale] = useState(1.0);
+    const [rotateDegree, setRotateDegree] = useState(0);
 
     useLayoutEffect(() => {
         const wrapper = wrapperRef.current;
@@ -17,10 +18,14 @@ export const useResize = (
             if (!wrapper || !image) {
                 return;
             }
+
+            const rotateDegree = wrapper.offsetHeight > wrapper.offsetWidth ? 90 : 0;
             const scale = Math.min(
-                wrapper.offsetWidth / image.naturalWidth,
-                wrapper.offsetHeight / image.naturalHeight
+                wrapper.offsetWidth / (rotateDegree ? image.naturalWidth : image.naturalHeight),
+                wrapper.offsetHeight / (rotateDegree ? image.naturalHeight : image.naturalWidth),
             );
+
+            setRotateDegree(rotateDegree);
             setScale(scale);
         }
 
@@ -33,5 +38,5 @@ export const useResize = (
         }
     }, [imageRef, wrapperRef]);
 
-    return scale;
+    return [scale, rotateDegree] as const;
 }
