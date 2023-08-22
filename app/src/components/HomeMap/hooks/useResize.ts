@@ -1,7 +1,6 @@
 import {RefObject, useState, useLayoutEffect} from 'react';
 
 const LOAD_EVENT = 'load';
-const RESIZE_EVENT = 'resize';
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
@@ -26,6 +25,10 @@ export const useResize = (
         const wrapper = wrapperRef.current;
         const image = imageRef.current;
 
+        if (!wrapper || !image) {
+            return;
+        }
+
         const handleResize = () => {
             if (!wrapper || !image) {
                 return;
@@ -41,12 +44,13 @@ export const useResize = (
             allowScale && setScale(scale);
         }
 
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(wrapper);
         image?.addEventListener(LOAD_EVENT, handleResize);
-        window.addEventListener(RESIZE_EVENT, handleResize);
 
         return () => {
+            resizeObserver.unobserve(wrapper)
             image?.removeEventListener(LOAD_EVENT, handleResize);
-            window.removeEventListener(RESIZE_EVENT, handleResize);
         }
     }, [imageRef, wrapperRef, allowScale, allowRotate]);
 
