@@ -12,13 +12,15 @@ export type Props = {
     imageSrc: string;
     elements: Record<string, ConfigurationElement>;
     data?: Record<string, MapElement>;
+    allowScale?: boolean;
+    allowRotate?: boolean;
     onElementClick?: (id: string) => void;
 }
 
-const HomeMap: FC<Props> = ({imageSrc, elements, data, onElementClick}) => {
+const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, onElementClick}) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
-    const [scale, rotateDegree] = useResize(wrapperRef, imageRef);
+    const [scale, rotateDegree] = useResize(wrapperRef, imageRef, {allowScale, allowRotate});
 
     const imageStyle = {
         transform: `scale(${scale}) rotate(${rotateDegree}deg)`,

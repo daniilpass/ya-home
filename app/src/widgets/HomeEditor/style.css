@@ -1,0 +1,24 @@
+.editor-layout {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+.editor-panel {
+    width: 200px;
+    min-width: 200px;
+    height: 100%;
+    background: #f3f4f6;
+    
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+.editor-panel--left {
+    box-shadow: -6px 0 12px 0 #060606;
+}
+
+.editor-panel--right {
+    box-shadow: 6px 0 12px 0 #060606;
+}

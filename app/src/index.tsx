@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import {BrowserRouter} from 'react-router-dom';
 
 import ConfigurationContextProvider from './providers/ConfigurationContextProvider';
 import App from './app';
@@ -10,7 +11,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <ConfigurationContextProvider>
-        <App />
-    </ConfigurationContextProvider>
+    <BrowserRouter>
+        <ConfigurationContextProvider>
+            <App />
+        </ConfigurationContextProvider>
+    </BrowserRouter>
 );

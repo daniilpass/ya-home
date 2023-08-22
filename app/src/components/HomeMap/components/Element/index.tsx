@@ -33,7 +33,7 @@ const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
 
     const elementClassName = cx('element', {
         'element--on': state === State.On,
-        'element--not-synced': substate !== Substate.Synced,
+        'element--not-synced': substate === Substate.Pending,
     });
 
     const elementStyle = {

@@ -6,11 +6,23 @@ const RESIZE_EVENT = 'resize';
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
     imageRef: RefObject<HTMLImageElement>,
+    configuration?: {
+        allowScale?: boolean,
+        allowRotate?: boolean,
+    }
 ) => {
     const [scale, setScale] = useState(1.0);
     const [rotateDegree, setRotateDegree] = useState(0);
+    const {
+        allowScale = true,
+        allowRotate = true,
+    } = configuration || {};
 
     useLayoutEffect(() => {
+        if (!allowScale && !allowRotate) {
+            return;
+        }
+
         const wrapper = wrapperRef.current;
         const image = imageRef.current;
 
@@ -25,8 +37,8 @@ export const useResize = (
                 wrapper.offsetHeight / (rotateDegree === 0 ? image.naturalHeight : image.naturalWidth),
             );
 
-            setRotateDegree(rotateDegree);
-            setScale(scale);
+            allowRotate && setRotateDegree(rotateDegree);
+            allowScale && setScale(scale);
         }
 
         image?.addEventListener(LOAD_EVENT, handleResize);
@@ -36,7 +48,7 @@ export const useResize = (
             image?.removeEventListener(LOAD_EVENT, handleResize);
             window.removeEventListener(RESIZE_EVENT, handleResize);
         }
-    }, [imageRef, wrapperRef]);
+    }, [imageRef, wrapperRef, allowScale, allowRotate]);
 
     return [scale, rotateDegree] as const;
 }

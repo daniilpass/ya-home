@@ -1,33 +1,14 @@
-import {useConfiguration} from '../providers/ConfigurationContextProvider';
-import {useMapService} from '../hooks/useMapService';
-import AppLoader from '../components/AppLoader';
-import HomeMap from '../components/HomeMap';
+import {Route, Routes} from 'react-router-dom';
 
-import './style.css';
+import MainPage from '../pages/MainPage';
+import EditorPage from '../pages/EditorPage';
 
 const App = () => {
-    const {isLoaded, configuration} = useConfiguration();
-    const [data, switchLight] = useMapService();
-
-    const handleElementClick = (id: string) => {
-        switchLight(id);
-    };
-
     return (
-        <>
-            <AppLoader isLoading={!isLoaded} />
-            <div className="app-container">
-                {configuration && (
-                    <HomeMap
-                        imageSrc={configuration.mapSrc}
-                        elements={configuration.elements}
-                        data={data}
-                        onElementClick={handleElementClick}
-                    />
-                )}
-            </div>
-        </>
-        
+        <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/editor' element={<EditorPage />} />
+        </Routes>        
     );
 }
 
