@@ -5,3 +5,5 @@ export type HomeDevice =
     & {
     state?: string;
     };
+
+export type HomeDeviceCollection = Record<string, HomeDevice>;

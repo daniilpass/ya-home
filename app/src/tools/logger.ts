@@ -1,5 +1,7 @@
+import {LOGGER_ENABLED} from '../constants';
+
 class Logger {
-    enabled = false;
+    enabled = LOGGER_ENABLED;
 
     debug(...data: any[]) {
         this.enabled && console.debug(...data);

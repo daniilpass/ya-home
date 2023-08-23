@@ -10,7 +10,6 @@ import {State} from './model/State';
 
 
 class MapService {
-    api: ApiClient;
     state: MapState;
     pollInterval: number;
     pollIntervalId?: number;
@@ -19,7 +18,6 @@ class MapService {
     constructor(
         elements: Record<string, Element> = {},
     ) {
-        this.api = new ApiClient();
         this.pollInterval = API_POLL_INTERVAL;
         this.state = new MapState(elements, API_SYNC_TIMEOUT);
     }
@@ -43,7 +41,7 @@ class MapService {
     }
 
     async getAndUpdateElementsState() {
-        await this.api.getHomeState().then((data) => {
+        await ApiClient.getDevices().then((data) => {
             this.state.updateElements(data);
         });
     }
@@ -57,7 +55,7 @@ class MapService {
 
         switch (element.state) {
             case State.On:
-                this.api.lightTurnOff(elementId).then(() => {
+                ApiClient.lightOff(elementId).then(() => {
                     this.state.updateElement(elementId, {
                         substate: Substate.Ready,
                     });
@@ -68,7 +66,7 @@ class MapService {
                 });
                 break;
             case State.Off:
-                this.api.lightTurnOn(elementId).then(() => {
+                ApiClient.lightOn(elementId).then(() => {
                     this.state.updateElement(elementId, {
                         substate: Substate.Ready,
                     });
