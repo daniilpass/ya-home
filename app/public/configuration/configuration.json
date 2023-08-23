@@ -1,7 +1,4 @@
 {
-    "apiHost": "/api",
-    "apiPollInterval": 1000,
-    "apiSyncTimeout": 2000,
     "mapSrc": "media/map.png",
     "elements": {
         "4d3e0a3b-f544-4a1b-9428-3b5a69551efc": "elements/light.aqara_wall_switch_eu_6.json",

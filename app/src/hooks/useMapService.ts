@@ -13,8 +13,8 @@ export const useMapService = () => {
             return;
         }
 
-        const {apiHost, apiPollInterval, apiSyncTimeout, elements} = configuration;
-        mapServiceRef.current = new MapService(apiHost, apiPollInterval, apiSyncTimeout, elements);
+        const {elements} = configuration;
+        mapServiceRef.current = new MapService(elements);
         mapServiceRef.current.start();
         mapServiceRef.current.onUpdate = (updateData) => {
             setData({...updateData});

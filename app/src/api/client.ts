@@ -1,18 +1,20 @@
 import {logger} from '../tools';
 
+import {API_BASE_URL} from '../constants';
+
 import {Headers, Endpoints, Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 import {REQUEST_SUCCESS, REQUEST_ERROR} from './constants';
 import {DeviceCollection} from './model/Device';
-import { HomeState } from './model/HomeState';
+import {HomeState} from './model/HomeState';
 
 class ApiClient {
     host: string;
     headers: Headers;
     endpoints: Endpoints;
 
-    constructor(host: string) {
-        this.host = host;
+    constructor() {
+        this.host = API_BASE_URL;
         this.headers = DEFAULT_HEADERS;
         this.endpoints = ENDPOINTS;
     }

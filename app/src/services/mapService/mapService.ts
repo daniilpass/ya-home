@@ -1,11 +1,13 @@
 import {logger} from '../../tools';
-import ApiClient from "../../api";
+import ApiClient from '../../api';
+import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../constants';
 
 import MapState from "./mapState";
-import {DEFAULT_POLL_INTERVAL, DEFAULT_SYNC_TIMEOUT, UNKNOWN_STATE} from "./constants";
+import {UNKNOWN_STATE} from "./constants";
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import {State} from './model/State';
+
 
 class MapService {
     api: ApiClient;
@@ -15,14 +17,11 @@ class MapService {
     onUpdate?: (elements: Record<string, Element>) => void;
 
     constructor(
-        apiHost: string,
-        pollInterval: number = DEFAULT_POLL_INTERVAL,
-        syncTimeout: number = DEFAULT_SYNC_TIMEOUT,
         elements: Record<string, Element> = {},
     ) {
-        this.api = new ApiClient(apiHost);
-        this.pollInterval = pollInterval;
-        this.state = new MapState(elements, syncTimeout);
+        this.api = new ApiClient();
+        this.pollInterval = API_POLL_INTERVAL;
+        this.state = new MapState(elements, API_SYNC_TIMEOUT);
     }
 
     async start() {
