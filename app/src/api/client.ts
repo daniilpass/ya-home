@@ -21,11 +21,15 @@ const request = <TResponse>(endpoint: Endpoint, payload?: any) => {
         headers: DEFAULT_HEADERS,
         body: payload ? JSON.stringify(payload) : undefined,
     }).then(response => {
+        if (!response.ok) {
+            return Promise.reject(response);
+        }
         log(REQUEST_SUCCESS, resource, startTs);
         return response.json();
     })
     .then(data => data as TResponse)
-    .catch(error => {
+    .catch(errorResponse => {
+        const error = `${errorResponse.status}: ${errorResponse.statusText}`
         log(REQUEST_ERROR, resource, startTs, error);
         throw error;
     })

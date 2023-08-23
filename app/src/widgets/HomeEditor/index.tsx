@@ -9,17 +9,28 @@ import './style.css';
 
 const HomeEditor = () => {
     const {isLoaded, configuration} = useConfiguration();
-    const [data, setData] = useState<HomeDeviceCollection>();
+    const [data, setData] = useState<HomeDeviceCollection>({});
 
     useEffect(() => {
-        ApiClient.getDevices().then(setData);
+        ApiClient
+            .getDevices()
+            .then(setData)
+            .catch(() => {});
     }, []);
 
     return ( <>
             <AppLoader isLoading={!isLoaded} />
             {configuration && (
                 <div className="editor-layout">
-                    <div className="editor-panel editor-panel--left"></div>
+                    <div className="editor-panel editor-panel--left">
+                        <ul>
+                            {
+                                Object.keys(data).map(key => (
+                                    <li key={key}>{data[key].name}</li>
+                                ))
+                            }
+                        </ul>
+                    </div>
                     <HomeMap 
                         imageSrc={configuration.mapSrc}
                         elements={configuration.elements}
