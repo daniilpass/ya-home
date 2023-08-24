@@ -41,9 +41,13 @@ class MapService {
     }
 
     async getAndUpdateElementsState() {
-        await ApiClient.getDevices().then((data) => {
-            this.state.updateElements(data);
-        });
+        await ApiClient
+            .getDevices()
+            .then((data) => {
+                this.state.updateElements(data);
+            }).catch(() => {
+                this.state.updateElements({})
+            });
     }
 
     switchLight(elementId: string) {

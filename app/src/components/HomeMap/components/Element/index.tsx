@@ -37,7 +37,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
 
     const elementClassName = cx('element', {
         'element--on': state === State.On,
-        'element--not-synced': substate && substate !== Substate.Synced,
+        'element--pending': substate === Substate.Pending,
         'element--synced': substate === Substate.Synced,
         'element--edit': isEditMode,
     });

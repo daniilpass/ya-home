@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 
-.element--not-synced .element-shape {
+.element--pending .element-shape {
     cursor: default;
     animation-name: borderblink;
     animation-duration: .6s;
