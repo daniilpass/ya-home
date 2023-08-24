@@ -2,12 +2,15 @@
     fill: rgb(29, 29, 66);
     stroke: rgb(128, 128, 128);
     stroke-width: 2px;
-    cursor: pointer;
 }
 
 .element--on .element-shape {
     fill: rgb(228, 235, 117);
     stroke: none;
+}
+
+.element--synced {
+    cursor: pointer;
 }
 
 .element--not-synced .element-shape {
@@ -29,6 +32,9 @@
     fill: #fff;
 }
 
+.element--edit .element-shape {
+    cursor: move;
+}
 
 /* ANIMATIONS */
 

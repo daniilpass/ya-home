@@ -1,0 +1,4 @@
+.group--edit {
+    outline: dashed 6px red;
+    outline-offset: -6px;
+}

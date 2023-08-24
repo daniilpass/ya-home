@@ -5,6 +5,7 @@ import {Position} from '../../../../services/configurationService/model/Position
 import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
+import {useDrag} from '../../hooks/useDrage';
 
 import './styles.css';
 
@@ -13,7 +14,9 @@ type Props = {
     icon?: string;
     state?: string;
     substate?: string;
+    isEditMode?: boolean;
     onClick?: () => void;
+    onDrag?: (pageX: number, pageY: number) => void;
 }
 
 export const ELEMENT_RADIUS = 20;
@@ -24,8 +27,9 @@ const createSvgFromString = (svgString: string) => {
     return div.children[0];
 }
 
-const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
+const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClick, onDrag}) => {
     const {rotateDegree} = useTransformContext();
+    const onDragStart = useDrag(onDrag);
 
     const svgIcon = useMemo(() => {
         return icon && createSvgFromString(icon);
@@ -34,6 +38,8 @@ const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
     const elementClassName = cx('element', {
         'element--on': state === State.On,
         'element--not-synced': substate === Substate.Pending,
+        'element--synced': substate === Substate.Synced,
+        'element--edit': isEditMode,
     });
 
     const elementStyle = {
@@ -46,6 +52,7 @@ const Element: FC<Props> = ({position, icon, state, substate, onClick}) => {
             className={elementClassName}
             style={elementStyle}
             onClick={onClick}
+            onMouseDown={isEditMode ? onDragStart : undefined}
         >
             <circle
                 className='element-shape'
