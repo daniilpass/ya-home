@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
@@ -12,7 +12,7 @@ const HomeEditor = () => {
     const {isLoaded, configuration} = useConfiguration();
     const [devices, setDevices] = useState<HomeDeviceCollection>({});
     const [selectedDeviceId, setSelectedDeviceId] = useState<string | undefined>(undefined);
-    const [updatedMapDevices, setUpdatedMapDevices] = useState<Record<string, ConfigurationElement> | undefined>(undefined);
+    const [mapDevicesEdited, setMapDevicesEdited] = useState<Record<string, ConfigurationElement> | undefined>(undefined);
 
     const {
         mapSrc = '',
@@ -27,10 +27,10 @@ const HomeEditor = () => {
     }, []);
 
     const handleElementDrag = (id: string, x: number, y: number) => {
-        const tmp = updatedMapDevices || mapDevices;
+        const tmp = mapDevicesEdited || mapDevices;
         const tmpDevice = tmp[id];
         
-        setUpdatedMapDevices({
+        setMapDevicesEdited({
             ...tmp,
             [id]: {
                 ...tmpDevice,
@@ -68,7 +68,7 @@ const HomeEditor = () => {
                     </div>
                     <HomeMap 
                         imageSrc={mapSrc}
-                        elements={updatedMapDevices || mapDevices}
+                        elements={mapDevicesEdited || mapDevices}
                         allowRotate={false}
                         editElementId={selectedDeviceId}
                         isEditorMode={true}

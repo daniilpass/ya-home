@@ -1,4 +1,4 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, useMemo, useRef} from 'react';
 import {Element as MapElement} from '../../services/mapService/model/Element';
 import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
 
@@ -44,6 +44,19 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, 
         onElementDrag(id, x, y);
     }
 
+    const sortedElements = useMemo(() => {
+        const elementsEntries = Object.entries(elements)
+    
+        // In edit mode, bring the edit element to the top.
+        if (editElementId) {
+            const editElementIndex = elementsEntries.findIndex(([id]) => id === editElementId);
+            elementsEntries.splice(editElementIndex, 1);
+            elementsEntries.push([editElementId, elements[editElementId]]);
+        }
+        
+        return elementsEntries;
+    }, [elements, editElementId]);
+
     return (
         <TransformContextProvider value={{scale, rotateDegree}}>
             <div className="map-wrapper" ref={wrapperRef}>
@@ -51,8 +64,8 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, 
                     <img className="map-layout__image" src={imageSrc} ref={imageRef}></img>
                     <svg className="map-layout__svg" ref={svgRef}>
                         {
-                            Object.entries(elements).map(([id, element]) => {
-                                return <ElementGroup
+                            sortedElements.map(([id, element]) => (
+                                <ElementGroup
                                     key={id}
                                     element={element}
                                     data={data?.[id]}
@@ -60,7 +73,7 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, 
                                     onElementClick={() => handleElementClick(id)}
                                     onElementDrag={(pageX, pageY) => handleElementDrag(id, pageX, pageY)}
                                 />
-                            })
+                            ))
                         }
                     </svg>
                 </div>
