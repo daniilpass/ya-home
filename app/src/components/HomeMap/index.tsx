@@ -20,6 +20,7 @@ export type Props = {
     onElementDrag?: (id: string, x: number, y: number) => void;
     onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
+    onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
 }
 
 const HomeMap: FC<Props> = ({
@@ -33,6 +34,7 @@ const HomeMap: FC<Props> = ({
     onElementDrag,
     onBulbsLinePointDrag,
     onShadowPointDrag,
+    onShadowMaskPointDrag,
 }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
@@ -82,6 +84,14 @@ const HomeMap: FC<Props> = ({
         onShadowPointDrag(id, index, x, y);
     }
 
+    const handleShadowMaskPointDrag = (id: string, index: number, pageX: number, pageY: number) => {
+        if (!onShadowMaskPointDrag) {
+            return;
+        }
+        const {x, y} = toRelativePosition(pageX, pageY);
+        onShadowMaskPointDrag(id, index, x, y);
+    }
+
     const sortedElements = useMemo(() => {
         const elementsEntries = Object.entries(elements)
     
@@ -112,6 +122,7 @@ const HomeMap: FC<Props> = ({
                                     onElementDrag={(pageX, pageY) => handleElementDrag(id, pageX, pageY)}
                                     onBulbsLinePointDrag={(index, pageX, pageY) => handleBulbsLinePointDrag(id, index, pageX, pageY)}
                                     onShadowPointDrag={(index, pageX, pageY) => handleShadowPointDrag(id, index, pageX, pageY)}
+                                    onShadowMaskPointDrag={(index, pageX, pageY) => handleShadowMaskPointDrag(id, index, pageX, pageY)}
                                 />
                             ))
                         }

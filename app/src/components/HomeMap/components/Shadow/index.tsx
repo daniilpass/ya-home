@@ -14,15 +14,21 @@ type Props = {
     state?: string;
     isEditMode?: boolean;
     onPointDrag?: (index: number, pageX: number, pageY: number) => void;
+    onMaskPointDrag?: (index: number, pageX: number, pageY: number) => void;
 }
 
-const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDrag}) => {
+const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDrag, onMaskPointDrag}) => {
     const onDrag = (pageX: number, pageY: number, options: any) => {
         const {index} = options;
         onPointDrag && onPointDrag(index, pageX, pageY);
     }
+    const onMaskDrag = (pageX: number, pageY: number, options: any) => {
+        const {index} = options;
+        onMaskPointDrag && onMaskPointDrag(index, pageX, pageY);
+    }
 
     const onDragStart = useDrag(onDrag);
+    const onMaskDragStart = useDrag(onMaskDrag);
 
     if (state === State.On) {
         return null;
@@ -48,6 +54,14 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDr
                     x={x}
                     y={y}
                     onMouseDown={(e) => onDragStart(e, {index})}
+                />
+            ))}
+            {isEditMode && maskPoints && maskPoints.map(([x, y], index) => (
+                <EditActionMove
+                    key={index}
+                    x={x}
+                    y={y}
+                    onMouseDown={(e) => onMaskDragStart(e, {index})}
                 />
             ))}
         </>
