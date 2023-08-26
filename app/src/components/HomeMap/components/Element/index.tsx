@@ -6,6 +6,8 @@ import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
 import {useDrag} from '../../hooks/useDrage';
+import {ELEMENT_RADIUS} from '../../constants';
+import {EditActionMove} from '../EditAction';
 
 import './styles.css';
 
@@ -18,8 +20,6 @@ type Props = {
     onClick?: () => void;
     onDrag?: (pageX: number, pageY: number) => void;
 }
-
-export const ELEMENT_RADIUS = 20;
 
 const createSvgFromString = (svgString: string) => {
     const div = document.createElement('div');
@@ -72,6 +72,12 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
                 >
                 </svg>
             )} 
+            {isEditMode && (
+                <EditActionMove
+                    x={position.x}
+                    y={position.y}
+                />
+            )}
         </g>
     )
 }

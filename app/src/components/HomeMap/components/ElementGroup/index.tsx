@@ -15,9 +15,17 @@ type Props = {
     isEditMode?: boolean;
     onElementClick?: () => void;
     onElementDrag?: (pageX:number, pageY: number) => void;
+    onBulbsLinePointDrag?: (index: number, pageX: number, pageY: number) => void;
 }
 
-const ElementGroup: FC<Props> = ({element, data, isEditMode, onElementClick, onElementDrag}) => {
+const ElementGroup: FC<Props> = ({
+    element,
+    data,
+    isEditMode,
+    onElementClick,
+    onElementDrag,
+    onBulbsLinePointDrag,
+}) => {
     const {id, position, icon, area} = element;
     const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
     const {state, substate} = data || {};
@@ -29,7 +37,14 @@ const ElementGroup: FC<Props> = ({element, data, isEditMode, onElementClick, onE
     return (
         <g className={rootClassName}>
             {shadowPoints && <Shadow id={id} points={shadowPoints} maskPoints={shadowMaskPoints} state={state} />}
-            {bulbsLinePoints && <BulbsLine points={bulbsLinePoints} state={state} />}
+            {bulbsLinePoints && (
+                <BulbsLine
+                    points={bulbsLinePoints}
+                    state={state}
+                    isEditMode={isEditMode}
+                    onPointDrag={onBulbsLinePointDrag}
+                />
+            )}
             <ElementComponent
                 position={position}
                 icon={icon}

@@ -17,10 +17,21 @@ export type Props = {
     allowScale?: boolean;
     allowRotate?: boolean;
     onElementClick?: (id: string) => void;
-    onElementDrag?: (id: string, pageX: number, pageY: number) => void;
+    onElementDrag?: (id: string, x: number, y: number) => void;
+    onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
 }
 
-const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, editElementId, onElementClick, onElementDrag}) => {
+const HomeMap: FC<Props> = ({
+    imageSrc,
+    elements,
+    data,
+    allowScale,
+    allowRotate,
+    editElementId,
+    onElementClick,
+    onElementDrag,
+    onBulbsLinePointDrag
+}) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
@@ -34,14 +45,31 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, 
         onElementClick && onElementClick(id);
     }
 
-    const handleElementDrag = (id: string, pageX: number, pageY: number) => {
-        if (!onElementDrag || !svgRef.current) {
-            return;
+    const toRelativePosition = (pageX: number, pageY: number) => {
+        if (!svgRef.current) {
+            return {x: pageX, y: pageY};
         }
         const bounds = svgRef.current.getBoundingClientRect();
-        const x = (pageX - bounds.left) / scale;
-        const y = (pageY - bounds.top) / scale;
+        return {
+            x: (pageX - bounds.left) / scale,
+            y: (pageY - bounds.top) / scale,
+        }
+    }
+
+    const handleElementDrag = (id: string, pageX: number, pageY: number) => {
+        if (!onElementDrag) {
+            return;
+        }
+        const {x, y} = toRelativePosition(pageX, pageY);
         onElementDrag(id, x, y);
+    }
+
+    const handleBulbsLinePointDrag = (id: string, index: number, pageX: number, pageY: number) => {
+        if (!onBulbsLinePointDrag) {
+            return;
+        }
+        const {x, y} = toRelativePosition(pageX, pageY);
+        onBulbsLinePointDrag(id, index, x, y);
     }
 
     const sortedElements = useMemo(() => {
@@ -72,6 +100,7 @@ const HomeMap: FC<Props> = ({imageSrc, elements, data, allowScale, allowRotate, 
                                     isEditMode={id === editElementId}
                                     onElementClick={() => handleElementClick(id)}
                                     onElementDrag={(pageX, pageY) => handleElementDrag(id, pageX, pageY)}
+                                    onBulbsLinePointDrag={(index, pageX, pageY) => handleBulbsLinePointDrag(id, index, pageX, pageY)}
                                 />
                             ))
                         }

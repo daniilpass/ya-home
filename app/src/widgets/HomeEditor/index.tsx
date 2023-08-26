@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
@@ -39,6 +39,27 @@ const HomeEditor = () => {
         })
     }
 
+    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
+        const tmp = mapDevicesEdited || mapDevices;
+        const tmpDevice = tmp[id];
+        if (!tmpDevice.area?.bulbsLinePoints) {
+            return;
+        }
+
+        const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
+        updatedDeviceAreaBulbsLinePoints[index] = [x , y];
+
+        setMapDevicesEdited({
+            ...tmp,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
+                }
+            }
+        })
+    }
     return ( <>
             <AppLoader isLoading={!isLoaded} />
             {configuration && (
@@ -73,6 +94,7 @@ const HomeEditor = () => {
                         editElementId={selectedDeviceId}
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}
+                        onBulbsLinePointDrag={handleBulbsLinePointDrag}
                     />
                     <div className="editor-panel  editor-panel--right"></div>
                 </div>

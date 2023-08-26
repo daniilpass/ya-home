@@ -4,15 +4,15 @@ const EVENT_MOUSEMOVE = 'mousemove';
 const EVENT_MOUSEUP = 'mouseup'
 
 export const useDrag = (
-    onDrag?: (pageX: number, pageY: number) => void
+    onDrag?: (pageX: number, pageY: number, options?: any) => void
 ) => {
-    const onDragStart = (e: ReactMouseEvent<Element, MouseEvent>) => {
+    const onDragStart = (e: ReactMouseEvent<Element, MouseEvent>, options?: any) => {
         const bounds = (e.target as Element).getBoundingClientRect();
         const x = e.clientX - bounds.left - bounds.width / 2;
         const y = e.clientY - bounds.top - bounds.height / 2;
 
         const handleDrag = (e: MouseEvent) => {
-            onDrag && onDrag(e.pageX - x, e.pageY - y);
+            onDrag && onDrag(e.pageX - x, e.pageY - y, options);
         }
         document.addEventListener(EVENT_MOUSEMOVE, handleDrag);
         document.addEventListener(EVENT_MOUSEUP, () => {
