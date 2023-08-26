@@ -5,7 +5,9 @@ import HomeMap from '../../components/HomeMap';
 import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
+import {ELEMENT_RADIUS} from '../../components/HomeMap/constants';
 
+import {getMagnetPoints} from './tools';
 import './style.css';
 
 const HomeEditor = () => {
@@ -45,9 +47,28 @@ const HomeEditor = () => {
         if (!tmpDevice.area?.bulbsLinePoints) {
             return;
         }
+        
+        let [magnetX, magnetY]: Array<number | undefined> = [];
 
+        // Magnet to element
+        [magnetX, magnetY] = getMagnetPoints(x, y, tmpDevice.position.x, tmpDevice.position.y, ELEMENT_RADIUS / 2);
+
+        // Magnet to bulbs line
+        for (let pointIndex = 0; pointIndex < tmpDevice.area.bulbsLinePoints.length; pointIndex++) {
+            const [pointX, pointY] = tmpDevice.area.bulbsLinePoints[pointIndex];
+            if (pointIndex === index) {
+                continue;
+            }
+            let [magnetXToBulb, magnetYToBulb] = getMagnetPoints(x, y, pointX, pointY, 10);
+            magnetX = magnetX || magnetXToBulb;
+            magnetY = magnetY || magnetYToBulb;
+            if (magnetX && magnetY) {
+                break;
+            }
+        }
+    
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
-        updatedDeviceAreaBulbsLinePoints[index] = [x , y];
+        updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
 
         setMapDevicesEdited({
             ...tmp,
