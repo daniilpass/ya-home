@@ -2,6 +2,8 @@ import {FC} from 'react';
 
 import {Point} from '../../../../services/configurationService/model/Area';
 import {State} from '../../../../services/mapService/model/State';
+import {useDrag} from '../../hooks/useDrage';
+import {EditActionMove} from '../EditAction';
 
 import './styles.css';
 
@@ -10,9 +12,18 @@ type Props = {
     points: Point[];
     maskPoints?: Point[];
     state?: string;
+    isEditMode?: boolean;
+    onPointDrag?: (index: number, pageX: number, pageY: number) => void;
 }
 
-const Shadow: FC<Props> = ({id, points, maskPoints, state}) => {
+const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDrag}) => {
+    const onDrag = (pageX: number, pageY: number, options: any) => {
+        const {index} = options;
+        onPointDrag && onPointDrag(index, pageX, pageY);
+    }
+
+    const onDragStart = useDrag(onDrag);
+
     if (state === State.On) {
         return null;
     }
@@ -31,6 +42,14 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state}) => {
                     <polygon points={svgMaskPoints} fill='black' />
                 </mask>
             )}
+            {isEditMode && points.map(([x, y], index) => (
+                <EditActionMove
+                    key={index}
+                    x={x}
+                    y={y}
+                    onMouseDown={(e) => onDragStart(e, {index})}
+                />
+            ))}
         </>
     )
 }

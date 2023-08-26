@@ -80,6 +80,39 @@ const HomeEditor = () => {
             }
         })
     }
+
+    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
+        const tmp = mapDevicesEdited || mapDevices;
+        const tmpDevice = tmp[id];
+        if (!tmpDevice.area?.shadowPoints) {
+            return;
+        }
+        const originPoint = tmpDevice.area.shadowPoints[index];
+
+        const [magnetX, magnetY] = getMagnetPointsForAnchors(
+            [x, y],
+            originPoint,
+            tmpDevice.area.shadowPoints,
+            tmpDevice.area.bulbsLinePoints || [],
+            [[tmpDevice.position.x, tmpDevice.position.y]]
+        )
+
+        const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
+        updatedDeviceAreaShadowPoints[index] = [magnetX || x, magnetY || y];
+
+        
+        setMapDevicesEdited({
+            ...tmp,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    shadowPoints: updatedDeviceAreaShadowPoints,
+                }
+            }
+        })
+    }
+
     return ( <>
             <AppLoader isLoading={!isLoaded} />
             {configuration && (
@@ -115,6 +148,7 @@ const HomeEditor = () => {
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}
                         onBulbsLinePointDrag={handleBulbsLinePointDrag}
+                        onShadowPointDrag={handleShadowPointDrag}
                     />
                     <div className="editor-panel  editor-panel--right"></div>
                 </div>
