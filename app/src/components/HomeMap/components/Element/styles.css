@@ -33,7 +33,7 @@
 }
 
 .element--edit .element-shape {
-    cursor: move;
+    /* cursor: move; */
 }
 
 /* ANIMATIONS */
