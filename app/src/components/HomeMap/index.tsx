@@ -16,6 +16,7 @@ export type Props = {
     data?: Record<string, MapElement>;
     allowScale?: boolean;
     allowRotate?: boolean;
+    allowZoom?: boolean;
     onElementClick?: (id: string) => void;
     onElementDrag?: (id: string, x: number, y: number) => void;
     onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
@@ -29,6 +30,7 @@ const HomeMap: FC<Props> = ({
     data,
     allowScale,
     allowRotate,
+    allowZoom,
     editElementId,
     onElementClick,
     onElementDrag,
@@ -39,11 +41,7 @@ const HomeMap: FC<Props> = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
-    const [scale, rotateDegree] = useResize(wrapperRef, imageRef, {allowScale, allowRotate});
-
-    const imageStyle = {
-        transform: `scale(${scale}) rotate(${rotateDegree}deg)`,
-    };
+    const [scale, rotateDegree] = useResize(wrapperRef, imageRef, {allowScale, allowRotate, allowZoom});
 
     const handleElementClick = (id: string) => {
         onElementClick && onElementClick(id);
@@ -91,6 +89,10 @@ const HomeMap: FC<Props> = ({
         const {x, y} = toRelativePosition(pageX, pageY);
         onShadowMaskPointDrag(id, index, x, y);
     }
+
+    const imageStyle = {
+        transform: `scale(${scale}) rotate(${rotateDegree}deg)`,
+    };
 
     const sortedElements = useMemo(() => {
         const elementsEntries = Object.entries(elements)

@@ -176,6 +176,7 @@ const HomeEditor = () => {
                         imageSrc={mapSrc}
                         elements={mapDevicesEdited || mapDevices}
                         allowRotate={false}
+                        allowZoom={true}
                         editElementId={selectedDeviceId}
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}

@@ -52,7 +52,6 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
             className={elementClassName}
             style={elementStyle}
             onClick={onClick}
-            onMouseDown={isEditMode ? onDragStart : undefined}
         >
             <circle
                 className='element-shape'
@@ -76,6 +75,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
                 <EditActionMove
                     x={position.x}
                     y={position.y}
+                    onMouseDown={onDragStart}
                 />
             )}
         </g>
