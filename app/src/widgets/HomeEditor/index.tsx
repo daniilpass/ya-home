@@ -5,9 +5,9 @@ import HomeMap from '../../components/HomeMap';
 import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
-import {ELEMENT_RADIUS} from '../../components/HomeMap/constants';
 
-import {getMagnetPoints} from './tools';
+import {getMagnetPointsForAnchors} from './tools';
+
 import './style.css';
 
 const HomeEditor = () => {
@@ -32,11 +32,20 @@ const HomeEditor = () => {
         const tmp = mapDevicesEdited || mapDevices;
         const tmpDevice = tmp[id];
         
+        const [magnetX, magnetY] = getMagnetPointsForAnchors(
+            [x, y],
+            null,
+            tmpDevice.area?.bulbsLinePoints || []
+        )
+    
         setMapDevicesEdited({
             ...tmp,
             [id]: {
                 ...tmpDevice,
-                position: {x, y}
+                position: {
+                    x: magnetX || x, 
+                    y: magnetY || y,
+                }
             }
         })
     }
@@ -47,29 +56,19 @@ const HomeEditor = () => {
         if (!tmpDevice.area?.bulbsLinePoints) {
             return;
         }
-        
-        let [magnetX, magnetY]: Array<number | undefined> = [];
+        const originPoint = tmpDevice.area.bulbsLinePoints[index];
 
-        // Magnet to element
-        [magnetX, magnetY] = getMagnetPoints(x, y, tmpDevice.position.x, tmpDevice.position.y, ELEMENT_RADIUS / 2);
+        const [magnetX, magnetY] = getMagnetPointsForAnchors(
+            [x, y],
+            originPoint,
+            tmpDevice.area.bulbsLinePoints,
+            [[tmpDevice.position.x, tmpDevice.position.y]]
+        )
 
-        // Magnet to bulbs line
-        for (let pointIndex = 0; pointIndex < tmpDevice.area.bulbsLinePoints.length; pointIndex++) {
-            const [pointX, pointY] = tmpDevice.area.bulbsLinePoints[pointIndex];
-            if (pointIndex === index) {
-                continue;
-            }
-            let [magnetXToBulb, magnetYToBulb] = getMagnetPoints(x, y, pointX, pointY, 10);
-            magnetX = magnetX || magnetXToBulb;
-            magnetY = magnetY || magnetYToBulb;
-            if (magnetX && magnetY) {
-                break;
-            }
-        }
-    
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
         updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
 
+        
         setMapDevicesEdited({
             ...tmp,
             [id]: {
