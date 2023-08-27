@@ -6,7 +6,7 @@ import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
 
-import {getMagnetPointsForAnchors} from './tools';
+import {Point, getMagnetPointsForAnchors} from './tools';
 
 import './style.css';
 
@@ -28,15 +28,27 @@ const HomeEditor = () => {
             .catch(() => {});
     }, []);
 
+    const getMagnetPointsForAll = (
+        point: Point,
+        ignorePoint: Point | null,
+        device: ConfigurationElement
+    ) => getMagnetPointsForAnchors(
+        point,
+        ignorePoint,
+        device.area?.shadowPoints || [],
+        device.area?.shadowMaskPoints || [],
+        device.area?.bulbsLinePoints || [],
+        [[device.position.x, device.position.y]]
+    );
+    
     const handleElementDrag = (id: string, x: number, y: number) => {
         const tmp = mapDevicesEdited || mapDevices;
         const tmpDevice = tmp[id];
-        
-        const [magnetX, magnetY] = getMagnetPointsForAnchors(
-            [x, y],
-            null,
-            tmpDevice.area?.bulbsLinePoints || []
-        )
+        if (!tmpDevice) {
+            return;
+        }
+
+        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice);
     
         setMapDevicesEdited({
             ...tmp,
@@ -56,14 +68,9 @@ const HomeEditor = () => {
         if (!tmpDevice.area?.bulbsLinePoints) {
             return;
         }
-        const originPoint = tmpDevice.area.bulbsLinePoints[index];
 
-        const [magnetX, magnetY] = getMagnetPointsForAnchors(
-            [x, y],
-            originPoint,
-            tmpDevice.area.bulbsLinePoints,
-            [[tmpDevice.position.x, tmpDevice.position.y]]
-        )
+        const originPoint = tmpDevice.area.bulbsLinePoints[index];
+        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
         updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
@@ -87,15 +94,9 @@ const HomeEditor = () => {
         if (!tmpDevice.area?.shadowPoints) {
             return;
         }
-        const originPoint = tmpDevice.area.shadowPoints[index];
 
-        const [magnetX, magnetY] = getMagnetPointsForAnchors(
-            [x, y],
-            originPoint,
-            tmpDevice.area.shadowPoints,
-            tmpDevice.area.bulbsLinePoints || [],
-            [[tmpDevice.position.x, tmpDevice.position.y]]
-        )
+        const originPoint = tmpDevice.area.shadowPoints[index];
+        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
         updatedDeviceAreaShadowPoints[index] = [magnetX || x, magnetY || y];
@@ -119,15 +120,9 @@ const HomeEditor = () => {
         if (!tmpDevice.area?.shadowMaskPoints) {
             return;
         }
+    
         const originPoint = tmpDevice.area.shadowMaskPoints[index];
-
-        const [magnetX, magnetY] = getMagnetPointsForAnchors(
-            [x, y],
-            originPoint,
-            tmpDevice.area.shadowMaskPoints,
-            tmpDevice.area.bulbsLinePoints || [],
-            [[tmpDevice.position.x, tmpDevice.position.y]]
-        )
+        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaShadowMaskPoints = [...tmpDevice.area.shadowMaskPoints];
         updatedDeviceAreaShadowMaskPoints[index] = [magnetX || x, magnetY || y];
