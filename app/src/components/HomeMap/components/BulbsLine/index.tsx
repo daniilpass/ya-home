@@ -2,7 +2,7 @@ import {FC} from 'react';
 import cx from 'classnames';
 
 import {pointsToPathDirections} from '../../tools';
-import {Point} from '../../../../services/configurationService/model/Area';
+import { Point } from '../../../../common/types';
 import {State} from '../../../../services/mapService/model/State';
 import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';

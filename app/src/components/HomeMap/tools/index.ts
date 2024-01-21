@@ -1,4 +1,4 @@
-import {Point} from '../../../services/configurationService/model/Area';
+import { Point } from '../../../common/types';
 
 enum SVG_PATH_ACTIONS {
     MOVE_TO = 'M',

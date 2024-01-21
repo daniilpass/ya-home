@@ -1,6 +1,5 @@
+import {Point} from '../../common/types';
 import {Element} from '../../services/configurationService/model/Element';
-
-export type Point = [number, number];
 
 const MAGNET_RADIUS = 10;
 

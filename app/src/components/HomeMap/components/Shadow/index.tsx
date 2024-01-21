@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import {Point} from '../../../../services/configurationService/model/Area';
+import { Point } from '../../../../common/types';
 import {State} from '../../../../services/mapService/model/State';
 import {useDrag} from '../../hooks/useDrage';
 import {EditActionMove} from '../EditAction';

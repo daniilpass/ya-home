@@ -1,4 +1,4 @@
-export type Point = [number, number];
+import { Point } from '../../../common/types';
 
 export type Area = {
     bulbsLinePoints?: Point[];
