@@ -1,5 +1,5 @@
-import {logger} from '../../tools';
-import {mergeDeep} from '../../tools';
+import {logger} from '../../common/tools';
+import {mergeDeep} from '../../common/tools';
 
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';

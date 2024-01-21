@@ -1,4 +1,4 @@
-import {logger} from '../tools';
+import {logger} from '../common/tools';
 
 import {API_BASE_URL} from '../constants';
 

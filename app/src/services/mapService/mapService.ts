@@ -1,4 +1,4 @@
-import {logger} from '../../tools';
+import {logger} from '../../common/tools';
 import ApiClient from '../../api';
 import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../constants';
 

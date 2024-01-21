@@ -129,7 +129,7 @@ const HomeEditor = () => {
             {configuration && (
                 <div className="editor-layout">
                     <div className="editor-panel editor-panel--left editor-panel--split-2">
-                        <div>Все устройства</div>
+                        <h3>Все устройства</h3>
                         <ul>
                             {
                                 Object.keys(allDevices).map(key => (
@@ -137,7 +137,7 @@ const HomeEditor = () => {
                                 ))
                             }
                         </ul>
-                        <div>На карте</div>
+                        <h3>На карте</h3>
                         <ul>
                             {
                                 Object.keys(mapDevices).map(key => (
@@ -163,7 +163,11 @@ const HomeEditor = () => {
                         onShadowPointDrag={handleShadowPointDrag}
                         onShadowMaskPointDrag={handleShadowMaskPointDrag}
                     />
-                    <div className="editor-panel  editor-panel--right"></div>
+                    <div className="editor-panel  editor-panel--right">
+                        <h3>Позиция</h3>
+                        <h3>Линия лам</h3>
+                        <h3>Зона тени</h3>
+                    </div>
                 </div>
             )}
         </>
