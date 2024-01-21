@@ -7,6 +7,7 @@ import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 import {REQUEST_SUCCESS, REQUEST_ERROR} from './constants';
 import {DeviceCollection} from './model/Device';
 import {HomeDeviceCollection} from './model/HomeDevice';
+import {isSupportedDevice} from './utils';
 
 
 const log = (status: string, url: string, startTs: number, error = '') => {
@@ -66,19 +67,21 @@ const getDevices = (): Promise<HomeDeviceCollection> => {
     return request<DeviceCollection>(ENDPOINTS.homeInfo)
         .then(({devices}) => {
             return Object.fromEntries(
-                devices.map(device => {
-                    const deviceState = device.capabilities[0]?.state;
-                    const state = deviceState ? `${deviceState.instance}:${deviceState.value}` : undefined;
-                    return [
-                        device.id,
-                        {
-                            id: device.id,
-                            name: device.name,
-                            type: device.type,
-                            state,
-                        },                    
-                    ]
-                })
+                devices
+                    .filter(device => isSupportedDevice(device.type))
+                    .map(device => {
+                        const deviceState = device.capabilities[0]?.state;
+                        const state = deviceState ? `${deviceState.instance}:${deviceState.value}` : undefined;
+                        return [
+                            device.id,
+                            {
+                                id: device.id,
+                                name: device.name,
+                                type: device.type,
+                                state,
+                            },                    
+                        ]
+                    })
             );
         });
 }

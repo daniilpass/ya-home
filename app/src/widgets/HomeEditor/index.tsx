@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
@@ -32,6 +32,13 @@ const HomeEditor = () => {
         setMapDevices(configuration?.elements || {});
     }, [configuration?.elements]);
 
+    const devicesNotOnMap = useMemo(() => {
+        return Object.fromEntries(
+            Object.entries(allDevices)
+                .filter(([id]) => !Object.hasOwn(mapDevices, id))
+        );
+    }, [allDevices, mapDevices]);
+
     /**
      * Element hanlders
      */
@@ -60,6 +67,13 @@ const HomeEditor = () => {
     
     const handleElementDrag = (id: string, x: number, y: number) => {
         handleElementPositionChange(id, x, y, true);
+    }
+
+    const handleElementDelete = (id: string) => {
+        const updatedMapDevices = {...mapDevices}
+        delete updatedMapDevices[id];
+        setMapDevices(updatedMapDevices);
+        setSelectedMapDeviceId(undefined);
     }
 
     /**
@@ -300,11 +314,11 @@ const HomeEditor = () => {
             {configuration && (
                 <div className="editor-layout">
                     <div className="editor-panel editor-panel--left editor-panel--split-2">
-                        <h3>Все устройства</h3>
+                        <h3>Устройства</h3>
                         <ul>
                             {
-                                Object.keys(allDevices).map(key => (
-                                    <li key={key}>{allDevices[key].name}</li>
+                                Object.keys(devicesNotOnMap).map(key => (
+                                    <li key={key}>{devicesNotOnMap[key].name}</li>
                                 ))
                             }
                         </ul>
@@ -342,6 +356,7 @@ const HomeEditor = () => {
                                     value={[selectedMapDevice.position.x, selectedMapDevice.position.y]}
                                     onChange={(value) => handleElementPositionChange(selectedMapDevice.id, ...value)}
                                 />
+                                <button onClick={() => handleElementDelete(selectedMapDevice.id)}>Удалить</button>
 
                                 <h3>Линия ламп</h3>
                                 <PointsList

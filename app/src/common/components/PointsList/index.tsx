@@ -26,7 +26,7 @@ const PointsList: FC<Props> = ({value, onChange, onAdd, onDelete}) => {
             )}
             {
                 value.map((point, index) => (
-                    <div className='points-list_item'>
+                    <div className='points-list_item' key={index}>
                         <PointInput value={point} onChange={(value) => onChange?.(index, value)} />
                         {onDelete && <button onClick={() => onDelete(index)}>X</button>}
                     </div>
