@@ -1,7 +1,7 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const options = {
-    target: 'http://127.0.0.1:8080/',
+    target: process.env.REACT_APP_PROXY_TARGET,
     pathRewrite: {
       '^/api/': '/',
     },
