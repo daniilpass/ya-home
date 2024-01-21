@@ -5,7 +5,7 @@ import HomeMap from '../../components/HomeMap';
 import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {ElementCollection} from '../../services/configurationService/model/Element';
-
+import { Point } from '../../common/types';
 import PointInput from '../../common/components/PointInput';
 import PointsList from '../../common/components/PointsList';
 
@@ -32,6 +32,10 @@ const HomeEditor = () => {
         setMapDevices(configuration?.elements || {});
     }, [configuration?.elements]);
 
+    /**
+     * Element hanlders
+     */
+
     const handleElementPositionChange = (id: string, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice) {
@@ -53,6 +57,14 @@ const HomeEditor = () => {
             }
         })
     }
+    
+    const handleElementDrag = (id: string, x: number, y: number) => {
+        handleElementPositionChange(id, x, y, true);
+    }
+
+    /**
+     * Bulbs hanlders
+     */
 
     const handleBulbsLinePointChange = (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
@@ -82,7 +94,56 @@ const HomeEditor = () => {
         })
     }
 
-    const handleShadowPointChange= (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
+    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
+        handleBulbsLinePointChange(id, index, x, y, true);
+    }
+
+    const handleBulbsLinePointDelete = (id: string, index: number) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice.area?.bulbsLinePoints) {
+            return;
+        }
+
+        const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints]
+        updatedDeviceAreaBulbsLinePoints.splice(index, 1);
+
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
+                }
+            }
+        })
+    }
+
+    const handleBulbsLinePointAdd = (id: string, value: Point) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice) {
+            return;
+        }
+
+        const updatedDeviceAreaBulbsLinePoints = [...(tmpDevice.area?.bulbsLinePoints || []), value]
+
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
+                }
+            }
+        })
+    }
+
+    /**
+     * Shadow hanlders
+     */
+
+    const handleShadowPointChange = (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.shadowPoints) {
             return;
@@ -109,6 +170,56 @@ const HomeEditor = () => {
             }
         })
     }
+
+    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
+        handleShadowPointChange(id, index, x, y, true);
+    }
+
+    const handleShadowPointDelete = (id: string, index: number) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice.area?.shadowPoints) {
+            return;
+        }
+
+        const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
+        updatedDeviceAreaShadowPoints.splice(index, 1);
+
+        
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    shadowPoints: updatedDeviceAreaShadowPoints,
+                }
+            }
+        })
+    }
+
+    const handleShadowPointAdd = (id: string, value: Point) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice) {
+            return;
+        }
+
+        const updatedDeviceAreaShadowPoints = [...(tmpDevice.area?.shadowPoints || []), value];
+        
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    shadowPoints: updatedDeviceAreaShadowPoints,
+                }
+            }
+        })
+    }
+
+    /**
+     * ShadowMask hanlders
+     */
 
     const handleShadowMaskPointChange = (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
@@ -138,20 +249,50 @@ const HomeEditor = () => {
         })
     }
 
-    const handleElementDrag = (id: string, x: number, y: number) => {
-        handleElementPositionChange(id, x, y, true);
-    }
-
-    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
-        handleBulbsLinePointChange(id, index, x, y, true);
-    }
-
-    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
-        handleShadowPointChange(id, index, x, y, true);
-    }
-
     const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
         handleShadowMaskPointChange(id, index, x, y, true)
+    }
+    
+    const handleShadowMaskPointDelete = (id: string, index: number) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice.area?.shadowMaskPoints) {
+            return;
+        }
+
+        const updatedDeviceAreaShadowMaskPoints = [...tmpDevice.area.shadowMaskPoints];
+        updatedDeviceAreaShadowMaskPoints.splice(index, 1);
+
+        
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    shadowMaskPoints: updatedDeviceAreaShadowMaskPoints,
+                }
+            }
+        })
+    }
+
+    const handleShadowMaskPointAdd = (id: string, value: Point) => {
+        const tmpDevice = mapDevices[id];
+        if (!tmpDevice) {
+            return;
+        }
+
+        const updatedDeviceAreaShadowMaskPoints = [...(tmpDevice.area?.shadowMaskPoints || []), value];
+
+        setMapDevices({
+            ...mapDevices,
+            [id]: {
+                ...tmpDevice,
+                area: {
+                    ...tmpDevice.area,
+                    shadowMaskPoints: updatedDeviceAreaShadowMaskPoints,
+                }
+            }
+        })
     }
 
     return ( <>
@@ -206,18 +347,24 @@ const HomeEditor = () => {
                                 <PointsList
                                     value={selectedMapDevice.area?.bulbsLinePoints || []}
                                     onChange={(index, value) => handleBulbsLinePointChange(selectedMapDevice.id, index, ...value)}
+                                    onAdd={(value) => handleBulbsLinePointAdd(selectedMapDevice.id, value)}
+                                    onDelete={(index) => handleBulbsLinePointDelete(selectedMapDevice.id, index)}
                                 />
 
                                 <h3>Зона тени</h3>
                                 <PointsList
                                     value={selectedMapDevice.area?.shadowPoints || []}
                                     onChange={(index, value) => handleShadowPointChange(selectedMapDevice.id, index, ...value)}
+                                    onAdd={(value) => handleShadowPointAdd(selectedMapDevice.id, value)}
+                                    onDelete={(index) => handleShadowPointDelete(selectedMapDevice.id, index)}
                                 />
 
                                 <h3>Зона маски тени</h3>
                                 <PointsList
                                     value={selectedMapDevice.area?.shadowMaskPoints || []}
                                     onChange={(index, value) => handleShadowMaskPointChange(selectedMapDevice.id, index, ...value)}
+                                    onAdd={(value) => handleShadowMaskPointAdd(selectedMapDevice.id, value)}
+                                    onDelete={(index) => handleShadowMaskPointDelete(selectedMapDevice.id, index)}
                                 />
                             </>
                         )}

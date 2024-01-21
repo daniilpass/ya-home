@@ -3,3 +3,12 @@
     flex-direction: column;
     gap: 4px;
 }
+
+.points-list_item {
+    display: flex;
+    gap: 4px;
+}
+
+.points-list button {
+    cursor: pointer;
+}
