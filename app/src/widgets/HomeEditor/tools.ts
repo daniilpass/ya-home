@@ -1,8 +1,10 @@
+import {Element} from '../../services/configurationService/model/Element';
+
 export type Point = [number, number];
 
-const MAGNET_RADIUS =10;
+const MAGNET_RADIUS = 10;
 
-const getMagnetPoints = (x: number, y: number, anchorX: number, anchorY: number, magnetRadius: number) => {
+const getMagnetPoint = (x: number, y: number, anchorX: number, anchorY: number, magnetRadius: number) => {
     let magnetX;
     let magnetY;
     if (x >= anchorX - magnetRadius && x <= anchorX + magnetRadius) {
@@ -15,7 +17,7 @@ const getMagnetPoints = (x: number, y: number, anchorX: number, anchorY: number,
 }
 
 
-export const getMagnetPointsForAnchors = (
+const getMagnetPointsForAnchors = (
     position: Point,
     ignorePosition: Point | null,
     ...anchors: Array<Array<Point>>
@@ -31,9 +33,9 @@ export const getMagnetPointsForAnchors = (
                 continue;
             }
 
-            const [magnetXToBulb, magnetYToBulb] = getMagnetPoints(x, y, anchorX, anchorY, MAGNET_RADIUS);
-            magnetX = magnetX || magnetXToBulb;
-            magnetY = magnetY || magnetYToBulb;
+            const [nextMagnetX, nextMagnetY] = getMagnetPoint(x, y, anchorX, anchorY, MAGNET_RADIUS);
+            magnetX = magnetX || nextMagnetX;
+            magnetY = magnetY || nextMagnetY;
 
             if (magnetX && magnetY) {
                 return [magnetX, magnetY];
@@ -43,3 +45,16 @@ export const getMagnetPointsForAnchors = (
 
     return [magnetX, magnetY];
 }
+
+export const getMagnetPoints = (
+    point: Point,
+    ignorePoint: Point | null,
+    device: Element
+) => getMagnetPointsForAnchors(
+    point,
+    ignorePoint,
+    device.area?.shadowPoints || [],
+    device.area?.shadowMaskPoints || [],
+    device.area?.bulbsLinePoints || [],
+    [[device.position.x, device.position.y]]
+);

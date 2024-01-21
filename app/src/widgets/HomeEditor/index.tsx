@@ -4,54 +4,41 @@ import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
 import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
-import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
+import {ElementCollection} from '../../services/configurationService/model/Element';
 
-import {Point, getMagnetPointsForAnchors} from './tools';
+import {getMagnetPoints} from './tools';
 
 import './style.css';
 
+type DeviceState = HomeDeviceCollection | ElementCollection;
+
 const HomeEditor = () => {
     const {isLoaded, configuration} = useConfiguration();
-    const [devices, setDevices] = useState<HomeDeviceCollection>({});
-    const [selectedDeviceId, setSelectedDeviceId] = useState<string | undefined>(undefined);
-    const [mapDevicesEdited, setMapDevicesEdited] = useState<Record<string, ConfigurationElement> | undefined>(undefined);
-
-    const {
-        mapSrc = '',
-        elements: mapDevices = {},
-    } = configuration || {};
+    const [allDevices, setAllDevices] = useState<DeviceState>({});
+    const [mapDevices, setMapDevices] = useState<ElementCollection>({});
+    const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         ApiClient
             .getDevices()
-            .then(setDevices)
+            .then(setAllDevices)
             .catch(() => {});
     }, []);
 
-    const getMagnetPointsForAll = (
-        point: Point,
-        ignorePoint: Point | null,
-        device: ConfigurationElement
-    ) => getMagnetPointsForAnchors(
-        point,
-        ignorePoint,
-        device.area?.shadowPoints || [],
-        device.area?.shadowMaskPoints || [],
-        device.area?.bulbsLinePoints || [],
-        [[device.position.x, device.position.y]]
-    );
+    useEffect(() => {
+        setMapDevices(configuration?.elements || {});
+    }, [configuration?.elements]);
     
     const handleElementDrag = (id: string, x: number, y: number) => {
-        const tmp = mapDevicesEdited || mapDevices;
-        const tmpDevice = tmp[id];
+        const tmpDevice = mapDevices[id];
         if (!tmpDevice) {
             return;
         }
 
-        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice);
+        const [magnetX, magnetY] = getMagnetPoints([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice);
     
-        setMapDevicesEdited({
-            ...tmp,
+        setMapDevices({
+            ...mapDevices,
             [id]: {
                 ...tmpDevice,
                 position: {
@@ -63,21 +50,20 @@ const HomeEditor = () => {
     }
 
     const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
-        const tmp = mapDevicesEdited || mapDevices;
-        const tmpDevice = tmp[id];
+        const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.bulbsLinePoints) {
             return;
         }
 
         const originPoint = tmpDevice.area.bulbsLinePoints[index];
-        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
+        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
         updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
 
         
-        setMapDevicesEdited({
-            ...tmp,
+        setMapDevices({
+            ...mapDevices,
             [id]: {
                 ...tmpDevice,
                 area: {
@@ -89,21 +75,20 @@ const HomeEditor = () => {
     }
 
     const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
-        const tmp = mapDevicesEdited || mapDevices;
-        const tmpDevice = tmp[id];
+        const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.shadowPoints) {
             return;
         }
 
         const originPoint = tmpDevice.area.shadowPoints[index];
-        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
+        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
         updatedDeviceAreaShadowPoints[index] = [magnetX || x, magnetY || y];
 
         
-        setMapDevicesEdited({
-            ...tmp,
+        setMapDevices({
+            ...mapDevices,
             [id]: {
                 ...tmpDevice,
                 area: {
@@ -115,21 +100,20 @@ const HomeEditor = () => {
     }
 
     const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
-        const tmp = mapDevicesEdited || mapDevices;
-        const tmpDevice = tmp[id];
+        const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.shadowMaskPoints) {
             return;
         }
     
         const originPoint = tmpDevice.area.shadowMaskPoints[index];
-        const [magnetX, magnetY] = getMagnetPointsForAll([x, y], originPoint, tmpDevice);
+        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
 
         const updatedDeviceAreaShadowMaskPoints = [...tmpDevice.area.shadowMaskPoints];
         updatedDeviceAreaShadowMaskPoints[index] = [magnetX || x, magnetY || y];
 
         
-        setMapDevicesEdited({
-            ...tmp,
+        setMapDevices({
+            ...mapDevices,
             [id]: {
                 ...tmpDevice,
                 area: {
@@ -148,8 +132,8 @@ const HomeEditor = () => {
                         <div>Все устройства</div>
                         <ul>
                             {
-                                Object.keys(devices).map(key => (
-                                    <li key={key}>{devices[key].name}</li>
+                                Object.keys(allDevices).map(key => (
+                                    <li key={key}>{allDevices[key].name}</li>
                                 ))
                             }
                         </ul>
@@ -159,7 +143,7 @@ const HomeEditor = () => {
                                 Object.keys(mapDevices).map(key => (
                                     <li
                                         key={key}
-                                        onClick={() => setSelectedDeviceId(key)}
+                                        onClick={() => setSelectedMapDeviceId(key)}
                                     >
                                         {mapDevices[key].name}
                                     </li>
@@ -168,11 +152,11 @@ const HomeEditor = () => {
                         </ul>
                     </div>
                     <HomeMap 
-                        imageSrc={mapSrc}
-                        elements={mapDevicesEdited || mapDevices}
+                        imageSrc={configuration.mapSrc}
+                        elements={mapDevices}
                         allowRotate={false}
                         allowZoom={true}
-                        editElementId={selectedDeviceId}
+                        editElementId={selectedMapDeviceId}
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}
                         onBulbsLinePointDrag={handleBulbsLinePointDrag}
