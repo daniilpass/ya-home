@@ -11,7 +11,7 @@
     user-select: none;
 }
 
-.map-layout {
+.map-layout--transitional {
     transition: transform .5s linear;
 }
 

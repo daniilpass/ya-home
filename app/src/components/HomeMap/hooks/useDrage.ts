@@ -1,13 +1,20 @@
 import {MouseEvent as ReactMouseEvent} from 'react';
 
+import { MouseButton } from '../../../common/types';
+
 const EVENT_MOUSEMOVE = 'mousemove';
 const EVENT_MOUSEUP = 'mouseup'
 
 export const useDrag = (
-    onDrag?: (pageX: number, pageY: number, options?: any) => void
+    onDrag?: (pageX: number, pageY: number, options?: any) => void,
+    button: MouseButton = MouseButton.LEFT,
 ) => {
     const onDragStart = (e: ReactMouseEvent<Element, MouseEvent>, options?: any) => {
-        const bounds = (e.target as Element).getBoundingClientRect();
+        if (e.button !== button) {
+            return;
+        }
+
+        const bounds = (e.currentTarget as Element).getBoundingClientRect();
         const x = e.clientX - bounds.left - bounds.width / 2;
         const y = e.clientY - bounds.top - bounds.height / 2;
 

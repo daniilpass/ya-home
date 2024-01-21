@@ -351,8 +351,11 @@ const HomeEditor = () => {
                     <HomeMap 
                         imageSrc={configuration.mapSrc}
                         elements={mapDevices}
-                        allowRotate={false}
                         allowZoom={true}
+                        allowDrag={true}
+                        allowScale={false}
+                        allowRotate={false}
+                        allowInitialRotate={false}
                         editElementId={selectedMapDeviceId}
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}
