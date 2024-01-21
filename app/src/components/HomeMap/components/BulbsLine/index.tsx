@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {pointsToPathDirections} from '../../tools';
 import {Point} from '../../../../services/configurationService/model/Area';
 import {State} from '../../../../services/mapService/model/State';
+import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';
 import {useDrag} from '../../hooks/useDrage';
 
@@ -12,14 +13,16 @@ import './styles.css';
 type Props = {
     points: Point[];
     state?: string;
+    substate?: string;
     isEditMode?: boolean;
     onPointDrag?: (index: number, pageX: number, pageY: number) => void;
 }
 
-const BulbsLine: FC<Props> = ({points, state, isEditMode, onPointDrag}) => {
+const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}) => {
     const directions = pointsToPathDirections(points);
     const className = cx('element-bulbs-line', {
         'element-bulbs-line--on': state === State.On,
+        'element-bulbs-line--lost': substate === Substate.Lost,
     });
 
     const onDrag = (pageX: number, pageY: number, options: any) => {

@@ -15,10 +15,10 @@ export const useMapService = () => {
 
         const {elements} = configuration;
         mapServiceRef.current = new MapService(elements);
-        mapServiceRef.current.start();
-        mapServiceRef.current.onUpdate = (updateData) => {
-            setData({...updateData});
+        mapServiceRef.current.onUpdate = (updatedData) => {
+            setData({...updatedData});
         }
+        mapServiceRef.current.start();
         return () => {
             mapServiceRef.current?.stop();
         }

@@ -13,6 +13,15 @@ class MapState {
     constructor(elements: Record<string, Element>, syncTimeout: number) {
         this.elements = elements;
         this.syncTimeout = syncTimeout;
+        this.initElementsState();
+    }
+
+    initElementsState() {
+        Object.entries(this.elements).forEach(([id, element]) => {
+            this.updateElement(id, {
+                substate: Substate.Pending,
+            });
+        });
     }
 
     updateElements(elementsUpdate: Record<string, Element>) {

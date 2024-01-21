@@ -20,6 +20,10 @@
     animation-iteration-count: infinite;
 }
 
+.element--lost {
+    filter: grayscale(1);
+}
+
 .element-icon {
     pointer-events: none;
 }

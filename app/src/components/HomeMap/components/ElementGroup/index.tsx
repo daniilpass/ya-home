@@ -55,6 +55,7 @@ const ElementGroup: FC<Props> = ({
                 <BulbsLine
                     points={bulbsLinePoints}
                     state={state}
+                    substate={substate}
                     isEditMode={isEditMode}
                     onPointDrag={onBulbsLinePointDrag}
                 />

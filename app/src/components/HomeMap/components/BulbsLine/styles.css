@@ -8,3 +8,7 @@
 .element-bulbs-line--on {
     stroke: rgb(228, 235, 117);
 }
+
+.element-bulbs-line--lost {
+    filter: grayscale(1);
+}

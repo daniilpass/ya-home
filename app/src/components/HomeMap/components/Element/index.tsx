@@ -39,6 +39,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
         'element--on': state === State.On,
         'element--pending': substate === Substate.Pending,
         'element--synced': substate === Substate.Synced,
+        'element--lost': substate === Substate.Lost,
         'element--edit': isEditMode,
     });
 
