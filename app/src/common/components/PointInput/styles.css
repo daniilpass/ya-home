@@ -1,0 +1,8 @@
+.point-input {
+    display: flex;
+    gap: 4px;
+}
+
+.point-input > input {
+    width: 100%;
+}

@@ -6,8 +6,10 @@ import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {ElementCollection} from '../../services/configurationService/model/Element';
 
-import {getMagnetPoints} from './tools';
+import PointInput from '../../common/components/PointInput';
+import PointsList from '../../common/components/PointsList';
 
+import {getMagnetPoints} from './tools';
 import './style.css';
 
 type DeviceState = HomeDeviceCollection | ElementCollection;
@@ -17,6 +19,7 @@ const HomeEditor = () => {
     const [allDevices, setAllDevices] = useState<DeviceState>({});
     const [mapDevices, setMapDevices] = useState<ElementCollection>({});
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
+    const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
 
     useEffect(() => {
         ApiClient
@@ -28,14 +31,16 @@ const HomeEditor = () => {
     useEffect(() => {
         setMapDevices(configuration?.elements || {});
     }, [configuration?.elements]);
-    
-    const handleElementDrag = (id: string, x: number, y: number) => {
+
+    const handleElementPositionChange = (id: string, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice) {
             return;
         }
 
-        const [magnetX, magnetY] = getMagnetPoints([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice);
+        const [magnetX, magnetY] = isMagnetic
+            ? getMagnetPoints([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice)
+            : [0, 0];
     
         setMapDevices({
             ...mapDevices,
@@ -49,14 +54,17 @@ const HomeEditor = () => {
         })
     }
 
-    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleBulbsLinePointChange = (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.bulbsLinePoints) {
             return;
         }
 
-        const originPoint = tmpDevice.area.bulbsLinePoints[index];
-        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        let [magnetX, magnetY] = new Array<number | undefined>(2);
+        if (isMagnetic) {
+            const originPoint = tmpDevice.area.bulbsLinePoints[index];
+            [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        }
 
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
         updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
@@ -74,14 +82,17 @@ const HomeEditor = () => {
         })
     }
 
-    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleShadowPointChange= (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.shadowPoints) {
             return;
         }
 
-        const originPoint = tmpDevice.area.shadowPoints[index];
-        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        let [magnetX, magnetY] = new Array<number | undefined>(2);
+        if (isMagnetic) {
+            const originPoint = tmpDevice.area.shadowPoints[index];
+            [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        }
 
         const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
         updatedDeviceAreaShadowPoints[index] = [magnetX || x, magnetY || y];
@@ -99,14 +110,17 @@ const HomeEditor = () => {
         })
     }
 
-    const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleShadowMaskPointChange = (id: string, index: number, x: number, y: number, isMagnetic: boolean = false) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice.area?.shadowMaskPoints) {
             return;
         }
     
-        const originPoint = tmpDevice.area.shadowMaskPoints[index];
-        const [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        let [magnetX, magnetY] = new Array<number | undefined>(2);
+        if (isMagnetic) {
+            const originPoint = tmpDevice.area.shadowMaskPoints[index];
+            [magnetX, magnetY] = getMagnetPoints([x, y], originPoint, tmpDevice);
+        }
 
         const updatedDeviceAreaShadowMaskPoints = [...tmpDevice.area.shadowMaskPoints];
         updatedDeviceAreaShadowMaskPoints[index] = [magnetX || x, magnetY || y];
@@ -122,6 +136,22 @@ const HomeEditor = () => {
                 }
             }
         })
+    }
+
+    const handleElementDrag = (id: string, x: number, y: number) => {
+        handleElementPositionChange(id, x, y, true);
+    }
+
+    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
+        handleBulbsLinePointChange(id, index, x, y, true);
+    }
+
+    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
+        handleShadowPointChange(id, index, x, y, true);
+    }
+
+    const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
+        handleShadowMaskPointChange(id, index, x, y, true)
     }
 
     return ( <>
@@ -164,9 +194,33 @@ const HomeEditor = () => {
                         onShadowMaskPointDrag={handleShadowMaskPointDrag}
                     />
                     <div className="editor-panel  editor-panel--right">
-                        <h3>Позиция</h3>
-                        <h3>Линия лам</h3>
-                        <h3>Зона тени</h3>
+                        {selectedMapDevice && (
+                            <>
+                                <h3>Позиция</h3>
+                                <PointInput
+                                    value={[selectedMapDevice.position.x, selectedMapDevice.position.y]}
+                                    onChange={(value) => handleElementPositionChange(selectedMapDevice.id, ...value)}
+                                />
+
+                                <h3>Линия ламп</h3>
+                                <PointsList
+                                    value={selectedMapDevice.area?.bulbsLinePoints || []}
+                                    onChange={(index, value) => handleBulbsLinePointChange(selectedMapDevice.id, index, ...value)}
+                                />
+
+                                <h3>Зона тени</h3>
+                                <PointsList
+                                    value={selectedMapDevice.area?.shadowPoints || []}
+                                    onChange={(index, value) => handleShadowPointChange(selectedMapDevice.id, index, ...value)}
+                                />
+
+                                <h3>Зона маски тени</h3>
+                                <PointsList
+                                    value={selectedMapDevice.area?.shadowMaskPoints || []}
+                                    onChange={(index, value) => handleShadowMaskPointChange(selectedMapDevice.id, index, ...value)}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             )}
