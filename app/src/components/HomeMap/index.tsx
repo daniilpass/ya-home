@@ -27,6 +27,10 @@ export type Props = {
     onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
+    classes?: {
+        wrapper?: string,
+        layout?: string,
+    }
 }
 
 const HomeMap: FC<Props> = ({
@@ -45,6 +49,7 @@ const HomeMap: FC<Props> = ({
     onBulbsLinePointDrag,
     onShadowPointDrag,
     onShadowMaskPointDrag,
+    classes,
 }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
@@ -127,13 +132,15 @@ const HomeMap: FC<Props> = ({
         return elementsEntries;
     }, [elements, editElementId]);
 
+    const wrapperStyle = cx('map-wrapper', classes?.wrapper);
+
     const layoutStyle = cx({
         'map-layout--transitional': !allowDrag && !allowZoom,
-    });
+    }, classes?.layout);
 
     return (
         <TransformContextProvider value={{scale, rotateDegree}}>
-            <div className="map-wrapper" ref={wrapperRef}>
+            <div className={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutStyle} ref={layoutRef} style={imageStyle}>
                     <img className="map-layout__image" src={imageSrc} ref={imageRef}></img>
                     <svg className="map-layout__svg" ref={svgRef}>

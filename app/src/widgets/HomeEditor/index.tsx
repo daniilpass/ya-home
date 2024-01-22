@@ -403,6 +403,10 @@ const HomeEditor = () => {
                         onBulbsLinePointDrag={handleBulbsLinePointDrag}
                         onShadowPointDrag={handleShadowPointDrag}
                         onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                        classes={{
+                            wrapper: 'editor_map-wrapper',
+                            layout: 'editor_map-layout',
+                        }}
                     />
                     <div className="editor-panel  editor-panel--right">
                         {selectedMapDevice && (

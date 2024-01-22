@@ -4,6 +4,9 @@ import { MouseButton } from '../../../common/types';
 
 const LOAD_EVENT = 'load';
 const WHEEL_EVENT = 'wheel';
+const MIN_SCALE = 0.125;
+const MAX_SCALE = 4;
+const SCALE_STEP = 0.001;
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
@@ -20,7 +23,7 @@ export const useResize = (
     }
 ) => {
     const [scale, setScale] = useState(1.0);
-    const [minScale, setMinScale] = useState(0.125);
+    const [minScale, setMinScale] = useState(MIN_SCALE);
     const [rotateDegree, setRotateDegree] = useState(0);
     const [translate, setTranslate] = useState<[number, number]>([0, 0]);
 
@@ -58,7 +61,7 @@ export const useResize = (
 
         if (allowScale) {
             setScale(scale);
-            setMinScale(scale);
+            !allowZoom && setMinScale(scale);
         }
     }
 
@@ -107,8 +110,8 @@ export const useResize = (
         }
 
         const handleZoom = (e: any) => {
-            let newScale = scale + e.deltaY * -0.002;
-            newScale = Math.min(Math.max(minScale, newScale), 4);
+            let newScale = scale + e.deltaY * -SCALE_STEP;
+            newScale = Math.min(Math.max(minScale, newScale), MAX_SCALE);
             setScale(newScale);
         }
         
