@@ -360,19 +360,19 @@ const HomeEditor = () => {
                             open={addDeviceModalOpened}
                             onClose={() => setAddDeviceModalOpened(false)}
                         >
-                            <DialogTitle>Subscribe</DialogTitle>
-                                <IconButton
-                                    aria-label="close"
-                                    onClick={() => setAddDeviceModalOpened(false)}
-                                    sx={{
-                                        position: 'absolute',
-                                        right: 8,
-                                        top: 8,
-                                        color: (theme) => theme.palette.grey[500],
-                                    }}
-                                >
-                                    <CloseIcon />
-                                </IconButton>
+                            <DialogTitle>Устройства</DialogTitle>
+                            <IconButton
+                                aria-label="close"
+                                onClick={() => setAddDeviceModalOpened(false)}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
                             <DialogContent dividers={true}>
                                 <List component="div" sx={{padding: 0, width: 400 }}>
                                     {
