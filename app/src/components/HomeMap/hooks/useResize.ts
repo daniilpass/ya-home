@@ -6,7 +6,7 @@ const LOAD_EVENT = 'load';
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
 const MAX_SCALE = 4;
-const SCALE_STEP = 0.001;
+const SCALE_FACTOR = 0.1;
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
@@ -110,8 +110,8 @@ export const useResize = (
         }
 
         const handleZoom = (e: any) => {
-            let newScale = scale + e.deltaY * -SCALE_STEP;
-            newScale = Math.min(Math.max(minScale, newScale), MAX_SCALE);
+            const delta = Math.sign(e.deltaY) * scale * SCALE_FACTOR;
+            const newScale = Math.min(Math.max(minScale, scale - delta), MAX_SCALE);
             setScale(newScale);
         }
         
