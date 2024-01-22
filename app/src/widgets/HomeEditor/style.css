@@ -11,22 +11,11 @@
     min-width: 200px;
     height: 100%;
     background: #f3f4f6;
-    padding: 8px;
-    margin: -16px 0;
+    padding: 0 8px;
 
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 1;
-}
-
-.editor-panel--split-2 > ul {
-    overflow-y: scroll;
-    flex-basis: 50%;
-}
-
-.editor-panel--split-2 > ul > li:hover{
-    cursor: pointer;
-    color: blue;
 }
 
 .editor-panel--left {

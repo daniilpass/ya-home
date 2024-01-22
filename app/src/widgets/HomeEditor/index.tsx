@@ -1,4 +1,7 @@
 import {useEffect, useState, useMemo} from 'react';
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close'
+
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
@@ -17,6 +20,7 @@ const HomeEditor = () => {
     const [allDevices, setAllDevices] = useState<HomeDeviceCollection>({});
     const [mapDevices, setMapDevices] = useState<ElementCollection>({});
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
+    const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
 
     useEffect(() => {
@@ -75,6 +79,11 @@ const HomeEditor = () => {
     }
 
     const handleElementAdd = (id: string) => {
+        setAddDeviceModalOpened(false);
+        if (id === selectedMapDevice) {
+            console.log('HELLO LOG')
+            return;
+        }
         const newDevice: Element = {
             ...devicesNotOnMap[id],
             position: {x: 50, y: 50},
@@ -326,27 +335,59 @@ const HomeEditor = () => {
             <AppLoader isLoading={!isLoaded} />
             {configuration && (
                 <div className="editor-layout">
-                    <div className="editor-panel editor-panel--left editor-panel--split-2">
-                        <h3>Устройства</h3>
-                        <ul>
-                            {
-                                Object.keys(devicesNotOnMap).map(key => (
-                                    <li key={key} onClick={() => handleElementAdd(key)} >
-                                        {devicesNotOnMap[key].name}
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        <h3>На карте</h3>
-                        <ul>
+                    <div className="editor-panel editor-panel--left">
+                        <Typography component="h1" variant="h5" align="center" margin={1}>
+                            Устройства
+                        </Typography>
+                        <Button onClick={() => setAddDeviceModalOpened(true)}>
+                            Добавить
+                        </Button>
+                        <List component="div" sx={{margin: "0 -8px"}}>
                             {
                                 Object.keys(mapDevices).map(key => (
-                                    <li key={key} onClick={() => setSelectedMapDeviceId(key)}>
-                                        {mapDevices[key].name}
-                                    </li>
+                                    <ListItemButton
+                                        key={key}
+                                        selected={key === selectedMapDeviceId}
+                                        onClick={() => setSelectedMapDeviceId(key)}
+                                        
+                                    >
+                                        <ListItemText primary={mapDevices[key].name} />
+                                    </ListItemButton>
                                 ))
                             }
-                        </ul>
+                        </List>
+                        <Dialog
+                            open={addDeviceModalOpened}
+                            onClose={() => setAddDeviceModalOpened(false)}
+                        >
+                            <DialogTitle>Subscribe</DialogTitle>
+                                <IconButton
+                                    aria-label="close"
+                                    onClick={() => setAddDeviceModalOpened(false)}
+                                    sx={{
+                                        position: 'absolute',
+                                        right: 8,
+                                        top: 8,
+                                        color: (theme) => theme.palette.grey[500],
+                                    }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            <DialogContent dividers={true}>
+                                <List component="div" sx={{padding: 0, width: 400 }}>
+                                    {
+                                        Object.keys(devicesNotOnMap).map(key => (
+                                            <ListItemButton
+                                                key={key}
+                                                onClick={() => handleElementAdd(key)}
+                                            >
+                                                <ListItemText primary={devicesNotOnMap[key].name} />
+                                            </ListItemButton>
+                                        ))
+                                    }
+                                </List>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                     <HomeMap 
                         imageSrc={configuration.mapSrc}
