@@ -7,7 +7,7 @@ import Shadow from '../Shadow';
 import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
 
-import './style.css';
+import './style.scss';
 
 type Props = {
     element: Element;
