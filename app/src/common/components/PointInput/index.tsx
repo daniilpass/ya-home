@@ -1,4 +1,5 @@
 import {ChangeEvent, FC} from 'react';
+import { TextField } from '@mui/material';
 
 import { Point } from '../../types';
 
@@ -9,8 +10,6 @@ type Props = {
     onChange?: (value: Point) => void;
     // TODO: pass min, max
 }
-
-const STEP = 1;
 
 const PointInput: FC<Props> = ({value: [x, y], onChange}) => {
     const onChangeX = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,17 +22,19 @@ const PointInput: FC<Props> = ({value: [x, y], onChange}) => {
 
     return (
         <div className='point-input'>
-            <input
+            <TextField
                 value={Math.floor(x)}
                 onChange={onChangeX}
-                type='number'
-                step={STEP}
+                label="x"
+                type="number"
+                size="small"
             />
-            <input
+            <TextField
                 value={Math.floor(y)}
                 onChange={onChangeY}
-                type='number'
-                step={STEP}
+                label="y"
+                type="number"
+                size="small"
             />
         </div>
     )

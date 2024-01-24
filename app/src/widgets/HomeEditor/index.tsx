@@ -1,6 +1,8 @@
 import {useEffect, useState, useMemo} from 'react';
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
@@ -336,26 +338,30 @@ const HomeEditor = () => {
             {configuration && (
                 <div className="editor-layout">
                     <div className="editor-panel editor-panel--left">
-                        <Typography component="h1" variant="h5" align="center" margin={1}>
-                            Устройства
-                        </Typography>
-                        <Button onClick={() => setAddDeviceModalOpened(true)}>
-                            Добавить
-                        </Button>
-                        <List component="div" sx={{margin: "0 -8px"}}>
-                            {
-                                Object.keys(mapDevices).map(key => (
-                                    <ListItemButton
-                                        key={key}
-                                        selected={key === selectedMapDeviceId}
-                                        onClick={() => setSelectedMapDeviceId(key)}
-                                        
-                                    >
-                                        <ListItemText primary={mapDevices[key].name} />
-                                    </ListItemButton>
-                                ))
-                            }
-                        </List>
+                        <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+                            <Typography component="h1" variant="h5" align="center" marginBottom={1}>
+                                Устройства
+                            </Typography>
+                            <Button startIcon={<AddIcon />} onClick={() => setAddDeviceModalOpened(true)}>
+                                Добавить
+                            </Button>
+                        </Box>
+                        <Box sx={{p: "0 8px"}}>
+                            <List component="div" sx={{m: "0 -8px", p: 0}}>
+                                {
+                                    Object.keys(mapDevices).map(key => (
+                                        <ListItemButton
+                                            key={key}
+                                            selected={key === selectedMapDeviceId}
+                                            onClick={() => setSelectedMapDeviceId(key)}
+                                            
+                                        >
+                                            <ListItemText primary={mapDevices[key].name} />
+                                        </ListItemButton>
+                                    ))
+                                }
+                            </List>
+                        </Box>
                         <Dialog
                             open={addDeviceModalOpened}
                             onClose={() => setAddDeviceModalOpened(false)}
@@ -411,38 +417,59 @@ const HomeEditor = () => {
                     <div className="editor-panel  editor-panel--right">
                         {selectedMapDevice && (
                             <>
-                                <h3>{mapDevices[selectedMapDevice.id].name}</h3>
-                                <button onClick={() => handleElementDelete(selectedMapDevice.id)}>Удалить</button>
+                                <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+                                    <Typography component="h1" variant="h5" align="center" marginBottom={1}>
+                                        {mapDevices[selectedMapDevice.id].name}
+                                    </Typography>
+                                    <Button
+                                        startIcon={<DeleteIcon />}
+                                        onClick={() => handleElementDelete(selectedMapDevice.id)}
+                                    >
+                                        Удалить
+                                    </Button> 
+                                </Box>
+                                                               
+                                <Divider variant="middle" textAlign="left">Позиция</Divider>
 
-                                <h3>Позиция</h3>
-                                <PointInput
-                                    value={[selectedMapDevice.position.x, selectedMapDevice.position.y]}
-                                    onChange={(value) => handleElementPositionChange(selectedMapDevice.id, ...value)}
-                                />
+                                <Box sx={{p: 2}}>
+                                    <PointInput
+                                        value={[selectedMapDevice.position.x, selectedMapDevice.position.y]}
+                                        onChange={(value) => handleElementPositionChange(selectedMapDevice.id, ...value)}
+                                    />
+                                </Box>
 
-                                <h3>Линия ламп</h3>
-                                <PointsList
-                                    value={selectedMapDevice.area?.bulbsLinePoints || []}
-                                    onChange={(index, value) => handleBulbsLinePointChange(selectedMapDevice.id, index, ...value)}
-                                    onAdd={(value) => handleBulbsLinePointAdd(selectedMapDevice.id, value)}
-                                    onDelete={(index) => handleBulbsLinePointDelete(selectedMapDevice.id, index)}
-                                />
+                                <Divider variant="middle" textAlign="left">Линия ламп</Divider>
 
-                                <h3>Зона тени</h3>
-                                <PointsList
-                                    value={selectedMapDevice.area?.shadowPoints || []}
-                                    onChange={(index, value) => handleShadowPointChange(selectedMapDevice.id, index, ...value)}
-                                    onAdd={(value) => handleShadowPointAdd(selectedMapDevice.id, value)}
-                                    onDelete={(index) => handleShadowPointDelete(selectedMapDevice.id, index)}
-                                />
+                                <Box sx={{p: 2}}>
+                                    <PointsList
+                                        value={selectedMapDevice.area?.bulbsLinePoints || []}
+                                        onChange={(index, value) => handleBulbsLinePointChange(selectedMapDevice.id, index, ...value)}
+                                        onAdd={(value) => handleBulbsLinePointAdd(selectedMapDevice.id, value)}
+                                        onDelete={(index) => handleBulbsLinePointDelete(selectedMapDevice.id, index)}
+                                    />
+                                </Box>
+                                
+                                <Divider variant="middle" textAlign="left">Тень</Divider>
 
-                                <h3>Зона маски тени</h3>
-                                <PointsList
-                                    value={selectedMapDevice.area?.shadowMaskPoints || []}
-                                    onChange={(index, value) => handleShadowMaskPointChange(selectedMapDevice.id, index, ...value)}
-                                    onAdd={(value) => handleShadowMaskPointAdd(selectedMapDevice.id, value)}
-                                    onDelete={(index) => handleShadowMaskPointDelete(selectedMapDevice.id, index)}
-                                />
+                                <Box sx={{p: 2}}>
+                                    <PointsList
+                                        value={selectedMapDevice.area?.shadowPoints || []}
+                                        onChange={(index, value) => handleShadowPointChange(selectedMapDevice.id, index, ...value)}
+                                        onAdd={(value) => handleShadowPointAdd(selectedMapDevice.id, value)}
+                                        onDelete={(index) => handleShadowPointDelete(selectedMapDevice.id, index)}
+                                    />
+                                </Box>
+                                
+                                <Divider variant="middle" textAlign="left">Маска тени</Divider>
+                                
+                                <Box sx={{p: 2}}>
+                                    <PointsList
+                                        value={selectedMapDevice.area?.shadowMaskPoints || []}
+                                        onChange={(index, value) => handleShadowMaskPointChange(selectedMapDevice.id, index, ...value)}
+                                        onAdd={(value) => handleShadowMaskPointAdd(selectedMapDevice.id, value)}
+                                        onDelete={(index) => handleShadowMaskPointDelete(selectedMapDevice.id, index)}
+                                    />
+                                </Box>
                             </>
                         )}
                     </div>
