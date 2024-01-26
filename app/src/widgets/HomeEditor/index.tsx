@@ -396,7 +396,7 @@ const HomeEditor = () => {
                         </Dialog>
                     </div>
                     <HomeMap 
-                        imageSrc={configuration.mapSrc}
+                        plan={configuration.plan}
                         elements={mapDevices}
                         allowZoom={true}
                         allowDrag={true}
@@ -412,6 +412,11 @@ const HomeEditor = () => {
                         classes={{
                             wrapper: 'editor_map-wrapper',
                             layout: 'editor_map-layout',
+                        }}
+                        styles={{
+                            wrapper: {
+                                backgroundColor: undefined,
+                            }
                         }}
                     />
                     <div className="editor-panel  editor-panel--right">

@@ -16,7 +16,7 @@ const HomeMapW = () => {
             <AppLoader isLoading={!isLoaded} />
             {configuration && (
                 <HomeMap
-                    imageSrc={configuration.mapSrc}
+                    plan={configuration.plan}
                     elements={configuration.elements}
                     data={data}
                     onElementClick={handleElementClick}

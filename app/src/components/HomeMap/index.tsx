@@ -1,8 +1,9 @@
-import React, {FC, useMemo, useRef} from 'react';
+import React, {CSSProperties, FC, useMemo, useRef} from 'react';
 import cx from 'classnames';
 
 import {Element as MapElement} from '../../services/mapService/model/Element';
 import {Element as ConfigurationElement} from '../../services/configurationService/model/Element';
+import {Plan} from '../../services/configurationService/model/Plan';
 
 import {useResize} from './hooks/useResize';
 import ElementGroup from './components/ElementGroup';
@@ -11,7 +12,7 @@ import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 
 export type Props = {
-    imageSrc: string;
+    plan: Plan;
     elements: Record<string, ConfigurationElement>;
     editElementId?: string;
     isEditorMode?: boolean;
@@ -30,11 +31,14 @@ export type Props = {
     classes?: {
         wrapper?: string,
         layout?: string,
+    },
+    styles?: {
+        wrapper: CSSProperties
     }
 }
 
 const HomeMap: FC<Props> = ({
-    imageSrc,
+    plan,
     elements,
     data,
     allowScale,
@@ -44,20 +48,20 @@ const HomeMap: FC<Props> = ({
     allowZoom,
     allowDrag,
     editElementId,
+    isEditorMode,
     onElementClick,
     onElementDrag,
     onBulbsLinePointDrag,
     onShadowPointDrag,
     onShadowMaskPointDrag,
     classes,
+    styles,
 }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLImageElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
     const [scale, rotateDegree, translate] = useResize(
         wrapperRef,
-        imageRef,
         layoutRef,
         {
             allowScale,
@@ -66,6 +70,8 @@ const HomeMap: FC<Props> = ({
             allowInitialRotate,
             allowZoom,
             allowDrag,
+            naturalWidth: plan.width,
+            naturalHeight: plan.height,
         });
 
     const handleElementClick = (id: string) => {
@@ -115,10 +121,6 @@ const HomeMap: FC<Props> = ({
         onShadowMaskPointDrag(id, index, x, y);
     }
 
-    const imageStyle = {
-        transform: `scale(${scale}) rotate(${rotateDegree}deg) translate(${translate[0]}px, ${translate[1]}px)`,
-    };
-
     const sortedElements = useMemo(() => {
         const elementsEntries = Object.entries(elements)
     
@@ -132,17 +134,27 @@ const HomeMap: FC<Props> = ({
         return elementsEntries;
     }, [elements, editElementId]);
 
-    const wrapperStyle = cx('map-wrapper', classes?.wrapper);
+    const wrapperStyle = {
+        backgroundColor: plan.background.color,
+        ...styles?.wrapper,
+    }
 
-    const layoutStyle = cx({
+    const layoutStyle = {
+        backgroundColor: plan.background.color,
+        transform: `scale(${scale}) rotate(${rotateDegree}deg) translate(${translate[0]}px, ${translate[1]}px)`,
+    }
+
+    const wrapperClassName = cx('map-wrapper', classes?.wrapper);
+
+    const layoutClassName = cx({
         'map-layout--transitional': !allowDrag && !allowZoom,
     }, classes?.layout);
 
     return (
         <TransformContextProvider value={{scale, rotateDegree}}>
-            <div className={wrapperStyle} ref={wrapperRef}>
-                <div className={layoutStyle} ref={layoutRef} style={imageStyle}>
-                    <img className="map-layout__image" src={imageSrc} ref={imageRef}></img>
+            <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
+                <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
+                    <img className="map-layout__image" src={plan.background.src}></img>
                     <svg className="map-layout__svg" ref={svgRef}>
                         {
                             sortedElements.map(([id, element]) => (

@@ -1,8 +1,7 @@
-import {RefObject, useState, useLayoutEffect, MouseEvent as ReactMouseEvent} from 'react';
+import {RefObject, useState, useLayoutEffect, MouseEvent as ReactMouseEvent, useCallback} from 'react';
 import {useDrag} from './useDrage';
 import { MouseButton } from '../../../common/types';
 
-const LOAD_EVENT = 'load';
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
 const MAX_SCALE = 4;
@@ -10,7 +9,6 @@ const SCALE_FACTOR = 0.1;
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
-    imageRef: RefObject<HTMLImageElement>,
     layoutRef: RefObject<HTMLDivElement>,
     configuration?: {
         allowScale?: boolean,
@@ -20,6 +18,8 @@ export const useResize = (
         allowZoom?: boolean;
         allowMove?: boolean;
         allowDrag?: boolean;
+        naturalWidth: number;
+        naturalHeight: number;
     }
 ) => {
     const [scale, setScale] = useState(1.0);
@@ -46,15 +46,22 @@ export const useResize = (
         allowInitialRotate = true,
         allowZoom = false,
         allowDrag = false,
+        naturalWidth = 1,
+        naturalHeight = 1,
     } = configuration || {};
 
-    const handleResize = (allowScale: boolean, allowRotate: boolean, wrapper: HTMLElement, image: HTMLImageElement) => {   
+    const handleResize = useCallback((allowScale: boolean, allowRotate: boolean, wrapper: HTMLElement) => {   
         const rotateDegree = allowRotate && wrapper.offsetHeight > wrapper.offsetWidth ? 90 : 0;
         const scale = Math.min(
-            wrapper.offsetWidth / (rotateDegree === 0 ? image.naturalWidth : image.naturalHeight),
-            wrapper.offsetHeight / (rotateDegree === 0 ? image.naturalHeight : image.naturalWidth),
+            wrapper.offsetWidth / (rotateDegree === 0 ? naturalWidth : naturalHeight),
+            wrapper.offsetHeight / (rotateDegree === 0 ? naturalHeight : naturalWidth),
         );
-
+        console.log('HELLO', {
+            offsetWidth: wrapper.offsetWidth,
+            offsetHeight: wrapper.offsetHeight,
+            naturalWidth,
+            naturalHeight
+        })
         if (allowRotate) {
             setRotateDegree(rotateDegree);
         };
@@ -63,44 +70,38 @@ export const useResize = (
             setScale(scale);
             !allowZoom && setMinScale(scale);
         }
-    }
+    }, [allowZoom, naturalHeight, naturalWidth])
 
     // Scale'n'Rotate initial
     useLayoutEffect(() => {
         const hookDisabled = !allowInitialScale && !allowInitialRotate;
         const wrapper = wrapperRef.current;
-        const image = imageRef.current;
 
-        if (hookDisabled || !wrapper || !image) {
+        if (hookDisabled || !wrapper) {
             return;
         }
 
-        const onResize = () => handleResize(allowInitialScale, allowInitialRotate, wrapper, image);
-        image?.addEventListener(LOAD_EVENT, onResize);
+        handleResize(allowInitialScale, allowInitialRotate, wrapper);
 
-        return () => {
-            image?.removeEventListener(LOAD_EVENT, onResize);
-        }
-    }, [allowInitialScale, allowInitialRotate, imageRef, wrapperRef]);
+    }, [allowInitialScale, allowInitialRotate, wrapperRef, handleResize]);
 
     // Scale'n'Rotate observer
     useLayoutEffect(() => {
         const hookDisabled = !allowScale && !allowRotate;
         const wrapper = wrapperRef.current;
-        const image = imageRef.current;
 
-        if (hookDisabled || !wrapper || !image) {
+        if (hookDisabled || !wrapper) {
             return;
         }
 
-        const onResize = () => handleResize(allowScale, allowRotate, wrapper, image);
+        const onResize = () => handleResize(allowScale, allowRotate, wrapper);
         const resizeObserver = new ResizeObserver(onResize);
         resizeObserver.observe(wrapper);
 
         return () => {
             resizeObserver.unobserve(wrapper)
         }
-    }, [allowScale, allowRotate, imageRef, wrapperRef]);
+    }, [allowScale, allowRotate, wrapperRef, handleResize]);
 
     // Zoom
     useLayoutEffect(() => {
@@ -137,7 +138,7 @@ export const useResize = (
         return () => {
             wrapper.removeEventListener('mousedown', handleDrag);
         }
-    }, [layoutRef, scale])
+    }, [allowDrag, layoutRef, scale])
 
     return [scale, rotateDegree, translate] as const;
 }
