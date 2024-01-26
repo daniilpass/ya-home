@@ -24,7 +24,7 @@ export const useResize = (
 ) => {
     const [scale, setScale] = useState(1.0);
     const [minScale, setMinScale] = useState(MIN_SCALE);
-    const [rotateDegree, setRotateDegree] = useState(0);
+    const [rotate, setRotate] = useState(0);
     const [translate, setTranslate] = useState<[number, number]>([0, 0]);
 
     const onDrag = (pageX: number, pageY: number, _scale: number) => {
@@ -51,19 +51,13 @@ export const useResize = (
     } = configuration || {};
 
     const handleResize = useCallback((allowScale: boolean, allowRotate: boolean, wrapper: HTMLElement) => {   
-        const rotateDegree = allowRotate && wrapper.offsetHeight > wrapper.offsetWidth ? 90 : 0;
+        const rotate = allowRotate && wrapper.offsetHeight > wrapper.offsetWidth ? 90 : 0;
         const scale = Math.min(
-            wrapper.offsetWidth / (rotateDegree === 0 ? naturalWidth : naturalHeight),
-            wrapper.offsetHeight / (rotateDegree === 0 ? naturalHeight : naturalWidth),
+            wrapper.offsetWidth / (rotate === 0 ? naturalWidth : naturalHeight),
+            wrapper.offsetHeight / (rotate === 0 ? naturalHeight : naturalWidth),
         );
-        console.log('HELLO', {
-            offsetWidth: wrapper.offsetWidth,
-            offsetHeight: wrapper.offsetHeight,
-            naturalWidth,
-            naturalHeight
-        })
         if (allowRotate) {
-            setRotateDegree(rotateDegree);
+            setRotate(rotate);
         };
 
         if (allowScale) {
@@ -140,5 +134,5 @@ export const useResize = (
         }
     }, [allowDrag, layoutRef, scale])
 
-    return [scale, rotateDegree, translate] as const;
+    return [scale, rotate, translate] as const;
 }

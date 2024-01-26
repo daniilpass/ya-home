@@ -1,4 +1,4 @@
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
-import HomeMap from '../../components/HomeMap';
+import HomeMap, { MapTransform } from '../../components/HomeMap';
 import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
 import {Element, ElementCollection} from '../../services/configurationService/model/Element';
@@ -22,8 +22,10 @@ const HomeEditor = () => {
     const [allDevices, setAllDevices] = useState<HomeDeviceCollection>({});
     const [mapDevices, setMapDevices] = useState<ElementCollection>({});
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
+    const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
     const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
+    const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
 
     useEffect(() => {
         ApiClient
@@ -51,6 +53,24 @@ const HomeEditor = () => {
             Math.min(maxX, Math.max(0, x)),
             Math.min(maxY, Math.max(0, y)),
         ];
+    }
+
+    /**
+     * Map handlers
+     */
+    const handleTransform = useCallback(
+        ({scale, bounds}: MapTransform) => setMapTransform({scale, bounds}),
+        [setMapTransform],
+    );
+
+    const toMapRelativePosition = (x: number, y: number): Point => {
+        if (!mapTransform) {
+            return [x, y];
+        }
+        return [
+            (x - mapTransform.bounds.left) / mapTransform.scale,
+            (y - mapTransform.bounds.top) / mapTransform.scale,
+        ]
     }
 
     /**
@@ -87,15 +107,14 @@ const HomeEditor = () => {
         setSelectedMapDeviceId(undefined);
     }
 
-    const handleElementAdd = (id: string) => {
+    const handleElementAdd = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
         setAddDeviceModalOpened(false);
         if (id === selectedMapDevice) {
-            console.log('HELLO LOG')
             return;
         }
         const newDevice: Element = {
             ...devicesNotOnMap[id],
-            position: [50, 50],
+            position: toMapRelativePosition(e.clientX, e.clientY),
         };
 
         const updatedMapDevices = {
@@ -105,6 +124,12 @@ const HomeEditor = () => {
 
         setMapDevices(updatedMapDevices);
         setSelectedMapDeviceId(id);
+        setSelectedMapDeviceDrag(true);
+    }
+
+    const handleElementSelect = (id: string) => {
+        setSelectedMapDeviceId(id);
+        setSelectedMapDeviceDrag(false);
     }
 
     /**
@@ -360,7 +385,7 @@ const HomeEditor = () => {
                                         <ListItemButton
                                             key={key}
                                             selected={key === selectedMapDeviceId}
-                                            onClick={() => setSelectedMapDeviceId(key)}
+                                            onClick={() => handleElementSelect(key)}
                                             
                                         >
                                             <ListItemText primary={mapDevices[key].name} />
@@ -392,7 +417,7 @@ const HomeEditor = () => {
                                         Object.keys(devicesNotOnMap).map(key => (
                                             <ListItemButton
                                                 key={key}
-                                                onClick={() => handleElementAdd(key)}
+                                                onClick={(e) => handleElementAdd(key, e)}
                                             >
                                                 <ListItemText primary={devicesNotOnMap[key].name} />
                                             </ListItemButton>
@@ -411,11 +436,13 @@ const HomeEditor = () => {
                         allowRotate={false}
                         allowInitialRotate={false}
                         editElementId={selectedMapDeviceId}
+                        editElementDrag={selectedMapDeviceDrag}
                         isEditorMode={true}
                         onElementDrag={handleElementDrag}
                         onBulbsLinePointDrag={handleBulbsLinePointDrag}
                         onShadowPointDrag={handleShadowPointDrag}
                         onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                        onTansform={handleTransform}
                         classes={{
                             wrapper: 'editor_map-wrapper',
                             layout: 'editor_map-layout',

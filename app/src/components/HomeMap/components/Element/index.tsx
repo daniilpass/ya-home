@@ -1,7 +1,7 @@
-import {FC, useMemo} from 'react';
+import {FC, useEffect, useMemo, useRef} from 'react';
 import cx from 'classnames'
 
-import { Point } from '../../../../common/types';
+import { MouseButton, Point } from '../../../../common/types';
 import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
@@ -28,8 +28,21 @@ const createSvgFromString = (svgString: string) => {
 }
 
 const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClick, onDrag}) => {
-    const {rotateDegree} = useTransformContext();
+    const {rotate, editElementDrag} = useTransformContext();
     const onDragStart = useDrag(onDrag);
+    const moveRef = useRef<SVGGElement>(null);
+
+    useEffect(() => {
+        if (moveRef?.current && isEditMode && editElementDrag) {
+            const bounds = (moveRef.current as Element).getBoundingClientRect();
+            onDragStart({
+                button: MouseButton.LEFT,
+                currentTarget: moveRef.current,
+                clientX: bounds.left + bounds.width / 2,
+                clientY: bounds.top + bounds.height / 2,
+            });
+        }
+    }, [moveRef, isEditMode, editElementDrag]);
 
     const svgIcon = useMemo(() => {
         return icon && createSvgFromString(icon);
@@ -44,7 +57,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
     });
 
     const elementStyle = {
-        transform: `rotate(${-rotateDegree}deg)`,
+        transform: `rotate(${-rotate}deg)`,
         transformOrigin: `${position[0]}px ${position[1]}px`,
     };
 
@@ -77,6 +90,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
                     x={position[0]}
                     y={position[1]}
                     onMouseDown={onDragStart}
+                    ref={moveRef}
                 />
             )}
         </g>

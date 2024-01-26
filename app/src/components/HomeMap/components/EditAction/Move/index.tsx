@@ -1,4 +1,4 @@
-import {FC, MouseEventHandler} from 'react';
+import {FC, MouseEventHandler, forwardRef} from 'react';
 import { EDIT_ACTION_SIZE } from '../../../constants';
 import colors from '../../../../../common/styles/colors.module.scss';
 
@@ -10,14 +10,10 @@ type Props = {
     onMouseDown?: MouseEventHandler<Element>,
 }
 
-const EditActionMove: FC<Props> = ({
-    x,
-    y,
-    onMouseDown,
-}) => {
+const EditActionMove = forwardRef<SVGGElement, Props>(({ x, y, onMouseDown }, ref) => {
     const strokeColor = colors.primaryDark;
     return (
-        <g className='edit-action__move' onMouseDown={onMouseDown}>
+        <g className='edit-action__move' onMouseDown={onMouseDown} ref={ref}>
             <svg
                 width={EDIT_ACTION_SIZE}
                 height={EDIT_ACTION_SIZE}
@@ -41,6 +37,6 @@ const EditActionMove: FC<Props> = ({
             </svg>
         </g>
     )
-}
+});
 
 export default EditActionMove;

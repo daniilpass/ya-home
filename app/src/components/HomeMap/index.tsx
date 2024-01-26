@@ -1,4 +1,4 @@
-import React, {CSSProperties, FC, useMemo, useRef} from 'react';
+import {CSSProperties, FC, useEffect, useMemo, useRef} from 'react';
 import cx from 'classnames';
 
 import {Element as MapElement} from '../../services/mapService/model/Element';
@@ -11,10 +11,18 @@ import ElementGroup from './components/ElementGroup';
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 
+export type MapTransform = {
+    scale: number;
+    rotate: number;
+    translate: [number, number];
+    bounds: DOMRect;
+}
+
 export type Props = {
     plan: Plan;
     elements: Record<string, ConfigurationElement>;
     editElementId?: string;
+    editElementDrag?: boolean;
     isEditorMode?: boolean;
     data?: Record<string, MapElement>;
     allowScale?: boolean;
@@ -28,6 +36,7 @@ export type Props = {
     onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
+    onTansform?: (transfrom: MapTransform) => void;
     classes?: {
         wrapper?: string,
         layout?: string,
@@ -48,19 +57,21 @@ const HomeMap: FC<Props> = ({
     allowZoom,
     allowDrag,
     editElementId,
+    editElementDrag = false,
     isEditorMode,
     onElementClick,
     onElementDrag,
     onBulbsLinePointDrag,
     onShadowPointDrag,
     onShadowMaskPointDrag,
+    onTansform,
     classes,
     styles,
 }) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
-    const [scale, rotateDegree, translate] = useResize(
+    const [scale, rotate, translate] = useResize(
         wrapperRef,
         layoutRef,
         {
@@ -77,6 +88,13 @@ const HomeMap: FC<Props> = ({
     const handleElementClick = (id: string) => {
         onElementClick && onElementClick(id);
     }
+
+    useEffect(() => {
+        if (!svgRef.current || !onTansform) {
+            return;
+        }
+        onTansform({scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect()})
+    }, [scale, rotate, translate, svgRef, onTansform]);
 
     const toRelativePosition = (pageX: number, pageY: number) => {
         if (!svgRef.current) {
@@ -141,7 +159,7 @@ const HomeMap: FC<Props> = ({
 
     const layoutStyle: CSSProperties = {
         backgroundColor: plan.background.color,
-        transform: `scale(${scale}) rotate(${rotateDegree}deg) translate(${translate[0]}px, ${translate[1]}px)`,
+        transform: `scale(${scale}) rotate(${rotate}deg) translate(${translate[0]}px, ${translate[1]}px)`,
         width: plan.width,
         height: plan.height,
         flexShrink: 0,
@@ -154,7 +172,7 @@ const HomeMap: FC<Props> = ({
     }, classes?.layout);
 
     return (
-        <TransformContextProvider value={{scale, rotateDegree}}>
+        <TransformContextProvider value={{scale, rotate, editElementDrag}}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
                     <img className="map-layout__image" src={plan.background.src}></img>
