@@ -1,7 +1,7 @@
 import {FC, useMemo} from 'react';
 import cx from 'classnames'
 
-import {Position} from '../../../../services/configurationService/model/Position';
+import { Point } from '../../../../common/types';
 import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
@@ -12,7 +12,7 @@ import {EditActionMove} from '../EditAction';
 import './styles.css';
 
 type Props = {
-    position: Position;
+    position: Point;
     icon?: string;
     state?: string;
     substate?: string;
@@ -45,7 +45,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
 
     const elementStyle = {
         transform: `rotate(${-rotateDegree}deg)`,
-        transformOrigin: `${position.x}px ${position.y}px`,
+        transformOrigin: `${position[0]}px ${position[1]}px`,
     };
 
     return (
@@ -56,15 +56,15 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
         >
             <circle
                 className='element-shape'
-                cx={position.x}
-                cy={position.y}
+                cx={position[0]}
+                cy={position[1]}
                 r={ELEMENT_RADIUS}
             />
             {svgIcon && (
                 <svg
                     className='element-icon'
-                    x={position.x - ELEMENT_RADIUS / 2}
-                    y={position.y - ELEMENT_RADIUS / 2}
+                    x={position[0] - ELEMENT_RADIUS / 2}
+                    y={position[1] - ELEMENT_RADIUS / 2}
                     width={ELEMENT_RADIUS} 
                     height={ELEMENT_RADIUS}
                     viewBox={svgIcon.getAttribute("viewBox") || undefined}
@@ -74,8 +74,8 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
             )} 
             {isEditMode && (
                 <EditActionMove
-                    x={position.x}
-                    y={position.y}
+                    x={position[0]}
+                    y={position[1]}
                     onMouseDown={onDragStart}
                 />
             )}

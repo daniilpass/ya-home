@@ -43,6 +43,16 @@ const HomeEditor = () => {
         );
     }, [allDevices, mapDevices]);
 
+    const limitPosition = ([x, y]: Point): Point => {
+        const maxX = configuration?.plan.width || Number.POSITIVE_INFINITY;
+        const maxY = configuration?.plan.height || Number.POSITIVE_INFINITY;
+
+        return [
+            Math.min(maxX, Math.max(0, x)),
+            Math.min(maxY, Math.max(0, y)),
+        ];
+    }
+
     /**
      * Element hanlders
      */
@@ -54,17 +64,14 @@ const HomeEditor = () => {
         }
 
         const [magnetX, magnetY] = isMagnetic
-            ? getMagnetPoints([x, y], [tmpDevice.position.x, tmpDevice.position.y], tmpDevice)
+            ? getMagnetPoints([x, y], [tmpDevice.position[0], tmpDevice.position[1]], tmpDevice)
             : [0, 0];
     
         setMapDevices({
             ...mapDevices,
             [id]: {
                 ...tmpDevice,
-                position: {
-                    x: magnetX || x, 
-                    y: magnetY || y,
-                }
+                position: limitPosition([magnetX || x, magnetY || y]),
             }
         })
     }
@@ -88,7 +95,7 @@ const HomeEditor = () => {
         }
         const newDevice: Element = {
             ...devicesNotOnMap[id],
-            position: {x: 50, y: 50},
+            position: [50, 50],
         };
 
         const updatedMapDevices = {
@@ -117,7 +124,7 @@ const HomeEditor = () => {
         }
 
         const updatedDeviceAreaBulbsLinePoints = [...tmpDevice.area.bulbsLinePoints];
-        updatedDeviceAreaBulbsLinePoints[index] = [magnetX || x, magnetY || y];
+        updatedDeviceAreaBulbsLinePoints[index] = limitPosition([magnetX || x, magnetY || y]);
 
         
         setMapDevices({
@@ -194,7 +201,7 @@ const HomeEditor = () => {
         }
 
         const updatedDeviceAreaShadowPoints = [...tmpDevice.area.shadowPoints];
-        updatedDeviceAreaShadowPoints[index] = [magnetX || x, magnetY || y];
+        updatedDeviceAreaShadowPoints[index] = limitPosition([magnetX || x, magnetY || y]);
 
         
         setMapDevices({
@@ -272,7 +279,7 @@ const HomeEditor = () => {
         }
 
         const updatedDeviceAreaShadowMaskPoints = [...tmpDevice.area.shadowMaskPoints];
-        updatedDeviceAreaShadowMaskPoints[index] = [magnetX || x, magnetY || y];
+        updatedDeviceAreaShadowMaskPoints[index] = limitPosition([magnetX || x, magnetY || y]);
 
         
         setMapDevices({
@@ -438,7 +445,7 @@ const HomeEditor = () => {
 
                                 <Box sx={{p: 2}}>
                                     <PointInput
-                                        value={[selectedMapDevice.position.x, selectedMapDevice.position.y]}
+                                        value={selectedMapDevice.position}
                                         onChange={(value) => handleElementPositionChange(selectedMapDevice.id, ...value)}
                                     />
                                 </Box>

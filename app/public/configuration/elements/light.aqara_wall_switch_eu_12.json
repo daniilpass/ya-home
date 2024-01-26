@@ -4,10 +4,7 @@
     "entity": "light",
     "type": "state-icon",
     "iconSrc": "media/icons/lightbulb.svg",
-    "position": {
-        "x": 570,
-        "y": 775
-    },
+    "position": [570, 775],
     "area": {
         "bulbsLinePoints": [
             [570, 775],

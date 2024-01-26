@@ -55,5 +55,5 @@ export const getMagnetPoints = (
     device.area?.shadowPoints || [],
     device.area?.shadowMaskPoints || [],
     device.area?.bulbsLinePoints || [],
-    [[device.position.x, device.position.y]]
+    [device.position]
 );

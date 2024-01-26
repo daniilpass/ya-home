@@ -4,9 +4,6 @@
     "entity": "light",
     "type": "state-icon",
     "iconSrc": "media/icons/lightbulb.svg",
-    "position": {
-        "x": 360,
-        "y": 664
-    },
+    "position": [360, 664],
     "condition": {}
 }

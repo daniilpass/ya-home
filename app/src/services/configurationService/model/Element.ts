@@ -1,13 +1,13 @@
-import {Device} from '../../../api/model/Device';
-import {Area} from './Area';
-import {Position} from './Position';
+import { Device } from '../../../api/model/Device';
+import { Point } from '../../../common/types';
+import { Area } from './Area';
 
 export type Element = 
     & Pick<Device, 'id' | 'name' | 'type'>
     & {
         iconSrc?: string;
         icon?: string;
-        position: Position;
+        position: Point;
         area?: Area;
     };
 

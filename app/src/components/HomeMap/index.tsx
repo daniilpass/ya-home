@@ -134,14 +134,17 @@ const HomeMap: FC<Props> = ({
         return elementsEntries;
     }, [elements, editElementId]);
 
-    const wrapperStyle = {
+    const wrapperStyle: CSSProperties = {
         backgroundColor: plan.background.color,
         ...styles?.wrapper,
     }
 
-    const layoutStyle = {
+    const layoutStyle: CSSProperties = {
         backgroundColor: plan.background.color,
         transform: `scale(${scale}) rotate(${rotateDegree}deg) translate(${translate[0]}px, ${translate[1]}px)`,
+        width: plan.width,
+        height: plan.height,
+        flexShrink: 0,
     }
 
     const wrapperClassName = cx('map-wrapper', classes?.wrapper);
