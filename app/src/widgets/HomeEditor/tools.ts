@@ -57,3 +57,15 @@ export const getMagnetPoints = (
     device.area?.bulbsLinePoints || [],
     [device.position]
 );
+
+export const getNormilizedDirection = (p1: Point, p2: Point): Point => {
+    const vector = [p1[0] - p2[0], p1[1] - p2[1]];
+    const magnitude = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
+    return [vector[0] / magnitude, vector[1] / magnitude];
+
+}
+
+export const getNextPoint = (p1: Point, p2: Point, step: number): Point => {
+    const normDirection = getNormilizedDirection(p1, p2);
+    return [p1[0] + normDirection[0] * step, p1[1] + normDirection[1] * step];
+}

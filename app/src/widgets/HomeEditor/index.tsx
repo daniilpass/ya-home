@@ -13,8 +13,9 @@ import {Element, ElementCollection} from '../../services/configurationService/mo
 import { Point } from '../../common/types';
 import PointInput from '../../common/components/PointInput';
 import PointsList from '../../common/components/PointsList';
+import { ELEMENT_RADIUS } from '../../components/HomeMap/constants';
 
-import {getMagnetPoints} from './tools';
+import {getMagnetPoints, getNextPoint} from './tools';
 import './style.css';
 
 const HomeEditor = () => {
@@ -189,13 +190,37 @@ const HomeEditor = () => {
         })
     }
 
-    const handleBulbsLinePointAdd = (id: string, value: Point) => {
+    const handleBulbsLinePointAdd = (id: string) => {
         const tmpDevice = mapDevices[id];
         if (!tmpDevice) {
             return;
         }
 
-        const updatedDeviceAreaBulbsLinePoints = [...(tmpDevice.area?.bulbsLinePoints || []), value]
+        const bulbsPoints = tmpDevice.area?.bulbsLinePoints || [];
+        const devicePosition = tmpDevice.position;
+        const padding = ELEMENT_RADIUS * 3;
+        let newPoints: Point[] = [];
+
+        if (bulbsPoints.length === 0 ) {
+            // No exising points - add two points from sides of device
+            const leftPoint = limitPosition([devicePosition[0] - padding, devicePosition[1]]);
+            newPoints.push(leftPoint);
+    
+            const rightPoint = limitPosition([devicePosition[0] + padding, devicePosition[1]]);
+            newPoints.push(rightPoint);
+        } else if (bulbsPoints.length === 1) {
+            // One exising point - add point in direction specified by last point and device
+            const newPoint = limitPosition(getNextPoint(devicePosition, bulbsPoints[0], padding));
+            newPoints.push(newPoint);
+        } else {
+            // More than one exising point - add point in direction specified by last points
+            const newPoint = limitPosition(
+                getNextPoint(bulbsPoints[bulbsPoints.length - 1], bulbsPoints[bulbsPoints.length - 2], padding)
+            );
+            newPoints.push(newPoint);
+        }
+
+        const updatedDeviceAreaBulbsLinePoints = [...bulbsPoints, ...newPoints]
 
         setMapDevices({
             ...mapDevices,
@@ -483,7 +508,7 @@ const HomeEditor = () => {
                                     <PointsList
                                         value={selectedMapDevice.area?.bulbsLinePoints || []}
                                         onChange={(index, value) => handleBulbsLinePointChange(selectedMapDevice.id, index, ...value)}
-                                        onAdd={(value) => handleBulbsLinePointAdd(selectedMapDevice.id, value)}
+                                        onAdd={(value) => handleBulbsLinePointAdd(selectedMapDevice.id)}
                                         onDelete={(index) => handleBulbsLinePointDelete(selectedMapDevice.id, index)}
                                     />
                                 </Box>
