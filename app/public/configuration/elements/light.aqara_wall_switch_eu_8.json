@@ -3,7 +3,7 @@
     "id": "6ac9a76b-fce3-40d0-9be1-80c9cad59007",
     "entity": "light",
     "type": "state-icon",
-    "iconSrc": "media/icons/lightbulb.svg",
+    "icon": "bulb",
     "position": [1505, 440],
     "area": {
         "shadowPoints": [

@@ -117,6 +117,7 @@ const HomeEditor = () => {
         }
         const newDevice: Element = {
             ...devicesNotOnMap[id],
+            icon: 'bulb',
             position: toMapRelativePosition(e.clientX, e.clientY),
         };
 

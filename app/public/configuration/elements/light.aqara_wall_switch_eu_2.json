@@ -3,7 +3,7 @@
     "name": "Выключатель левый трэк",
     "type": "state-icon",
     "entity": "light",
-    "iconSrc": "media/icons/lightbulb.svg",
+    "icon": "bulb",
     "position": [1180, 530],
     "area": {
         "bulbsLinePoints": [

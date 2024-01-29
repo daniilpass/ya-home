@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useRef} from 'react';
+import {FC, useEffect, useRef} from 'react';
 import cx from 'classnames'
 
 import { MouseButton, Point } from '../../../../common/types';
@@ -8,23 +8,18 @@ import {useTransformContext} from '../../providers/TransformContextProvider';
 import {useDrag} from '../../hooks/useDrage';
 import {ELEMENT_RADIUS} from '../../constants';
 import {EditActionMove} from '../EditAction';
+import { DeviceIcon, DeviceIconName } from '../../../DeviceIcon';
 
 import './styles.css';
 
 type Props = {
     position: Point;
-    icon?: string;
+    icon?: DeviceIconName;
     state?: string;
     substate?: string;
     isEditMode?: boolean;
     onClick?: () => void;
     onDrag?: (pageX: number, pageY: number) => void;
-}
-
-const createSvgFromString = (svgString: string) => {
-    const div = document.createElement('div');
-    div.innerHTML = svgString.trim();
-    return div.children[0];
 }
 
 const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClick, onDrag}) => {
@@ -43,10 +38,6 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
             });
         }
     }, [moveRef, isEditMode, editElementDrag]);
-
-    const svgIcon = useMemo(() => {
-        return icon && createSvgFromString(icon);
-    }, [icon]);
 
     const elementClassName = cx('element', {
         'element--on': state === State.On,
@@ -73,16 +64,15 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
                 cy={position[1]}
                 r={ELEMENT_RADIUS}
             />
-            {svgIcon && (
+            {icon && (
                 <svg
                     className='element-icon'
                     x={position[0] - ELEMENT_RADIUS / 2}
                     y={position[1] - ELEMENT_RADIUS / 2}
                     width={ELEMENT_RADIUS} 
                     height={ELEMENT_RADIUS}
-                    viewBox={svgIcon.getAttribute("viewBox") || undefined}
-                    dangerouslySetInnerHTML={{__html: svgIcon.innerHTML}}
                 >
+                    <DeviceIcon name={icon} />
                 </svg>
             )} 
             {isEditMode && (
