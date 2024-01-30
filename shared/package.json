@@ -1,4 +1,10 @@
 {
   "name": "@homemap/shared",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "type": "module",
+  "main": "build/index.js",
+  "files": ["build"],
+  "scripts": {
+    "build": "npx tsc"
+  }
 }

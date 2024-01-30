@@ -6,9 +6,11 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node build/index.js",
-    "watch": "nodemon"
+    "watch": "SET NODE_ENV=development && nodemon"
   },
   "dependencies": {
+    "@homemap/shared": "^1.0.0",
+    "axios": "^1.6.7",
     "dotenv": "^16.4.1",
     "express": "^4.18.2"
   },
