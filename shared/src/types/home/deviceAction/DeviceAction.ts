@@ -1,4 +1,4 @@
-import { DeviceState } from './index.js';
+import { DeviceState } from '../deviceStates/index.js';
 
 export type DeviceAction = {
     id: string;

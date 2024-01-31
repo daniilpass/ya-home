@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 import { YAPI_AUTH_TOKEN, YAPI_BASE_URL } from '../constants.js';
-import { YaUserInfo } from './model/YaUserInfo.js';
-import { YaDevicesActionsRequest } from './model/YaDevicesActionsRequest.js';
+import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse.js';
+import { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest.js';
+import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse.js';
 
 const client = axios.create({
     baseURL: YAPI_BASE_URL,
@@ -13,12 +14,12 @@ const client = axios.create({
     }
 });
 
-const getUserInfo = () => {
-    return client.get<YaUserInfo>('/user/info').then(response => response.data);
+const getUserInfo = (): Promise<YaUserInfoResponse> => {
+    return client.get<YaUserInfoResponse>('/user/info').then(response => response.data);
 }
 
-const postDevicesActions = (data: YaDevicesActionsRequest) => {
-    return client.post('/devices/actions', data).then(response => response.data);
+const postDevicesActions = (data: YaDevicesActionsRequest): Promise<YaDevicesActionsResponse> => {
+    return client.post<YaDevicesActionsResponse>('/devices/actions', data).then(response => response.data);
 }
 
 export default {
