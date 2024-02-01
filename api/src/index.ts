@@ -1,2 +1,3 @@
-import './config.js';
-import './server.js';
+import { bootstrap } from './bootstrap/index.js';
+
+bootstrap();
