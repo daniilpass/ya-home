@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { YAPI_AUTH_TOKEN, YAPI_BASE_URL, YAPI_LOGIN_BASE_URL } from '../constants.js';
+import { YAPI_AUTH_TOKEN, YAPI_IOT_BASE_URL, YAPI_LOGIN_BASE_URL } from '../constants.js';
 import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse.js';
 import { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest.js';
 import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse.js';
 import { YaLoginInfo } from './model/YaLoginInfo.js';
 
 const iotClient = axios.create({
-    baseURL: YAPI_BASE_URL,
+    baseURL: YAPI_IOT_BASE_URL,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
