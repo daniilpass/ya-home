@@ -1,0 +1,1 @@
+export type { Entries, ValueOf } from './entries.js';

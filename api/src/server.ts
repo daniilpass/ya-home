@@ -1,6 +1,7 @@
 import express from "express";
 
 import { PORT } from './constants.js';
+import loginRouter from './routes/login.js';
 import devicesRouter from './routes/devices.js';
 import statsRouter from './routes/stats.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 
+app.use('/', loginRouter);
 app.use('/', devicesRouter);
 app.use('/', statsRouter);
 

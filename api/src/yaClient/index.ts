@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-import { YAPI_AUTH_TOKEN, YAPI_BASE_URL } from '../constants.js';
+import { YAPI_AUTH_TOKEN, YAPI_BASE_URL, YAPI_LOGIN_BASE_URL } from '../constants.js';
 import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse.js';
 import { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest.js';
 import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse.js';
+import { YaLoginInfo } from './model/YaLoginInfo.js';
 
-const client = axios.create({
+const iotClient = axios.create({
     baseURL: YAPI_BASE_URL,
     headers: {
         'Accept': 'application/json',
@@ -14,15 +15,29 @@ const client = axios.create({
     }
 });
 
+const loginClient = axios.create({
+    baseURL: YAPI_LOGIN_BASE_URL,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `OAuth ${YAPI_AUTH_TOKEN}`,
+    }
+});
+
+const getLoginInfo = (): Promise<YaLoginInfo> => {
+    return loginClient.get<YaLoginInfo>('/info').then(response => response.data);
+}
+
 const getUserInfo = (): Promise<YaUserInfoResponse> => {
-    return client.get<YaUserInfoResponse>('/user/info').then(response => response.data);
+    return iotClient.get<YaUserInfoResponse>('/user/info').then(response => response.data);
 }
 
 const postDevicesActions = (data: YaDevicesActionsRequest): Promise<YaDevicesActionsResponse> => {
-    return client.post<YaDevicesActionsResponse>('/devices/actions', data).then(response => response.data);
+    return iotClient.post<YaDevicesActionsResponse>('/devices/actions', data).then(response => response.data);
 }
 
 export default {
+    getLoginInfo,
     getUserInfo,
     postDevicesActions,
 }
