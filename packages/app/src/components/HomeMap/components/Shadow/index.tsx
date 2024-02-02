@@ -31,7 +31,7 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDr
     const onDragStart = useDrag(onDrag);
     const onMaskDragStart = useDrag(onMaskDrag);
 
-    if (state?.on === 'on') {
+    if (state?.on) {
         return null;
     }
 

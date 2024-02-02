@@ -1,5 +1,5 @@
 export type DeviceStateOnOf = {
-    on: 'on' | 'off';
+    on: boolean;
 }
 
 export type DeviceStateBrightness = {

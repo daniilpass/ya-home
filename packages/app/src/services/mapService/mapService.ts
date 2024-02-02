@@ -63,25 +63,25 @@ class MapService {
         }
 
         switch (element.state?.on) {
-            case 'on':
+            case true:
                 ApiClient.lightOff(deviceId).then(() => {
                     this.state.updateElement(deviceId, {
                         substate: Substate.Ready,
                     });
                 });
                 this.state.updateElement(deviceId, {
-                    state: { on: 'off' },
+                    state: { on: false },
                     substate: Substate.Pending,
                 });
                 break;
-            case 'off':
+            case false:
                 ApiClient.lightOn(deviceId).then(() => {
                     this.state.updateElement(deviceId, {
                         substate: Substate.Ready,
                     });
                 });
                 this.state.updateElement(deviceId, {
-                    state: { on: 'on' },
+                    state: { on: true },
                     substate: Substate.Pending,
                 });
                 break;

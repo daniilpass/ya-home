@@ -22,7 +22,7 @@ type Props = {
 const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}) => {
     const directions = pointsToPathDirections(points);
     const className = cx('element-bulbs-line', {
-        'element-bulbs-line--on': state?.on === 'on',
+        'element-bulbs-line--on': state?.on,
         'element-bulbs-line--lost': substate === Substate.Lost,
     });
 

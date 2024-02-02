@@ -40,16 +40,10 @@ const ping = () => {
 
 const lightToggle = (deviceId: string, value: boolean) => {
     return request(ENDPOINTS.action, {
-        devices: [{
-            id: deviceId,
-            actions: [{
-                type: "devices.capabilities.on_off",
-                state: {
-                    instance: "on",
-                    value
-                }
-            }]
-        }]
+        id: deviceId,
+        state: {
+            on: value,
+        },
     });
 }
 
