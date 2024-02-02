@@ -1,10 +1,9 @@
 import express from "express";
 
 import { PORT } from '../constants.js';
-import loginRouter from '../routes/login.js';
-import devicesRouter from '../routes/devices.js';
-import statsRouter from '../routes/stats.js';
+
 import { errorHandler } from '../middlewares/errorHandler.js';
+import { devicesRouter, loginRouter, planRouter, statsRouter } from '../routes/index.js';
 
 export const bootstrapServer = () => {
     console.log("[server] Configure express");
@@ -15,6 +14,7 @@ export const bootstrapServer = () => {
     
     app.use('/', loginRouter);
     app.use('/', devicesRouter);
+    app.use('/', planRouter);
     app.use('/', statsRouter);
     
     app.use(errorHandler);
