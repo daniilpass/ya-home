@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction} from "express";
-import { AppError } from '../errors/AppError.js';
-import { NotFoundError } from '../errors/NotFoundError.js';
+import { AppError } from '../errors/AppError';
+import { NotFoundError } from '../errors/NotFoundError';
 
 const getErrorStatusCode = (err: Error) => {
     switch ((err as Object).constructor) {

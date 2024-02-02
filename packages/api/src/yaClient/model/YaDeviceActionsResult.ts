@@ -1,4 +1,4 @@
-import { YaDeviceCapability } from './YaDeviceCapability.js';
+import { YaDeviceCapability } from './YaDeviceCapability';
 
 export type YaDeviceActionsResult = {
     id: string;

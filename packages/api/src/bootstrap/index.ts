@@ -1,6 +1,6 @@
-import './config.js';
-import { bootstrapDatabase } from './db.js';
-import { bootstrapServer } from './server.js';
+import './config';
+import { bootstrapDatabase } from './db';
+import { bootstrapServer } from './server';
 
 export const bootstrap = async () => {
     await bootstrapDatabase();

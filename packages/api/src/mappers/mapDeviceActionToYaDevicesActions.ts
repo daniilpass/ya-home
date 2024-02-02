@@ -1,6 +1,6 @@
-import { DeviceAction, DeviceState, Entries } from '@homemap/shared/index.js';
-import { YaDeviceActions } from '../yaClient/model/YaDeviceActions.js';
-import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability.js';
+import { DeviceAction, DeviceState, Entries } from '@homemap/shared';
+import { YaDeviceActions } from '../yaClient/model/YaDeviceActions';
+import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';
 
 export const mapDeviceActionToYaDevicesActions = (deviceAction: DeviceAction): YaDeviceActions => {
     const actions: YaDeviceCapability[] = [];

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getDevices, postDevicesActions } from '../controllers/devices.js';
+import { getDevices, postDevicesActions } from '../controllers/devices';
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { ping } from '../controllers/stats.js';
+import { ping } from '../controllers/stats';
 
 const router = express.Router();
 

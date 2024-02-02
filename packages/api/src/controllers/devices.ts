@@ -2,16 +2,16 @@ import { NextFunction, Request, Response } from 'express';
 
 import { Collection, Device, DeviceAction, DeviceActionResult } from '@homemap/shared';
 
-import yaclient from '../yaClient/index.js';
+import yaclient from '../yaClient';
 import {
     mapYaDeviceToDevice,
     mapDeviceActionToYaDevicesActions,
     mapYaDeviceActionsResultToDeviceActionsResult,
     mapToRecord,
-} from '../mappers/index.js';
-import { YaDevicesActionsRequest } from '../yaClient/model/requests/YaDevicesActionsRequest.js';
-import { YaUserInfoResponse } from '../yaClient/model/responses/YaUserInfoResponse.js';
-import { YaDevicesActionsResponse } from '../yaClient/model/responses/YaDevicesActionsResponse.js';
+} from '../mappers';
+import { YaDevicesActionsRequest } from '../yaClient/model/requests/YaDevicesActionsRequest';
+import { YaUserInfoResponse } from '../yaClient/model/responses/YaUserInfoResponse';
+import { YaDevicesActionsResponse } from '../yaClient/model/responses/YaDevicesActionsResponse';
 
 export const getDevices = async (req: Request, res: Response, next: NextFunction) => {
     try {

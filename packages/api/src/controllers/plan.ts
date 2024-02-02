@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { Plan } from '@homemap/shared/index.js';
+import { Plan } from '@homemap/shared';
 
-import yaclient from '../yaClient/index.js';
-import { PlanRepository } from '../dal/repositories/index.js';
-import { NotFoundError } from '../errors/index.js';
+import yaclient from '../yaClient';
+import { PlanRepository } from '../dal/repositories';
+import { NotFoundError } from '../errors';
 
 export const getUserPlan = async (req: Request, res: Response, next: NextFunction) => {
     try {

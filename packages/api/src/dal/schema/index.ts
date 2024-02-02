@@ -1,1 +1,1 @@
-export { planSchema } from './planSchema.js';
+export { planSchema } from './planSchema';

@@ -1,6 +1,6 @@
-import { Point } from '../../geom/index.js';
-import { Device } from '../devices/index.js';
-import { PlanDeviceArea } from './PlanDeviceArea.js';
+import { Point } from '../../geom';
+import { Device } from '../devices';
+import { PlanDeviceArea } from './PlanDeviceArea';
 
 export type PlanDevice = 
     & Pick<Device, 'id' | 'name' | 'type'>

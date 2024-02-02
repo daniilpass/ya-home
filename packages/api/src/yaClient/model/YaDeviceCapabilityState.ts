@@ -1,4 +1,4 @@
-import { YaDeviceCapabilityStateInstance } from './YaDeviceCapabilityStateInstance.js';
+import { YaDeviceCapabilityStateInstance } from './YaDeviceCapabilityStateInstance';
 
 type YaDeviceCapabilityStateActionResult = {
     status: 'DONE' | 'ERROR';

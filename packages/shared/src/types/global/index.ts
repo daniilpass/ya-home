@@ -1,2 +1,2 @@
-export type { Entries, ValueOf } from './entries.js';
-export type { Collection } from './Collection.js';
+export type { Entries, ValueOf } from './entries';
+export type { Collection } from './Collection';

@@ -1,1 +1,1 @@
-export type { LoginInfo } from './LoginInfo.js';
+export type { LoginInfo } from './LoginInfo';

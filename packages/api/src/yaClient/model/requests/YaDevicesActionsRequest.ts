@@ -1,4 +1,4 @@
-import { YaDeviceActions } from '../YaDeviceActions.js';
+import { YaDeviceActions } from '../YaDeviceActions';
 
 export type YaDevicesActionsRequest = {
     devices: YaDeviceActions[];

@@ -1,7 +1,7 @@
-import loginRouter from './login.js';
-import devicesRouter from './devices.js';
-import planRouter from './plan.js';
-import statsRouter from './stats.js';
+import loginRouter from './login';
+import devicesRouter from './devices';
+import planRouter from './plan';
+import statsRouter from './stats';
 
 export {
     loginRouter,

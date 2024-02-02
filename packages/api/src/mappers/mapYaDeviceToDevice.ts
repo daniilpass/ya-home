@@ -1,7 +1,7 @@
-import { Device, DeviceTypes } from '@homemap/shared/index.js';
+import { Device, DeviceTypes } from '@homemap/shared';
 
-import { YaDevice } from '../yaClient/model/YaDevice.js';
-import { mapYaCapabilitiesToState } from './mapYaCapabilitiesToState.js';
+import { YaDevice } from '../yaClient/model/YaDevice';
+import { mapYaCapabilitiesToState } from './mapYaCapabilitiesToState';
 
 export const mapYaDeviceToDevice = (yaDevice: YaDevice): Device => {
     const type = yaDevice.type.replace('devices.types.', '');

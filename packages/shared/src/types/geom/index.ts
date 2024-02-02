@@ -1,1 +1,1 @@
-export type { Point } from './Point.js';
+export type { Point } from './Point';

@@ -1,5 +1,5 @@
-import { YaDeviceCapability } from './YaDeviceCapability.js';
-import { YaDeviceType } from './YaDeviceType.js';
+import { YaDeviceCapability } from './YaDeviceCapability';
+import { YaDeviceType } from './YaDeviceType';
 
 export type YaDevice = {
     id: string;

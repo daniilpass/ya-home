@@ -1,5 +1,5 @@
-import { YaDeviceActionsResult } from '../YaDeviceActionsResult.js';
-import { YaBaseResponse } from './YaBaseReponse.js';
+import { YaDeviceActionsResult } from '../YaDeviceActionsResult';
+import { YaBaseResponse } from './YaBaseReponse';
 
 export type YaDevicesActionsResponse = YaBaseResponse & {
     devices: YaDeviceActionsResult[];

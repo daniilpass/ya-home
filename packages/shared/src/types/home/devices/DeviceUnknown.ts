@@ -1,5 +1,5 @@
-import { DeviceTypes } from '../deviceTypes/index.js';
-import { DeviceBase } from './DeviceBase.js';
+import { DeviceTypes } from '../deviceTypes';
+import { DeviceBase } from './DeviceBase';
 
 export type DeviceUnknown = DeviceBase & {
     type: typeof DeviceTypes.Unknown;

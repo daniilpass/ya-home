@@ -1,2 +1,2 @@
-export { AppError } from './AppError.js';
-export { NotFoundError } from './NotFoundError.js';
+export { AppError } from './AppError';
+export { NotFoundError } from './NotFoundError';

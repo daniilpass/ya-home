@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 
-import { Plan as HomePlan } from '@homemap/shared/index.js';
+import { Plan as HomePlan } from '@homemap/shared';
 
-import { Plan } from '../dal/model/index.js';
-import { planSchema } from '../dal/schema/index.js';
+import { Plan } from '../dal/model';
+import { planSchema } from '../dal/schema';
 import planJson from '../demo/plan.json' assert { type: "json" };
-import { DEMO_USER_ID } from '../demo/constants.js';
+import { DEMO_USER_ID } from '../demo/constants';
 
 const createDemoData = async () => {
     const [_, created] = await Plan.findOrCreate({

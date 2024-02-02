@@ -1,9 +1,9 @@
 import express from "express";
 
-import { PORT } from '../constants.js';
+import { PORT } from '../constants';
 
-import { errorHandler } from '../middlewares/errorHandler.js';
-import { devicesRouter, loginRouter, planRouter, statsRouter } from '../routes/index.js';
+import { errorHandler } from '../middlewares/errorHandler';
+import { devicesRouter, loginRouter, planRouter, statsRouter } from '../routes';
 
 export const bootstrapServer = () => {
     console.log("[server] Configure express");

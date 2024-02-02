@@ -1,6 +1,6 @@
-import { DeviceState } from '@homemap/shared/index.js';
+import { DeviceState } from '@homemap/shared';
 
-import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability.js';
+import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';
 
 export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): DeviceState => {
     let state: DeviceState = {}

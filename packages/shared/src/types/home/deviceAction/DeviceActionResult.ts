@@ -1,4 +1,4 @@
-import { DeviceState } from '../deviceStates/index.js';
+import { DeviceState } from '../deviceStates';
 
 type DeviceActionStatus = {
     [K in keyof DeviceState]: 'DONE' | 'ERROR';

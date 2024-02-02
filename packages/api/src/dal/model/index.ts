@@ -1,1 +1,1 @@
-export { Plan } from './Plan.js';
+export { Plan } from './Plan';

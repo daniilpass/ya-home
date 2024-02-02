@@ -1,6 +1,6 @@
-import { DeviceStateBrightness, DeviceStateOnOf } from '../deviceStates/index.js';
-import { DeviceTypes } from '../deviceTypes/index.js';
-import { DeviceBase } from './DeviceBase.js';
+import { DeviceStateBrightness, DeviceStateOnOf } from '../deviceStates';
+import { DeviceTypes } from '../deviceTypes';
+import { DeviceBase } from './DeviceBase';
 
 export type DeviceLight = DeviceBase & {
     type: typeof DeviceTypes.Light;

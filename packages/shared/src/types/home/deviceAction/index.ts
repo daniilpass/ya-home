@@ -1,2 +1,2 @@
-export type { DeviceAction } from './DeviceAction.js';
-export type { DeviceActionResult } from './DeviceActionResult.js';
+export type { DeviceAction } from './DeviceAction';
+export type { DeviceActionResult } from './DeviceActionResult';

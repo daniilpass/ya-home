@@ -1,6 +1,6 @@
-import { Collection } from '../../global/index.js';
-import { PlanBackground } from './PlanBackground.js';
-import { PlanDevice } from './PlanDevice.js';
+import { Collection } from '../../global';
+import { PlanBackground } from './PlanBackground';
+import { PlanDevice } from './PlanDevice';
 
 export type Plan = {
     width: number;

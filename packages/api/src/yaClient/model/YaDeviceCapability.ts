@@ -1,5 +1,5 @@
-import { YaDeviceCapabilityType } from './YaDeviceCapabilityType.js'
-import { YaDeviceCapabilityState } from './YaDeviceCapabilityState.js';
+import { YaDeviceCapabilityType } from './YaDeviceCapabilityType'
+import { YaDeviceCapabilityState } from './YaDeviceCapabilityState';
 
 export type YaDeviceCapability = {
     type: YaDeviceCapabilityType;

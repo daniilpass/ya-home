@@ -1,6 +1,6 @@
-import { DeviceActionResult, DeviceState } from '@homemap/shared/index.js';
+import { DeviceActionResult, DeviceState } from '@homemap/shared';
 
-import { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult.js';
+import { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult';
 
 export const mapYaDeviceActionsResultToDeviceActionsResult = (yaActionsResult: YaDeviceActionsResult): DeviceActionResult => {
     let actionResult: DeviceActionResult = {

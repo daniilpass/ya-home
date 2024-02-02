@@ -1,1 +1,1 @@
-export * as PlanRepository from './PlanRepository.js';
+export * as PlanRepository from './PlanRepository';

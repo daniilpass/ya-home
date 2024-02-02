@@ -1,5 +1,5 @@
-import { LoginInfo } from '@homemap/shared/index.js';
-import { YaLoginInfo } from '../yaClient/model/YaLoginInfo.js';
+import { LoginInfo } from '@homemap/shared';
+import { YaLoginInfo } from '../yaClient/model/YaLoginInfo';
 
 export const mapYaLoginInfoToLoginInfo = (yaLogin: YaLoginInfo): LoginInfo => {
     return {
