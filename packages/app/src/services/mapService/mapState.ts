@@ -1,3 +1,5 @@
+import isEqual from 'lodash.isequal';
+
 import {logger} from '../../common/tools';
 
 import {Element} from './model/Element';
@@ -35,23 +37,33 @@ class MapState {
 
             const syncTimeElpased = Date.now() - (element.updatedAt || 0);
 
-            if (element.substate !== Substate.Synced &&
-                element.state !== elementUpdate.state &&
-                syncTimeElpased < this.syncTimeout
+            /**
+             * State updated with some time lag, so wait some time before update state
+             */
+            if (element.substate !== Substate.Synced && // Not synced
+                element.state && // Have state (no state - initial call)
+                !isEqual(element.state, elementUpdate.state) && // State not equal
+                syncTimeElpased < this.syncTimeout // Timeout not expired
             ) {
                 return;
             }
 
-            if (element.state !== elementUpdate.state && syncTimeElpased >= this.syncTimeout) {
+            /**
+             * Some logging
+             */
+            if (!isEqual(element.state, elementUpdate.state) && syncTimeElpased >= this.syncTimeout) {
                 logger.warn(SYNC_TYMEOUT, id)
             }
 
             if (element.substate !== Substate.Synced &&
-                element.state === elementUpdate.state
+                isEqual(element.state, elementUpdate.state)
             ) {
                 logger.debug(STATE_SYNCED, elementUpdate.state, id, `${syncTimeElpased} ms`);
             }
 
+            /**
+             * Finally update device state
+             */
             this.updateElement(id, {
                 state: elementUpdate.state,
                 substate: Substate.Synced,
