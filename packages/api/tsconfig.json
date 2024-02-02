@@ -1,18 +1,11 @@
 {
+    "extends": "../../tsconfig",
     "compilerOptions": {
-      "module": "NodeNext",
-      "moduleResolution": "NodeNext",
-      "target": "es6",
-      "outDir": "./build",
-      "declaration": true,
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noFallthroughCasesInSwitch": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "es6",
+        "outDir": "./build",
+        "declaration": true,
     },
     "include": [
         "src/**/*"
