@@ -2,14 +2,16 @@ import express from "express";
 
 import { PORT } from '../constants';
 
-import { errorHandler } from '../middlewares/errorHandler';
+import { errorHandler, requestLogger } from '../middlewares';
 import { devicesRouter, loginRouter, planRouter, statsRouter } from '../routes';
+import { logger } from '../utils';
 
 export const bootstrapServer = () => {
-    console.log("[server] Configure express");
+    logger.info("[server] Configure express");
 
     const app = express();
     
+    app.use(requestLogger);
     app.use(express.json());
     
     app.use('/', loginRouter);
@@ -20,6 +22,6 @@ export const bootstrapServer = () => {
     app.use(errorHandler);
     
     app.listen(PORT, () => {
-      console.log(`[server] Server is running at http://localhost:${PORT}`);
+      logger.info(`[server] Server is running at http://localhost:${PORT}`);
     });
 }
