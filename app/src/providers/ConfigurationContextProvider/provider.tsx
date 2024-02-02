@@ -1,15 +1,8 @@
-import {
-    useEffect,
-    useState,
-    FC,
-    ReactNode,
-} from 'react'
-
-
-import {loadConfiguration} from '../../services/configurationService';
-import {Configuration} from '../../services/configurationService/model/Configuration';
+import { useEffect, useState, FC, ReactNode } from 'react'
+import { Plan } from '@homemap/shared';
 
 import {ConfigurationContext} from './context';
+import ApiClient from '../../api';
 
 type Props = {
     children: ReactNode
@@ -17,11 +10,11 @@ type Props = {
 
 export const ConfigurationContextProvider: FC<Props> = ({children}) => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [configuration, setConfiguration] = useState<Configuration | undefined>(undefined);
+    const [plan, setPlan] = useState<Plan | undefined>(undefined);
 
     useEffect(() => {
-        loadConfiguration().then(cfg => {
-            setConfiguration(cfg);
+        ApiClient.getPlan().then(plan => {
+            setPlan(plan);
             setIsLoaded(true);
         });
     }, []);
@@ -29,7 +22,7 @@ export const ConfigurationContextProvider: FC<Props> = ({children}) => {
     return (
         <ConfigurationContext.Provider value={{
             isLoaded,
-            configuration
+            plan
         }}>
             {children}
         </ConfigurationContext.Provider>

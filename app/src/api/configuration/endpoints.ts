@@ -1,17 +1,19 @@
-import {Endpoints} from './types';
-
-const ENDPOINTS: Endpoints = {
+const ENDPOINTS = {
     action: {
         method: 'POST',
         url: '/devices/actions',
     },
-    homeInfo: {
+    devices: {
         method: 'GET',
-        url: '/home/info',
+        url: '/devices',
+    },
+    plan: {
+        method: 'GET',
+        url: '/plan',
     },
     ping: {
         method: 'GET',
-        url: '/home/ping',
+        url: '/stats/ping',
     }
 }
 

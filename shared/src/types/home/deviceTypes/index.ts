@@ -1,2 +1,5 @@
-export { DeviceTypes } from './DeviceTypes.js';
-export { isValidDeviceType } from './utils.js';
+export const DeviceTypes = {
+    Unknown: 'unknown',
+    Switch: 'switch',
+    Light: 'light',
+};

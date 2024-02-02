@@ -5,16 +5,16 @@ import {useConfiguration} from '../providers/ConfigurationContextProvider';
 
 export const useMapService = () => {
     const mapServiceRef = useRef<MapService | null>(null);
-    const {configuration} = useConfiguration();
+    const {plan} = useConfiguration();
     const [data, setData] = useState<Record<string, Element>>();
 
     useEffect(() => {
-        if (!configuration) {
+        if (!plan) {
             return;
         }
 
-        const {elements} = configuration;
-        mapServiceRef.current = new MapService(elements);
+        const { devices } = plan;
+        mapServiceRef.current = new MapService(devices);
         mapServiceRef.current.onUpdate = (updatedData) => {
             setData({...updatedData});
         }
@@ -22,7 +22,7 @@ export const useMapService = () => {
         return () => {
             mapServiceRef.current?.stop();
         }
-    }, [configuration]);
+    }, [plan]);
 
     const switchLight = (id: string) => {
         mapServiceRef.current?.switchLight(id);

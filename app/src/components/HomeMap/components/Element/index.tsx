@@ -1,8 +1,9 @@
 import {FC, useEffect, useRef} from 'react';
 import cx from 'classnames'
 
+import { DeviceState } from '@homemap/shared';
+
 import { MouseButton, Point } from '../../../../common/types';
-import {State} from '../../../../services/mapService/model/State';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
 import {useDrag} from '../../hooks/useDrage';
@@ -15,7 +16,7 @@ import './styles.css';
 type Props = {
     position: Point;
     icon?: DeviceIconName;
-    state?: string;
+    state?: DeviceState | null;
     substate?: string;
     isEditMode?: boolean;
     onClick?: () => void;
@@ -40,7 +41,7 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
     }, [moveRef, isEditMode, editElementDrag]);
 
     const elementClassName = cx('element', {
-        'element--on': state === State.On,
+        'element--on': state?.on === 'on',
         'element--pending': substate === Substate.Pending,
         'element--synced': substate === Substate.Synced,
         'element--lost': substate === Substate.Lost,

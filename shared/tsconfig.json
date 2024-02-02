@@ -5,6 +5,7 @@
       "target": "es6",
       "outDir": "./build",
       "declaration": true,
+
       "skipLibCheck": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,

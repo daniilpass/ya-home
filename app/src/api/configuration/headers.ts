@@ -1,6 +1,4 @@
-import {Headers} from './types';
-
-const DEFAULT_HEADERS: Headers = {
+const DEFAULT_HEADERS = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
 }

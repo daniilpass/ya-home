@@ -1,3 +1,5 @@
+import { Collection, DeviceTypes } from '@homemap/shared';
+
 import {logger} from '../../common/tools';
 import ApiClient from '../../api';
 import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../constants';
@@ -6,8 +8,6 @@ import MapState from "./mapState";
 import {UNKNOWN_STATE} from "./constants";
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
-import {State} from './model/State';
-
 
 class MapService {
     state: MapState;
@@ -16,7 +16,7 @@ class MapService {
     onUpdate?: (elements: Record<string, Element>) => void;
 
     constructor(
-        elements: Record<string, Element> = {},
+        elements: Collection<Element> = {},
     ) {
         this.pollInterval = API_POLL_INTERVAL;
         this.state = new MapState(elements, API_SYNC_TIMEOUT);
@@ -51,33 +51,37 @@ class MapService {
             });
     }
 
-    switchLight(elementId: string) {
-        const element = this.state.elements[elementId];
+    switchLight(deviceId: string) {
+        const element = this.state.elements[deviceId];
 
         if (!element || element.substate !== Substate.Synced) {
             return;
         }
 
-        switch (element.state) {
-            case State.On:
-                ApiClient.lightOff(elementId).then(() => {
-                    this.state.updateElement(elementId, {
+        if (element.type !== DeviceTypes.Light && element.type !== DeviceTypes.Switch) {
+            return;
+        }
+
+        switch (element.state?.on) {
+            case 'on':
+                ApiClient.lightOff(deviceId).then(() => {
+                    this.state.updateElement(deviceId, {
                         substate: Substate.Ready,
                     });
                 });
-                this.state.updateElement(elementId, {
-                    state: State.Off,
+                this.state.updateElement(deviceId, {
+                    state: { on: 'off' },
                     substate: Substate.Pending,
                 });
                 break;
-            case State.Off:
-                ApiClient.lightOn(elementId).then(() => {
-                    this.state.updateElement(elementId, {
+            case 'off':
+                ApiClient.lightOn(deviceId).then(() => {
+                    this.state.updateElement(deviceId, {
                         substate: Substate.Ready,
                     });
                 });
-                this.state.updateElement(elementId, {
-                    state: State.On,
+                this.state.updateElement(deviceId, {
+                    state: { on: 'on' },
                     substate: Substate.Pending,
                 });
                 break;

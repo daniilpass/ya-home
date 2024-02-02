@@ -1,17 +1,19 @@
 import {FC} from 'react';
 import cx from 'classnames';
 
-import {Element} from '../../../../services/configurationService/model/Element';
-import {Element as MapElement} from '../../../../services/mapService/model/Element';
+import { PlanDevice } from '@homemap/shared';
+
+import { Element } from '../../../../services/mapService/model/Element';
 import Shadow from '../Shadow';
 import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
+import { DeviceIconName } from '../../../DeviceIcon';
 
 import './style.scss';
 
 type Props = {
-    element: Element;
-    data?: MapElement;
+    element: PlanDevice;
+    data?: Element;
     isEditMode?: boolean;
     onElementClick?: () => void;
     onElementDrag?: (pageX:number, pageY: number) => void;
@@ -62,7 +64,7 @@ const ElementGroup: FC<Props> = ({
             )}
             <ElementComponent
                 position={position}
-                icon={icon}
+                icon={icon as DeviceIconName}
                 state={state}
                 substate={substate}
                 isEditMode={isEditMode}

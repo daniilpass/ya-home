@@ -1,5 +1,20 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
-import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { 
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    IconButton,
+    List,
+    ListItemButton,
+    ListItemText,
+    Typography,
+} from '@mui/material';
+
+import { Collection, Device, PlanDevice } from '@homemap/shared';
+
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,9 +22,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
-import {HomeDeviceCollection} from '../../api/model/HomeDevice';
 import ApiClient from '../../api';
-import {Element, ElementCollection} from '../../services/configurationService/model/Element';
 import { Point } from '../../common/types';
 import PointInput from '../../common/components/PointInput';
 import PointsList from '../../common/components/PointsList';
@@ -19,9 +32,9 @@ import {getMagnetPoints, getNewPointsForLine, getNewPointsForSquare} from './too
 import './style.css';
 
 const HomeEditor = () => {
-    const {isLoaded, configuration} = useConfiguration();
-    const [allDevices, setAllDevices] = useState<HomeDeviceCollection>({});
-    const [mapDevices, setMapDevices] = useState<ElementCollection>({});
+    const {isLoaded, plan} = useConfiguration();
+    const [allDevices, setAllDevices] = useState<Collection<Device>>({});
+    const [mapDevices, setMapDevices] = useState<Collection<PlanDevice>>({});
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
     const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
     const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
@@ -36,10 +49,10 @@ const HomeEditor = () => {
     }, []);
 
     useEffect(() => {
-        setMapDevices(configuration?.elements || {});
-    }, [configuration?.elements]);
+        setMapDevices(plan?.devices || {});
+    }, [plan?.devices]);
 
-    const devicesNotOnMap = useMemo<HomeDeviceCollection>(() => {
+    const devicesNotOnMap = useMemo<Collection<Device>>(() => {
         return Object.fromEntries(
             Object.entries(allDevices)
                 .filter(([id]) => !Object.hasOwn(mapDevices, id))
@@ -47,8 +60,8 @@ const HomeEditor = () => {
     }, [allDevices, mapDevices]);
 
     const limitPosition = ([x, y]: Point): Point => {
-        const maxX = configuration?.plan.width || Number.POSITIVE_INFINITY;
-        const maxY = configuration?.plan.height || Number.POSITIVE_INFINITY;
+        const maxX = plan?.width || Number.POSITIVE_INFINITY;
+        const maxY = plan?.height || Number.POSITIVE_INFINITY;
 
         return [
             Math.min(maxX, Math.max(0, x)),
@@ -115,7 +128,7 @@ const HomeEditor = () => {
         if (id === selectedMapDevice) {
             return;
         }
-        const newDevice: Element = {
+        const newDevice: PlanDevice = {
             ...devicesNotOnMap[id],
             icon: 'bulb',
             position: toMapRelativePosition(e.clientX, e.clientY),
@@ -377,7 +390,7 @@ const HomeEditor = () => {
 
     return ( <>
             <AppLoader isLoading={!isLoaded} />
-            {configuration && (
+            {plan && (
                 <div className="editor-layout">
                     <div className="editor-panel editor-panel--left">
                         <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
@@ -438,7 +451,9 @@ const HomeEditor = () => {
                         </Dialog>
                     </div>
                     <HomeMap 
-                        plan={configuration.plan}
+                        background={plan.background}
+                        width={plan.width}
+                        height={plan.height}
                         elements={mapDevices}
                         allowZoom={true}
                         allowDrag={true}

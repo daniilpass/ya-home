@@ -1,9 +1,10 @@
 import {FC} from 'react';
 import cx from 'classnames';
 
+import { DeviceState } from '@homemap/shared';
+
 import {pointsToPathDirections} from '../../tools';
 import { Point } from '../../../../common/types';
-import {State} from '../../../../services/mapService/model/State';
 import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';
 import {useDrag} from '../../hooks/useDrage';
@@ -12,7 +13,7 @@ import './styles.css';
 
 type Props = {
     points: Point[];
-    state?: string;
+    state?: DeviceState | null;
     substate?: string;
     isEditMode?: boolean;
     onPointDrag?: (index: number, pageX: number, pageY: number) => void;
@@ -21,7 +22,7 @@ type Props = {
 const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}) => {
     const directions = pointsToPathDirections(points);
     const className = cx('element-bulbs-line', {
-        'element-bulbs-line--on': state === State.On,
+        'element-bulbs-line--on': state?.on === 'on',
         'element-bulbs-line--lost': substate === Substate.Lost,
     });
 

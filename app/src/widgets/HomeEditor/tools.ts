@@ -1,5 +1,5 @@
+import { PlanDevice } from '@homemap/shared';
 import {Point} from '../../common/types';
-import {Element} from '../../services/configurationService/model/Element';
 
 const MAGNET_RADIUS = 10;
 
@@ -48,7 +48,7 @@ const getMagnetPointsForAnchors = (
 export const getMagnetPoints = (
     point: Point,
     ignorePoint: Point | null,
-    device: Element
+    device: PlanDevice,
 ) => getMagnetPointsForAnchors(
     point,
     ignorePoint,

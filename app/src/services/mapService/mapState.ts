@@ -1,10 +1,8 @@
 import {logger} from '../../common/tools';
-import {mergeDeep} from '../../common/tools';
 
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import {SYNC_TYMEOUT, STATE_SYNCED} from './constants';
-
 
 class MapState {
     elements: Record<string, Element>;
@@ -17,7 +15,7 @@ class MapState {
     }
 
     initElementsState() {
-        Object.entries(this.elements).forEach(([id, element]) => {
+        Object.entries(this.elements).forEach(([id]) => {
             this.updateElement(id, {
                 substate: Substate.Pending,
             });
@@ -61,25 +59,26 @@ class MapState {
         });
     }
 
-    updateElement(id: string, options: Pick<Element, 'state' | 'substate'>) {
+    updateElement(id: string, options: Partial<Pick<Element, 'state' | 'substate'>>): Element | null {
         const element = this.elements[id];
         if (!element) {
-            return;
+            return null;
         }
 
-        Object.assign(element, {
-            ...options,
-            updatedAt: Date.now(),
-        });
-
-        this.applyConditionalProps(element);
-    }
-
-    applyConditionalProps(element: Element) {
-        const condition = element.condition?.[element.state || ''];
-        if (condition) {
-            mergeDeep(element, condition);
+        if (options.state) {
+            element.state = {
+                ...(element.state || {}),
+                ...options.state,
+            }
         }
+
+        if (options.substate) {
+            element.substate = options.substate;
+        }
+        
+        element.updatedAt = Date.now();
+
+        return element;
     }
 }
 

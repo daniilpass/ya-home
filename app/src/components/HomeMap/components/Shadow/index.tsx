@@ -1,7 +1,8 @@
 import {FC} from 'react';
 
+import { DeviceState } from '@homemap/shared';
+
 import { Point } from '../../../../common/types';
-import {State} from '../../../../services/mapService/model/State';
 import {useDrag} from '../../hooks/useDrage';
 import {EditActionMove} from '../EditAction';
 
@@ -11,7 +12,7 @@ type Props = {
     id: string;
     points: Point[];
     maskPoints?: Point[];
-    state?: string;
+    state?: DeviceState | null;
     isEditMode?: boolean;
     onPointDrag?: (index: number, pageX: number, pageY: number) => void;
     onMaskPointDrag?: (index: number, pageX: number, pageY: number) => void;
@@ -30,7 +31,7 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDr
     const onDragStart = useDrag(onDrag);
     const onMaskDragStart = useDrag(onMaskDrag);
 
-    if (state === State.On) {
+    if (state?.on === 'on') {
         return null;
     }
 

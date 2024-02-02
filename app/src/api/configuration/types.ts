@@ -3,6 +3,4 @@ export interface Endpoint {
     url: string;
 }
 
-export type Endpoints = Record<string, Endpoint>;
-
 export type Headers = Record<string, string>;

@@ -27,7 +27,6 @@ export const mapYaDeviceToDevice = (yaDevice: YaDevice): Device => {
                 id: yaDevice.id,
                 name: yaDevice.name,
                 type: DeviceTypes.Unknown,
-                state: {},
             }
     }
 }

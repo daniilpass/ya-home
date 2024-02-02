@@ -4,7 +4,7 @@ import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
 
 const HomeMapW = () => {
-    const {isLoaded, configuration} = useConfiguration();
+    const {isLoaded, plan} = useConfiguration();
     const [data, switchLight] = useMapService();
 
     const handleElementClick = (id: string) => {
@@ -14,10 +14,12 @@ const HomeMapW = () => {
     return (
         <>
             <AppLoader isLoading={!isLoaded} />
-            {configuration && (
+            {plan && (
                 <HomeMap
-                    plan={configuration.plan}
-                    elements={configuration.elements}
+                    background={plan.background}
+                    width={plan.width}
+                    height={plan.height}
+                    elements={plan.devices}
                     data={data}
                     onElementClick={handleElementClick}
                 />

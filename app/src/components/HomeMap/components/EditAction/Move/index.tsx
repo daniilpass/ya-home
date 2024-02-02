@@ -1,4 +1,4 @@
-import {FC, MouseEventHandler, forwardRef} from 'react';
+import { MouseEventHandler, forwardRef} from 'react';
 import { EDIT_ACTION_SIZE } from '../../../constants';
 import colors from '../../../../../common/styles/colors.module.scss';
 

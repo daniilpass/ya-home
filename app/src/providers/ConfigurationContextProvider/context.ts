@@ -1,14 +1,14 @@
 import {createContext} from 'react'
-import {Configuration} from '../../services/configurationService/model/Configuration';
+import { Plan } from '@homemap/shared';
 
 type State = {
     isLoaded: boolean;
-    configuration: Configuration | undefined;
+    plan: Plan | undefined;
 }
 
 const DEFAULT_VALUE = {
     isLoaded: false,
-    configuration: undefined,
+    plan: undefined,
 }
 
 export const ConfigurationContext = createContext<State>(DEFAULT_VALUE);

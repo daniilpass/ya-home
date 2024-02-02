@@ -1,14 +1,12 @@
-import {logger} from '../common/tools';
 
+import { Collection, Device, Plan } from '@homemap/shared';
+
+import {logger} from '../common/tools';
 import {API_BASE_URL} from '../constants';
 
 import {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 import {REQUEST_SUCCESS, REQUEST_ERROR} from './constants';
-import {DeviceCollection} from './model/Device';
-import {HomeDeviceCollection} from './model/HomeDevice';
-import {isSupportedDevice} from './utils';
-
 
 const log = (status: string, url: string, startTs: number, error = '') => {
     logger.debug(status, url, error, `${Date.now() - startTs} ms`);
@@ -40,10 +38,10 @@ const ping = () => {
     request(ENDPOINTS.ping)
 }
 
-const lightToggle = (entityId: string, value: boolean) => {
+const lightToggle = (deviceId: string, value: boolean) => {
     return request(ENDPOINTS.action, {
         devices: [{
-            id: entityId,
+            id: deviceId,
             actions: [{
                 type: "devices.capabilities.on_off",
                 state: {
@@ -55,35 +53,20 @@ const lightToggle = (entityId: string, value: boolean) => {
     });
 }
 
-const lightOn = (entityId: string) => {
-    return lightToggle(entityId, true);
+const lightOn = (deviceId: string) => {
+    return lightToggle(deviceId, true);
 }
 
-const lightOff = (entityId: string) => {
-    return lightToggle(entityId, false);
+const lightOff = (deviceId: string) => {
+    return lightToggle(deviceId, false);
 }
 
-const getDevices = (): Promise<HomeDeviceCollection> => {
-    return request<DeviceCollection>(ENDPOINTS.homeInfo)
-        .then(({devices}) => {
-            return Object.fromEntries(
-                devices
-                    .filter(device => isSupportedDevice(device.type))
-                    .map(device => {
-                        const deviceState = device.capabilities[0]?.state;
-                        const state = deviceState ? `${deviceState.instance}:${deviceState.value}` : undefined;
-                        return [
-                            device.id,
-                            {
-                                id: device.id,
-                                name: device.name,
-                                type: device.type,
-                                state,
-                            },                    
-                        ]
-                    })
-            );
-        });
+const getDevices = (): Promise<Collection<Device>> => {
+    return request<Collection<Device>>(ENDPOINTS.devices);
+}
+
+const getPlan = (): Promise<Plan>  => {
+    return request<Plan>(ENDPOINTS.plan);
 }
 
 const ApiClient = {
@@ -92,6 +75,7 @@ const ApiClient = {
     lightOn,
     lightOff,
     getDevices,
+    getPlan,
 }
 
 export default ApiClient;
