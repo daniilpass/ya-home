@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { Device, DeviceAction, DeviceActionResult } from '@homemap/shared';
+import { Collection, Device, DeviceAction, DeviceActionResult } from '@homemap/shared';
 
 import yaclient from '../yaClient/index.js';
 import {
@@ -16,7 +16,7 @@ import { YaDevicesActionsResponse } from '../yaClient/model/responses/YaDevicesA
 export const getDevices = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const response: YaUserInfoResponse = await yaclient.getUserInfo();
-        const result: Record<string, Device> = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
+        const result: Collection<Device> = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
         res.json(result);
     } catch (error) {
         next(error);
@@ -33,7 +33,7 @@ export const postDevicesActions = async (req: Request, res: Response, next: Next
         };
     
         const response: YaDevicesActionsResponse = await yaclient.postDevicesActions(deviceActionRequest);
-        const result: Record<string, DeviceActionResult> = mapToRecord(
+        const result: Collection<DeviceActionResult> = mapToRecord(
             response.devices,
             'id',
             mapYaDeviceActionsResultToDeviceActionsResult,
