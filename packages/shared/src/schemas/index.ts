@@ -1,0 +1,1 @@
+export { default as planSchema } from './home/plan.json' assert { type: "json" };

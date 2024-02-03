@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { Plan } from '@homemap/shared';
+import { Plan, schemas } from '@homemap/shared';
 
 import yaclient from '../yaClient';
 import { PlanRepository } from '../dal/repositories';
 import { NotFoundError } from '../errors';
+import { jsonValidator } from '../utils/jsonValidator';
+import { SchemaValidationError } from '../errors/SchemaValidationError';
 
 export const getUserPlan = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -25,7 +27,11 @@ export const getUserPlan = async (req: Request, res: Response, next: NextFunctio
 
 export const updateUserPlan = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {         
-        // TODO: schema validation of existingPlan
+        // Schema validation
+        const { valid, errors } = jsonValidator.validate(req.body, schemas.planSchema);
+        if (!valid) {
+            throw new SchemaValidationError(errors);
+        }
 
         // Find existing user plan by plan id
         const planId = Number(req.params.id);
