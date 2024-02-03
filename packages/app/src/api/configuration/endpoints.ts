@@ -11,6 +11,10 @@ const ENDPOINTS = {
         method: 'GET',
         url: '/plan',
     },
+    savePlan: {
+        method: 'PUT',
+        url: '/plan/:id',
+    },
     ping: {
         method: 'GET',
         url: '/stats/ping',

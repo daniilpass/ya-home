@@ -6,8 +6,14 @@ import {API_BASE_URL} from '../constants';
 import {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 
-const request = <TResponse>(endpoint: Endpoint, payload?: any) => {
-    const resource = `${API_BASE_URL}${endpoint.url}`;
+const request = <TResponse>(endpoint: Endpoint, payload?: any, params?: Record<string, string | number>) => {
+    let resource = `${API_BASE_URL}${endpoint.url}`;
+    if (params) {
+        for(const [key, value] of Object.entries(params)) {
+            resource = resource.replace(`:${key}`, value.toString());
+        }
+    }
+
     return fetch(resource, {
         method: endpoint.method,
         headers: DEFAULT_HEADERS,
@@ -54,6 +60,12 @@ const getPlan = (): Promise<Plan>  => {
     return request<Plan>(ENDPOINTS.plan);
 }
 
+const savePlan = (planId: number, plan: Plan): Promise<Plan> => {
+    return request<Plan>(ENDPOINTS.savePlan, plan, {
+        id: planId
+    });
+}
+
 const ApiClient = {
     ping,
     lightToggle,
@@ -61,6 +73,7 @@ const ApiClient = {
     lightOff,
     getDevices,
     getPlan,
+    savePlan,
 }
 
 export default ApiClient;
