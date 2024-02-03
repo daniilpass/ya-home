@@ -1,19 +1,19 @@
 import { Sequelize } from 'sequelize';
 
-import { Plan as HomePlan } from '@homemap/shared';
+import { Plan } from '@homemap/shared';
 
-import { Plan } from '../dal/model';
-import { planSchema } from '../dal/schema';
+import { PlanEntity } from '../dal/entities';
+import { planSchema } from '../dal/schemas';
 import planJson from '../demo/plan.json' assert { type: "json" };
 import { DEMO_USER_ID } from '../demo/constants';
 import { logger } from '../utils';
 
 const createDemoData = async () => {
-    const [_, created] = await Plan.findOrCreate({
+    const [_, created] = await PlanEntity.findOrCreate({
         where: { userId: DEMO_USER_ID},
         defaults: {
             userId: DEMO_USER_ID,
-            json: planJson as unknown as HomePlan
+            json: planJson as unknown as Plan
         }
     });
     if (created) {
@@ -32,7 +32,7 @@ export const bootstrapDatabase = async () => {
     });
     
     // Init model
-    Plan.init(planSchema, { sequelize, modelName: 'plan' });
+    PlanEntity.init(planSchema, { sequelize, modelName: 'plan' });
     
     // Sync models
     logger.info("[database] Sync all defined models started");
