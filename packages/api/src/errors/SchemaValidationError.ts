@@ -3,10 +3,12 @@ import { ValidationError } from 'jsonschema';
 import { AppError } from './AppError';
 
 export class SchemaValidationError extends AppError {
-    errors: ValidationError[];
+    schemaErrors: ValidationError[];
+    schemaErrorsShort: Pick<ValidationError, 'argument' | 'message' | 'path'>[];
 
-    constructor(erros: ValidationError[], message?: string) {
+    constructor(schemaErrors: ValidationError[], message?: string) {
         super(message || 'Schema is invalid');
-        this.errors = erros;
+        this.schemaErrors = schemaErrors;
+        this.schemaErrorsShort = schemaErrors.map(({argument, message, path}) => ({argument, message, path}));
     }
 }
