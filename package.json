@@ -4,6 +4,8 @@
     "workspaces": [ "./packages/*"],
     "scripts": {
         "api": "npm run watch -w ./packages/api",
-        "app": "npm run start -w ./packages/app"
+        "build-api": "npm run build -w ./packages/api",
+        "app": "npm run start -w ./packages/app",
+        "build-app": "npm run build -w ./packages/app"
     }
 }
