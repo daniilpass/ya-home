@@ -1,0 +1,21 @@
+services:
+  api:
+    container_name: homemap-api
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    restart: always
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      YAPI_LOGIN_BASE_URL: https://login.yandex.ru
+      YAPI_IOT_BASE_URL: https://api.iot.yandex.net/v1.0
+      YAPI_AUTH_TOKEN: ${YAPI_AUTH_TOKEN}
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
+networks:
+  app-network:
+    driver: bridge
