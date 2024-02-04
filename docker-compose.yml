@@ -16,6 +16,16 @@ services:
       - app-network
     ports:
       - "3000:3000"
+  app:
+    container_name: homemap-app
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.app
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - "8888:80"
 networks:
   app-network:
     driver: bridge
