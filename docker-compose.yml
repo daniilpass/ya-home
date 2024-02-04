@@ -16,6 +16,9 @@ services:
       - app-network
     ports:
       - "3000:3000"
+    volumes:
+      - /homemap/server/appData:/server/packages/api/appData
+
   app:
     container_name: homemap-app
     build:
