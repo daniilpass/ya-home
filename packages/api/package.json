@@ -4,8 +4,8 @@
   "type": "module",
   "main": "build/index.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node build/index.js",
+    "build": "npx tsc --build --verbose",
+    "start": "node --experimental-specifier-resolution=node build/index.js",
     "watch": "SET NODE_ENV=development && nodemon"
   },
   "dependencies": {

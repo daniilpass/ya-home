@@ -6,8 +6,11 @@
         "target": "es6",
         "outDir": "./build",
         "declaration": true,
+        "composite": true
     },
     "include": [
-        "src/**/*"
+        "index.ts",
+        "src/**/*",
+        "src/**/*.json"
     ]
 }  

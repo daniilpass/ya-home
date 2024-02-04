@@ -5,7 +5,9 @@
     "scripts": {
         "api": "npm run watch -w ./packages/api",
         "build-api": "npm run build -w ./packages/api",
+        "start-api": "npm run start -w ./packages/api",
         "app": "npm run start -w ./packages/app",
-        "build-app": "npm run build -w ./packages/app"
+        "build-app": "npm run build -w ./packages/app",
+        "build-shared": "npm run build -w ./packages/shared"
     }
 }
