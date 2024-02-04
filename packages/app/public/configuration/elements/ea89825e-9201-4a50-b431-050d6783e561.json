@@ -1,9 +1,0 @@
-{
-    "name": "Люстра в спальне",
-    "id": "ea89825e-9201-4a50-b431-050d6783e561",
-    "entity": "light",
-    "type": "state-icon",
-    "icon": "bulb",
-    "position": [360, 664],
-    "condition": {}
-}
