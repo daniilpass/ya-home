@@ -31,6 +31,7 @@ import { ELEMENT_RADIUS } from '../../components/HomeMap/constants';
 
 import {getMagnetPoints, getNewPointsForLine, getNewPointsForSquare} from './tools';
 import './style.css';
+import Toolbar from '../../components/Toolbar';
 
 const HomeEditor = () => {
     const {isLoaded, plan} = useConfiguration();
@@ -412,15 +413,15 @@ const HomeEditor = () => {
             <AppLoader isLoading={!isLoaded} />
             {plan && (
                 <div className='editor-root'>
-                    <div className='editor-topbar'>
-                        <Box sx={{p: "8px", display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                    <Toolbar position="top" withBorder>
+                        <Box sx={{p: "8px", display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%'}}>
                             <Button onClick={onSave} startIcon={<SaveIcon />}>
                                 Сохранить
                             </Button >
                         </Box>
-                    </div>
+                    </Toolbar>
                     <div className="editor-layout">
-                        <div className="editor-panel editor-panel--left">
+                        <Toolbar position="left" >
                             <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
                                 <Typography component="h1" variant="h5" align="center" marginBottom={1}>
                                     Устройства
@@ -477,7 +478,7 @@ const HomeEditor = () => {
                                     </List>
                                 </DialogContent>
                             </Dialog>
-                        </div>
+                        </Toolbar>
                         <HomeMap 
                             background={plan.background}
                             width={plan.width}
@@ -506,7 +507,7 @@ const HomeEditor = () => {
                                 }
                             }}
                         />
-                        <div className="editor-panel  editor-panel--right">
+                        <Toolbar position="right" >
                             {selectedMapDevice && (
                                 <>
                                     <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
@@ -564,7 +565,7 @@ const HomeEditor = () => {
                                     </Box>
                                 </>
                             )}
-                        </div>
+                        </Toolbar>
                     </div>
                 </div>
             )}

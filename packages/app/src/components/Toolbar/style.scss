@@ -1,0 +1,45 @@
+.toolbar {
+    position: relative;
+    display: flex;
+    width: 256px;
+    flex-shrink: 0;
+    background: #f3f4f6;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1;
+
+    &--top {
+        width: 100%;
+        box-shadow: 0 -6px 12px 0 #060606;
+    }
+
+    &--right {
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 6px 0 12px 0 #060606;
+    }
+
+    &--left {
+        flex-direction: column;
+        height: 100%;
+        box-shadow: -6px 0 12px 0 #060606;
+    }
+
+    &--border {
+        border-style: solid;
+        border-color: rgb(229, 234, 242);
+    }
+
+    &--top#{&}--border {
+        border-width: 0px 0px thin 0px;
+    }
+
+    &--right#{&}--border {
+        border-width: 0px 0px 0px thin;
+    }
+
+    &--left#{&}--border {
+        border-width: 0px thin 0px 0px;
+    }
+}
