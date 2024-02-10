@@ -167,6 +167,7 @@ const HomeMap: FC<Props> = ({
         width: width,
         height: height,
         flexShrink: 0,
+        overflow: 'hidden',
     }
 
     const wrapperClassName = cx('map-wrapper', classes?.wrapper);

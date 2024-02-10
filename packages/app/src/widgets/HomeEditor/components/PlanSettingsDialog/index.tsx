@@ -1,5 +1,5 @@
 
-import { CSSProperties, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -35,6 +35,14 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                 ...dialogValue.background,
                 color: color.hex,
             }
+        })
+    }
+
+    const handleDimensionsChange = (value: Point) => {
+        setDialogValue({
+            ...dialogValue,
+            width: value[0],
+            height: value[1],
         })
     }
 
@@ -74,15 +82,15 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                     <Divider variant="middle" textAlign="left">Размеры</Divider>
                     <PointInput
                         value={dimensions}
+                        onChange={handleDimensionsChange}
                         labelX='ширина'
                         labelY='высота'
                         vertical
                     />
                 </Box>
                 <Box sx={{
-                    width: '100%',
+                    width: '600px',
                     height: '400px',
-                    minWidth: '0px',
                 }}>
                     <HomeMap
                         background={{
@@ -93,6 +101,11 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                         height={dialogValue.height}
                         allowRotate={false}
                         allowInitialRotate={false}
+                        styles={{
+                            wrapper: {
+                                backgroundColor: undefined,
+                            }
+                        }}
                     />
                 </Box>
             </Box>
