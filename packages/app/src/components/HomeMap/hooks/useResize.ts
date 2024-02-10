@@ -42,10 +42,10 @@ export const useResize = (
     const onDragStart = useDrag(onDrag, MouseButton.MIDDLE);
 
     const {
-        allowScale = true,
-        allowInitialScale = true,
-        allowRotate = true,
-        allowInitialRotate = true,
+        allowScale = false,
+        allowInitialScale = false,
+        allowRotate = false,
+        allowInitialRotate = false,
         allowZoom = false,
         allowDrag = false,
         naturalWidth = 1,

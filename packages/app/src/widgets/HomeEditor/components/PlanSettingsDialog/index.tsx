@@ -99,8 +99,8 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                         }}
                         width={dialogValue.width}
                         height={dialogValue.height}
-                        allowRotate={false}
-                        allowInitialRotate={false}
+                        allowScale={true}
+                        allowInitialScale={true}
                         styles={{
                             wrapper: {
                                 backgroundColor: undefined,

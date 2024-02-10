@@ -22,6 +22,10 @@ const HomeMapW = () => {
                     elements={plan.devices}
                     data={data}
                     onElementClick={handleElementClick}
+                    allowScale={true}
+                    allowInitialScale={true}
+                    allowRotate={true}
+                    allowInitialRotate={true}
                     transition
                 />
             )}

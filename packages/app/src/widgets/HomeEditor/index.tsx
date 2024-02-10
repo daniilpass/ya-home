@@ -198,9 +198,7 @@ const HomeEditor = () => {
                             elements={mapDevices}
                             allowZoom={true}
                             allowDrag={true}
-                            allowScale={false}
-                            allowRotate={false}
-                            allowInitialRotate={false}
+                            allowInitialScale={true}
                             editElementId={selectedMapDeviceId}
                             editElementDrag={selectedMapDeviceDrag}
                             isEditorMode={true}
