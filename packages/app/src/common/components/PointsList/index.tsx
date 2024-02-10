@@ -3,8 +3,9 @@ import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
+import { Point } from '@homemap/shared';
+
 import PointInput from '../PointInput';
-import {Point} from '../../types';
 
 import './styles.css';
 

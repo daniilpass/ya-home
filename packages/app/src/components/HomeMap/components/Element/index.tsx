@@ -1,9 +1,8 @@
 import {FC, useEffect, useRef} from 'react';
 import cx from 'classnames'
 
-import { DeviceState } from '@homemap/shared';
+import { DeviceState,  MouseButton, Point } from '@homemap/shared';
 
-import { MouseButton, Point } from '../../../../common/types';
 import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
 import {useDrag} from '../../hooks/useDrage';

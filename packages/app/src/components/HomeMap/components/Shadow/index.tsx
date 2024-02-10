@@ -1,8 +1,7 @@
 import {FC} from 'react';
 
-import { DeviceState } from '@homemap/shared';
+import { DeviceState, Point } from '@homemap/shared';
 
-import { Point } from '../../../../common/types';
 import {useDrag} from '../../hooks/useDrage';
 import {EditActionMove} from '../EditAction';
 

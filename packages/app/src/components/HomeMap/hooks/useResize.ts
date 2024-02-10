@@ -1,6 +1,8 @@
 import {RefObject, useState, useLayoutEffect, MouseEvent as ReactMouseEvent, useCallback} from 'react';
+
+import { MouseButton } from '@homemap/shared';
+
 import {useDrag} from './useDrage';
-import { MouseButton } from '../../../common/types';
 
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;

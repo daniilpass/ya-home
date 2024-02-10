@@ -1,7 +1,7 @@
 import {ChangeEvent, FC} from 'react';
 import { TextField } from '@mui/material';
 
-import { Point } from '../../types';
+import { Point } from '@homemap/shared';
 
 import './styles.css';
 

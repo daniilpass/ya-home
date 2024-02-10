@@ -1,6 +1,6 @@
 import {MouseEvent as ReactMouseEvent} from 'react';
 
-import { MouseButton } from '../../../common/types';
+import { MouseButton } from '@homemap/shared';
 
 const EVENT_MOUSEMOVE = 'mousemove';
 const EVENT_MOUSEUP = 'mouseup'
