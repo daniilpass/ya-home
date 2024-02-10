@@ -1,16 +1,19 @@
 
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { Plan, Point } from '@homemap/shared';
 
 import PointInput from '../../../../common/components/PointInput';
 import ColorPickerButton from '../../../../components/ColorPickerButton';
 import HomeMap from '../../../../components/HomeMap';
+import VisuallyHiddenInput from '../../../../components/VisuallyHiddenInput';
 
 import './style.scss';
+import { readFileAsDataURL } from '../../../../utils/file';
 
 export type DialogProps = {
     value: Pick<Plan, 'width' | 'height' | 'background'>;
@@ -46,6 +49,23 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
         })
     }
 
+    const handleImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) {
+            return;
+        }
+        
+        const imageDataURL = await readFileAsDataURL(file);
+
+        setDialogValue({
+            ...dialogValue,
+            background: {
+                ...dialogValue.background,
+                image: imageDataURL,
+            }
+        });
+    }
+
     const dimensions: Point = [dialogValue.width, dialogValue.height];
     const color = dialogValue.background.color;
     const image = dialogValue.background.image;
@@ -65,11 +85,18 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                 }}>
                     <Divider variant="middle" textAlign="left">Изображение</Divider>
                     <Button
+                        component="label"
                         variant='contained'
+                        startIcon={<CloudUploadIcon />}
                         sx={{width: '100%'}}
                         size='large'
                     >
                         Загрузить
+                        <VisuallyHiddenInput
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handleImageFileChange}
+                        />
                     </Button>
                 
                     <Divider variant="middle" textAlign="left">Заливка</Divider>
@@ -80,13 +107,21 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                     />
 
                     <Divider variant="middle" textAlign="left">Размеры</Divider>
-                    <PointInput
-                        value={dimensions}
-                        onChange={handleDimensionsChange}
-                        labelX='ширина'
-                        labelY='высота'
-                        vertical
-                    />
+                    <Box>
+                        <PointInput
+                            value={dimensions}
+                            onChange={handleDimensionsChange}
+                            labelX='ширина'
+                            labelY='высота'
+                            vertical
+                        />
+                        {/* <Button
+                            variant="outlined"
+                            sx={{ width: '100%', marginTop: 1 }}
+                        >
+                            подогнать
+                        </Button> */}
+                    </Box>
                 </Box>
                 <Box sx={{
                     width: '600px',

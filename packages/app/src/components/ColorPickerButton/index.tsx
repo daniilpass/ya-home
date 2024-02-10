@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { ChromePicker, ColorChangeHandler, ColorResult } from 'react-color';
 import { Popover, SxProps, Theme } from '@mui/material';
+import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 
 import ColorButton from './ColorButton';
 import { getContrastColorHEX } from './utils';
@@ -42,6 +43,7 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
                 onClick={handlePickerOpen}
                 size='large'
                 variant='contained'
+                startIcon={<FormatColorFillIcon />}
                 sx={sx}
             >
                 {color}
