@@ -30,14 +30,14 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, onChang
     return (
         <Box className='point-input' sx={style}>
             <TextField
-                value={Math.floor(x)}
+                value={Math.floor(x).toString()}
                 onChange={onChangeX}
                 label={labelX ?? "x"}
                 type="number"
                 size="small"
             />
             <TextField
-                value={Math.floor(y)}
+                value={Math.floor(y).toString()}
                 onChange={onChangeY}
                 label={labelY ?? "y"}
                 type="number"
