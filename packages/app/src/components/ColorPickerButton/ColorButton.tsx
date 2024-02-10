@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled'
 
 type Props = {
     bgColor: string;
     textColor: string;
 };
 
-const ColorButton = styled(Button)(({ bgColor, textColor }: Props) => ({
+const makeStyle = ({ bgColor, textColor }: Props) => ({
     backgroundColor: bgColor,
     color: textColor,
     fontFamily: 'Monospace',
@@ -16,6 +16,13 @@ const ColorButton = styled(Button)(({ bgColor, textColor }: Props) => ({
     '&:active': {
         backgroundColor: bgColor,
     },
-}));
+});
+
+const ColorButton = styled(
+    Button,
+    {
+        shouldForwardProp: (propName: string) => !['bgColor', 'textColor'].includes(propName),
+    }
+)(makeStyle);
 
 export default ColorButton;

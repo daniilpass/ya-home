@@ -112,7 +112,7 @@ export const useResize = (
             setScale(newScale);
         }
         
-        wrapper.addEventListener(WHEEL_EVENT, handleZoom);
+        wrapper.addEventListener(WHEEL_EVENT, handleZoom, { passive: true });
 
         return () => {
             wrapper.removeEventListener(WHEEL_EVENT, handleZoom);
