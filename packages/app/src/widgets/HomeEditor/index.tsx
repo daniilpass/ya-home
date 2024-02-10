@@ -1,6 +1,4 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
-import { Box, Button } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
 
 import { Bounds, Collection, Device, PlanDevice } from '@homemap/shared';
 
@@ -13,6 +11,8 @@ import ApiClient from '../../api';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
+import PlanActions from './components/PlanActions';
+import PlanSettingsDialog, { DialogProps as PlanSettingsProps } from './components/PlanSettingsDialog';
 import actions from './actions';
 import { toRelativePosition } from './tools';
 
@@ -25,6 +25,8 @@ const HomeEditor = () => {
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
     const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
+    const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
+    const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsProps['value']>();
 
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
     const planBounds: Partial<Bounds> = {
@@ -52,7 +54,7 @@ const HomeEditor = () => {
     }, [plan?.devices]);
 
     /**
-     * Filter devices no on plan
+     * Filtered devices no on plan
      */
     const devicesNotOnMap = useMemo<Collection<Device>>(() => {
         return Object.fromEntries(
@@ -62,9 +64,9 @@ const HomeEditor = () => {
     }, [allDevices, mapDevices]);
 
     /**
-     * API calls
+     * Plan actions handlers
      */
-    const onSave = () => {
+    const handleSave = () => {
         if (!plan) {
             return;
         }
@@ -75,6 +77,18 @@ const HomeEditor = () => {
                 ...mapDevices,
             }
         });
+    }
+
+    /**
+     * Plan settings dialog
+     */
+    const handleShowSettings = () => {
+        setPlanSettingsValue(plan);
+        setPlanSettingsOpen(true);
+    }
+
+    const handleCloseSettings = () => {
+        setPlanSettingsOpen(false);
     }
 
     /**
@@ -162,11 +176,10 @@ const HomeEditor = () => {
             {plan && (
                 <div className='editor-root'>
                     <Toolbar position="top" withBorder>
-                        <Box sx={{p: "8px", display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%'}}>
-                            <Button onClick={onSave} startIcon={<SaveIcon />}>
-                                Сохранить
-                            </Button >
-                        </Box>
+                        <PlanActions
+                            onSave={handleSave}
+                            onShowSettings={handleShowSettings}
+                        />
                     </Toolbar>
                     <div className="editor-layout">
                         <Toolbar position="left" >
@@ -217,6 +230,11 @@ const HomeEditor = () => {
                             )}
                         </Toolbar>
                     </div>
+                    <PlanSettingsDialog
+                        open={planSettingsOpen}
+                        onClose={handleCloseSettings}
+                        value={planSettingsValue!}
+                    />
                 </div>
             )}
         </>

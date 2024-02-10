@@ -1,17 +1,18 @@
 import {ChangeEvent, FC} from 'react';
-import { TextField } from '@mui/material';
+import { Box, SxProps, TextField, Theme } from '@mui/material';
 
 import { Point } from '@homemap/shared';
-
-import './styles.css';
 
 type Props = {
     value: Point;
     onChange?: (value: Point) => void;
+    labelX?: string;
+    labelY?: string;
+    vertical?: boolean;
     // TODO: pass min, max
 }
 
-const PointInput: FC<Props> = ({value: [x, y], onChange}) => {
+const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, onChange}) => {
     const onChangeX = (event: ChangeEvent<HTMLInputElement>) => {
         onChange?.([Number(event.target.value), y]);
     };
@@ -20,23 +21,29 @@ const PointInput: FC<Props> = ({value: [x, y], onChange}) => {
         onChange?.([x, Number(event.target.value)]);
     };
 
+    const style: SxProps<Theme> = {
+        display: 'flex',
+        gap: vertical ? 1 : 0.5,
+        flexDirection: vertical ? 'column' : 'row',
+    }
+
     return (
-        <div className='point-input'>
+        <Box className='point-input' sx={style}>
             <TextField
                 value={Math.floor(x)}
                 onChange={onChangeX}
-                label="x"
+                label={labelX ?? "x"}
                 type="number"
                 size="small"
             />
             <TextField
                 value={Math.floor(y)}
                 onChange={onChangeY}
-                label="y"
+                label={labelY ?? "y"}
                 type="number"
                 size="small"
             />
-        </div>
+        </Box>
     )
 }
 
