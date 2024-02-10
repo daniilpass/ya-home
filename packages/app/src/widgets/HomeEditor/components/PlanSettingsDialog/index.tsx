@@ -8,6 +8,7 @@ import { Plan, Point } from '@homemap/shared';
 
 import PointInput from '../../../../common/components/PointInput';
 import ColorPickerButton from '../../../../components/ColorPickerButton';
+import HomeMap from '../../../../components/HomeMap';
 
 import './style.scss';
 
@@ -40,11 +41,6 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
     const dimensions: Point = [dialogValue.width, dialogValue.height];
     const color = dialogValue.background.color;
     const image = dialogValue.background.image;
-    const imageStyle: CSSProperties = {
-        backgroundColor: color,
-        minWidth: '400px',
-        height: '100%',
-    };
 
     return (
         <DialogContent dividers={true}>
@@ -84,16 +80,20 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                     />
                 </Box>
                 <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    width: '100%',
+                    height: '400px',
+                    minWidth: '0px',
                 }}>
-                    <div style={imageStyle}>
-                        <img
-                            className='settings__background-image'
-                            src={image}
-                        />
-                    </div>
+                    <HomeMap
+                        background={{
+                            color,
+                            image,
+                        }}
+                        width={dialogValue.width}
+                        height={dialogValue.height}
+                        allowRotate={false}
+                        allowInitialRotate={false}
+                    />
                 </Box>
             </Box>
             
@@ -107,6 +107,7 @@ const PlanSettingsDialog = ({ value, open, onClose }: DialogProps) => {
             open={open}
             onClose={onClose}
             maxWidth="md"
+            scroll="body"
         >
             <DialogTitle>Параметры</DialogTitle>
             <IconButton

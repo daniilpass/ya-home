@@ -10,7 +10,6 @@ const ColorButton = styled(Button)(({ bgColor, textColor }: Props) => ({
     backgroundColor: bgColor,
     color: textColor,
     fontFamily: 'Monospace',
-    // minWidth: 110,
     '&:hover': {
         backgroundColor: bgColor,
     },

@@ -20,7 +20,7 @@ export type Props = {
     background: Plan['background'];
     width: Plan['width'];
     height: Plan['height'];
-    elements: Record<string, PlanDevice>;
+    elements?: Record<string, PlanDevice>;
     editElementId?: string;
     editElementDrag?: boolean;
     isEditorMode?: boolean;
@@ -31,6 +31,7 @@ export type Props = {
     allowInitialRotate?: boolean;
     allowZoom?: boolean;
     allowDrag?: boolean;
+    transition?: boolean;
     onElementClick?: (id: string) => void;
     onElementDrag?: (id: string, x: number, y: number) => void;
     onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
@@ -50,7 +51,7 @@ const HomeMap: FC<Props> = ({
     background,
     width,
     height,
-    elements,
+    elements = {},
     data,
     allowScale,
     allowInitialScale,
@@ -58,6 +59,7 @@ const HomeMap: FC<Props> = ({
     allowInitialRotate,
     allowZoom,
     allowDrag,
+    transition,
     editElementId,
     editElementDrag = false,
     isEditorMode,
@@ -170,7 +172,7 @@ const HomeMap: FC<Props> = ({
     const wrapperClassName = cx('map-wrapper', classes?.wrapper);
 
     const layoutClassName = cx({
-        'map-layout--transitional': !allowDrag && !allowZoom,
+        'map-layout--transitional': transition && !allowDrag && !allowZoom,
     }, classes?.layout);
 
     return (

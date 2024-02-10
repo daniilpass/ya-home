@@ -22,6 +22,7 @@ const HomeMapW = () => {
                     elements={plan.devices}
                     data={data}
                     onElementClick={handleElementClick}
+                    transition
                 />
             )}
         </>
