@@ -66,6 +66,10 @@ const savePlan = (planId: number, plan: Plan): Promise<Plan> => {
     });
 }
 
+const getMediaUrl = (mediaId: string) => {
+    return `${API_BASE_URL}${ENDPOINTS.media.url}/${mediaId}`
+}
+
 const ApiClient = {
     ping,
     lightToggle,
@@ -74,6 +78,7 @@ const ApiClient = {
     getDevices,
     getPlan,
     savePlan,
+    getMediaUrl,
 }
 
 export default ApiClient;

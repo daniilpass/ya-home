@@ -11,9 +11,10 @@ import PointInput from '../../../../common/components/PointInput';
 import ColorPickerButton from '../../../../components/ColorPickerButton';
 import HomeMap from '../../../../components/HomeMap';
 import VisuallyHiddenInput from '../../../../components/VisuallyHiddenInput';
+import { readFileAsDataURL } from '../../../../utils/file';
+import { uuidOrDataToURL } from '../../../../utils/mediaStorage';
 
 import './style.scss';
-import { readFileAsDataURL } from '../../../../utils/file';
 
 export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;
 
@@ -153,7 +154,7 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                     <HomeMap
                         background={{
                             color,
-                            image,
+                            image: uuidOrDataToURL(image),
                         }}
                         onBackgroundLoad={handleBackgroundLoad}
                         width={value.width}

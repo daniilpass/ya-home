@@ -1,3 +1,4 @@
+import path from 'path';
 import { Sequelize } from 'sequelize';
 
 import { Plan } from '@homemap/shared';
@@ -7,6 +8,7 @@ import { planSchema } from '../dal/schemas';
 import planJson from '../demo/plan.json' assert { type: "json" };
 import { DEMO_USER_ID } from '../demo/constants';
 import { logger } from '../utils';
+import { DB_STORAGE_PATH } from '../constants';
 
 const createDemoData = async () => {
     const [_, created] = await PlanEntity.findOrCreate({
@@ -27,7 +29,7 @@ export const bootstrapDatabase = async () => {
     // Create Sequelize instance
     const sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: './appData/db.sqlite',
+        storage: path.join(DB_STORAGE_PATH, 'db.sqlite'),
         logging: (message) => logger.debug(`[database] ${message}`),
     });
     

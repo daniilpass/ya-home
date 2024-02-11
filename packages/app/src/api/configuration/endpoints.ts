@@ -15,6 +15,9 @@ const ENDPOINTS = {
         method: 'PUT',
         url: '/plan/:id',
     },
+    media: {
+        url: '/media',
+    },
     ping: {
         method: 'GET',
         url: '/stats/ping',
