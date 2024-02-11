@@ -1,11 +1,11 @@
 
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { Plan, Point } from '@homemap/shared';
+import { Plan, Point, Size } from '@homemap/shared';
 
 import PointInput from '../../../../common/components/PointInput';
 import ColorPickerButton from '../../../../components/ColorPickerButton';
@@ -26,6 +26,7 @@ type DialogContentProps = Pick<DialogProps, 'value'>;
 const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
     // store and change copy of value
     const [dialogValue, setDialogValue] = useState<DialogProps['value']>(value);
+    const [backgroundNaturalSize, setBackgroundNaturalSize] = useState<Size>();
 
     useEffect(() => {
         setDialogValue(value);
@@ -38,7 +39,7 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                 ...dialogValue.background,
                 color: color.hex,
             }
-        })
+        });
     }
 
     const handleDimensionsChange = (value: Point) => {
@@ -46,7 +47,7 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
             ...dialogValue,
             width: value[0],
             height: value[1],
-        })
+        });
     }
 
     const handleImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +64,26 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                 ...dialogValue.background,
                 image: imageDataURL,
             }
+        });
+    }
+
+    const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
+        const imageEl = e.target as HTMLImageElement;
+        setBackgroundNaturalSize({
+            width: imageEl.naturalWidth,
+            height: imageEl.naturalHeight,
+        });        
+    }
+
+    const handleClickFitToBackground = () => {
+        if (!backgroundNaturalSize) {
+            return;
+        }
+
+        setDialogValue({
+            ...dialogValue,
+            width: backgroundNaturalSize.width,
+            height: backgroundNaturalSize.height,
         });
     }
 
@@ -115,12 +136,14 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                             labelY='высота'
                             vertical
                         />
-                        {/* <Button
+                        <Button
                             variant="outlined"
                             sx={{ width: '100%', marginTop: 1 }}
+                            disabled={!backgroundNaturalSize}
+                            onClick={handleClickFitToBackground}
                         >
-                            подогнать
-                        </Button> */}
+                            Подогнать
+                        </Button>
                     </Box>
                 </Box>
                 <Box sx={{
@@ -132,6 +155,7 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                             color,
                             image,
                         }}
+                        onBackgroundLoad={handleBackgroundLoad}
                         width={dialogValue.width}
                         height={dialogValue.height}
                         allowScale={true}

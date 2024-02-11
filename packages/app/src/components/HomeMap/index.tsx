@@ -1,4 +1,4 @@
-import {CSSProperties, FC, useEffect, useMemo, useRef} from 'react';
+import {CSSProperties, FC, SyntheticEvent, useEffect, useMemo, useRef} from 'react';
 import cx from 'classnames';
 
 import { Plan, PlanDevice } from '@homemap/shared';
@@ -38,6 +38,7 @@ export type Props = {
     onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onTansform?: (transfrom: MapTransform) => void;
+    onBackgroundLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
     classes?: {
         wrapper?: string,
         layout?: string,
@@ -69,6 +70,7 @@ const HomeMap: FC<Props> = ({
     onShadowPointDrag,
     onShadowMaskPointDrag,
     onTansform,
+    onBackgroundLoad,
     classes,
     styles,
 }) => {
@@ -180,7 +182,11 @@ const HomeMap: FC<Props> = ({
         <TransformContextProvider value={{scale, rotate, editElementDrag}}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
-                    <img className="map-layout__image" src={background.image}></img>
+                    <img
+                        className="map-layout__image"
+                        src={background.image}
+                        onLoad={onBackgroundLoad}
+                    ></img>
                     <svg className="map-layout__svg" ref={svgRef}>
                         {
                             sortedElements.map(([id, element]) => (
