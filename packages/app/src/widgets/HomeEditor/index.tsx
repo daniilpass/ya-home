@@ -1,6 +1,6 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
 
-import { Bounds, Collection, Device, PlanDevice } from '@homemap/shared';
+import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
 import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
@@ -12,22 +12,27 @@ import ApiClient from '../../api';
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
 import PlanActions from './components/PlanActions';
-import PlanSettingsDialog, { DialogProps as PlanSettingsProps } from './components/PlanSettingsDialog';
+import PlanSettingsDialog, { DialogValue as PlanSettingsValue, DialogProps as PlanSettingsProps } from './components/PlanSettingsDialog';
 import actions from './actions';
 import { toRelativePosition } from './tools';
+import { DEFAULT_PLAN } from './constants';
 
 import './style.css';
 
 const HomeEditor = () => {
-    const {isLoaded, plan} = useConfiguration();
+    // Plan state
+    const {isLoaded, plan: originPlan} = useConfiguration();
+    const [plan, setPlan] = useState<Plan>(DEFAULT_PLAN);
+    const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
+    // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
-    const [mapDevices, setMapDevices] = useState<Collection<PlanDevice>>({});
     const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
     const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
-    const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
+    // Plan settings dialog state
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
     const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsProps['value']>();
 
+    const mapDevices = plan.devices;
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
     const planBounds: Partial<Bounds> = {
         top: 0,
@@ -35,6 +40,12 @@ const HomeEditor = () => {
         right: plan?.width,
         bottom: plan?.height,
     }
+
+    useEffect(() => {
+        if (originPlan) {
+            setPlan(originPlan);
+        }
+    }, [originPlan])
 
     /**
      * Get all available devices
@@ -47,13 +58,6 @@ const HomeEditor = () => {
     }, []);
 
     /**
-     * Store devices from plan
-     */
-    useEffect(() => {
-        setMapDevices(plan?.devices || {});
-    }, [plan?.devices]);
-
-    /**
      * Filtered devices no on plan
      */
     const devicesNotOnMap = useMemo<Collection<Device>>(() => {
@@ -64,8 +68,15 @@ const HomeEditor = () => {
     }, [allDevices, mapDevices]);
 
     /**
-     * Plan actions handlers
+     * Plan handlers
      */
+    const setMapDevices = (updatedDevices: Collection<PlanDevice>) => {
+        setPlan({
+            ...plan,
+            devices: updatedDevices,
+        });
+    }
+
     const handleSave = () => {
         if (!plan) {
             return;
@@ -89,6 +100,18 @@ const HomeEditor = () => {
 
     const handleCloseSettings = () => {
         setPlanSettingsOpen(false);
+    }
+
+    const handleChangePlanSettings = (value: PlanSettingsValue) => {
+        setPlanSettingsOpen(false);
+        setPlan({
+            ...plan,
+            width: value.width,
+            height: value.height,
+            background: {
+                ...value.background,
+            }
+        });
     }
 
     /**
@@ -232,6 +255,7 @@ const HomeEditor = () => {
                         open={planSettingsOpen}
                         onClose={handleCloseSettings}
                         value={planSettingsValue!}
+                        onSubmit={handleChangePlanSettings}
                     />
                 </div>
             )}

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChromePicker, ColorChangeHandler, ColorResult } from 'react-color';
 import { Popover, SxProps, Theme } from '@mui/material';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
@@ -20,8 +20,11 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
         getContrastColorHEX(color)
     );
     
+    useEffect(() => {
+        setTextColor(getContrastColorHEX(color));
+    }, [color])
+
     const hanldeColorChange = (color: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
-        setTextColor(getContrastColorHEX(color.hex));
         onChange?.(color, event);
     }
 

@@ -1,7 +1,7 @@
 
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
-import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -15,38 +15,38 @@ import VisuallyHiddenInput from '../../../../components/VisuallyHiddenInput';
 import './style.scss';
 import { readFileAsDataURL } from '../../../../utils/file';
 
+export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;
+
 export type DialogProps = {
-    value: Pick<Plan, 'width' | 'height' | 'background'>;
+    value: DialogValue;
     open: boolean;
+    onSubmit: (value: DialogValue) => void;
     onClose: () => void;
 }
 
-type DialogContentProps = Pick<DialogProps, 'value'>;
+type DialogContentProps = {
+    value: DialogValue;
+    onChange: (value: DialogValue) => void;
+}
 
-const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
-    // store and change copy of value
-    const [dialogValue, setDialogValue] = useState<DialogProps['value']>(value);
+const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     const [backgroundNaturalSize, setBackgroundNaturalSize] = useState<Size>();
 
-    useEffect(() => {
-        setDialogValue(value);
-    }, [value]);
-
     const handleColorChange = (color: ColorResult) => {
-        setDialogValue({
-            ...dialogValue,
+        onChange({
+            ...value,
             background: {
-                ...dialogValue.background,
+                ...value.background,
                 color: color.hex,
             }
         });
     }
 
-    const handleDimensionsChange = (value: Point) => {
-        setDialogValue({
-            ...dialogValue,
-            width: value[0],
-            height: value[1],
+    const handleDimensionsChange = (dimensions: Point) => {
+        onChange({
+            ...value,
+            width: dimensions[0],
+            height: dimensions[1],
         });
     }
 
@@ -58,10 +58,10 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
         
         const imageDataURL = await readFileAsDataURL(file);
 
-        setDialogValue({
-            ...dialogValue,
+        onChange({
+            ...value,
             background: {
-                ...dialogValue.background,
+                ...value.background,
                 image: imageDataURL,
             }
         });
@@ -80,16 +80,16 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
             return;
         }
 
-        setDialogValue({
-            ...dialogValue,
+        onChange({
+            ...value,
             width: backgroundNaturalSize.width,
             height: backgroundNaturalSize.height,
         });
     }
 
-    const dimensions: Point = [dialogValue.width, dialogValue.height];
-    const color = dialogValue.background.color;
-    const image = dialogValue.background.image;
+    const dimensions: Point = [value.width, value.height];
+    const color = value.background.color;
+    const image = value.background.image;
 
     return (
         <DialogContent dividers={true}>
@@ -156,8 +156,8 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                             image,
                         }}
                         onBackgroundLoad={handleBackgroundLoad}
-                        width={dialogValue.width}
-                        height={dialogValue.height}
+                        width={value.width}
+                        height={value.height}
                         allowScale={true}
                         allowInitialScale={true}
                         styles={{
@@ -168,23 +168,46 @@ const PlanSettingsDialogContent = ({ value }: DialogContentProps) => {
                     />
                 </Box>
             </Box>
-            
         </DialogContent>
     )
 }
 
-const PlanSettingsDialog = ({ value, open, onClose }: DialogProps) => {
+const PlanSettingsDialog = ({ value, open, onClose, onSubmit }: DialogProps) => {
+    // store and change copy of value
+    const [dialogValue, setDialogValue] = useState<DialogProps['value']>(value);
+
+    useEffect(() => {
+        if (open) {
+            setDialogValue(value);
+        }
+    }, [value, open]);
+
+    const handleDialogValueChange = (newDialogValue: DialogValue) => {
+        setDialogValue(newDialogValue);
+    }
+
+    const handleSubmit = () => {
+        onSubmit(dialogValue);
+    }
+
+    const handleClose = (_?: {}, reason?: 'backdropClick' | 'escapeKeyDown') => {
+        if (reason === 'backdropClick') {
+            return;
+        }
+        onClose();
+    }
+
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             maxWidth="md"
             scroll="body"
         >
             <DialogTitle>Параметры</DialogTitle>
             <IconButton
                 aria-label="close"
-                onClick={onClose}
+                onClick={handleClose}
                 sx={{
                     position: 'absolute',
                     right: 8,
@@ -194,7 +217,18 @@ const PlanSettingsDialog = ({ value, open, onClose }: DialogProps) => {
             >
                 <CloseIcon />
             </IconButton>
-            {value && <PlanSettingsDialogContent value={value} />}
+
+            {dialogValue && (
+                <PlanSettingsDialogContent
+                    value={dialogValue}
+                    onChange={handleDialogValueChange}
+                />
+            )}
+
+            <DialogActions>
+                <Button type="submit" onClick={handleSubmit}>Применить</Button>
+                <Button onClick={handleClose}>Отмена</Button>
+            </DialogActions>
         </Dialog>
     )
 }
