@@ -16,11 +16,11 @@ export const bootstrapServer = () => {
         limit: '10mb'
     }));
     
-    app.use('/', loginRouter);
-    app.use('/', devicesRouter);
-    app.use('/', planRouter);
-    app.use('/', statsRouter);
-    app.use('/', mediaRouter);
+    app.use('/api', loginRouter);
+    app.use('/api', devicesRouter);
+    app.use('/api', planRouter);
+    app.use('/api', statsRouter);
+    app.use('/api', mediaRouter);
 
     app.use(errorHandler);
     
