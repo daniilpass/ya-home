@@ -47,24 +47,28 @@ export const updateUserPlan = async (req: Request<{id: string}>, res: Response, 
         }
         
         // Process base64 image if present
-        let mediaIdToDelete = null;
+        let outdatedMediaId = null;
         const imageBase64 = planJson.background.image ? parseBase64DataUrl(planJson.background.image) : null;
         if (imageBase64) {
-            mediaIdToDelete = existingPlan.json.background.image;
+            outdatedMediaId = existingPlan.json.background.image;
+            // Repalce data:base64 value to created mediaId
             planJson.background.image = await MediaStorage.saveMedia(userId, imageBase64);
+        } else {
+            // Repalce any other value to existing mediaId
+            planJson.background.image = existingPlan.json.background.image;
         }
     
         // Update entity
         existingPlan.json = planJson;
-        await existingPlan.save()
+        await existingPlan.save();
 
         // Delete old image
-        if (mediaIdToDelete) {
+        if (outdatedMediaId) {
             try {
-                await MediaStorage.deleteMedia(userId, mediaIdToDelete);
+                await MediaStorage.deleteMedia(userId, outdatedMediaId);
             } catch {
                 // do not throw
-                logger.error(`[server] Error occured while trying to delete user media: ${mediaIdToDelete}`);
+                logger.error(`[server] Error occured while trying to delete user media: ${outdatedMediaId}`);
             }
         }
 

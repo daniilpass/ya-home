@@ -96,28 +96,46 @@ const writeUserFile = async (userId: string, file: FileBase64): Promise<string> 
     return fileId;
 }
 
-const saveMedia = async (userId: string, media: FileBase64): Promise<string> => {
-    if (!isSupportedMime(media.mime)) {
-        throw new AppError(`Not supported media: ${media.mime}`);
+const assertMime = (mime: string) => {
+    if (!isSupportedMime(mime)) {
+        throw new AppError(`Not supported media: ${mime}`);
     }
+}
+
+const assertMediaId = (mediaId: string) => {
+    if (!uuid.validate(mediaId)) {
+        throw new AppError(`Not supported mediaId: ${mediaId}`);
+    }
+}
+
+const saveMedia = async (userId: string, media: FileBase64): Promise<string> => {
+    assertMime(media.mime);
 
     const mediaId = await writeUserFile(userId, media);
     return mediaId;
 };
 
 const findMedia = (userId: string, mediaId: string): Promise<FileInfo | null> => {
+    assertMediaId(mediaId);
+
     return findUserFile(userId, mediaId);
 }
 
 const deleteMedia = (userId: string, mediaId: string) => {
+    assertMediaId(mediaId);
+
     return deleteUserFile(userId, mediaId);
 }
 
 const getMediaUrl = (mediaId: string) => {
+    assertMediaId(mediaId);
+
     return `/api/media/${mediaId}`;
 }
 
 export const MediaStorage = {
+    assertMime,
+    assertMediaId,
     saveMedia,
     findMedia,
     deleteMedia,
