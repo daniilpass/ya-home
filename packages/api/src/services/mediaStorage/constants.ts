@@ -21,3 +21,5 @@ export const SUPPORTED_MIME = [
     MIME.imageJpg,
     MIME.imageJpeg,
 ]
+
+export const META_EXTENSION = '.meta';

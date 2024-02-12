@@ -2,7 +2,6 @@ import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import {useMapService} from '../../hooks/useMapService';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
-import { uuidOrDataToURL } from '../../utils/mediaStorage';
 
 const HomeMapW = () => {
     const {isLoaded, plan} = useConfiguration();
@@ -17,10 +16,7 @@ const HomeMapW = () => {
             <AppLoader isLoading={!isLoaded} />
             {plan && (
                 <HomeMap
-                    background={{
-                        color: plan.background.color,
-                        image: uuidOrDataToURL(plan.background.image),
-                    }}
+                    background={plan.background}
                     width={plan.width}
                     height={plan.height}
                     elements={plan.devices}

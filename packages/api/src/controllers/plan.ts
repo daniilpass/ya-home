@@ -5,10 +5,10 @@ import { Plan, schemas } from '@homemap/shared';
 import { MediaStorage } from '../services/mediaStorage/MediaStorage';
 import yaclient from '../yaClient';
 import { PlanRepository } from '../dal/repositories';
-import { BadRequestError, NotFoundError, SchemaValidationError } from '../errors';
+import { NotFoundError, SchemaValidationError } from '../errors';
 import { jsonValidator } from '../utils/jsonValidator';
-import { parseMediaBase64DataUrl } from '../utils/dataUrl';
-import { uuid } from '../utils/uuid';
+import { parseBase64DataUrl } from '../utils/dataUrl';
+import { logger } from '../utils';
 
 export const getUserPlan = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -45,25 +45,28 @@ export const updateUserPlan = async (req: Request<{id: string}>, res: Response, 
         if (!existingPlan) {
             throw new NotFoundError();
         }
-
-        /**
-         * Process image UUID or Base64
-         * UUID as is
-         * Base64 save to file and get UUID
-         */
-        const imageGuidOrDataUrl = planJson.background.image;
-        if (imageGuidOrDataUrl && !uuid.validate(imageGuidOrDataUrl)) {
-            const imageBase64 = parseMediaBase64DataUrl(imageGuidOrDataUrl);
-            if (!imageBase64) {
-                throw new BadRequestError('Bad request param: image');
-            } else {
-                planJson.background.image = await MediaStorage.saveBase64Media(userId, imageBase64);
-            }
+        
+        // Process base64 image if present
+        let mediaIdToDelete = null;
+        const imageBase64 = planJson.background.image ? parseBase64DataUrl(planJson.background.image) : null;
+        if (imageBase64) {
+            mediaIdToDelete = existingPlan.json.background.image;
+            planJson.background.image = await MediaStorage.saveMedia(userId, imageBase64);
         }
     
         // Update entity
         existingPlan.json = planJson;
         await existingPlan.save()
+
+        // Delete old image
+        if (mediaIdToDelete) {
+            try {
+                await MediaStorage.deleteMedia(userId, mediaIdToDelete);
+            } catch {
+                // do not throw
+                logger.error(`[server] Error occured while trying to delete user media: ${mediaIdToDelete}`);
+            }
+        }
 
         // Prepare response
         const updatedPlan: Plan = existingPlan.toModel();

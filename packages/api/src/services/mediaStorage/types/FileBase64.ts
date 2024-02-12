@@ -1,4 +1,4 @@
-export type MediaBase64 = {
+export type FileBase64 = {
     mime: string;
     data: string;
 }

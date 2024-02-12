@@ -12,7 +12,6 @@ import ColorPickerButton from '../../../../components/ColorPickerButton';
 import HomeMap from '../../../../components/HomeMap';
 import VisuallyHiddenInput from '../../../../components/VisuallyHiddenInput';
 import { readFileAsDataURL } from '../../../../utils/file';
-import { uuidOrDataToURL } from '../../../../utils/mediaStorage';
 
 import './style.scss';
 
@@ -154,7 +153,7 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                     <HomeMap
                         background={{
                             color,
-                            image: uuidOrDataToURL(image),
+                            image,
                         }}
                         onBackgroundLoad={handleBackgroundLoad}
                         width={value.width}

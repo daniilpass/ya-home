@@ -20,7 +20,8 @@ export const getUserMedia = async (req: Request<{id: string}>, res: Response, ne
             throw new NotFoundError();
         }
 
-        res.send(media);
+        res.setHeader('Content-Type', media.meta.mime);
+        res.send(media.data);
     } catch (error) {
         next(error);
     }

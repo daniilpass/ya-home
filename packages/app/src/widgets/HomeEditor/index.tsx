@@ -8,7 +8,6 @@ import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
-import { uuidOrDataToURL } from '../../utils/mediaStorage';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
@@ -212,10 +211,7 @@ const HomeEditor = () => {
                             />
                         </Toolbar>
                         <HomeMap 
-                            background={{
-                                color: plan.background.color,
-                                image: uuidOrDataToURL(plan.background.image),
-                            }}
+                            background={plan.background}
                             width={plan.width}
                             height={plan.height}
                             elements={mapDevices}

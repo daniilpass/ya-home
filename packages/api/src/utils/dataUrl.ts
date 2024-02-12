@@ -1,8 +1,8 @@
-import { MediaBase64 } from '../types/MediaBase64';
+import { FileBase64 } from '../services/mediaStorage/types/FileBase64';
 
 const dataUrlBase64Regex = /^(data){1}:(?<mime>[a-zA-Z\/]+){1};(base64),(?<data>.*)/;
 
-export const parseMediaBase64DataUrl = (dataUrl: string): MediaBase64 | null => {
+export const parseBase64DataUrl = (dataUrl: string): FileBase64 | null => {
     const match = dataUrl.match(dataUrlBase64Regex);
     if (!match) {
         return null;

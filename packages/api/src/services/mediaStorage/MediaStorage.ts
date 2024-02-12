@@ -1,76 +1,125 @@
 import { promises as fs, mkdir } from 'fs';
 import path from 'path';
 
-import { logger } from '../../utils';
 import { AppError } from '../../errors';
-import { MediaBase64 } from '../../types/MediaBase64';
 import { uuid } from '../../utils/uuid';
-import { MIME_TO_EXTENSION, SUPPORTED_MIME } from './constants'
+import { META_EXTENSION, MIME_TO_EXTENSION, SUPPORTED_MIME } from './constants'
 import { MEDIA_STORAGE_PATH } from '../../constants';
+
+import { FileBase64 } from './types/FileBase64';
+import { FileMeta } from './types/FileMeta';
+import { FileInfo } from './types/FileInfo';
 
 const isSupportedMime = (mime: string): boolean => SUPPORTED_MIME.includes(mime);
 
 const mimeToExtension = (mime: string): string | null => MIME_TO_EXTENSION[mime] ?? null;
 
+const createFileMeta = (file: FileBase64, realFilename: string): Buffer => {
+    const metaArr = [
+        file.mime,
+        realFilename,
+    ];
+
+    return Buffer.from(metaArr.join('\r\n'));
+}
+
+const readUserFileMeta = async (userId: string, fileId: string): Promise<FileMeta> => {
+    const metaBuffer = await readUserFile(userId, getMetaFileName(fileId));
+    const metaArr = metaBuffer.toString().split('\r\n');
+
+    return {
+        mime: metaArr[0],
+        name: metaArr[1],
+    }
+}
+
+const getFileName = (fileId: string) => `${fileId}`;
+
+const getMetaFileName = (fileId: string) => `${fileId}${META_EXTENSION}`;
+
 const getUserDir = (userId: string) => path.join(MEDIA_STORAGE_PATH, userId);
 
-const getUserFilepath = (userId: string, filename: string) => path.join(getUserDir(userId), filename);
+const getUserFilepath = (userId: string, file: string) => path.join(getUserDir(userId), file);
 
-const readUserDir = (userId: string) => fs.readdir(getUserDir(userId));
-
-const readUserFile = (userId: string, filename: string) => fs.readFile(getUserFilepath(userId, filename));
+const readUserFile = (userId: string, file: string) => fs.readFile(getUserFilepath(userId, file));
 
 const unlinkUserFile = (userId: string, file: string) => fs.unlink(getUserFilepath(userId, file));
 
-const findUserFile = async (userId: string, nameNoExt: string) => {
-    const files = await readUserDir(userId);
-    return files.find((file) => path.parse(file).name === nameNoExt);
+const deleteUserFile = async (userId: string, fileId: string) => {
+    await unlinkUserFile(userId, getFileName(fileId));
+    await unlinkUserFile(userId, getMetaFileName(fileId));
 }
 
-const saveBase64Media = async (userId: string, media: MediaBase64): Promise<string> => {
+
+const findUserFile = async (userId: string, fileId: string): Promise<FileInfo | null> => {
+    try {
+        return {
+            data: await readUserFile(userId, getFileName(fileId)),
+            meta: await readUserFileMeta(userId, fileId),
+        };
+    } catch {
+        return null;
+    }
+}
+
+const writeUserFile = async (userId: string, file: FileBase64): Promise<string> => {
+    const fileId = uuid.new();
+
+    const fileExt = mimeToExtension(file.mime);
+    const realFilename = `${fileId}${fileExt}`;
+
+    const dataFilename = getFileName(fileId);
+    const dataFilepath = getUserFilepath(userId, dataFilename);
+
+    const metaFilename = getMetaFileName(fileId);
+    const metaFilepath = getUserFilepath(userId, metaFilename);
+
+    const metaContent = createFileMeta(file, realFilename);
+
+    // Create user dir
+    const userDir = getUserDir(userId);
+    await fs.mkdir(userDir, { recursive: true });
+
+    // Write file meta
+    await fs.writeFile(
+        metaFilepath,
+        metaContent,
+    );
+
+    // Write file
+    await fs.writeFile(
+        dataFilepath,
+        file.data,
+        'base64',
+    );
+
+    return fileId;
+}
+
+const saveMedia = async (userId: string, media: FileBase64): Promise<string> => {
     if (!isSupportedMime(media.mime)) {
         throw new AppError(`Not supported media: ${media.mime}`);
     }
 
-    const mediaId = uuid.new();
-    const mediaExt = mimeToExtension(media.mime);
-    const filename = `${mediaId}${mediaExt}`;
-    const userDir = getUserDir(userId);
-    const filepath = getUserFilepath(userId, filename);
-
-    try {
-        await clearMedia(userId);
-    } catch {
-        logger.error('[MediaStorage] Error occured while trying to clear user media');
-    }
-
-    await fs.mkdir(userDir, { recursive: true });
-    await fs.writeFile(
-        filepath,
-        media.data,
-        'base64',
-    );
-
+    const mediaId = await writeUserFile(userId, media);
     return mediaId;
 };
 
-const findMedia = async (userId: string, mediaId: string): Promise<Buffer | null> => {
-    const filename = await findUserFile(userId, mediaId);
-    if (!filename) {
-        return null;
-    }
-
-    return readUserFile(userId, filename);
+const findMedia = (userId: string, mediaId: string): Promise<FileInfo | null> => {
+    return findUserFile(userId, mediaId);
 }
 
-const clearMedia = async (userId: string) => {
-    const files = await readUserDir(userId);
-    for (const file of files) {
-        await unlinkUserFile(userId, file);
-    }
+const deleteMedia = (userId: string, mediaId: string) => {
+    return deleteUserFile(userId, mediaId);
+}
+
+const getMediaUrl = (mediaId: string) => {
+    return `/api/media/${mediaId}`;
 }
 
 export const MediaStorage = {
-    saveBase64Media,
+    saveMedia,
     findMedia,
+    deleteMedia,
+    getMediaUrl,
 }
