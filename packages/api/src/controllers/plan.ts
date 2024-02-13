@@ -12,6 +12,9 @@ import { logger } from '../utils';
 import { PlanEntity } from '../dal/entities';
 import { mapToRecord } from '../mappers';
 
+// TODO: set to 1
+const PLAN_LIMIT = 100;
+
 export const getUserPlans = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // Find all existing user plans
@@ -63,7 +66,7 @@ export const createUserPlan = async (req: Request, res: Response, next: NextFunc
 
         // Find existing user plans
         const userPlans = await PlanRepository.getUserPlanAll(userId);
-        if (userPlans && userPlans.length > 100) {
+        if (userPlans && userPlans.length > PLAN_LIMIT) {
             throw new BadRequestError(`Достигнут лимит: ${userPlans.length}`);
         }
         
