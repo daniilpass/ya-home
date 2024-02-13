@@ -1,11 +1,12 @@
 import {useEffect, useRef, useState} from 'react';
+
+import { Plan } from '@homemap/shared';
+
 import MapService from '../services/mapService';
 import {Element} from '../services/mapService/model/Element';
-import {useConfiguration} from '../providers/ConfigurationContextProvider';
 
-export const useMapService = () => {
+export const useMapService = (plan: Plan | undefined) => {
     const mapServiceRef = useRef<MapService | null>(null);
-    const {plan} = useConfiguration();
     const [data, setData] = useState<Record<string, Element>>();
 
     useEffect(() => {

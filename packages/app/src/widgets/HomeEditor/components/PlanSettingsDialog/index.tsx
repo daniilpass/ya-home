@@ -20,6 +20,7 @@ export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;
 export type DialogProps = {
     value: DialogValue;
     open: boolean;
+    hideClose?: boolean;
     onSubmit: (value: DialogValue) => void;
     onClose: () => void;
 }
@@ -172,7 +173,7 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     )
 }
 
-const PlanSettingsDialog = ({ value, open, onClose, onSubmit }: DialogProps) => {
+const PlanSettingsDialog = ({ value, open, hideClose, onClose, onSubmit }: DialogProps) => {
     // store and change copy of value
     const [dialogValue, setDialogValue] = useState<DialogProps['value']>(value);
 
@@ -205,18 +206,20 @@ const PlanSettingsDialog = ({ value, open, onClose, onSubmit }: DialogProps) => 
             scroll="body"
         >
             <DialogTitle>Параметры</DialogTitle>
-            <IconButton
-                aria-label="close"
-                onClick={handleClose}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500],
-                }}
-            >
-                <CloseIcon />
-            </IconButton>
+            {!hideClose && (
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            )}
 
             {dialogValue && (
                 <PlanSettingsDialogContent
@@ -227,7 +230,7 @@ const PlanSettingsDialog = ({ value, open, onClose, onSubmit }: DialogProps) => 
 
             <DialogActions>
                 <Button type="submit" onClick={handleSubmit}>Применить</Button>
-                <Button onClick={handleClose}>Отмена</Button>
+                {!hideClose && <Button onClick={handleClose}>Отмена</Button>}
             </DialogActions>
         </Dialog>
     )

@@ -6,7 +6,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import ConfigurationContextProvider from './providers/ConfigurationContextProvider';
 import App from './app';
 
 import './index.css';
@@ -17,9 +16,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <BrowserRouter>
-        <ConfigurationContextProvider>
-            <CssBaseline />
-            <App />
-        </ConfigurationContextProvider>
+        <CssBaseline />
+        <App />
     </BrowserRouter>
 );

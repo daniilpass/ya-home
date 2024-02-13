@@ -7,13 +7,21 @@ const ENDPOINTS = {
         method: 'GET',
         url: '/devices',
     },
-    plan: {
+    getPlans: {
         method: 'GET',
         url: '/plan',
     },
-    savePlan: {
+    getPlanById: {
+        method: 'GET',
+        url: '/plan/:id',
+    },
+    updatePlan: {
         method: 'PUT',
         url: '/plan/:id',
+    },
+    createPlan: {
+        method: 'POST',
+        url: '/plan',
     },
     media: {
         url: '/media',

@@ -1,8 +1,8 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
-import {useConfiguration} from '../../providers/ConfigurationContextProvider';
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../components/Toolbar';
@@ -18,10 +18,20 @@ import { toRelativePosition } from './tools';
 import { DEFAULT_PLAN } from './constants';
 
 import './style.css';
+import { routes } from '../../app/routes';
 
-const HomeEditor = () => {
+export type Props = {
+    planId: number;
+    mode: 'edit' | 'create';
+} | {
+    planId: undefined;
+    mode: 'create';
+}
+
+const HomeEditor = ({ planId, mode }: Props) => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     // Plan state
-    const {isLoaded, plan: originPlan} = useConfiguration();
     const [plan, setPlan] = useState<Plan>(DEFAULT_PLAN);
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
     // Devices state
@@ -42,10 +52,24 @@ const HomeEditor = () => {
     }
 
     useEffect(() => {
-        if (originPlan) {
-            setPlan(originPlan);
+        if (mode === 'create') {
+            setIsLoading(false);
+            setPlanSettingsValue(DEFAULT_PLAN);
+            setPlanSettingsOpen(true);
+            return;
         }
-    }, [originPlan])
+    }, [mode]);
+
+    useEffect(() => {
+        if (mode === 'edit') {
+            ApiClient
+                .getPlan(planId)
+                .then((plan) => {
+                    setPlan(plan);
+                    setIsLoading(false);
+                });
+        }
+    }, [mode, planId]);
 
     /**
      * Get all available devices
@@ -82,8 +106,17 @@ const HomeEditor = () => {
             return;
         }
 
-        const updatedPlan = await ApiClient.savePlan(plan.id, plan);
+        const updatedPlan = await ApiClient.updatePlan(plan.id, plan);
         setPlan(updatedPlan);
+    }
+
+    const handleCreate = async () => {
+        if (!plan) {
+            return;
+        }
+
+        const { id } = await ApiClient.createPlan(plan);
+        navigate(`${routes.edit}/${id}`)
     }
 
     /**
@@ -94,20 +127,26 @@ const HomeEditor = () => {
         setPlanSettingsOpen(true);
     }
 
-    const handleCloseSettings = () => {
+    const handleCloseSettings = async () => {
         setPlanSettingsOpen(false);
     }
 
-    const handleChangePlanSettings = (value: PlanSettingsValue) => {
-        setPlanSettingsOpen(false);
-        setPlan({
+    const handleChangePlanSettings = async (value: PlanSettingsValue) => {
+        const updatedPlan = {
             ...plan,
             width: value.width,
             height: value.height,
             background: {
                 ...value.background,
             }
-        });
+        };
+
+        if (mode === 'edit') {
+            setPlanSettingsOpen(false);
+            setPlan(updatedPlan);
+        } else {
+            await handleCreate();
+        }
     }
 
     /**
@@ -191,7 +230,7 @@ const HomeEditor = () => {
     }
 
     return ( <>
-            <AppLoader isLoading={!isLoaded} />
+            <AppLoader isLoading={isLoading} />
             {plan && (
                 <div className='editor-root'>
                     <Toolbar position="top" withBorder>
@@ -249,6 +288,7 @@ const HomeEditor = () => {
                     </div>
                     <PlanSettingsDialog
                         open={planSettingsOpen}
+                        hideClose={mode === 'create'}
                         onClose={handleCloseSettings}
                         value={planSettingsValue!}
                         onSubmit={handleChangePlanSettings}

@@ -1,5 +1,5 @@
 
-import { Collection, Device, Plan } from '@homemap/shared';
+import { Collection, Device, Plan, PlanInfo } from '@homemap/shared';
 
 import {API_BASE_URL} from '../constants';
 
@@ -56,14 +56,24 @@ const getDevices = (): Promise<Collection<Device>> => {
     return request<Collection<Device>>(ENDPOINTS.devices);
 }
 
-const getPlan = (): Promise<Plan>  => {
-    return request<Plan>(ENDPOINTS.plan);
-}
-
-const savePlan = (planId: number, plan: Plan): Promise<Plan> => {
-    return request<Plan>(ENDPOINTS.savePlan, plan, {
+const getPlan = (planId: number): Promise<Plan>  => {
+    return request<Plan>(ENDPOINTS.getPlanById, null, {
         id: planId
     });
+}
+
+const getPlans = (): Promise<Collection<PlanInfo>>  => {
+    return request<Collection<PlanInfo>>(ENDPOINTS.getPlans);
+}
+
+const updatePlan = (planId: number, plan: Plan): Promise<Plan> => {
+    return request<Plan>(ENDPOINTS.updatePlan, plan, {
+        id: planId
+    });
+}
+
+const createPlan = (plan: Plan): Promise<Plan> => {
+    return request<Plan>(ENDPOINTS.createPlan, plan);
 }
 
 const getMediaUrl = (mediaId: string) => {
@@ -77,7 +87,9 @@ const ApiClient = {
     lightOff,
     getDevices,
     getPlan,
-    savePlan,
+    getPlans,
+    updatePlan,
+    createPlan,
     getMediaUrl,
 }
 

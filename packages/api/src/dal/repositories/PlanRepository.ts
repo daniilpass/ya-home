@@ -1,7 +1,7 @@
 import { PlanEntity } from '../entities';
 
-const getUserPlan = (userId: string): Promise<PlanEntity | null> => {
-    return PlanEntity.findOne({
+const getUserPlanAll = (userId: string): Promise<PlanEntity[] | null> => {
+    return PlanEntity.findAll({
         where: { userId }
     });
 }
@@ -13,6 +13,6 @@ const getUserPlanById = (userId: string, planId: number): Promise<PlanEntity | n
 }
 
 export {
-    getUserPlan,
+    getUserPlanAll,
     getUserPlanById,
 }

@@ -1,9 +1,11 @@
 import express from 'express';
-import { getUserPlan, updateUserPlan } from '../controllers/plan';
+import { getUserPlans, getUserPlanById, updateUserPlan, createUserPlan } from '../controllers/plan';
 
 const router = express.Router();
 
-router.get('/plan', getUserPlan);
+router.get('/plan', getUserPlans);
+router.get('/plan/:id', getUserPlanById);
 router.put('/plan/:id', updateUserPlan);
+router.post('/plan', createUserPlan);
 
 export default router;
