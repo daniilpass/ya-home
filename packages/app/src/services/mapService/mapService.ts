@@ -2,7 +2,7 @@ import { Collection, DeviceTypes } from '@homemap/shared';
 
 import {logger} from '../../common/tools';
 import ApiClient from '../../api';
-import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../constants';
+import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../configuration';
 
 import MapState from "./mapState";
 import {UNKNOWN_STATE} from "./constants";

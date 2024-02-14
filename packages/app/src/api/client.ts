@@ -1,7 +1,7 @@
 
 import { Collection, Device, Plan, PlanInfo } from '@homemap/shared';
 
-import {API_BASE_URL} from '../constants';
+import {API_BASE_URL} from '../configuration';
 
 import {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';

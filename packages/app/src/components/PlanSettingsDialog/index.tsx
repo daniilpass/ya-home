@@ -7,11 +7,11 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { Plan, Point, Size } from '@homemap/shared';
 
-import PointInput from '../../../../common/components/PointInput';
-import ColorPickerButton from '../../../../common/components/ColorPickerButton';
-import HomeMap from '../../../../components/HomeMap';
-import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
-import { readFileAsDataURL } from '../../../../utils/file';
+import PointInput from '../../common/components/PointInput';
+import ColorPickerButton from '../../common/components/ColorPickerButton';
+import VisuallyHiddenInput from '../../common/components/VisuallyHiddenInput';
+import { readFileAsDataURL } from '../../utils/file';
+import HomeMap from '../HomeMap';
 
 import './style.scss';
 
@@ -21,6 +21,8 @@ export type DialogProps = {
     value: DialogValue;
     open: boolean;
     hideClose?: boolean;
+    labelSubmit?: string;
+    labelClose?: string;
     onSubmit: (value: DialogValue) => void;
     onClose: () => void;
 }
@@ -173,7 +175,15 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     )
 }
 
-const PlanSettingsDialog = ({ value, open, hideClose, onClose, onSubmit }: DialogProps) => {
+const PlanSettingsDialog = ({
+    value,
+    open,
+    hideClose,
+    labelSubmit,
+    labelClose,
+    onClose,
+    onSubmit,
+}: DialogProps) => {
     // store and change copy of value
     const [dialogValue, setDialogValue] = useState<DialogProps['value']>(value);
 
@@ -229,8 +239,8 @@ const PlanSettingsDialog = ({ value, open, hideClose, onClose, onSubmit }: Dialo
             )}
 
             <DialogActions>
-                <Button type="submit" onClick={handleSubmit}>Применить</Button>
-                {!hideClose && <Button onClick={handleClose}>Отмена</Button>}
+                <Button type="submit" onClick={handleSubmit}>{labelSubmit ?? 'Применить'}</Button>
+                {!hideClose && <Button onClick={handleClose}>{labelClose ?? 'Отмена'}</Button>}
             </DialogActions>
         </Dialog>
     )

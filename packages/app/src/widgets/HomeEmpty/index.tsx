@@ -1,10 +1,44 @@
-import { Box, Typography } from '@mui/material'
-import { Link as RouterLink } from 'react-router-dom'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material'
 
-import { routes } from '../../app/routes'
-import RouterLinkButton from '../../common/components/RouterLinkButton'
+import { Plan } from '@homemap/shared';
 
+import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { routes } from '../../app/routes';
+import ApiClient from '../../api';
+
+import { DEFAULT_PLAN } from './constants';
 export const HomeEmpty = () => {
+    const navigate = useNavigate();
+    const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
+    const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsValue>();
+
+    const handleShowSettingsDialog = () => {
+        setPlanSettingsValue(DEFAULT_PLAN);
+        setPlanSettingsOpen(true);
+    }
+
+    const handleCloseSettingsDialog = () => {
+        setPlanSettingsOpen(false);
+    }
+
+    const handleSubmitSettingsDialog = async (value: PlanSettingsValue) => {
+        const plan: Plan = {
+            id: 0,
+            width: value.width,
+            height: value.height,
+            background: {
+                ...value.background,
+            },
+            devices: {},
+        };
+
+        const { id } = await ApiClient.createPlan(plan);
+
+        navigate(`${routes.edit}/${id}`)
+    }
+
     return (
         <Box sx={{
             width: '100%',
@@ -17,10 +51,19 @@ export const HomeEmpty = () => {
         }}>
             <Typography component="h1" variant="h5" align="center" marginBottom={1}>
                 У Вас еще нет ни одного плана =(
-            </Typography>            
-            <RouterLinkButton LinkComponent={RouterLink} to={routes.new} variant="contained">
+            </Typography>  
+          
+            <Button variant="contained" onClick={handleShowSettingsDialog}>
                 Создать сейчас
-            </RouterLinkButton>
+            </Button>
+    
+            <PlanSettingsDialog
+                open={planSettingsOpen}
+                value={planSettingsValue!}
+                labelSubmit='Создать'
+                onClose={handleCloseSettingsDialog}
+                onSubmit={handleSubmitSettingsDialog}
+            />
         </Box>
     )
 }

@@ -1,4 +1,4 @@
-import {LOGGER_ENABLED} from '../../constants';
+import {LOGGER_ENABLED} from '../../configuration';
 
 class Logger {
     enabled = LOGGER_ENABLED;

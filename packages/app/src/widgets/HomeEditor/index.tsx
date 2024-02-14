@@ -1,5 +1,4 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -12,27 +11,20 @@ import ApiClient from '../../api';
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
 import PlanActions from './components/PlanActions';
-import PlanSettingsDialog, { DialogValue as PlanSettingsValue, DialogProps as PlanSettingsProps } from './components/PlanSettingsDialog';
+import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import actions from './actions';
 import { toRelativePosition } from './tools';
-import { DEFAULT_PLAN } from './constants';
 
 import './style.css';
-import { routes } from '../../app/routes';
 
 export type Props = {
     planId: number;
-    mode: 'edit' | 'create';
-} | {
-    planId: undefined;
-    mode: 'create';
 }
 
-const HomeEditor = ({ planId, mode }: Props) => {
-    const navigate = useNavigate();
+const HomeEditor = ({ planId }: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     // Plan state
-    const [plan, setPlan] = useState<Plan>(DEFAULT_PLAN);
+    const [plan, setPlan] = useState<Plan>();
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
@@ -40,9 +32,9 @@ const HomeEditor = ({ planId, mode }: Props) => {
     const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
     // Plan settings dialog state
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
-    const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsProps['value']>();
+    const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsValue>();
 
-    const mapDevices = plan.devices;
+    const mapDevices = useMemo(() => plan?.devices ?? {}, [plan]);
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
     const planBounds: Partial<Bounds> = {
         top: 0,
@@ -52,24 +44,13 @@ const HomeEditor = ({ planId, mode }: Props) => {
     }
 
     useEffect(() => {
-        if (mode === 'create') {
-            setIsLoading(false);
-            setPlanSettingsValue(DEFAULT_PLAN);
-            setPlanSettingsOpen(true);
-            return;
-        }
-    }, [mode]);
-
-    useEffect(() => {
-        if (mode === 'edit') {
-            ApiClient
-                .getPlan(planId)
-                .then((plan) => {
-                    setPlan(plan);
-                    setIsLoading(false);
-                });
-        }
-    }, [mode, planId]);
+        ApiClient
+            .getPlan(planId)
+            .then((plan) => {
+                setPlan(plan);
+                setIsLoading(false);
+            });
+    }, [planId]);
 
     /**
      * Get all available devices
@@ -96,7 +77,7 @@ const HomeEditor = ({ planId, mode }: Props) => {
      */
     const setMapDevices = (updatedDevices: Collection<PlanDevice>) => {
         setPlan({
-            ...plan,
+            ...plan!,
             devices: updatedDevices,
         });
     }
@@ -108,15 +89,6 @@ const HomeEditor = ({ planId, mode }: Props) => {
 
         const updatedPlan = await ApiClient.updatePlan(plan.id, plan);
         setPlan(updatedPlan);
-    }
-
-    const handleCreate = async () => {
-        if (!plan) {
-            return;
-        }
-
-        const { id } = await ApiClient.createPlan(plan);
-        navigate(`${routes.edit}/${id}`)
     }
 
     /**
@@ -133,20 +105,15 @@ const HomeEditor = ({ planId, mode }: Props) => {
 
     const handleChangePlanSettings = async (value: PlanSettingsValue) => {
         const updatedPlan = {
-            ...plan,
+            ...plan!,
             width: value.width,
             height: value.height,
             background: {
                 ...value.background,
             }
         };
-
-        if (mode === 'edit') {
-            setPlanSettingsOpen(false);
-            setPlan(updatedPlan);
-        } else {
-            await handleCreate();
-        }
+        setPlanSettingsOpen(false);
+        setPlan(updatedPlan);
     }
 
     /**
@@ -288,7 +255,6 @@ const HomeEditor = ({ planId, mode }: Props) => {
                     </div>
                     <PlanSettingsDialog
                         open={planSettingsOpen}
-                        hideClose={mode === 'create'}
                         onClose={handleCloseSettings}
                         value={planSettingsValue!}
                         onSubmit={handleChangePlanSettings}

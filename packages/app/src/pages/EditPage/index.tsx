@@ -9,7 +9,7 @@ const EditPage = () => {
 
     return (
         <div className="edit-page">
-            <HomeEditor planId={Number(id)} mode="edit" />
+            <HomeEditor planId={Number(id)} />
         </div>
     );
 }
