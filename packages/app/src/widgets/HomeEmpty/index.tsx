@@ -2,9 +2,7 @@ import { Box, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 
 import { routes } from '../../app/routes'
-import RouterLinkButton from '../../components/RouterLinkButton'
-
-
+import RouterLinkButton from '../../common/components/RouterLinkButton'
 
 export const HomeEmpty = () => {
     return (

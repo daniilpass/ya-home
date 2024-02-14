@@ -8,9 +8,9 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Plan, Point, Size } from '@homemap/shared';
 
 import PointInput from '../../../../common/components/PointInput';
-import ColorPickerButton from '../../../../components/ColorPickerButton';
+import ColorPickerButton from '../../../../common/components/ColorPickerButton';
 import HomeMap from '../../../../components/HomeMap';
-import VisuallyHiddenInput from '../../../../components/VisuallyHiddenInput';
+import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
 import { readFileAsDataURL } from '../../../../utils/file';
 
 import './style.scss';

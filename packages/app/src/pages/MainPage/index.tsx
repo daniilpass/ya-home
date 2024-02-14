@@ -21,9 +21,9 @@ const MainPage = () => {
             .then((planInfos: Collection<PlanInfo>) => {
                 const planIds = Object.keys(planInfos);
                 if (planIds.length > 0) {
-                    // setIsLoading(false);
-                    // setIsEmpty(true);
-                    navigate(`${routes.view}/${planIds[0]}`);
+                    setIsLoading(false);
+                    setIsEmpty(true);
+                    // navigate(`${routes.view}/${planIds[0]}`);
                 } else {
                     setIsLoading(false);
                     setIsEmpty(true);

@@ -5,7 +5,7 @@ import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
-import Toolbar from '../../components/Toolbar';
+import Toolbar from '../../common/components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
 

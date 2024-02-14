@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import cx from 'classnames';
 
-import Loader from '../Loader';
+import Loader from '../../common/components/Loader';
 
 import './style.css';
 
