@@ -1,4 +1,5 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -7,6 +8,7 @@ import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../common/components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
+import { Dispatch } from '../../store';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
@@ -22,6 +24,7 @@ export type Props = {
 }
 
 const HomeEditor = ({ planId }: Props) => {
+    const dispatch = useDispatch<Dispatch>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
@@ -78,8 +81,13 @@ const HomeEditor = ({ planId }: Props) => {
             return;
         }
 
-        const updatedPlan = await ApiClient.updatePlan(plan.id, plan);
-        setPlan(updatedPlan);
+        try {
+            const updatedPlan = await ApiClient.updatePlan(plan.id, plan);
+            setPlan(updatedPlan);
+            dispatch.alerts.success('Сохранено');
+        } catch {
+            dispatch.alerts.error('Ошибка при сохранении');
+        }
     }
 
     /**
