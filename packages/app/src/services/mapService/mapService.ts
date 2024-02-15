@@ -8,6 +8,7 @@ import MapState from "./mapState";
 import {UNKNOWN_STATE} from "./constants";
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
+import { store } from '../../store';
 
 class MapService {
     state: MapState;
@@ -53,42 +54,52 @@ class MapService {
     }
 
     switchLight(deviceId: string) {
-        const element = this.state.elements[deviceId];
+        const device = this.state.elements[deviceId];
 
-        if (!element || element.substate !== Substate.Synced) {
+        if (!device || device.substate !== Substate.Synced) {
             return;
         }
 
-        if (element.type !== DeviceTypes.Light && element.type !== DeviceTypes.Switch) {
+        if (device.type !== DeviceTypes.Light && device.type !== DeviceTypes.Switch) {
             return;
         }
 
-        switch (element.state?.on) {
+        const prevState = {
+            state: device.state,
+            substate: device.substate,
+        }
+
+        let updatePromise: Promise<void> | undefined;
+
+        switch (device.state?.on) {
             case true:
-                ApiClient.lightOff(deviceId).then(() => {
-                    this.state.updateElement(deviceId, {
-                        substate: Substate.Ready,
-                    });
-                });
                 this.state.updateElement(deviceId, {
                     state: { on: false },
                     substate: Substate.Pending,
                 });
+
+                updatePromise = ApiClient.lightOff(deviceId);
                 break;
             case false:
-                ApiClient.lightOn(deviceId).then(() => {
-                    this.state.updateElement(deviceId, {
-                        substate: Substate.Ready,
-                    });
-                });
                 this.state.updateElement(deviceId, {
                     state: { on: true },
                     substate: Substate.Pending,
                 });
+
+                updatePromise = ApiClient.lightOn(deviceId);
                 break;
             default:
-                logger.error(UNKNOWN_STATE, element.state);
+                logger.error(UNKNOWN_STATE, device.state);
         }
+
+        updatePromise?.then(() => {
+            this.state.updateElement(deviceId, {
+                substate: Substate.Ready,
+            });
+        }).catch(() => {
+            store.dispatch.alerts.error('Ошибка');
+            this.state.updateElement(deviceId, prevState);
+        });
 
         this.handleUpdate();
     }

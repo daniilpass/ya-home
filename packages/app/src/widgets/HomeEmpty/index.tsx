@@ -7,6 +7,7 @@ import { Plan } from '@homemap/shared';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { routes } from '../../app/routes';
 import ApiClient from '../../api';
+import { store } from '../../store';
 
 import { DEFAULT_PLAN } from './constants';
 export const HomeEmpty = () => {
@@ -34,9 +35,12 @@ export const HomeEmpty = () => {
             devices: {},
         };
 
-        const { id } = await ApiClient.createPlan(plan);
-
-        navigate(`${routes.edit}/${id}`)
+        try {
+            const { id } = await ApiClient.createPlan(plan);
+            navigate(`${routes.edit}/${id}`)
+        } catch {
+            store.dispatch.alerts.error('Ошибка при создании');
+        }
     }
 
     return (

@@ -22,7 +22,7 @@ const AlertContainer = () => {
             position: 'absolute',
             left: '50%',
             transform: 'translate(-50%, 0)',
-            zIndex: 100,
+            zIndex: 1337,
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
