@@ -1,7 +1,7 @@
 import { CreationOptional, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { Plan, PlanInfo } from '@homemap/shared';
 
-import { MediaStorage } from '../../services/mediaStorage/MediaStorage';
+import MediaStorage from '../../services/mediaStorage';
 
 export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreationAttributes<PlanEntity>> {
     declare id: CreationOptional<number>;

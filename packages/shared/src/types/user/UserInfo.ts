@@ -1,4 +1,4 @@
-export type LoginInfo = {
+export type UserInfo = {
     id: string;
     login: string;
 }

@@ -1,16 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { MediaStorage } from '../services/mediaStorage/MediaStorage';
-import yaclient from '../yaClient';
-import { BadRequestError, NotFoundError} from '../errors';
-import { uuid } from '../utils/uuid';
+import YaService from '../services/yaService';
+import MediaStorage from '../services/mediaStorage';
+import { NotFoundError} from '../errors';
 
 export const getUserMedia = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
         const mediaId = req.params.id;
         MediaStorage.assertMediaId(mediaId);
 
-        const { id: userId } = await yaclient.getLoginInfo();
+        const userId = await YaService.getUserId();
         const media = await MediaStorage.findMedia(userId, mediaId);
         if (!media) {
             throw new NotFoundError();

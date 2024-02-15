@@ -12,7 +12,7 @@ const getUserPlanById = (userId: string, planId: number): Promise<PlanEntity | n
     });
 }
 
-export {
+export const PlanRepository = {
     getUserPlanAll,
     getUserPlanById,
 }

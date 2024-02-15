@@ -1,1 +1,1 @@
-export * as PlanRepository from './PlanRepository';
+export { PlanRepository } from './PlanRepository';

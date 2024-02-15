@@ -1,22 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { Collection, Device, DeviceAction, DeviceActionResult } from '@homemap/shared';
+import { Collection, Device, DeviceActionResult } from '@homemap/shared';
 
-import yaclient from '../yaClient';
-import {
-    mapYaDeviceToDevice,
-    mapDeviceActionToYaDevicesActions,
-    mapYaDeviceActionsResultToDeviceActionsResult,
-    mapToRecord,
-} from '../mappers';
-import { YaDevicesActionsRequest } from '../yaClient/model/requests/YaDevicesActionsRequest';
-import { YaUserInfoResponse } from '../yaClient/model/responses/YaUserInfoResponse';
-import { YaDevicesActionsResponse } from '../yaClient/model/responses/YaDevicesActionsResponse';
+import YaService from '../services/yaService';
+import ValidationService from '../services/validationService';
 
 export const getDevices = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const response: YaUserInfoResponse = await yaclient.getUserInfo();
-        const result: Collection<Device> = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
+        const result: Collection<Device> = await YaService.getUserDevices();
+
         res.json(result);
     } catch (error) {
         next(error);
@@ -25,20 +17,11 @@ export const getDevices = async (req: Request, res: Response, next: NextFunction
 
 export const postDevicesActions = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const deviceAction: DeviceAction = req.body;
-        const deviceActionRequest: YaDevicesActionsRequest = {
-            devices: [
-                mapDeviceActionToYaDevicesActions(deviceAction)
-            ],
-        };
+        ValidationService.validateDeviceAction(req.body);
     
-        const response: YaDevicesActionsResponse = await yaclient.postDevicesActions(deviceActionRequest);
-        const result: Collection<DeviceActionResult> = mapToRecord(
-            response.devices,
-            'id',
-            mapYaDeviceActionsResultToDeviceActionsResult,
-        );
-        res.json(result);       
+        const result: Collection<DeviceActionResult> = await YaService.postDeviceAction(req.body);
+
+        res.json(result);      
     } catch (error) {
         next(error);
     }
