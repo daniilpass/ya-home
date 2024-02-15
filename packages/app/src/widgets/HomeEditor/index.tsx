@@ -36,6 +36,7 @@ const HomeEditor = ({ planId }: Props) => {
 
     const mapDevices = useMemo(() => plan?.devices ?? {}, [plan]);
     const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
+
     const planBounds: Partial<Bounds> = {
         top: 0,
         left: 0,
@@ -61,16 +62,6 @@ const HomeEditor = ({ planId }: Props) => {
             .then(setAllDevices)
             .catch(() => {});
     }, []);
-
-    /**
-     * Filtered devices no on plan
-     */
-    const devicesNotOnMap = useMemo<Collection<Device>>(() => {
-        return Object.fromEntries(
-            Object.entries(allDevices)
-                .filter(([id]) => !Object.hasOwn(mapDevices, id))
-        );
-    }, [allDevices, mapDevices]);
 
     /**
      * Plan handlers
@@ -152,7 +143,7 @@ const HomeEditor = ({ planId }: Props) => {
             },
             mapTransform?.scale ?? 1,
         );
-        const newDevice = actions.addDevice(devicesNotOnMap[id], { icon, position }, planBounds);
+        const newDevice = actions.addDevice(allDevices[id], { icon, position }, planBounds);
 
         const updatedMapDevices = {
             [id]: newDevice,

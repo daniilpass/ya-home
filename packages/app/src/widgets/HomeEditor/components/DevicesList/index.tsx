@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 
-import { Collection, Device, PlanDevice } from '@homemap/shared';
+import { Collection, Device, DeviceTypes, PlanDevice } from '@homemap/shared';
 
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add';
@@ -28,10 +28,17 @@ export type Props = {
 const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelected, onDeviceAddClick }: Props) => {
     const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
 
-    const devicesNotOnPlan = useMemo<Collection<Device>>(() => {
+    /**
+     * Filtered supported devices not on plan
+     */
+    const supportedDevicesNotOnMap = useMemo<Collection<Device>>(() => {
         return Object.fromEntries(
             Object.entries(devices)
-                .filter(([id]) => !Object.hasOwn(devicesOnPlan, id))
+                .filter(([id, device]) => {
+                    const isSupported = device.type !== DeviceTypes.Unknown;
+                    const notOnPlan = !Object.hasOwn(devicesOnPlan, id);
+                    return isSupported && notOnPlan;
+                })
         );
     }, [devices, devicesOnPlan]);
 
@@ -93,12 +100,12 @@ const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelecte
                 <DialogContent dividers={true}>
                     <List component="div" sx={{padding: 0, width: 400 }}>
                         {
-                            Object.keys(devicesNotOnPlan).map(key => (
+                            Object.keys(supportedDevicesNotOnMap).map(key => (
                                 <ListItemButton
                                     key={key}
                                     onClick={(e) => handleDeviceAddClick(key, e)}
                                 >
-                                    <ListItemText primary={devicesNotOnPlan[key].name} />
+                                    <ListItemText primary={supportedDevicesNotOnMap[key].name} />
                                 </ListItemButton>
                             ))
                         }
