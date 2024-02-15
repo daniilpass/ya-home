@@ -4,6 +4,7 @@ import { routes } from './routes';
 import MainPage from '../pages/MainPage';
 import ViewPage from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 const App = () => {
     return (
@@ -17,6 +18,8 @@ const App = () => {
             <Route path={routes.edit}>
                 <Route path=":id" element={<EditPage />} />
             </Route>
+
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>        
     );
 }
