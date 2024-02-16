@@ -7,13 +7,15 @@ import AppLoader from '../../components/AppLoader';
 import { HomeEmpty } from '../../widgets/HomeEmpty';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../app/routes';
+import { useDispatch } from '../../store/hooks';
 
 import './style.css';
 
 const MainPage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isEmpty, setIsEmpty] = useState<boolean>(true);
-    const navigate = useNavigate();
 
     useEffect(() => {
         ApiClient
@@ -28,8 +30,11 @@ const MainPage = () => {
                     setIsLoading(false);
                     setIsEmpty(true);
                 }
+            })
+            .catch(() => {
+                dispatch.dialog.crash('Не удалось зарузить список планов');
             });
-    }, [navigate]);
+    }, [navigate, dispatch]);
 
     return (
         <div className="main-page">

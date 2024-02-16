@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 
 import { Alert } from '../../common/components/Alert';
-import { Dispatch, RootState } from '../../store';
+import { useSelector, useDispatch } from '../../store/hooks';
 
 const AlertContainer = () => {
-    const queue = useSelector((state: RootState) => state.alerts.queue);
-    const dispatch = useDispatch<Dispatch>();
+    const queue = useSelector((state) => state.alerts.queue);
+    const dispatch = useDispatch();
 
     const handleClose = (id: string) => {
         dispatch.alerts.close(id);

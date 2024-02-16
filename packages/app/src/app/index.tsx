@@ -1,33 +1,40 @@
 
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import { routes } from './routes';
+import { store } from '../store';
 import MainPage from '../pages/MainPage';
 import ViewPage from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AlertContainer from '../components/AlertContainer';
-import { store } from '../store';
+import DialogContainer from '../components/DialogContainer';
+import ErrorFallback from '../components/ErrorFallback';
+
+import { routes } from './routes';
 
 const App = () => {
     return (
         <Provider store={store}>
-            <AlertContainer />
             <BrowserRouter>
-                <Routes>
-                    <Route path={routes.root} element={<MainPage />} />
+                <AlertContainer />
+                <DialogContainer />
+                <ErrorBoundary fallback={<ErrorFallback />} >
+                    <Routes>
+                        <Route path={routes.root} element={<MainPage />} />
 
-                    <Route path={routes.view}>
-                        <Route path=":id" element={<ViewPage />} />
-                    </Route>
+                        <Route path={routes.view}>
+                            <Route path=":id" element={<ViewPage />} />
+                        </Route>
 
-                    <Route path={routes.edit}>
-                        <Route path=":id" element={<EditPage />} />
-                    </Route>
+                        <Route path={routes.edit}>
+                            <Route path=":id" element={<EditPage />} />
+                        </Route>
 
-                    <Route path="*" element={<NotFoundPage />} />
-                </Routes>
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Routes>
+                </ErrorBoundary>
             </BrowserRouter>
         </Provider>     
     );

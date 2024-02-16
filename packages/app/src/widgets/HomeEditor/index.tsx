@@ -1,5 +1,4 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
-import { useDispatch } from 'react-redux';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -8,7 +7,7 @@ import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../common/components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
-import { Dispatch } from '../../store';
+import { useDispatch } from '../../store/hooks';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
@@ -24,7 +23,7 @@ export type Props = {
 }
 
 const HomeEditor = ({ planId }: Props) => {
-    const dispatch = useDispatch<Dispatch>();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
@@ -53,8 +52,11 @@ const HomeEditor = ({ planId }: Props) => {
             .then((plan) => {
                 setPlan(plan);
                 setIsLoading(false);
+            })
+            .catch(() => {
+                dispatch.dialog.crash('Не удалось загрузить план');
             });
-    }, [planId]);
+    }, [planId, dispatch]);
 
     /**
      * Get all available devices
@@ -63,8 +65,10 @@ const HomeEditor = ({ planId }: Props) => {
         ApiClient
             .getDevices()
             .then(setAllDevices)
-            .catch(() => {});
-    }, []);
+            .catch(() => {
+                dispatch.dialog.crash('Не удалось загрузить список устройств');
+            });
+    }, [dispatch]);
 
     /**
      * Plan handlers

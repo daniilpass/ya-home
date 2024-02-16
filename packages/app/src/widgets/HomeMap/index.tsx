@@ -6,12 +6,14 @@ import { useMapService } from '../../hooks/useMapService';
 import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
 import ApiClient from '../../api';
+import { useDispatch } from '../../store/hooks';
 
 export type Props = {
     planId: number;
 }
 
 const HomeMapWidget = ({ planId }: Props) => {
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [plan, setPlan] = useState<Plan>();
     const [data, switchLight] = useMapService(plan);
@@ -22,8 +24,11 @@ const HomeMapWidget = ({ planId }: Props) => {
             .then((plan) => {
                 setPlan(plan);
                 setIsLoading(false);
+            })
+            .catch(() => {
+                dispatch.dialog.crash('Не удалось загрузить план');
             });
-    }, [planId]);
+    }, [planId, dispatch]);
 
     const handleElementClick = (id: string) => {
         switchLight(id);
