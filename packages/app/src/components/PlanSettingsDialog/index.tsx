@@ -1,17 +1,19 @@
 
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { Plan, Point, Size } from '@homemap/shared';
 
+import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB } from '../../configuration';
 import PointInput from '../../common/components/PointInput';
 import ColorPickerButton from '../../common/components/ColorPickerButton';
 import VisuallyHiddenInput from '../../common/components/VisuallyHiddenInput';
 import { readFileAsDataURL } from '../../utils/file';
 import HomeMap from '../HomeMap';
+import { useDispatch } from '../../store/hooks';
 
 import './style.scss';
 
@@ -34,6 +36,7 @@ type DialogContentProps = {
 
 const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     const [backgroundNaturalSize, setBackgroundNaturalSize] = useState<Size>();
+    const dispatch = useDispatch();
 
     const handleColorChange = (color: ColorResult) => {
         onChange({
@@ -59,6 +62,12 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
             return;
         }
         
+        if (file.size > MAX_IMAGE_SIZE_BYTES) {
+            dispatch.alerts.warning(`Выбранный файл больше ${MAX_IMAGE_SIZE_MB}мб`);
+            e.target.value = '';
+            return;
+        }
+
         const imageDataURL = await readFileAsDataURL(file);
 
         onChange({
@@ -108,21 +117,29 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                     width: 200,
                 }}>
                     <Divider variant="middle" textAlign="left">Изображение</Divider>
-                    <Button
-                        component="label"
-                        variant='contained'
-                        startIcon={<CloudUploadIcon />}
-                        sx={{width: '100%'}}
-                        size='large'
-                    >
-                        Загрузить
-                        <VisuallyHiddenInput
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            onChange={handleImageFileChange}
-                        />
-                    </Button>
-                
+                    <Box>
+                        <Button
+                            component="label"
+                            variant='contained'
+                            startIcon={<CloudUploadIcon />}
+                            sx={{width: '100%'}}
+                            size='large'
+                        >
+                            Загрузить
+                            <VisuallyHiddenInput
+                                type="file"
+                                accept="image/png, image/jpeg"
+                                onChange={handleImageFileChange}
+                            />
+                        </Button>
+                        <Typography color="GrayText" sx={{
+                            marginTop: 1,
+                            textAlign: 'center',
+                        }}>
+                            Размером до {MAX_IMAGE_SIZE_MB}мб
+                        </Typography>
+                    </Box>
+
                     <Divider variant="middle" textAlign="left">Заливка</Divider>
                     <ColorPickerButton
                         color={color}
