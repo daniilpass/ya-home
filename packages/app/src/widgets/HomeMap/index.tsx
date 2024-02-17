@@ -15,6 +15,7 @@ export type Props = {
 const HomeMapWidget = ({ planId }: Props) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [mapReady, setMapReady] = useState<boolean>(false);
     const [plan, setPlan] = useState<Plan>();
     const [data, switchLight] = useMapService(plan);
 
@@ -36,7 +37,7 @@ const HomeMapWidget = ({ planId }: Props) => {
 
     return (
         <>
-            <AppLoader isLoading={isLoading} />
+            <AppLoader isLoading={isLoading || !mapReady} />
             {plan && (
                 <HomeMap
                     background={plan.background}
@@ -50,6 +51,7 @@ const HomeMapWidget = ({ planId }: Props) => {
                     allowRotate={true}
                     allowInitialRotate={true}
                     transition
+                    onReady={() => setMapReady(true)}
                 />
             )}
         </>

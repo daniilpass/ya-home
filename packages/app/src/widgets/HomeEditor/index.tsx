@@ -25,6 +25,7 @@ export type Props = {
 const HomeEditor = ({ planId }: Props) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [mapReady, setMapReady] = useState<boolean>(false);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
@@ -200,7 +201,7 @@ const HomeEditor = ({ planId }: Props) => {
     }
 
     return ( <>
-            <AppLoader isLoading={isLoading} />
+            <AppLoader isLoading={isLoading || !mapReady} />
             {plan && (
                 <div className='editor-root'>
                     <Toolbar position="top" withBorder>
@@ -235,6 +236,7 @@ const HomeEditor = ({ planId }: Props) => {
                             onShadowPointDrag={handleShadowPointDrag}
                             onShadowMaskPointDrag={handleShadowMaskPointDrag}
                             onTansform={handleTransform}
+                            onReady={() => setMapReady(true)}
                             classes={{
                                 wrapper: 'editor_map-wrapper',
                                 layout: 'editor_map-layout',

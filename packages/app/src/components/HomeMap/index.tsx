@@ -1,14 +1,14 @@
-import {CSSProperties, FC, SyntheticEvent, useEffect, useMemo, useRef} from 'react';
+import {CSSProperties, FC, SyntheticEvent, useEffect, useMemo, useRef, useState} from 'react';
 import cx from 'classnames';
 
 import { Plan, PlanDevice } from '@homemap/shared';
 import { Element } from '../../services/mapService/model/Element';
 import { useResize } from './hooks/useResize';
 import ElementGroup from './components/ElementGroup';
+import { useDispatch } from '../../store/hooks';
 
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
-
 export type MapTransform = {
     scale: number;
     rotate: number;
@@ -38,7 +38,9 @@ export type Props = {
     onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
     onTansform?: (transfrom: MapTransform) => void;
+    onReady?: () => void;
     onBackgroundLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
+    onBackgroundError?: (e: SyntheticEvent<HTMLImageElement>) => void;
     classes?: {
         wrapper?: string,
         layout?: string,
@@ -70,13 +72,17 @@ const HomeMap: FC<Props> = ({
     onShadowPointDrag,
     onShadowMaskPointDrag,
     onTansform,
+    onReady,
     onBackgroundLoad,
+    onBackgroundError,
     classes,
     styles,
 }) => {
+    const dispatch = useDispatch();
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
+    const [isBackgrounError, setIsBackgrounError] = useState<boolean>(false);
     const [scale, rotate, translate] = useResize(
         wrapperRef,
         layoutRef,
@@ -91,16 +97,28 @@ const HomeMap: FC<Props> = ({
             naturalHeight: height,
         });
 
-    const handleElementClick = (id: string) => {
-        onElementClick && onElementClick(id);
-    }
-
     useEffect(() => {
         if (!svgRef.current || !onTansform) {
             return;
         }
         onTansform({scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect()})
     }, [scale, rotate, translate, svgRef, onTansform]);
+
+    const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
+        onBackgroundLoad?.(e);
+        onReady?.();
+    }
+
+    const handleBackgroundError = (e: SyntheticEvent<HTMLImageElement>) => {
+        dispatch.alerts.error('Ошибка загрузки фона');
+        setIsBackgrounError(true);
+        onBackgroundError?.(e);
+        onReady?.();
+    }
+
+    const handleElementClick = (id: string) => {
+        onElementClick && onElementClick(id);
+    }
 
     const toRelativePosition = (pageX: number, pageY: number) => {
         if (!svgRef.current) {
@@ -182,11 +200,15 @@ const HomeMap: FC<Props> = ({
         <TransformContextProvider value={{scale, rotate, editElementDrag}}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
-                    <img
-                        className="map-layout__image"
-                        src={background.image}
-                        onLoad={onBackgroundLoad}
-                    ></img>
+                    {!isBackgrounError ? (
+                        <img
+                            src={background.image}
+                            onLoad={handleBackgroundLoad}
+                            onError={handleBackgroundError}
+                        ></img>
+                    ) : (
+                        <div className="map-layout__image-fallback"></div>
+                    )}
                     <svg className="map-layout__svg" ref={svgRef}>
                         {
                             sortedElements.map(([id, element]) => (
