@@ -22,7 +22,16 @@ const addPathsPlugin = (config) => {
     return config;
 };
 
+const addFallbackOverride = (config) => {
+    config.resolve.fallback = {
+        ...config.resolve.fallback,
+        "url": require.resolve("url/"),
+    }
+    return config;
+}
+
 module.exports = override(
     addPathsPlugin,
     addExternalBabelPlugin('@babel/plugin-syntax-import-assertions'),
+    addFallbackOverride,
 )

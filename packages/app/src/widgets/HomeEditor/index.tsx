@@ -1,4 +1,4 @@
-import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback} from 'react';
+import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -11,10 +11,12 @@ import { useDispatch } from '../../store/hooks';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
-import PlanActions from './components/PlanActions';
+import PlanActions, { PlanActionEvent } from './components/PlanActions';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+
 import actions from './actions';
-import { toRelativePosition } from './tools';
+import { exportPlan, importPlan, toRelativePosition } from './tools';
+import { PlanActionsEnum } from './components/PlanActions/constants';
 
 import './style.css';
 
@@ -25,6 +27,12 @@ export type Props = {
 const HomeEditor = ({ planId }: Props) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    // Used for reactive UI update
+    const [actionsInProgress, setActionsInProgress] = useState<PlanActionsEnum[]>([]);
+    // Used to share latest value between callback's calls
+    const actionsInProgressRef = useRef<PlanActionsEnum[]>([]);
+
     const [mapReady, setMapReady] = useState<boolean>(false);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
@@ -72,6 +80,33 @@ const HomeEditor = ({ planId }: Props) => {
     }, [dispatch]);
 
     /**
+     * Plan action handler
+     */
+    const handleClickPlanAction = async (e: PlanActionEvent) => {
+        actionsInProgressRef.current = [...actionsInProgressRef.current, e.type];
+        setActionsInProgress([...actionsInProgressRef.current]);
+
+        switch (e.type) {
+            case PlanActionsEnum.Save:
+                await handleSave();
+                break;
+            case PlanActionsEnum.Settings:
+                handleShowSettings();
+                break;
+            case PlanActionsEnum.Export:
+                await handleExport();
+                break;
+            case PlanActionsEnum.Import:
+                await handleImport(e.file!);
+                break;
+        }
+
+        const index = actionsInProgressRef.current.findIndex(x => x === e.type);
+        actionsInProgressRef.current.splice(index, 1);
+        setActionsInProgress([...actionsInProgressRef.current]);
+    }
+
+    /**
      * Plan handlers
      */
     const setMapDevices = (updatedDevices: Collection<PlanDevice>) => {
@@ -92,6 +127,32 @@ const HomeEditor = ({ planId }: Props) => {
             dispatch.alerts.success('Сохранено');
         } catch {
             dispatch.alerts.error('Ошибка при сохранении');
+        }
+    }
+
+    const handleExport = async () => {
+        if (!plan) {
+            return;
+        }
+
+        try {
+            await exportPlan(plan);
+        } catch {
+            dispatch.alerts.error('Ошибка при экспорте');
+        }
+    }
+
+    const handleImport = async (file: File) => {
+        if (!plan) {
+            return;
+        }
+
+        try {
+            const importedPlan = await importPlan(file);
+            setPlan(importedPlan);
+            dispatch.alerts.success('План загружен. Не забудьте сохранить изменения.');
+        } catch (e) {
+            dispatch.alerts.error('Ошибка при импорте');
         }
     }
 
@@ -206,8 +267,8 @@ const HomeEditor = ({ planId }: Props) => {
                 <div className='editor-root'>
                     <Toolbar position="top" withBorder>
                         <PlanActions
-                            onSave={handleSave}
-                            onShowSettings={handleShowSettings}
+                            onClick={handleClickPlanAction}
+                            actionsInProgress={actionsInProgress}
                         />
                     </Toolbar>
                     <div className="editor-layout">
@@ -220,7 +281,7 @@ const HomeEditor = ({ planId }: Props) => {
                                 onDeviceAddClick={handleAddDevice}
                             />
                         </Toolbar>
-                        <HomeMap 
+                        <HomeMap
                             background={plan.background}
                             width={plan.width}
                             height={plan.height}

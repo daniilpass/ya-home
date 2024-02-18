@@ -1,25 +1,37 @@
 import {FC} from 'react';
-import cx from 'classnames';
+import { Backdrop, Box } from '@mui/material';
 
 import Loader from '../../common/components/Loader';
 
-import './style.css';
-
 type Props = {
     isLoading: boolean;
+    opacity?: 'full' | 'half'
 }
 
-const AppLoader: FC<Props> = ({isLoading}) => {
-    const className = cx('app-loader', {
-        'app-loader--loaded': !isLoading,
-    });
-
+const AppLoader: FC<Props> = ({
+    isLoading,
+    opacity = 'full',
+}) => {
     return (
-        <div className={className}>
-            {isLoading && (
-                <Loader />
-            )}
-        </div>
+        <Backdrop
+            sx={{
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                background: opacity === 'full' ? '#97cbfe' : undefined,
+            }}
+            open={isLoading}
+            transitionDuration={1000}
+            appear={false}
+        >
+            <Box sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Loader color='white' />
+            </Box>
+        </Backdrop>
     )
 }
 
