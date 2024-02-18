@@ -1,4 +1,13 @@
-import {CSSProperties, FC, SyntheticEvent, useEffect, useMemo, useRef, useState} from 'react';
+import {
+    CSSProperties,
+    FC,
+    SyntheticEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import cx from 'classnames';
 
 import { Plan, PlanDevice } from '@homemap/shared';
@@ -82,7 +91,8 @@ const HomeMap: FC<Props> = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
-    const [isBackgrounError, setIsBackgrounError] = useState<boolean>(false);
+    const isReadyRef = useRef<boolean>(false);
+    const [isBackgroundError, setIsBackgroundError] = useState<boolean>(false);
     const [scale, rotate, translate] = useResize(
         wrapperRef,
         layoutRef,
@@ -97,6 +107,19 @@ const HomeMap: FC<Props> = ({
             naturalHeight: height,
         });
 
+    const handleReady = useCallback(() => {
+        if (!isReadyRef.current) {
+            isReadyRef.current = true;
+            onReady?.();
+        }
+    }, [isReadyRef, onReady]);
+
+    useEffect(() => {
+        if (!background.image) {
+            handleReady();
+        }
+    }, [background.image, handleReady]);
+
     useEffect(() => {
         if (!svgRef.current || !onTansform) {
             return;
@@ -106,14 +129,14 @@ const HomeMap: FC<Props> = ({
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         onBackgroundLoad?.(e);
-        onReady?.();
+        handleReady();
     }
 
     const handleBackgroundError = (e: SyntheticEvent<HTMLImageElement>) => {
         dispatch.alerts.error('Ошибка загрузки фона');
-        setIsBackgrounError(true);
+        setIsBackgroundError(true);
         onBackgroundError?.(e);
-        onReady?.();
+        handleReady();
     }
 
     const handleElementClick = (id: string) => {
@@ -200,15 +223,21 @@ const HomeMap: FC<Props> = ({
         <TransformContextProvider value={{scale, rotate, editElementDrag}}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
-                    {!isBackgrounError ? (
+                    {/* Background image */}
+                    {!isBackgroundError && background.image && (
                         <img
                             src={background.image}
                             onLoad={handleBackgroundLoad}
                             onError={handleBackgroundError}
                         ></img>
-                    ) : (
+                    )}
+
+                    {/* Background image fallback*/}
+                    {isBackgroundError && (
                         <div className="map-layout__image-fallback"></div>
                     )}
+
+                    {/* Map */}
                     <svg className="map-layout__svg" ref={svgRef}>
                         {
                             sortedElements.map(([id, element]) => (

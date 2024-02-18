@@ -22,9 +22,5 @@ RUN npm run build-api
 # Expose port from env
 EXPOSE $PORT
 
-# Run extra scripts
-COPY docker/entrypoint.api.sh .
-ENTRYPOINT ["./entrypoint.api.sh"]
-
 # Run api when running a container
 CMD ["npm", "run", "start-api"]
