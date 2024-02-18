@@ -1,68 +1,4 @@
-import { Point, Bounds, PlanDevice, Offset } from '@homemap/shared';
-
-const MAGNET_RADIUS = 10;
-
-/**
- * Magnet point utils
- */
-
-const getMagnetPoint = (x: number, y: number, anchorX: number, anchorY: number, magnetRadius: number) => {
-    let magnetX;
-    let magnetY;
-    if (x >= anchorX - magnetRadius && x <= anchorX + magnetRadius) {
-        magnetX = anchorX;
-    }
-    if (y >= anchorY - magnetRadius && y <= anchorY + magnetRadius) {
-        magnetY = anchorY;
-    }
-    return [magnetX, magnetY];
-}
-
-const getMagnetPointsForAnchors = (
-    position: Point,
-    ignorePosition: Point | null,
-    ...anchors: Array<Array<Point>>
-) => {
-    let magnetX;
-    let magnetY;
-    const [x, y] = position;
-    const [ignoreX, ignorY] = ignorePosition || [];
-
-    for (const anchorPoints of anchors) {
-        for (const [anchorX, anchorY] of anchorPoints) {
-            if (ignoreX === anchorX && ignorY === anchorY) {
-                continue;
-            }
-
-            const [nextMagnetX, nextMagnetY] = getMagnetPoint(x, y, anchorX, anchorY, MAGNET_RADIUS);
-            magnetX = magnetX ?? nextMagnetX;
-            magnetY = magnetY ?? nextMagnetY;
-
-            if (magnetX && magnetY) {
-                return [magnetX, magnetY];
-            }
-        }
-    }
-
-    return [magnetX, magnetY];
-}
-
-export const getMagnetPoints = (
-    point: Point,
-    ignorePoint: Point | null,
-    device: PlanDevice,
-) => getMagnetPointsForAnchors(
-    point,
-    ignorePoint,
-    device.area?.shadowPoints || [],
-    device.area?.shadowMaskPoints || [],
-    device.area?.bulbsLinePoints || [],
-    [device.position]
-);
-
-/**
- * Next point utils
- */
+import { Point } from '@homemap/shared';
 
 const getNormilizedDirection = (p1: Point, p2: Point): Point => {
     const vector = [p1[0] - p2[0], p1[1] - p2[1]];
@@ -125,29 +61,4 @@ export const getNewPointsForSquare = (existingPoints: Point[], center: Point, ga
         const newPoint = getNextPoint(existingPoints[existingPoints.length - 1], existingPoints[existingPoints.length - 2], gap)
         return [newPoint];
     }
-}
-
-/**
- * Point bounds utils
- */
-
-export const limitPosition = ([x, y]: Point, bounds: Partial<Bounds>): Point => {
-    const maxX = bounds.right ?? Number.POSITIVE_INFINITY;
-    const minX = bounds.left ?? Number.NEGATIVE_INFINITY;
-    const maxY = bounds.bottom ?? Number.POSITIVE_INFINITY;
-    const minY = bounds.top ?? Number.NEGATIVE_INFINITY;
-
-    return [
-        Math.min(maxX, Math.max(minX, x)),
-        Math.min(maxY, Math.max(minY, y)),
-    ];
-}
-
-export const limitPositions = (points: Point[], bounds: Partial<Bounds>): Point[] => points.map(p => limitPosition(p, bounds));
-
-export const toRelativePosition = (position: Point, offset: Offset, scale: number): Point => {
-    return [
-        (position[0] - offset.left) / scale,
-        (position[1] - offset.top) / scale,
-    ]
 }
