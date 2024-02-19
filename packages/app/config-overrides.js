@@ -30,8 +30,21 @@ const addFallbackOverride = (config) => {
     return config;
 }
 
+const addServiceWorkerEntry = (config) => {
+    config.entry = {
+        main: './src/index.tsx',
+        sw: {
+            import: './src/serviceWorker/worker.ts',
+            filename:  'service-worker.js',
+        }
+    }
+
+    return config;
+}
+
 module.exports = override(
     addPathsPlugin,
     addExternalBabelPlugin('@babel/plugin-syntax-import-assertions'),
     addFallbackOverride,
+    addServiceWorkerEntry,
 )

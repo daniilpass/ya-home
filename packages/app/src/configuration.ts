@@ -4,3 +4,4 @@ export const API_SYNC_TIMEOUT = Number(process.env.REACT_APP_API_SYNC_TIMEOUT) |
 export const LOGGER_ENABLED = process.env.REACT_APP_LOGGER_ENABLED?.toLowerCase() === 'true';
 export const MAX_IMAGE_SIZE_MB = 5;
 export const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+export const IS_DEMO = Boolean(process.env.REACT_APP_DEMO);

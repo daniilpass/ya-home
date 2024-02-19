@@ -1,0 +1,2 @@
+export const log = (message?: any, ...optionalParams: any[]) => console.log('[SW]', message, ...optionalParams);
+export const error = (message?: any, ...optionalParams: any[]) => console.error('[SW]', message, ...optionalParams);
