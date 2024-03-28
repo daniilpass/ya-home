@@ -31,14 +31,15 @@ const addFallbackOverride = (config) => {
 }
 
 const addServiceWorkerEntry = (config) => {
-    config.entry = {
-        main: './src/index.tsx',
-        sw: {
-            import: './src/serviceWorker/worker.ts',
-            filename:  'service-worker.js',
+    if (process.env.REACT_APP_DEMO) {
+        config.entry = {
+            main: './src/index.tsx',
+            sw: {
+                import: './src/serviceWorker/worker.ts',
+                filename:  'service-worker.js',
+            }
         }
     }
-
     return config;
 }
 

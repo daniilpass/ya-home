@@ -10,3 +10,5 @@ export type DeviceState = Partial<
     DeviceStateOnOf &
     DeviceStateBrightness
 >;
+
+export type DeviceStateKeys = keyof DeviceState;

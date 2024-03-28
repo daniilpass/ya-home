@@ -1,21 +1,26 @@
 /// <reference lib="webworker" />
-import { log } from './tools';
+
+import { ResponseFactory } from '../demo/proxy/ResponseFactory';
+
 
 export {};
 declare let self: ServiceWorkerGlobalScope;
 
-self.addEventListener('install', (e) => {
-    log(e.type);
+const responseFactory = new ResponseFactory();
+
+self.addEventListener('install', (event) => {
     // Needs to activate updated SW immediately
     self.skipWaiting(); 
 });
 
-self.addEventListener('activate', (e) => {
-    log(e.type);
+self.addEventListener('activate', (event) => {
     // Needs to activate updated SW immediately
     return self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-    log(e.type, e.request);
+
+self.addEventListener('fetch', async (event) => {
+    event.respondWith(
+        responseFactory.makeResponse(event)
+    );
 });
