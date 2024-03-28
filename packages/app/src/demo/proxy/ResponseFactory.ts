@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep'
 import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, Plan, PlanInfo } from '@homemap/shared';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: "json" };
@@ -5,7 +6,6 @@ import { default as planResponseJson } from '../responses/plan.json' assert { ty
 import { default as devicesResponseJson } from '../responses/devices.json' assert { type: "json" };
 import { createJsonResponse, getRequestBody } from './tools';
 
-// TODO: plan edit (save - error - disabled)
 // TODO: bundle withoud json for non demo
 export class ResponseFactory {
     static readonly instance = new ResponseFactory();
@@ -14,7 +14,7 @@ export class ResponseFactory {
     planUrlPattern = /api\/plan\/\d*/;
     devicesUrlPattern = /api\/devices$/;
     deviceActionUrlPattern = /api\/devices\/actions$/;
-    updateInterval: number = 30000000;
+    updateInterval: number = 3000;
     lastUpdate: number;
     devicesResponse: Collection<Device>;
     planResponse: Plan;
@@ -22,9 +22,16 @@ export class ResponseFactory {
 
     constructor() {        
         this.lastUpdate = Date.now();
-        this.planListResponse = planListResponseJson;
-        this.planResponse = planResponseJson as unknown as Plan;
-        this.devicesResponse = devicesResponseJson;
+        this.planListResponse = cloneDeep(planListResponseJson);
+        this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
+        this.devicesResponse = cloneDeep(devicesResponseJson);
+    }
+
+    reset() {
+        this.lastUpdate = Date.now();
+        this.planListResponse = cloneDeep(planListResponseJson);
+        this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
+        this.devicesResponse = cloneDeep(devicesResponseJson);
     }
 
     async makeResponse(event: FetchEvent): Promise<Response> {

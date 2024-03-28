@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import HomeMap from '../../widgets/HomeMap';
+import DemoBanner from '../../widgets/DemoBanner';
 
 import './style.css';
 
@@ -9,6 +10,7 @@ const ViewPage = () => {
 
     return (
         <div className="view-page">
+            <DemoBanner />
             <HomeMap planId={Number(id)} />
         </div>
     );
