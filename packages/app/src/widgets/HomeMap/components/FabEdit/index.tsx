@@ -3,7 +3,7 @@ import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 
 import './style.scss'
-import { routes } from '../../../../app/routes';
+import { routes } from '../../../../app/router';
 
 export type FabEditProps = {
     planId: number;

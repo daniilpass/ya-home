@@ -1,6 +1,6 @@
-import { ErrorDialogProps } from '../../../common/components/ErrorDialog';
+import { DialogProps } from '../../../common/components/Dialog';
 
-export type DialogSettings = Pick<ErrorDialogProps, 'content' | 'open'> & {
+export type DialogSettings = Pick<DialogProps, 'content' | 'open'> & {
     type: 'error' | 'crash';
 }
 

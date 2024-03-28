@@ -1,5 +1,5 @@
-import ErrorDialogComponent from '../../common/components/ErrorDialog';
-import { routes } from '../../app/routes';
+import DialogComponent from '../../common/components/Dialog';
+import { routes } from '../../app/router';
 
 import { DialogProps } from './types';
 
@@ -13,8 +13,10 @@ const CrashDialog = ({ dialog }: DialogProps) => {
     }
 
     return (
-        <ErrorDialogComponent
+        <DialogComponent
             open={dialog?.open || false}
+            type="error"
+            title="Ошибка"
             content={dialog?.content}
             labelSubmit='На главную'
             labelClose='Перезагрузить'

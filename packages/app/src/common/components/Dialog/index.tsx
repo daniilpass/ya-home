@@ -1,7 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
-export type ErrorDialogProps = {
+export type DialogProps = {
     open: boolean;
+    type?: 'success' | 'error' | 'info' | 'warning',
+    title: string;
     content?: string;
     labelSubmit?: string;
     labelClose?: string;
@@ -11,32 +13,34 @@ export type ErrorDialogProps = {
     onClose?: () => void;
 }
 
-const ErrorDialog = ({
+const Dialog = ({
     open,
+    type = 'info',
+    title,
     content,
     labelSubmit = 'Submit',
     labelClose = 'Close',
     onSubmit,
     onClose,
-}: ErrorDialogProps) => {
+}: DialogProps) => {
     return (
-        <Dialog
+        <MuiDialog
             open={open}
             fullWidth
             maxWidth='sm'
         >
             <DialogTitle>
-                Ошибка
+                {title}
             </DialogTitle>
             <DialogContent>
                 {content}
             </DialogContent>
             <DialogActions>
-                {onSubmit && <Button onClick={onSubmit}>{labelSubmit}</Button>}
+                {onSubmit && <Button onClick={onSubmit} variant="contained" color={type}>{labelSubmit}</Button>}
                 {onClose && <Button onClick={onClose}>{labelClose}</Button>}
             </DialogActions>
-        </Dialog>
+        </MuiDialog>
     )
 }
 
-export default ErrorDialog;
+export default Dialog;

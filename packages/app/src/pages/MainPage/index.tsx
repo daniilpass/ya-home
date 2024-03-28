@@ -6,7 +6,7 @@ import ApiClient from '../../api';
 import AppLoader from '../../components/AppLoader';
 import { HomeEmpty } from '../../widgets/HomeEmpty';
 import { useNavigate } from 'react-router-dom';
-import { routes } from '../../app/routes';
+import { routes } from '../../app/router';
 import { useDispatch } from '../../store/hooks';
 
 import './style.css';

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import { routes } from '../../app/routes';
+import { routes } from '../../app/router';
 import RouterLinkButton from '../../common/components/RouterLinkButton';
 
 import './style.css';

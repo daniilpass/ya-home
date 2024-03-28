@@ -1,4 +1,4 @@
-import ErrorDialogComponent from '../../common/components/ErrorDialog';
+import DialogComponent from '../../common/components/Dialog';
 import { useDispatch } from '../../store/hooks';
 
 import { DialogProps } from './types';
@@ -11,8 +11,10 @@ const ErrorDialog = ({ dialog }: DialogProps) => {
     }
 
     return (
-        <ErrorDialogComponent
+        <DialogComponent
             open={dialog?.open || false}
+            type="error"
+            title="Ошибка"
             content={dialog?.content}
             labelClose='Закрыть'
             onClose={handleClose}

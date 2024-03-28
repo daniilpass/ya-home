@@ -1,5 +1,5 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useBlocker } from 'react-router-dom';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -9,7 +9,7 @@ import Toolbar from '../../common/components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
-import { routes } from '../../app/routes';
+import { routes } from '../../app/router';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
@@ -19,6 +19,7 @@ import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../comp
 import actions from './actions';
 import { exportPlan, importPlan, toRelativePosition } from './tools';
 import { PlanActionsEnum } from './components/PlanActions/constants';
+import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
 
 import './style.css';
 
@@ -29,6 +30,12 @@ export type Props = {
 const HomeEditor = ({ planId }: Props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
+    const blocker = useBlocker(({ currentLocation, nextLocation }) =>
+        hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
+    );
+
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     // Used for reactive UI update
@@ -134,6 +141,7 @@ const HomeEditor = ({ planId }: Props) => {
         try {
             const updatedPlan = await ApiClient.updatePlan(plan.id, plan);
             setPlan(updatedPlan);
+            setHasUnsavedChanges(false);
             dispatch.alerts.success('Сохранено');
         } catch {
             dispatch.alerts.error('Ошибка при сохранении');
@@ -208,6 +216,7 @@ const HomeEditor = ({ planId }: Props) => {
             ...mapDevices,
             [device.id]: device,
         });
+        setHasUnsavedChanges(true);
     }
 
     const handleDeleteDevice = (deviceId: string) => {
@@ -215,6 +224,7 @@ const HomeEditor = ({ planId }: Props) => {
         delete updatedMapDevices[deviceId];
         setMapDevices(updatedMapDevices);
         setSelectedMapDeviceId(undefined);
+        setHasUnsavedChanges(true);
     }
 
     const handleAddDevice = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -237,6 +247,7 @@ const HomeEditor = ({ planId }: Props) => {
         setMapDevices(updatedMapDevices);
         setSelectedMapDeviceId(id);
         setSelectedMapDeviceDrag(true);
+        setHasUnsavedChanges(true);
     }
 
     const handleSelectDevice = (id: string) => {
@@ -334,6 +345,11 @@ const HomeEditor = ({ planId }: Props) => {
                         onClose={handleCloseSettings}
                         value={planSettingsValue!}
                         onSubmit={handleChangePlanSettings}
+                    />
+                    <UnsavedChangesDialog
+                        open={blocker.state === 'blocked'}
+                        onSubmit={blocker.proceed!}
+                        onClose={blocker.reset!}
                     />
                 </div>
             )}
