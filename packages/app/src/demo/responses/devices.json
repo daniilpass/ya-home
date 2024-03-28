@@ -1,12 +1,4 @@
 {
-    "0d328e36-058f-4c2f-adfd-46dd8d57b193": {
-        "id": "0d328e36-058f-4c2f-adfd-46dd8d57b193",
-        "name": "Подсветка в туалете",
-        "type": "switch",
-        "state": {
-            "on": false
-        }
-    },
     "17c36c8d-3495-4015-a2cb-dc0abc7fe930": {
         "id": "17c36c8d-3495-4015-a2cb-dc0abc7fe930",
         "name": "Зеркало в коридоре",
@@ -43,14 +35,6 @@
         "id": "29c47132-b7f3-47af-8132-1c2452fcaddc",
         "name": "Подсветка в гардеробе",
         "type": "switch",
-        "state": {
-            "on": false
-        }
-    },
-    "2f84b3cc-4896-403c-889e-77630eb19baf": {
-        "id": "2f84b3cc-4896-403c-889e-77630eb19baf",
-        "name": "Ёлка",
-        "type": "light",
         "state": {
             "on": false
         }
@@ -127,14 +111,6 @@
             "on": true
         }
     },
-    "765af178-5cd9-43b3-b87d-d8046b735112": {
-        "id": "765af178-5cd9-43b3-b87d-d8046b735112",
-        "name": "Мастер выключатель",
-        "type": "switch",
-        "state": {
-            "on": true
-        }
-    },
     "785daa2a-581d-44cd-8dbc-d069da522e03": {
         "id": "785daa2a-581d-44cd-8dbc-d069da522e03",
         "name": "Подсветка в спальне",
@@ -163,14 +139,6 @@
         "id": "a151a962-c27d-4f8a-8702-31a95d0ee206",
         "name": "Рабочая поверхность",
         "type": "switch",
-        "state": {
-            "on": false
-        }
-    },
-    "b4c928df-d8a1-4936-9e44-b76ea693c099": {
-        "id": "b4c928df-d8a1-4936-9e44-b76ea693c099",
-        "name": "Шлюз",
-        "type": "light",
         "state": {
             "on": false
         }
