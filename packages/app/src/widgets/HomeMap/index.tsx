@@ -7,6 +7,7 @@ import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
+import FabEdit from './components/FabEdit';
 
 export type Props = {
     planId: number;
@@ -39,20 +40,23 @@ const HomeMapWidget = ({ planId }: Props) => {
         <>
             <AppLoader isLoading={isLoading || !mapReady} />
             {plan && (
-                <HomeMap
-                    background={plan.background}
-                    width={plan.width}
-                    height={plan.height}
-                    elements={plan.devices}
-                    data={data}
-                    onElementClick={handleElementClick}
-                    allowScale={true}
-                    allowInitialScale={true}
-                    allowRotate={true}
-                    allowInitialRotate={true}
-                    transition
-                    onReady={() => setMapReady(true)}
-                />
+                <>
+                    <HomeMap
+                        background={plan.background}
+                        width={plan.width}
+                        height={plan.height}
+                        elements={plan.devices}
+                        data={data}
+                        onElementClick={handleElementClick}
+                        allowScale={true}
+                        allowInitialScale={true}
+                        allowRotate={true}
+                        allowInitialRotate={true}
+                        transition
+                        onReady={() => setMapReady(true)}
+                    />
+                    <FabEdit planId={plan.id} />
+                </>
             )}
         </>
     );

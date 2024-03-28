@@ -3,6 +3,7 @@ import { Box, Button, Divider } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExportIcon from '@mui/icons-material/Upgrade';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import ImportIcon from '../../../../common/components/Icons/ImportIcon';
 import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
@@ -39,6 +40,7 @@ const PlanActions = ({
     const handleClickSave= () => onClick({ type: PlanActionsEnum.Save });
     const handleClickSettings = () => onClick({ type: PlanActionsEnum.Settings });
     const handleClickExport = () => onClick({ type: PlanActionsEnum.Export });
+    const handleClickExitToView = () => onClick({ type: PlanActionsEnum.ExitToView });
 
     return (
         <Box sx={{
@@ -49,6 +51,12 @@ const PlanActions = ({
             gap: 1,
             width: '100%',
         }}>
+            <Button onClick={handleClickExitToView} startIcon={<ExitToAppIcon sx={{ transform: 'rotate(180deg)' }} />}>
+                К просмотру
+            </Button>
+
+            <Divider orientation="vertical" />
+
             <LoadingButton
                 onClick={handleClickSave}
                 startIcon={<SaveIcon />}

@@ -1,4 +1,5 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
 
@@ -8,6 +9,7 @@ import Toolbar from '../../common/components/Toolbar';
 import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
+import { routes } from '../../app/routes';
 
 import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
@@ -26,6 +28,7 @@ export type Props = {
 
 const HomeEditor = ({ planId }: Props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     // Used for reactive UI update
@@ -99,11 +102,18 @@ const HomeEditor = ({ planId }: Props) => {
             case PlanActionsEnum.Import:
                 await handleImport(e.file!);
                 break;
+            case PlanActionsEnum.ExitToView:
+                handleExitToView();
+                break;
         }
 
         const index = actionsInProgressRef.current.findIndex(x => x === e.type);
         actionsInProgressRef.current.splice(index, 1);
         setActionsInProgress([...actionsInProgressRef.current]);
+    }
+
+    const handleExitToView = () => {
+        navigate(`${routes.view}/${planId}`);
     }
 
     /**

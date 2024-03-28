@@ -3,4 +3,5 @@ export enum PlanActionsEnum {
     Settings = 'settings',
     Export = 'export',
     Import = 'import',
+    ExitToView = 'exitToView',
 };
