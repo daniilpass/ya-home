@@ -10,8 +10,7 @@ import { mapToRecord } from '../../mappers';
 import YaService from '../yaService';
 import MediaStorage from '../mediaStorage';
 
-// TODO: set to 1
-const PLAN_LIMIT = 100;
+const PLAN_LIMIT = 1;
 
 const getUserPlans = async (): Promise<Collection<PlanInfo>> => {
     const userId = await YaService.getUserId();

@@ -9,7 +9,6 @@ type Props = {
     labelX?: string;
     labelY?: string;
     vertical?: boolean;
-    // TODO: pass min, max
 }
 
 const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, onChange}) => {

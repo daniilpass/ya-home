@@ -6,7 +6,6 @@ import { default as planResponseJson } from '../responses/plan.json' assert { ty
 import { default as devicesResponseJson } from '../responses/devices.json' assert { type: "json" };
 import { createJsonResponse, getRequestBody } from './tools';
 
-// TODO: bundle withoud json for non demo
 export class ResponseFactory {
     static readonly instance = new ResponseFactory();
 
