@@ -1,0 +1,1 @@
+export { type RootModel, models } from './root';

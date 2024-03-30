@@ -1,0 +1,4 @@
+.edit-action__move {
+    cursor: move;
+    pointer-events: bounding-box;
+}

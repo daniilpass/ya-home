@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "background": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      },
+      "required": ["color"]
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "devices": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "position": {
+            "$ref": "#/$defs/point"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "area": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "bulbsLinePoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              },
+              "shadowPoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              },
+              "shadowMaskPoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              }
+            }
+          }
+        },
+        "required": ["id", "name", "type", "position"]
+      }
+    }
+  },
+  "required": ["width", "height", "background", "devices"],
+  "$defs": {
+    "point": {
+      "type": "array",
+      "contains": {
+        "type": "number"
+      },
+      "minContains": 2,
+      "maxContains": 2
+    }
+  }
+}
