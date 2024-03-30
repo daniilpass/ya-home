@@ -1,0 +1,1 @@
+export { deviceTypeToName } from './deviceTypeToName';

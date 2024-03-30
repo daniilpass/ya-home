@@ -1,5 +1,5 @@
-export const DeviceTypes = {
-    Unknown: 'unknown',
-    Switch: 'switch',
-    Light: 'light',
+export enum DeviceTypes {
+    Unknown = 'unknown',
+    Switch = 'switch',
+    Light=  'light',
 };

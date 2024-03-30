@@ -23,14 +23,14 @@ export class ResponseFactory {
         this.lastUpdate = Date.now();
         this.planListResponse = cloneDeep(planListResponseJson);
         this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson);
+        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
     }
 
     reset() {
         this.lastUpdate = Date.now();
         this.planListResponse = cloneDeep(planListResponseJson);
         this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson);
+        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
     }
 
     async makeResponse(event: FetchEvent): Promise<Response> {
