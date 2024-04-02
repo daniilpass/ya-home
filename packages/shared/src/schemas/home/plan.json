@@ -41,6 +41,9 @@
           "type": {
             "type": "string"
           },
+          "subtype": {
+            "type": "string"
+          },
           "position": {
             "$ref": "#/$defs/point"
           },
@@ -72,7 +75,7 @@
             }
           }
         },
-        "required": ["id", "name", "type", "position"]
+        "required": ["id", "name", "type", "subtype", "position"]
       }
     }
   },
