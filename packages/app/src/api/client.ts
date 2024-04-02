@@ -1,12 +1,12 @@
 
-import { Collection, Device, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
 
 import {API_BASE_URL} from '../configuration';
 
 import {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 
-const request = <TResponse>(endpoint: Endpoint, payload?: any, params?: Record<string, string | number>) => {
+const request = <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {
     let resource = `${API_BASE_URL}${endpoint.url}`;
     if (params) {
         for(const [key, value] of Object.entries(params)) {
@@ -36,7 +36,7 @@ const ping = () => {
 }
 
 const lightToggle = (deviceId: string, value: boolean) => {
-    return request<void>(ENDPOINTS.action, {
+    return request<void, DeviceAction>(ENDPOINTS.action, {
         id: deviceId,
         state: {
             on: value,

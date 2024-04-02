@@ -5,6 +5,7 @@ import {logger} from '../../common/tools';
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import {SYNC_TYMEOUT, STATE_SYNCED} from './constants';
+import { Collection, Device } from '@homemap/shared';
 
 class MapState {
     elements: Record<string, Element>;
@@ -24,9 +25,9 @@ class MapState {
         });
     }
 
-    updateElements(elementsUpdate: Record<string, Element>) {
+    updateElements(devices: Collection<Device>) {
         Object.entries(this.elements).forEach(([id, element]) => {
-            const elementUpdate = elementsUpdate[id];
+            const elementUpdate = devices[id];
             
             if (!elementUpdate) {
                 this.updateElement(id, {

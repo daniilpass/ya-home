@@ -1,5 +1,2 @@
-export enum DeviceTypes {
-    Unknown = 'unknown',
-    Switch = 'switch',
-    Light=  'light',
-};
+export { DeviceTypes } from './DeviceTypes';
+export { DeviceSubtypes } from './DeviceSubtypes';

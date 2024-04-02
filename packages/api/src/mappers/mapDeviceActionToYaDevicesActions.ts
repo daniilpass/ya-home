@@ -1,6 +1,8 @@
 import { DeviceAction, DeviceState, Entries } from '@homemap/shared';
 import { YaDeviceActions } from '../yaClient/model/YaDeviceActions';
 import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';
+import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
+import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
 export const mapDeviceActionToYaDevicesActions = (deviceAction: DeviceAction): YaDeviceActions => {
     const actions: YaDeviceCapability[] = [];
@@ -10,9 +12,9 @@ export const mapDeviceActionToYaDevicesActions = (deviceAction: DeviceAction): Y
         switch (stateKey) {
             case 'on':
                 actions.push({
-                    type: 'devices.capabilities.on_off',
+                    type: YaDeviceCapabilityType.OnOff,
                     state: {
-                        instance: stateKey,
+                        instance: YaDeviceCapabilityInstance.On,
                         value: stateValue,
                     },
                 })

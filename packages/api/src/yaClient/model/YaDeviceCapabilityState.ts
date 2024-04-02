@@ -1,11 +1,11 @@
-import { YaDeviceCapabilityStateInstance } from './YaDeviceCapabilityStateInstance';
+import { YaDeviceCapabilityInstance } from './YaDeviceCapabilityInstance';
 
 type YaDeviceCapabilityStateActionResult = {
     status: 'DONE' | 'ERROR';
 }
 
 export type YaDeviceCapabilityState = {
-    instance: YaDeviceCapabilityStateInstance;
+    instance: YaDeviceCapabilityInstance;
     value?: unknown;
     action_result?: YaDeviceCapabilityStateActionResult
 }

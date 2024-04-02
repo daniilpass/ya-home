@@ -1,43 +1,8 @@
 // https://yandex.ru/dev/dialogs/smart-home/doc/concepts/device-types.html#device-types__types
-export type YaDeviceType = 
-    'devices.types.switch' |
-    'devices.types.camera' |
-    'devices.types.cooking' |
-    'devices.types.cooking.coffee_maker' |
-    'devices.types.cooking.kettle' |
-    'devices.types.cooking.multicooker' |
-    'devices.types.dishwasher' |
-    'devices.types.humidifier' |
-    'devices.types.iron' |
-    'devices.types.light' |
-    'devices.types.media_device' |
-    'devices.types.media_device.receiver' |
-    'devices.types.media_device.tv' |
-    'devices.types.media_device.tv_box' |
-    'devices.types.openable' |
-    'devices.types.openable.curtain' |
-    'devices.types.other' |
-    'devices.types.pet_drinking_fountain' |
-    'devices.types.pet_feeder' |
-    'devices.types.purifier' |
-    'devices.types.sensor' |
-    'devices.types.sensor.button' |
-    'devices.types.sensor.climate' |
-    'devices.types.sensor.gas' |
-    'devices.types.sensor.illumination' |
-    'devices.types.sensor.motion' |
-    'devices.types.sensor.open' |
-    'devices.types.sensor.smoke' |
-    'devices.types.sensor.vibration' |
-    'devices.types.sensor.water_leak' |
-    'devices.types.smart_meter' |
-    'devices.types.smart_meter.cold_water' |
-    'devices.types.smart_meter.electricity' |
-    'devices.types.smart_meter.gas' |
-    'devices.types.smart_meter.heat' |
-    'devices.types.smart_meter.hot_water' |
-    'devices.types.socket' |
-    'devices.types.thermostat' |
-    'devices.types.thermostat.ac' |
-    'devices.types.vacuum_cleaner' |
-    'devices.types.washing_machine';
+export enum YaDeviceType {
+    Light = 'devices.types.light',
+    Switch = 'devices.types.switch',
+    Sensor = 'devices.types.sensor',
+    ClimateSensor = 'devices.types.sensor.climate',
+    MotionSensor = 'devices.types.sensor.motion',
+}

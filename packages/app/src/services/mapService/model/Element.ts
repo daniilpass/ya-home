@@ -1,11 +1,12 @@
-import { Device } from '@homemap/shared';
+import { Device, DeviceState, DeviceSubtypes, DeviceTypes } from '@homemap/shared';
 import {Substate} from './Substate';
 
 export type Element = {
     id: Device['id'];
     name: Device['name'];
-    type: Device['type'];
-    state?: Device['state'];
+    type: DeviceTypes;
+    subtype: DeviceSubtypes;
+    state?: DeviceState;
     substate?: Substate;
     updatedAt?: number;
 }

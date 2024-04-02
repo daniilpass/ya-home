@@ -7,6 +7,7 @@ export const addDevice = (device: Device, properties: Pick<PlanDevice, 'icon' | 
         id: device.id,
         name: device.name,
         type: device.type,
+        subtype: device.subtype,
         icon: properties.icon,
         position: limitPosition(properties.position, bounds),
     };
