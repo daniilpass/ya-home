@@ -189,6 +189,20 @@ const HomeMap: FC<Props> = ({
     const sortedElements = useMemo(() => {
         const elementsEntries = Object.entries(elements)
     
+        // TODO: implement z-index for plan devices
+        // First render elements with shadow
+        elementsEntries.sort((a, b) => {
+            const aDevice = a[1];
+            const bDevice = b[1];
+            if (aDevice.area?.shadowPoints && bDevice.area?.shadowPoints) {
+                return 0
+            } else if (aDevice.area?.shadowPoints) {
+                return -1;
+            } else {
+                return 1;
+            }
+        })
+
         // In edit mode, bring the edit element to the top.
         if (editElementId) {
             const editElementIndex = elementsEntries.findIndex(([id]) => id === editElementId);
