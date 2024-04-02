@@ -4,4 +4,5 @@ export enum PlanActionsEnum {
     Export = 'export',
     Import = 'import',
     ExitToView = 'exitToView',
+    SyncDevices = 'syncDevices',
 };

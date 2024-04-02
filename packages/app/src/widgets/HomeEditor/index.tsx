@@ -112,6 +112,9 @@ const HomeEditor = ({ planId }: Props) => {
             case PlanActionsEnum.ExitToView:
                 handleExitToView();
                 break;
+            case PlanActionsEnum.SyncDevices:
+                await handleSyncDevices();
+                break;
         }
 
         const index = actionsInProgressRef.current.findIndex(x => x === e.type);
@@ -145,6 +148,47 @@ const HomeEditor = ({ planId }: Props) => {
             dispatch.alerts.success('Сохранено');
         } catch {
             dispatch.alerts.error('Ошибка при сохранении');
+        }
+    }
+
+    const handleSyncDevices = async () => {
+        if (!plan) {
+            return;
+        }
+
+        try {
+            // Get device info
+            const devices = await ApiClient.getDevices();
+
+            // Copy old plan wihtout devices
+            const updatedPlan = { ...plan };
+            updatedPlan.devices = {};
+
+            // Fill updated plan devices
+            Object.entries(plan.devices).forEach(([id, planDevice]) => {
+                const device = devices[id];
+                if (!device) {
+                    return;
+                }
+
+                const updatedDevice: Collection<PlanDevice> = {
+                    [id]: {
+                        ...planDevice,
+                        name: device.name,
+                        type: device.type,
+                        subtype: device.subtype,
+                    }
+                }
+
+                Object.assign(updatedPlan.devices, updatedDevice);
+            })
+
+            // Update state
+            setPlan(updatedPlan);
+
+            dispatch.alerts.success('Устройства синхронизированы. Не забудьте сохранить изменения.');
+        } catch {
+            dispatch.alerts.error('Ошибка при синхронизации');
         }
     }
 
