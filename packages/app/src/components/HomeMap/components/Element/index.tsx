@@ -1,18 +1,16 @@
 import {FC, useEffect, useRef} from 'react';
-import cx from 'classnames'
 
-import { DeviceState,  MouseButton, Point } from '@homemap/shared';
+import { DeviceState,  DeviceTypes,  MouseButton, Point } from '@homemap/shared';
 
-import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
 import {useDrag} from '../../hooks/useDrage';
-import {ELEMENT_RADIUS} from '../../constants';
 import {EditActionMove} from '../EditAction';
-import { DeviceIcon, DeviceIconName } from '../../../DeviceIcon';
-
-import './styles.css';
+import { DeviceIconName } from '../../../DeviceIcon';
+import LightElement from './Light';
+import SensorElement from './Sensor';
 
 type Props = {
+    type: DeviceTypes;
     position: Point;
     icon?: DeviceIconName;
     state?: DeviceState | null;
@@ -22,8 +20,8 @@ type Props = {
     onDrag?: (pageX: number, pageY: number) => void;
 }
 
-const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClick, onDrag}) => {
-    const {rotate, editElementDrag} = useTransformContext();
+const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, onClick, onDrag}) => {
+    const { editElementDrag } = useTransformContext();
     const onDragStart = useDrag(onDrag);
     const moveRef = useRef<SVGGElement>(null);
 
@@ -39,42 +37,24 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
         }
     }, [moveRef, isEditMode, editElementDrag]);
 
-    const elementClassName = cx('element', {
-        'element--on': state?.on?.value,
-        'element--pending': substate === Substate.Pending,
-        'element--synced': substate === Substate.Synced,
-        'element--lost': substate === Substate.Lost,
-        'element--edit': isEditMode,
-    });
-
-    const elementStyle = {
-        transform: `rotate(${-rotate}deg)`,
-        transformOrigin: `${position[0]}px ${position[1]}px`,
-    };
-
     return (
-        <g
-            className={elementClassName}
-            style={elementStyle}
-            onClick={onClick}
-        >
-            <circle
-                className='element-shape'
-                cx={position[0]}
-                cy={position[1]}
-                r={ELEMENT_RADIUS}
-            />
-            {icon && (
-                <svg
-                    className='element-icon'
-                    x={position[0] - ELEMENT_RADIUS / 2}
-                    y={position[1] - ELEMENT_RADIUS / 2}
-                    width={ELEMENT_RADIUS} 
-                    height={ELEMENT_RADIUS}
-                >
-                    <DeviceIcon name={icon} />
-                </svg>
-            )} 
+        <>
+            {(type === DeviceTypes.Light || type === DeviceTypes.Switch) && (
+                <LightElement
+                    position={position}
+                    icon={icon as DeviceIconName}
+                    state={state}
+                    substate={substate}
+                    onClick={onClick}
+                />
+            )}
+            {type === DeviceTypes.Sensor && state && (
+                <SensorElement
+                    position={position}
+                    state={state}
+                    substate={substate}
+                />
+            )}
             {isEditMode && (
                 <EditActionMove
                     x={position[0]}
@@ -83,7 +63,8 @@ const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClic
                     ref={moveRef}
                 />
             )}
-        </g>
+        </>
+        
     )
 }
 

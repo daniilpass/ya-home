@@ -36,10 +36,6 @@
     fill: #fff;
 }
 
-.element--edit .element-shape {
-    /* cursor: move; */
-}
-
 /* ANIMATIONS */
 
 @keyframes borderblink {

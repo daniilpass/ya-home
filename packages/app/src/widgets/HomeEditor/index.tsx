@@ -272,7 +272,7 @@ const HomeEditor = ({ planId }: Props) => {
     }
 
     const handleAddDevice = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-        const icon: DeviceIconName = 'bulb';
+        const icon: DeviceIconName = DeviceIconName.Ligth;
         const position = toRelativePosition(
             [e.clientX, e.clientY], 
             {
