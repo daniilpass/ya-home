@@ -1,7 +1,7 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
 
-import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
+import { Bounds, Collection, Device, Plan, PlanDevice, Point } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
@@ -302,27 +302,27 @@ const HomeEditor = ({ planId }: Props) => {
     /**
      * Drag hanlders
      */
-    const handleDragDevice = (id: string, x: number, y: number) => {
+    const handleDragDevice = (id: string, positionDiff: Point) => {
         const device = mapDevices[id];
-        const updatedDevice = actions.updateDevicePosition(device, [x, y], planBounds, true)
+        const updatedDevice = actions.updateDevicePositionByDiff(device, positionDiff, planBounds, true)
         handleChangeDevice(updatedDevice);
     }
 
-    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleBulbsLinePointDrag = (id: string, index: number, position: Point) => {
         const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceBulbsPoint(device, index, [x, y], planBounds, true);
+        const updatedDevice = actions.updateDeviceBulbsPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
     
-    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleShadowPointDrag = (id: string, index: number, position: Point) => {
         const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceShadowPoint(device, index, [x, y], planBounds, true);
+        const updatedDevice = actions.updateDeviceShadowPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
 
-    const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
+    const handleShadowMaskPointDrag = (id: string, index: number, position: Point) => {
         const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceShadowMaskPoint(device, index, [x, y], planBounds, true);
+        const updatedDevice = actions.updateDeviceShadowMaskPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
 
@@ -347,6 +347,8 @@ const HomeEditor = ({ planId }: Props) => {
                             />
                         </Toolbar>
                         <HomeMap
+                            // TODO: sensor needs data
+                            // data={allDevices}
                             background={plan.background}
                             width={plan.width}
                             height={plan.height}

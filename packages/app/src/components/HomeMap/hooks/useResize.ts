@@ -2,7 +2,7 @@ import {RefObject, useState, useLayoutEffect, MouseEvent as ReactMouseEvent, use
 
 import { MouseButton } from '@homemap/shared';
 
-import {useDrag} from './useDrage';
+import {DragEvent, useDrag} from './useDrage';
 
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
@@ -29,7 +29,7 @@ export const useResize = (
     const [rotate, setRotate] = useState(0);
     const [translate, setTranslate] = useState<[number, number]>([0, 0]);
 
-    const onDrag = (pageX: number, pageY: number, _scale: number) => {
+    const onDrag = ({ pageX, pageY }: DragEvent, _scale: number) => {
         if (!wrapperRef.current) {
             return;
         }
@@ -126,13 +126,12 @@ export const useResize = (
             return;
         }
 
-        const handleDrag = (e: MouseEvent | ReactMouseEvent<Element, MouseEvent>) =>
-            onDragStart(e as ReactMouseEvent<Element, MouseEvent>, scale);
+        const handleDragStart = (e: MouseEvent) => onDragStart(e, scale);
         
-        wrapper.addEventListener('mousedown', handleDrag);
+        wrapper.addEventListener('mousedown', handleDragStart);
 
         return () => {
-            wrapper.removeEventListener('mousedown', handleDrag);
+            wrapper.removeEventListener('mousedown', handleDragStart);
         }
     }, [allowDrag, layoutRef, scale])
 

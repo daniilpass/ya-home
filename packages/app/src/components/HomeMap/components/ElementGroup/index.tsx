@@ -8,6 +8,7 @@ import Shadow from '../Shadow';
 import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
 import { DeviceIconName } from '../../../DeviceIcon';
+import { DragEvent } from '../../hooks/useDrage';
 
 import './style.scss';
 
@@ -16,10 +17,10 @@ type Props = {
     data?: Element;
     isEditMode?: boolean;
     onElementClick?: () => void;
-    onElementDrag?: (pageX:number, pageY: number) => void;
-    onBulbsLinePointDrag?: (index: number, pageX: number, pageY: number) => void;
-    onShadowPointDrag?: (index: number, pageX: number, pageY: number) => void;
-    onShadowMaskPointDrag?: (index: number, pageX: number, pageY: number) => void;
+    onElementDrag?: (event: DragEvent) => void;
+    onBulbsLinePointDrag?: (index: number, event: DragEvent) => void;
+    onShadowPointDrag?: (index: number, event: DragEvent) => void;
+    onShadowMaskPointDrag?: (index: number, event: DragEvent) => void;
 }
 
 const ElementGroup: FC<Props> = ({

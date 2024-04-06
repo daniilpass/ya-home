@@ -3,28 +3,41 @@ import {MouseEvent as ReactMouseEvent} from 'react';
 import { MouseButton } from '@homemap/shared';
 
 const EVENT_MOUSEMOVE = 'mousemove';
-const EVENT_MOUSEUP = 'mouseup'
+const EVENT_MOUSEUP = 'mouseup';
 
-type DragEvent = Pick<ReactMouseEvent<Element, MouseEvent>, 'button' | 'currentTarget' | 'clientX' | 'clientY'>
+export type DragStartEvent = ReactMouseEvent<Element, MouseEvent> | MouseEvent;
+
+export type DragEvent = MouseEvent & {
+    clientXDiff: number;
+    clientYDiff: number;
+    pageXDiff: number;
+    pageYDiff: number;
+};
+
+export type onDragCallback = (e: DragEvent, options?: any) => void;
 
 export const useDrag = (
-    onDrag?: (pageX: number, pageY: number, options?: any) => void,
+    onDrag?: onDragCallback,
     button: MouseButton = MouseButton.LEFT,
 ) => {
-    const onDragStart = (e: DragEvent, options?: any) => {
-        if (e.button !== button) {
+    const onDragStart = (dragStartEvent: DragStartEvent, options?: any) => {
+        if (dragStartEvent.button !== button || !onDrag) {
             return;
         }
 
-        // Element bounds
-        const bounds = (e.currentTarget as Element).getBoundingClientRect();
+        const clientXStart = dragStartEvent.clientX;
+        const clientYStart = dragStartEvent.clientY;
+        const pageXStart = dragStartEvent.pageX;
+        const pageYStart = dragStartEvent.pageY;
 
-        // Delta between mouse and element center
-        const deltaX = e.clientX - bounds.left - bounds.width / 2;
-        const deltaY = e.clientY - bounds.top - bounds.height / 2;
-
-        const handleDrag = (e: MouseEvent) => {
-            onDrag && onDrag(e.pageX - deltaX, e.pageY - deltaY, options);
+        const handleDrag = (dragEvent: MouseEvent) => {
+            const extendedEvent = Object.assign(dragEvent,{
+                clientXDiff: clientXStart - dragEvent.clientX,
+                clientYDiff: clientYStart - dragEvent.clientY,
+                pageXDiff: pageXStart - dragEvent.pageX,
+                pageYDiff: pageYStart - dragEvent.pageY,
+            })
+            onDrag(extendedEvent, options);
         }
 
         document.addEventListener(EVENT_MOUSEMOVE, handleDrag);

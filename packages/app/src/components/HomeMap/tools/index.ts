@@ -18,3 +18,7 @@ export const pointsToPathDirections = (points: Point[]) => {
 
     return directions.join(SVG_PATH_ACTIONS_DELIMITER);
 }
+
+export const normilizePosition = (x: number, y: number, scale: number): Point => {
+    return [ x / scale, y / scale ];
+}

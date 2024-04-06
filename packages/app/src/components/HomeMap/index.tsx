@@ -10,7 +10,7 @@ import {
 } from 'react';
 import cx from 'classnames';
 
-import { Plan, PlanDevice } from '@homemap/shared';
+import { Plan, PlanDevice, Point } from '@homemap/shared';
 import { Element } from '../../services/mapService/model/Element';
 import { useResize } from './hooks/useResize';
 import ElementGroup from './components/ElementGroup';
@@ -18,6 +18,8 @@ import { useDispatch } from '../../store/hooks';
 
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
+import { DragEvent } from './hooks/useDrage';
+import { normilizePosition } from './tools';
 export type MapTransform = {
     scale: number;
     rotate: number;
@@ -42,10 +44,10 @@ export type Props = {
     allowDrag?: boolean;
     transition?: boolean;
     onElementClick?: (id: string) => void;
-    onElementDrag?: (id: string, x: number, y: number) => void;
-    onBulbsLinePointDrag?: (id: string, index: number, x: number, y: number) => void;
-    onShadowPointDrag?: (id: string, index: number, x: number, y: number) => void;
-    onShadowMaskPointDrag?: (id: string, index: number, x: number, y: number) => void;
+    onElementDrag?: (id: string, position: Point) => void;
+    onBulbsLinePointDrag?: (id: string, index: number, position: Point) => void;
+    onShadowPointDrag?: (id: string, index: number, position: Point) => void;
+    onShadowMaskPointDrag?: (id: string, index: number, position: Point) => void;
     onTansform?: (transfrom: MapTransform) => void;
     onReady?: () => void;
     onBackgroundLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
@@ -143,47 +145,36 @@ const HomeMap: FC<Props> = ({
         onElementClick && onElementClick(id);
     }
 
-    const toRelativePosition = (pageX: number, pageY: number) => {
-        if (!svgRef.current) {
-            return {x: pageX, y: pageY};
-        }
-        const bounds = svgRef.current.getBoundingClientRect();
-        return {
-            x: (pageX - bounds.left) / scale,
-            y: (pageY - bounds.top) / scale,
-        }
-    }
-
-    const handleElementDrag = (id: string, pageX: number, pageY: number) => {
+    const handleElementDrag = (id: string, { pageXDiff, pageYDiff }: DragEvent) => {
         if (!onElementDrag) {
             return;
         }
-        const {x, y} = toRelativePosition(pageX, pageY);
-        onElementDrag(id, x, y);
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onElementDrag(id, position);
     }
 
-    const handleBulbsLinePointDrag = (id: string, index: number, pageX: number, pageY: number) => {
+    const handleBulbsLinePointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onBulbsLinePointDrag) {
             return;
         }
-        const {x, y} = toRelativePosition(pageX, pageY);
-        onBulbsLinePointDrag(id, index, x, y);
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onBulbsLinePointDrag(id, index, position);
     }
 
-    const handleShadowPointDrag = (id: string, index: number, pageX: number, pageY: number) => {
+    const handleShadowPointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowPointDrag) {
             return;
         }
-        const {x, y} = toRelativePosition(pageX, pageY);
-        onShadowPointDrag(id, index, x, y);
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onShadowPointDrag(id, index, position);
     }
 
-    const handleShadowMaskPointDrag = (id: string, index: number, pageX: number, pageY: number) => {
+    const handleShadowMaskPointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowMaskPointDrag) {
             return;
         }
-        const {x, y} = toRelativePosition(pageX, pageY);
-        onShadowMaskPointDrag(id, index, x, y);
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onShadowMaskPointDrag(id, index, position);
     }
 
     const sortedElements = useMemo(() => {
@@ -261,10 +252,10 @@ const HomeMap: FC<Props> = ({
                                     data={data?.[id]}
                                     isEditMode={id === editElementId}
                                     onElementClick={() => handleElementClick(id)}
-                                    onElementDrag={(pageX, pageY) => handleElementDrag(id, pageX, pageY)}
-                                    onBulbsLinePointDrag={(index, pageX, pageY) => handleBulbsLinePointDrag(id, index, pageX, pageY)}
-                                    onShadowPointDrag={(index, pageX, pageY) => handleShadowPointDrag(id, index, pageX, pageY)}
-                                    onShadowMaskPointDrag={(index, pageX, pageY) => handleShadowMaskPointDrag(id, index, pageX, pageY)}
+                                    onElementDrag={(event) => handleElementDrag(id, event)}
+                                    onBulbsLinePointDrag={(index, event) => handleBulbsLinePointDrag(id, index, event)}
+                                    onShadowPointDrag={(index, event) => handleShadowPointDrag(id, index, event)}
+                                    onShadowMaskPointDrag={(index, event) => handleShadowMaskPointDrag(id, index, event)}
                                 />
                             ))
                         }
