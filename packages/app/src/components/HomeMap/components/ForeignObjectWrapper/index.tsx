@@ -1,34 +1,42 @@
-import { forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import { Size } from '@homemap/shared';
 
-export type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement>;
+import { useLayoutEffect, useRef, useState } from 'react';
+import useResizeObserver from "use-resize-observer";
 
-export const ForeignObjectWrapper = forwardRef<SVGForeignObjectElement, ForeignObjectWrapperProps>(
-    ({ children, ...props }, foreignObjectRef ) => {
-        const [size, setSize] = useState<{ width: number; height: number; }>({ width: 1, height: 1});
-        const ref = useRef<HTMLDivElement>(null);
+export type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement> & {
+    onFit?: (rect: Size) => void;
+};
 
-        useLayoutEffect(() => {
-            if (ref.current) {
-                setSize({
-                    width: ref.current.scrollWidth,
-                    height: ref.current.scrollHeight,
-                })
-            }
-        }, [ref.current?.scrollWidth, ref.current?.scrollHeight]);
+export const ForeignObjectWrapper = ({ onFit, children, ...props }: ForeignObjectWrapperProps) => {
+    const [size, setSize] = useState<Size>({ width: 1, height: 1});
+    const childRef = useRef<HTMLDivElement>(null);
+    const { width, height} = useResizeObserver<HTMLDivElement>({ ref: childRef });
 
-        return (
-            <foreignObject
-                {...props}
-                style={{
-                    ...props.style,
-                    width: size.width,
-                    height: size.height,
-                    overflow: 'visible',
-                }}
-                ref={foreignObjectRef}
-            >
-                <div ref={ref}>{children}</div>
-            </foreignObject>
-        )
-    }
-);
+    useLayoutEffect(() => {
+        if (!childRef.current) {
+            return;
+        }
+
+        const newSize = {
+            width: childRef.current.scrollWidth,
+            height: childRef.current.scrollHeight,
+        };
+
+        setSize(newSize);
+        onFit?.(newSize);
+    }, [width, height, onFit]);
+
+    return (
+        <foreignObject
+            {...props}
+            style={{
+                ...props.style,
+                width: size.width,
+                height: size.height,
+                overflow: 'visible',
+            }}
+        >
+            <div ref={childRef}>{children}</div>
+        </foreignObject>
+    )
+}
