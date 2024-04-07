@@ -4,6 +4,7 @@ import { MouseButton } from '@homemap/shared';
 
 const EVENT_MOUSEMOVE = 'mousemove';
 const EVENT_MOUSEUP = 'mouseup';
+const EVENT_WHEEL = 'wheel';
 
 export type DragStartEvent = ReactMouseEvent<Element, MouseEvent> | MouseEvent;
 
@@ -42,6 +43,9 @@ export const useDrag = (
 
         document.addEventListener(EVENT_MOUSEMOVE, handleDrag);
         document.addEventListener(EVENT_MOUSEUP, () => {
+            document.removeEventListener(EVENT_MOUSEMOVE, handleDrag)
+        });
+        document.addEventListener(EVENT_WHEEL, () => {
             document.removeEventListener(EVENT_MOUSEMOVE, handleDrag)
         });
     }, [button, onDrag])
