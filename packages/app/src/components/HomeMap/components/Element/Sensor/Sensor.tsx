@@ -1,42 +1,13 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { DeviceState, DeviceStateKeys, DeviceStateType, Point } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
 import { DeviceIcon, DeviceIconName } from '../../../../DeviceIcon';
+import { ForeignObjectWrapper } from '../../ForeignObjectWrapper';
 
 import { SensorInformer } from './Informer';
 import './style.scss';
-
-type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement>
-
-const ForeignObjectWrapper = ({ children, ...props }: ForeignObjectWrapperProps) => {
-    const [size, setSize] = useState<{ width: number; height: number; }>({ width: 1, height: 1});
-    const ref = useRef<HTMLDivElement>(null);
-
-    useLayoutEffect(() => {
-        if (ref.current) {
-            setSize({
-                width: ref.current.scrollWidth,
-                height: ref.current.scrollHeight,
-            })
-        }
-    }, [ref.current?.scrollWidth, ref.current?.scrollHeight]);
-
-    return (
-        <foreignObject
-            {...props}
-            style={{
-                ...props.style,
-                width: size.width,
-                height: size.height,
-                overflow: 'visible',
-            }}
-        >
-            <div ref={ref}>{children}</div>
-        </foreignObject>
-    )
-}
 
 export type SensorElementProps = {
     position: Point;
@@ -47,10 +18,18 @@ export type SensorElementProps = {
 
 export const SensorElement = ({ position, state, substate }: SensorElementProps) => {
     const { rotate } = useTransformContext();
-    const elementStyle = {
-        transform: `rotate(${-rotate}deg)`,
-        transformOrigin: `${position[0]}px ${position[1]}px`,
-    };
+    const foreignObjectRef = useRef<SVGForeignObjectElement>(null);
+
+    const elementStyle = useMemo(() => {
+        const bBox = foreignObjectRef.current?.getBBox();
+        const { width = 0, height = 0} = bBox || {};
+
+        return {
+            transform: `rotate(${-rotate}deg)`,
+            transformOrigin: `${position[0] + width / 2}px ${position[1] + height / 2}px`,
+        }
+    }, [rotate, position]);
+
     const stateEntries = Object.entries(state) as [DeviceStateKeys, DeviceStateType][];
     const isNoData = stateEntries.length === 0;
 
@@ -59,6 +38,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
             <ForeignObjectWrapper
                 x={position[0]}
                 y={position[1]}
+                ref={foreignObjectRef}
             >
                 <div className='sensor'>
                     {stateEntries.map(([stateKey, stateEntry]) => (
