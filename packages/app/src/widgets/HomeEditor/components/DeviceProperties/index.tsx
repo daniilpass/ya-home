@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
 
-import { Bounds, PlanDevice, Point } from '@homemap/shared';
+import { Bounds, DeviceTypes, PlanDevice, Point } from '@homemap/shared';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -86,6 +86,8 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
         onChange(updatedDevice);
     }
 
+    const isShowLightProperties = device.type === DeviceTypes.Light || device.type === DeviceTypes.Switch;
+
     return (
         <>
             <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
@@ -109,38 +111,39 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
                 />
             </Box>
 
-            <Divider variant="middle" textAlign="left">Линия ламп</Divider>
+            {isShowLightProperties && (
+                <>
+                    <Divider variant="middle" textAlign="left">Линия ламп</Divider>
+                    <Box sx={{p: 2}}>
+                        <PointsList
+                            value={device.area?.bulbsLinePoints || []}
+                            onChange={(index, value) => handleBulbsLinePointChange(index, value)}
+                            onAdd={() => handleBulbsLinePointAdd()}
+                            onDelete={(index) => handleBulbsLinePointDelete(index)}
+                        />
+                    </Box>
 
-            <Box sx={{p: 2}}>
-                <PointsList
-                    value={device.area?.bulbsLinePoints || []}
-                    onChange={(index, value) => handleBulbsLinePointChange(index, value)}
-                    onAdd={() => handleBulbsLinePointAdd()}
-                    onDelete={(index) => handleBulbsLinePointDelete(index)}
-                />
-            </Box>
-            
-            <Divider variant="middle" textAlign="left">Тень</Divider>
+                    <Divider variant="middle" textAlign="left">Тень</Divider>
+                    <Box sx={{p: 2}}>
+                        <PointsList
+                            value={device.area?.shadowPoints || []}
+                            onChange={(index, value) => handleShadowPointChange(index, value)}
+                            onAdd={() => handleShadowPointAdd()}
+                            onDelete={(index) => handleShadowPointDelete(index)}
+                        />
+                    </Box>
 
-            <Box sx={{p: 2}}>
-                <PointsList
-                    value={device.area?.shadowPoints || []}
-                    onChange={(index, value) => handleShadowPointChange(index, value)}
-                    onAdd={() => handleShadowPointAdd()}
-                    onDelete={(index) => handleShadowPointDelete(index)}
-                />
-            </Box>
-            
-            <Divider variant="middle" textAlign="left">Маска тени</Divider>
-            
-            <Box sx={{p: 2}}>
-                <PointsList
-                    value={device.area?.shadowMaskPoints || []}
-                    onChange={(index, value) => handleShadowMaskPointChange(index, value)}
-                    onAdd={() => handleShadowMaskPointAdd()}
-                    onDelete={(index) => handleShadowMaskPointDelete(index)}
-                />
-            </Box>
+                    <Divider variant="middle" textAlign="left">Маска тени</Divider>
+                    <Box sx={{p: 2}}>
+                        <PointsList
+                            value={device.area?.shadowMaskPoints || []}
+                            onChange={(index, value) => handleShadowMaskPointChange(index, value)}
+                            onAdd={() => handleShadowMaskPointAdd()}
+                            onDelete={(index) => handleShadowMaskPointDelete(index)}
+                        />
+                    </Box>
+                </>
+            )}
         </>
     )
 }
