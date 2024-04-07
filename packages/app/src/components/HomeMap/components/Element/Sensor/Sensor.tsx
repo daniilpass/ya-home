@@ -1,10 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-import { DeviceState, DeviceStateKeys, DeviceStateType, Entries, Point } from '@homemap/shared';
+import { DeviceState, DeviceStateKeys, DeviceStateType, Point } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
-import { SensorInformer } from './Informer';
+import { DeviceIcon, DeviceIconName } from '../../../../DeviceIcon';
 
+import { SensorInformer } from './Informer';
 import './style.scss';
 
 type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement>
@@ -51,6 +52,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
         transformOrigin: `${position[0]}px ${position[1]}px`,
     };
     const stateEntries = Object.entries(state) as [DeviceStateKeys, DeviceStateType][];
+    const isNoData = stateEntries.length === 0;
 
     return (
         <g style={elementStyle}>
@@ -66,6 +68,12 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
                             state={stateEntry}
                         />
                     ))}
+                    {isNoData && (
+                        <DeviceIcon
+                            name={DeviceIconName.UnknownSensor}
+                            sx={{fill: 'white', verticalAlign: 'middle'}}
+                        />
+                    )}
                 </div>
             </ForeignObjectWrapper>
         </g>

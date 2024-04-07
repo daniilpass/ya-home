@@ -1,7 +1,7 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
 
-import { Bounds, Collection, Device, Plan, PlanDevice, Point } from '@homemap/shared';
+import { Bounds, Collection, Device, DeviceTypes, Plan, PlanDevice, Point } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
@@ -64,6 +64,13 @@ const HomeEditor = ({ planId }: Props) => {
         right: plan?.width,
         bottom: plan?.height,
     }
+
+    const sensorsData = useMemo<Collection<Device>>(() => {
+        return Object.fromEntries(
+            Object.entries(allDevices)
+                .filter(([id, device]) => device.type === DeviceTypes.Sensor)
+        );
+    }, [allDevices]);
 
     useEffect(() => {
         ApiClient
@@ -347,8 +354,7 @@ const HomeEditor = ({ planId }: Props) => {
                             />
                         </Toolbar>
                         <HomeMap
-                            // TODO: sensor needs data
-                            data={allDevices}
+                            data={sensorsData}
                             background={plan.background}
                             width={plan.width}
                             height={plan.height}

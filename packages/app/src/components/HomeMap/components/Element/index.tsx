@@ -53,10 +53,10 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
                     onClick={onClick}
                 />
             )}
-            {type === DeviceTypes.Sensor && state && (
+            {type === DeviceTypes.Sensor && (
                 <SensorElement
                     position={position}
-                    state={state}
+                    state={state ?? {}}
                     substate={substate}
                 />
             )}
