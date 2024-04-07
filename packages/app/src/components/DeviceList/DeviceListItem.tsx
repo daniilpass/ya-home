@@ -18,7 +18,7 @@ const DeviceListItem = ({ item, selected, withTooltip, onClick }: DeviceListItem
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                 }}
-                secondary={deviceTypeToName(item.type)}
+                secondary={deviceTypeToName(item.type, item.subtype)}
             />
         </ListItemButton>
     ), [item, selected, onClick]);

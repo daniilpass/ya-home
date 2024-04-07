@@ -1,16 +1,31 @@
-import { DeviceStateKeys, DeviceStateType, DeviceTypes, DeviceUnits } from '@homemap/shared';
+import { DeviceStateKeys, DeviceStateType, DeviceSubtypes, DeviceTypes, DeviceUnits } from '@homemap/shared';
 import { DeviceIconName } from '../components/DeviceIcon';
 
+export const sensorSubtypeToName = (subtype: DeviceSubtypes) => {
+    switch (subtype) {
+        case DeviceSubtypes.Motion:
+            return 'Датчик движения';
+        case DeviceSubtypes.Climate:
+            return 'Датчик климата';
+        case DeviceSubtypes.None:
+        case DeviceSubtypes.Unknown:
+        default:
+            return 'Датчик';
+    }
 
-export const deviceTypeToName = (type: DeviceTypes) => {
+}
+
+export const deviceTypeToName = (type: DeviceTypes, subtype: DeviceSubtypes) => {
     switch (type) {
         case DeviceTypes.Light:
             return 'Свет';
         case DeviceTypes.Switch:
             return 'Выключатель';
+        case DeviceTypes.Sensor:
+            return sensorSubtypeToName(subtype);
         case DeviceTypes.Unknown:
         default:
-            return 'Неизвестный';
+            return 'Неизвестное устройство';
     }
 }
 

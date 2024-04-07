@@ -5,7 +5,7 @@ import { Collection, Device } from '@homemap/shared';
 
 export type onDeviceListItemClick = (id: string, event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void
 
-export type DeviceListItem = Pick<Device, 'id' | 'name' | 'type'>
+export type DeviceListItem = Pick<Device, 'id' | 'name' | 'type' | 'subtype'>
 
 export type DeviceListProps = Pick<ListProps, 'sx'> & {
     items: Collection<DeviceListItem>;
