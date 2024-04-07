@@ -287,5 +287,21 @@
                 "unit": "boolean"
             }
         }
+    },
+    "a2006658-ab80-4255-a7d5-73a793b0258f": {
+        "id": "a2006658-ab80-4255-a7d5-73a793b0258f",
+        "name": "Климат в гостиной",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 26.64,
+                "unit": "celsius"
+            },
+            "humidity": {
+                "value": 35,
+                "unit": "percent"
+            }
+        }
     }
 }
