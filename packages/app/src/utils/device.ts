@@ -1,4 +1,4 @@
-import { DeviceStateKeys, DeviceTypes, DeviceUnits } from '@homemap/shared';
+import { DeviceStateKeys, DeviceStateType, DeviceTypes, DeviceUnits } from '@homemap/shared';
 import { DeviceIconName } from '../components/DeviceIcon';
 
 
@@ -35,7 +35,24 @@ export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconName | 
             return DeviceIconName.Ligth;
         case DeviceStateKeys.Temperature:
             return DeviceIconName.Temperature;
+        case DeviceStateKeys.Humidity:
+            return DeviceIconName.Humidity;
         default:
             return null;
+    }
+}
+
+const roundSensorValue = (value: number) => Math.round(value * 10) / 10;
+
+export const getSensorStateValue = (stateKey: DeviceStateKeys, state: DeviceStateType): unknown => {
+    switch (stateKey) {
+        case DeviceStateKeys.Temperature:
+            return roundSensorValue(+state.value!)
+        case DeviceStateKeys.On:
+        case DeviceStateKeys.Brightness:
+        case DeviceStateKeys.Humidity:
+        case DeviceStateKeys.Motion:
+        default:
+            return state.value;
     }
 }

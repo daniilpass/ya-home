@@ -8,7 +8,7 @@ export enum DeviceStateKeys {
     Motion = 'motion',
 }
 
-export type DeviceStateType<T> = {
+export type DeviceStateType<T = unknown> = {
     value: T,
     unit: DeviceUnits,
     updatedAt?: number,

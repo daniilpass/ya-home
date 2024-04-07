@@ -2,20 +2,21 @@ import { DeviceStateKeys, DeviceStateType } from '@homemap/shared';
 
 import { THIN_SPACE } from '../../../../../constants/symbols';
 import { DeviceIcon } from '../../../../DeviceIcon';
-import { getDeviceStateIcon, getDeviceUnitTitle } from '../../../../../utils/device';
+import { getDeviceStateIcon, getDeviceUnitTitle, getSensorStateValue } from '../../../../../utils/device';
 
 import './style.scss';
 
 type SensorInformerProps = {
-    state: DeviceStateType<unknown>;
+    type: DeviceStateKeys;
+    state: DeviceStateType;
 }
 
-const roundSensorValue = (value: number) => Math.round(value * 10) / 10;
 
-export const SensorInformer = ({ state }: SensorInformerProps) => {
-    const sensorValue = roundSensorValue(+state.value!).toString();
+
+export const SensorInformer = ({ type, state }: SensorInformerProps) => {
+    const sensorValue = getSensorStateValue(type, state)!.toString();
     const sensorUnit = getDeviceUnitTitle(state.unit);
-    const sensorIcon = getDeviceStateIcon(DeviceStateKeys.Temperature);
+    const sensorIcon = getDeviceStateIcon(type);
 
     return (
         <div className='informer'>

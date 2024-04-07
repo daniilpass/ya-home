@@ -1,6 +1,6 @@
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-import { DeviceState, Point } from '@homemap/shared';
+import { DeviceState, DeviceStateKeys, DeviceStateType, Entries, Point } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
 import { SensorInformer } from './Informer';
@@ -50,7 +50,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
         transform: `rotate(${-rotate}deg)`,
         transformOrigin: `${position[0]}px ${position[1]}px`,
     };
-    const stateEntries = Object.entries(state);
+    const stateEntries = Object.entries(state) as [DeviceStateKeys, DeviceStateType][];
 
     return (
         <g style={elementStyle}>
@@ -62,6 +62,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
                     {stateEntries.map(([stateKey, stateEntry]) => (
                         <SensorInformer
                             key={stateKey}
+                            type={stateKey}
                             state={stateEntry}
                         />
                     ))}
