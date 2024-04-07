@@ -4,7 +4,10 @@
         "name": "Зеркало в коридоре",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "18f70e85-5871-4ff8-bb88-ad32faae2938": {
@@ -12,7 +15,10 @@
         "name": "Подсветка в ванной",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "269d79b5-b11a-4257-a1c7-eba6aba48328": {
@@ -20,7 +26,10 @@
         "name": "Зеркало в ванной",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "27e4855e-226b-42a2-a3de-1b1b3c7d66f3": {
@@ -28,7 +37,10 @@
         "name": "Бра в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "29c47132-b7f3-47af-8132-1c2452fcaddc": {
@@ -36,7 +48,10 @@
         "name": "Подсветка в гардеробе",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "343f829b-d835-4a74-8215-f9fadae29603": {
@@ -44,7 +59,10 @@
         "name": "Свет в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "384d283d-c70d-4fc4-beb7-8e13825994ac": {
@@ -52,7 +70,10 @@
         "name": "Свет на кухне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "39567e31-12d2-42dc-b018-d3788e8e0fd8": {
@@ -60,7 +81,10 @@
         "name": "Подсветка в шкафу",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "40530a81-e6a9-4e84-bc32-7676e8f0c806": {
@@ -68,7 +92,10 @@
         "name": "Витрина",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "4d3e0a3b-f544-4a1b-9428-3b5a69551efc": {
@@ -76,7 +103,10 @@
         "name": "Свет в кабинете 1",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6": {
@@ -84,7 +114,10 @@
         "name": "Люстра на кухне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "6ac9a76b-fce3-40d0-9be1-80c9cad59007": {
@@ -92,7 +125,10 @@
         "name": "Свет в туалете",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "6f779d22-7c74-4622-bf65-1f595eb0b0c2": {
@@ -100,7 +136,10 @@
         "name": "Коридор в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "735de64f-469d-4078-ad9f-d8ee10e10a53": {
@@ -116,7 +155,10 @@
         "name": "Подсветка в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "81924c48-3d90-4b9b-95ad-a9df8845b327": {
@@ -124,7 +166,10 @@
         "name": "Левый трек",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "a0548812-7e7b-49cf-b233-215c664a21d7": {
@@ -132,7 +177,10 @@
         "name": "Свет в шкафу",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "a151a962-c27d-4f8a-8702-31a95d0ee206": {
@@ -140,7 +188,10 @@
         "name": "Рабочая поверхность",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "b6ac174c-fac9-4e1e-ba7e-5d8cbead9dae": {
@@ -148,7 +199,10 @@
         "name": "Выключатель",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "bd5b5118-ed3b-4085-8687-c60271f9aec2": {
@@ -156,7 +210,10 @@
         "name": "Свет в кабинете 2",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "cadeadfa-2e90-4099-920e-fbaaa4215877": {
@@ -172,7 +229,10 @@
         "name": "Свет в ванной",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "dea5a216-ff7a-4902-a8cc-1f9bf36e529e": {
@@ -189,7 +249,10 @@
         "name": "Люстра в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "ef20fa64-8ba2-4951-be45-f8cb95487957": {
@@ -197,7 +260,10 @@
         "name": "Свет в гардеробе",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "f78fa3cc-8df7-453d-9b5c-e706c9151b45": {
@@ -205,7 +271,10 @@
         "name": "Подсветка на кухне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
         }
     },
     "fafaeae7-8ae3-4041-89dc-57ada747c31b": {
@@ -213,7 +282,26 @@
         "name": "Зеркало в спальне",
         "type": "switch",
         "state": {
-            "on": false
+            "on": {
+                "value": false,
+                "unit": "boolean"
+            }
+        }
+    },
+    "a2006658-ab80-4255-a7d5-73a793b0258f": {
+        "id": "a2006658-ab80-4255-a7d5-73a793b0258f",
+        "name": "Климат в гостиной",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 26.64,
+                "unit": "celsius"
+            },
+            "humidity": {
+                "value": 35,
+                "unit": "percent"
+            }
         }
     }
 }

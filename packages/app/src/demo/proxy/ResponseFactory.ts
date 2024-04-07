@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep'
-import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, DeviceTypes, Plan, PlanInfo } from '@homemap/shared';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: "json" };
 import { default as planResponseJson } from '../responses/plan.json' assert { type: "json" };
@@ -23,14 +23,14 @@ export class ResponseFactory {
         this.lastUpdate = Date.now();
         this.planListResponse = cloneDeep(planListResponseJson);
         this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson);
+        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
     }
 
     reset() {
         this.lastUpdate = Date.now();
         this.planListResponse = cloneDeep(planListResponseJson);
         this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson);
+        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
     }
 
     async makeResponse(event: FetchEvent): Promise<Response> {
@@ -84,9 +84,14 @@ export class ResponseFactory {
             const deviceIds = Object.keys(this.planResponse.devices);
             const deviceToUpdateId = deviceIds[Math.floor(Math.random() * deviceIds.length)];
             const deviceToUpdate = this.devicesResponse[deviceToUpdateId];
-            this.devicesResponse[deviceToUpdateId].state = {
-                ...deviceToUpdate.state,
-                on: !deviceToUpdate.state?.on,
+            if (deviceToUpdate.type === DeviceTypes.Switch || deviceToUpdate.type === DeviceTypes.Light) {
+                this.devicesResponse[deviceToUpdateId].state = {
+                    ...deviceToUpdate.state,
+                    on: {
+                        ...deviceToUpdate.state.on!,
+                        value: !deviceToUpdate.state.on!.value,
+                    }
+                }
             }
         }
         return createJsonResponse(this.devicesResponse);
@@ -95,10 +100,16 @@ export class ResponseFactory {
     private async createDeviceActionsResponse(payload: DeviceAction) {
         this.lastUpdate = Date.now();
     
-        // update model
-        this.devicesResponse[payload.id].state = {
-            ...payload.state,
-        }
+        const keys = Object.keys(payload.state);
+        keys.forEach((key) => {
+            // @ts-expect-error
+            this.devicesResponse[payload.id].state[key] = {
+                // @ts-expect-error
+                ...this.devicesResponse[payload.id].state[key],
+                // @ts-expect-error
+                value: payload.state[key],
+            };
+        })
     
         // prepare response
         const response: DeviceActionResult = {

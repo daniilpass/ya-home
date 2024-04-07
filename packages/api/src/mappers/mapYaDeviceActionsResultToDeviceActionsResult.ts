@@ -1,6 +1,8 @@
 import { DeviceActionResult, DeviceState } from '@homemap/shared';
 
 import { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult';
+import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
+import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
 export const mapYaDeviceActionsResultToDeviceActionsResult = (yaActionsResult: YaDeviceActionsResult): DeviceActionResult => {
     let actionResult: DeviceActionResult = {
@@ -14,14 +16,14 @@ export const mapYaDeviceActionsResultToDeviceActionsResult = (yaActionsResult: Y
         }
 
         switch (capability.type) {
-            case 'devices.capabilities.on_off': {
-                if (capability.state.instance === 'on') {
+            case YaDeviceCapabilityType.OnOff: {
+                if (capability.state.instance === YaDeviceCapabilityInstance.On) {
                     actionResult.status.on = capability.state.action_result.status;
                 }
                 break;
             }
-            case 'devices.capabilities.range': {
-                if (capability.state.instance === 'brightness') {
+            case YaDeviceCapabilityType.Range: {
+                if (capability.state.instance === YaDeviceCapabilityInstance.Brightness) {
                     actionResult.status.brightness = capability.state.action_result.status;
                 }
                 break;

@@ -1,9 +1,11 @@
-import { DeviceState } from '@homemap/shared';
+import { DeviceState, DeviceUnits } from '@homemap/shared';
 
 import { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';
+import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
+import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
 export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): DeviceState => {
-    let state: DeviceState = {}
+    let state: DeviceState = {};
 
     for (const capability of yaCapabilites) {
         if (capability.state?.value === undefined) {
@@ -11,15 +13,21 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
         }
 
         switch (capability.type) {
-            case 'devices.capabilities.on_off': {
-                if (capability.state.instance === 'on') {
-                    state.on = Boolean(capability.state.value);
+            case YaDeviceCapabilityType.OnOff: {
+                if (capability.state.instance === YaDeviceCapabilityInstance.On) {
+                    state.on = {
+                        value: Boolean(capability.state.value),
+                        unit: DeviceUnits.Boolean,
+                    }
                 }
                 break;
             }
-            case 'devices.capabilities.range': {
-                if (capability.state.instance === 'brightness') {
-                    state.brightness = Number(capability.state.value);
+            case YaDeviceCapabilityType.Range: {
+                if (capability.state.instance === YaDeviceCapabilityInstance.Brightness) {
+                    state.brightness = {
+                        value: Number(capability.state.value),
+                        unit: DeviceUnits.Percent,
+                    }
                 }
                 break;
             }

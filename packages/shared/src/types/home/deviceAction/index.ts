@@ -1,2 +1,2 @@
-export type { DeviceAction } from './DeviceAction';
+export type { DeviceAction, DeviceActionState } from './DeviceAction';
 export type { DeviceActionResult } from './DeviceActionResult';

@@ -3,6 +3,17 @@
     "width": 1920,
     "height": 1081,
     "devices": {
+        "a2006658-ab80-4255-a7d5-73a793b0258f": {
+            "id": "a2006658-ab80-4255-a7d5-73a793b0258f",
+            "name": "Климат в гостиной",
+            "type": "sensor",
+            "subtype": "climate",
+            "position": [
+                917,
+                272
+            ],
+            "icon": "sensor"
+        },
       "4d3e0a3b-f544-4a1b-9428-3b5a69551efc": {
         "id": "4d3e0a3b-f544-4a1b-9428-3b5a69551efc",
         "name": "Выключатель в кабинете 1",

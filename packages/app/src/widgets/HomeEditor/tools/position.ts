@@ -20,3 +20,7 @@ export const toRelativePosition = (position: Point, offset: Offset, scale: numbe
         (position[1] - offset.top) / scale,
     ]
 }
+
+export const applyPositionDiff = (position: Point, diff: Point): Point => (
+    [position[0] - diff[0], position[1] - diff[1]]
+)

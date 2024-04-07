@@ -1,89 +1,85 @@
 import {FC, useEffect, useRef} from 'react';
-import cx from 'classnames'
 
-import { DeviceState,  MouseButton, Point } from '@homemap/shared';
+import { DeviceState,  DeviceTypes,  MouseButton, Point } from '@homemap/shared';
 
-import {Substate} from '../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../providers/TransformContextProvider';
-import {useDrag} from '../../hooks/useDrage';
-import {ELEMENT_RADIUS} from '../../constants';
+import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
-import { DeviceIcon, DeviceIconName } from '../../../DeviceIcon';
-
-import './styles.css';
+import { DeviceIconName } from '../../../DeviceIcon';
+import LightElement from './Light';
+import SensorElement from './Sensor';
+import './style.scss';
 
 type Props = {
+    type: DeviceTypes;
     position: Point;
     icon?: DeviceIconName;
     state?: DeviceState | null;
     substate?: string;
     isEditMode?: boolean;
     onClick?: () => void;
-    onDrag?: (pageX: number, pageY: number) => void;
+    onDrag?: (event: DragEvent) => void;
 }
 
-const Element: FC<Props> = ({position, icon, state, substate, isEditMode, onClick, onDrag}) => {
-    const {rotate, editElementDrag} = useTransformContext();
+const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, onClick, onDrag}) => {
+    const { editElementDrag } = useTransformContext();
     const onDragStart = useDrag(onDrag);
     const moveRef = useRef<SVGGElement>(null);
 
     useEffect(() => {
+        // Start drag newly added device
         if (moveRef?.current && isEditMode && editElementDrag) {
             const bounds = (moveRef.current as Element).getBoundingClientRect();
-            onDragStart({
+            const event = new MouseEvent('mousedown', {
                 button: MouseButton.LEFT,
-                currentTarget: moveRef.current,
                 clientX: bounds.left + bounds.width / 2,
                 clientY: bounds.top + bounds.height / 2,
-            });
+            })
+            onDragStart(event);
         }
     }, [moveRef, isEditMode, editElementDrag]);
 
-    const elementClassName = cx('element', {
-        'element--on': state?.on,
-        'element--pending': substate === Substate.Pending,
-        'element--synced': substate === Substate.Synced,
-        'element--lost': substate === Substate.Lost,
-        'element--edit': isEditMode,
-    });
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (!isEditMode) {
+            return;   
+        }
+        onDragStart(e);
+    }
 
-    const elementStyle = {
-        transform: `rotate(${-rotate}deg)`,
-        transformOrigin: `${position[0]}px ${position[1]}px`,
-    };
+    const isShowEditAction = isEditMode && type !== DeviceTypes.Sensor;
+
+    const className = isEditMode ? 'element--movable' : undefined;
 
     return (
         <g
-            className={elementClassName}
-            style={elementStyle}
-            onClick={onClick}
+            onMouseDown={handleMouseDown}
+            ref={moveRef}
+            className={className}
         >
-            <circle
-                className='element-shape'
-                cx={position[0]}
-                cy={position[1]}
-                r={ELEMENT_RADIUS}
-            />
-            {icon && (
-                <svg
-                    className='element-icon'
-                    x={position[0] - ELEMENT_RADIUS / 2}
-                    y={position[1] - ELEMENT_RADIUS / 2}
-                    width={ELEMENT_RADIUS} 
-                    height={ELEMENT_RADIUS}
-                >
-                    <DeviceIcon name={icon} />
-                </svg>
-            )} 
-            {isEditMode && (
+            {(type === DeviceTypes.Light || type === DeviceTypes.Switch) && (
+                <LightElement
+                    position={position}
+                    icon={icon as DeviceIconName}
+                    state={state}
+                    substate={substate}
+                    onClick={onClick}
+                />
+            )}
+            {type === DeviceTypes.Sensor && (
+                <SensorElement
+                    position={position}
+                    state={state ?? {}}
+                    substate={substate}
+                />
+            )}
+            {isShowEditAction && (
                 <EditActionMove
                     x={position[0]}
                     y={position[1]}
-                    onMouseDown={onDragStart}
-                    ref={moveRef}
                 />
             )}
         </g>
+        
     )
 }
 

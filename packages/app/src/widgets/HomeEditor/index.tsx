@@ -1,12 +1,11 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
 
-import { Bounds, Collection, Device, Plan, PlanDevice } from '@homemap/shared';
+import { Bounds, Collection, Device, DeviceTypes, Plan, PlanDevice, Point } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../common/components/Toolbar';
-import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
@@ -15,6 +14,7 @@ import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
 import PlanActions, { PlanActionEvent } from './components/PlanActions';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { getDeviceDefaultIcon } from '../../utils/device';
 
 import actions from './actions';
 import { exportPlan, importPlan, toRelativePosition } from './tools';
@@ -49,14 +49,14 @@ const HomeEditor = ({ planId }: Props) => {
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
-    const [selectedMapDeviceId, setSelectedMapDeviceId] = useState<string | undefined>(undefined);
-    const [selectedMapDeviceDrag, setSelectedMapDeviceDrag] = useState<boolean>(false);
+    const [selectedPlanDeviceId, setSelectedPlanDeviceId] = useState<string | undefined>(undefined);
+    const [selectedPlanDeviceDrag, setSelectedPlanDeviceDrag] = useState<boolean>(false);
     // Plan settings dialog state
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
     const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsValue>();
 
-    const mapDevices = useMemo(() => plan?.devices ?? {}, [plan]);
-    const selectedMapDevice = selectedMapDeviceId && mapDevices[selectedMapDeviceId];
+    const planDevices = useMemo(() => plan?.devices ?? {}, [plan]);
+    const selectedPlanDevice = selectedPlanDeviceId && planDevices[selectedPlanDeviceId];
 
     const planBounds: Partial<Bounds> = {
         top: 0,
@@ -64,6 +64,13 @@ const HomeEditor = ({ planId }: Props) => {
         right: plan?.width,
         bottom: plan?.height,
     }
+
+    const sensorsData = useMemo<Collection<Device>>(() => {
+        return Object.fromEntries(
+            Object.entries(allDevices)
+                .filter(([id, device]) => device.type === DeviceTypes.Sensor)
+        );
+    }, [allDevices]);
 
     useEffect(() => {
         ApiClient
@@ -112,6 +119,9 @@ const HomeEditor = ({ planId }: Props) => {
             case PlanActionsEnum.ExitToView:
                 handleExitToView();
                 break;
+            case PlanActionsEnum.SyncDevices:
+                await handleSyncDevices();
+                break;
         }
 
         const index = actionsInProgressRef.current.findIndex(x => x === e.type);
@@ -126,7 +136,7 @@ const HomeEditor = ({ planId }: Props) => {
     /**
      * Plan handlers
      */
-    const setMapDevices = (updatedDevices: Collection<PlanDevice>) => {
+    const setplanDevices = (updatedDevices: Collection<PlanDevice>) => {
         setPlan({
             ...plan!,
             devices: updatedDevices,
@@ -145,6 +155,47 @@ const HomeEditor = ({ planId }: Props) => {
             dispatch.alerts.success('Сохранено');
         } catch {
             dispatch.alerts.error('Ошибка при сохранении');
+        }
+    }
+
+    const handleSyncDevices = async () => {
+        if (!plan) {
+            return;
+        }
+
+        try {
+            // Get device info
+            const devices = await ApiClient.getDevices();
+
+            // Copy old plan wihtout devices
+            const updatedPlan = { ...plan };
+            updatedPlan.devices = {};
+
+            // Fill updated plan devices
+            Object.entries(plan.devices).forEach(([id, planDevice]) => {
+                const device = devices[id];
+                if (!device) {
+                    return;
+                }
+
+                const updatedDevice: Collection<PlanDevice> = {
+                    [id]: {
+                        ...planDevice,
+                        name: device.name,
+                        type: device.type,
+                        subtype: device.subtype,
+                    }
+                }
+
+                Object.assign(updatedPlan.devices, updatedDevice);
+            })
+
+            // Update state
+            setPlan(updatedPlan);
+
+            dispatch.alerts.success('Устройства синхронизированы. Не забудьте сохранить изменения.');
+        } catch {
+            dispatch.alerts.error('Ошибка при синхронизации');
         }
     }
 
@@ -212,23 +263,24 @@ const HomeEditor = ({ planId }: Props) => {
      */
     
     const handleChangeDevice = (device: PlanDevice) => {
-        setMapDevices({
-            ...mapDevices,
+        setplanDevices({
+            ...planDevices,
             [device.id]: device,
         });
         setHasUnsavedChanges(true);
     }
 
     const handleDeleteDevice = (deviceId: string) => {
-        const updatedMapDevices = {...mapDevices}
-        delete updatedMapDevices[deviceId];
-        setMapDevices(updatedMapDevices);
-        setSelectedMapDeviceId(undefined);
+        const updatedplanDevices = {...planDevices}
+        delete updatedplanDevices[deviceId];
+        setplanDevices(updatedplanDevices);
+        setSelectedPlanDeviceId(undefined);
         setHasUnsavedChanges(true);
     }
 
     const handleAddDevice = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-        const icon: DeviceIconName = 'bulb';
+        const device = allDevices[id];
+        const icon = getDeviceDefaultIcon(device.type);
         const position = toRelativePosition(
             [e.clientX, e.clientY], 
             {
@@ -237,48 +289,48 @@ const HomeEditor = ({ planId }: Props) => {
             },
             mapTransform?.scale ?? 1,
         );
-        const newDevice = actions.addDevice(allDevices[id], { icon, position }, planBounds);
+        const newDevice = actions.addDevice(device, { icon, position }, planBounds);
 
-        const updatedMapDevices = {
+        const updatedplanDevices = {
             [id]: newDevice,
-            ...mapDevices,
+            ...planDevices,
         };
 
-        setMapDevices(updatedMapDevices);
-        setSelectedMapDeviceId(id);
-        setSelectedMapDeviceDrag(true);
+        setplanDevices(updatedplanDevices);
+        setSelectedPlanDeviceId(id);
+        setSelectedPlanDeviceDrag(true);
         setHasUnsavedChanges(true);
     }
 
     const handleSelectDevice = (id: string) => {
-        setSelectedMapDeviceId(id);
-        setSelectedMapDeviceDrag(false);
+        setSelectedPlanDeviceId(id);
+        setSelectedPlanDeviceDrag(false);
     }
 
     /**
      * Drag hanlders
      */
-    const handleDragDevice = (id: string, x: number, y: number) => {
-        const device = mapDevices[id];
-        const updatedDevice = actions.updateDevicePosition(device, [x, y], planBounds, true)
+    const handleDragDevice = (id: string, positionDiff: Point) => {
+        const device = planDevices[id];
+        const updatedDevice = actions.updateDevicePositionByDiff(device, positionDiff, planBounds, true)
         handleChangeDevice(updatedDevice);
     }
 
-    const handleBulbsLinePointDrag = (id: string, index: number, x: number, y: number) => {
-        const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceBulbsPoint(device, index, [x, y], planBounds, true);
+    const handleBulbsLinePointDrag = (id: string, index: number, position: Point) => {
+        const device = planDevices[id];
+        const updatedDevice = actions.updateDeviceBulbsPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
     
-    const handleShadowPointDrag = (id: string, index: number, x: number, y: number) => {
-        const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceShadowPoint(device, index, [x, y], planBounds, true);
+    const handleShadowPointDrag = (id: string, index: number, position: Point) => {
+        const device = planDevices[id];
+        const updatedDevice = actions.updateDeviceShadowPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
 
-    const handleShadowMaskPointDrag = (id: string, index: number, x: number, y: number) => {
-        const device = mapDevices[id];
-        const updatedDevice = actions.updateDeviceShadowMaskPoint(device, index, [x, y], planBounds, true);
+    const handleShadowMaskPointDrag = (id: string, index: number, position: Point) => {
+        const device = planDevices[id];
+        const updatedDevice = actions.updateDeviceShadowMaskPointByDiff(device, index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }
 
@@ -296,22 +348,23 @@ const HomeEditor = ({ planId }: Props) => {
                         <Toolbar position="left" >
                             <DevicesList
                                 devices={allDevices}
-                                devicesOnPlan={mapDevices}
-                                selectedDeviceId={selectedMapDeviceId}
+                                devicesOnPlan={planDevices}
+                                selectedDeviceId={selectedPlanDeviceId}
                                 onDeviceSelected={handleSelectDevice}
                                 onDeviceAddClick={handleAddDevice}
                             />
                         </Toolbar>
                         <HomeMap
+                            data={sensorsData}
                             background={plan.background}
                             width={plan.width}
                             height={plan.height}
-                            elements={mapDevices}
+                            elements={planDevices}
                             allowZoom={true}
                             allowDrag={true}
                             allowInitialScale={true}
-                            editElementId={selectedMapDeviceId}
-                            editElementDrag={selectedMapDeviceDrag}
+                            editElementId={selectedPlanDeviceId}
+                            editElementDrag={selectedPlanDeviceDrag}
                             isEditorMode={true}
                             onElementDrag={handleDragDevice}
                             onBulbsLinePointDrag={handleBulbsLinePointDrag}
@@ -330,9 +383,9 @@ const HomeEditor = ({ planId }: Props) => {
                             }}
                         />
                         <Toolbar position="right" >
-                            {selectedMapDevice && (
+                            {selectedPlanDevice && (
                                <DeviceProperties
-                                    device={selectedMapDevice}
+                                    device={selectedPlanDevice}
                                     bounds={planBounds}
                                     onChange={handleChangeDevice}
                                     onDelete={handleDeleteDevice}

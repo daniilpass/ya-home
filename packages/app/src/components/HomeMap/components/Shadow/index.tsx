@@ -2,7 +2,7 @@ import {FC} from 'react';
 
 import { DeviceState, Point } from '@homemap/shared';
 
-import {useDrag} from '../../hooks/useDrage';
+import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 
 import './styles.css';
@@ -13,24 +13,24 @@ type Props = {
     maskPoints?: Point[];
     state?: DeviceState | null;
     isEditMode?: boolean;
-    onPointDrag?: (index: number, pageX: number, pageY: number) => void;
-    onMaskPointDrag?: (index: number, pageX: number, pageY: number) => void;
+    onPointDrag?: (index: number, event: DragEvent) => void;
+    onMaskPointDrag?: (index: number, event: DragEvent) => void;
 }
 
 const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDrag, onMaskPointDrag}) => {
-    const onDrag = (pageX: number, pageY: number, options: any) => {
+    const onDrag = (event: DragEvent, options: any) => {
         const {index} = options;
-        onPointDrag && onPointDrag(index, pageX, pageY);
+        onPointDrag && onPointDrag(index, event);
     }
-    const onMaskDrag = (pageX: number, pageY: number, options: any) => {
+    const onMaskDrag = (event: DragEvent, options: any) => {
         const {index} = options;
-        onMaskPointDrag && onMaskPointDrag(index, pageX, pageY);
+        onMaskPointDrag && onMaskPointDrag(index, event);
     }
 
     const onDragStart = useDrag(onDrag);
     const onMaskDragStart = useDrag(onMaskDrag);
 
-    if (state?.on) {
+    if (state?.on?.value) {
         return null;
     }
 

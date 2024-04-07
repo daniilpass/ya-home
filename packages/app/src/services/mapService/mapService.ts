@@ -71,10 +71,15 @@ class MapService {
 
         let updatePromise: Promise<void> | undefined;
 
-        switch (device.state?.on) {
+        switch (device.state?.on?.value) {
             case true:
                 this.state.updateElement(deviceId, {
-                    state: { on: false },
+                    state: { 
+                        on: {
+                            ...device.state?.on,
+                            value: false,
+                        }
+                    },
                     substate: Substate.Pending,
                 });
 
@@ -82,7 +87,12 @@ class MapService {
                 break;
             case false:
                 this.state.updateElement(deviceId, {
-                    state: { on: true },
+                    state: { 
+                        on: {
+                            ...device.state?.on,
+                            value: true,
+                        }
+                    },
                     substate: Substate.Pending,
                 });
 

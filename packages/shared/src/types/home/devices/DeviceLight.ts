@@ -3,6 +3,6 @@ import { DeviceTypes } from '../deviceTypes';
 import { DeviceBase } from './DeviceBase';
 
 export type DeviceLight = DeviceBase & {
-    type: typeof DeviceTypes.Light;
+    type: DeviceTypes.Light;
     state: Partial<DeviceStateOnOf & DeviceStateBrightness>;
 }

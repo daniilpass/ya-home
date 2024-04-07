@@ -1,13 +1,18 @@
-import {RefObject, useState, useLayoutEffect, MouseEvent as ReactMouseEvent, useCallback} from 'react';
+import {RefObject, useState, useLayoutEffect, useCallback} from 'react';
 
-import { MouseButton } from '@homemap/shared';
+import { MouseButton, Point } from '@homemap/shared';
 
-import {useDrag} from './useDrage';
+import {DragEvent, useDrag} from './useDrag';
 
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
 const MAX_SCALE = 4;
 const SCALE_FACTOR = 0.1;
+
+type DragOptions = { 
+    scale: number,
+    translate: Point,
+}
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
@@ -27,19 +32,7 @@ export const useResize = (
     const [scale, setScale] = useState(1.0);
     const [minScale, setMinScale] = useState(MIN_SCALE);
     const [rotate, setRotate] = useState(0);
-    const [translate, setTranslate] = useState<[number, number]>([0, 0]);
-
-    const onDrag = (pageX: number, pageY: number, _scale: number) => {
-        if (!wrapperRef.current) {
-            return;
-        }
-        const bounds = wrapperRef.current.getBoundingClientRect();
-        const x = (pageX - bounds.left - bounds.width / 2) / _scale;
-        const y = (pageY - bounds.top - bounds.height / 2) / _scale;
-
-        setTranslate([x, y]);
-    }
-    const onDragStart = useDrag(onDrag, MouseButton.MIDDLE);
+    const [translate, setTranslate] = useState<Point>([0, 0]);
 
     const {
         allowScale = false,
@@ -120,21 +113,29 @@ export const useResize = (
     }, [wrapperRef, scale, minScale, allowZoom]);
 
     // Drag
+    const onDrag = useCallback((e: DragEvent, options: DragOptions) => {
+        setTranslate([
+            options.translate[0] - (e.pageXDiff / options.scale),
+            options.translate[1] - (e.pageYDiff / options.scale),
+        ]);
+    }, []);
+
+    const onDragStart = useDrag(onDrag, MouseButton.MIDDLE);
+
     useLayoutEffect(() => {
         const wrapper = layoutRef.current;
         if(!allowDrag || !wrapper){
             return;
         }
 
-        const handleDrag = (e: MouseEvent | ReactMouseEvent<Element, MouseEvent>) =>
-            onDragStart(e as ReactMouseEvent<Element, MouseEvent>, scale);
+        const handleDragStart = (e: MouseEvent) => onDragStart(e, { scale, translate });
         
-        wrapper.addEventListener('mousedown', handleDrag);
+        wrapper.addEventListener('mousedown', handleDragStart);
 
         return () => {
-            wrapper.removeEventListener('mousedown', handleDrag);
+            wrapper.removeEventListener('mousedown', handleDragStart);
         }
-    }, [allowDrag, layoutRef, scale])
+    }, [allowDrag, layoutRef, onDragStart, scale, translate])
 
     return [scale, rotate, translate] as const;
 }

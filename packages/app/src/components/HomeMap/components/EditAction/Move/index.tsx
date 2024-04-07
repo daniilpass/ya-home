@@ -10,6 +10,8 @@ type Props = {
     onMouseDown?: MouseEventHandler<Element>,
 }
 
+const fillOpacity = 0.8;
+
 const EditActionMove = forwardRef<SVGGElement, Props>(({ x, y, onMouseDown }, ref) => {
     const strokeColor = colors.primaryDark;
     return (
@@ -23,7 +25,7 @@ const EditActionMove = forwardRef<SVGGElement, Props>(({ x, y, onMouseDown }, re
                 viewBox="0 0 48 48"
             >
                 <g> 
-                    <circle cx="24" cy="24" r="24" fill="white" fillOpacity="0.2"></circle>
+                    <circle cx="24" cy="24" r="24" fill="white" fillOpacity={fillOpacity}></circle>
                     <path d="M20 12L24 16L28 12" stroke={strokeColor} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M24 16V4" stroke={strokeColor} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M20 36L24 32L28 36" stroke={strokeColor} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>

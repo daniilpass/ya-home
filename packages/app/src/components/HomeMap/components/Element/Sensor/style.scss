@@ -1,0 +1,20 @@
+.sensor {
+    background-color:  rgba(29, 29, 66, .5); //rgba(128, 128, 128, .7); // rgb(29, 29, 66);
+    padding: 10px;
+    width: max-content;
+    border-radius: 20px;
+    border: 2px solid rgb(128, 128, 128);
+}
+
+.informer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.informer__value {
+    font-size: 24px;
+    color: white;
+    white-space: nowrap;
+}

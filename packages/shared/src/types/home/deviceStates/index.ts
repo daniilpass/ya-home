@@ -1,14 +1,43 @@
+import { DeviceUnits } from '../DeviceUnits';
+
+export enum DeviceStateKeys {
+    On = 'on',
+    Brightness = 'brightness',
+    Temperature = 'temperature',
+    Humidity = 'humidity',
+    Motion = 'motion',
+}
+
+export type DeviceStateType<T = unknown> = {
+    value: T,
+    unit: DeviceUnits,
+    updatedAt?: number,
+}
+
 export type DeviceStateOnOf = {
-    on: boolean;
+    [DeviceStateKeys.On]: DeviceStateType<boolean>;
 }
 
 export type DeviceStateBrightness = {
-    brightness: number;
+    [DeviceStateKeys.Brightness]: DeviceStateType<number>;
+}
+
+export type DeviceStateTemperature = {
+    [DeviceStateKeys.Temperature]: DeviceStateType<number>;
+}
+
+export type DeviceStateHumidity = {
+    [DeviceStateKeys.Humidity]: DeviceStateType<number>;
+}
+
+export type DeviceStateMotion = {
+    [DeviceStateKeys.Motion]: DeviceStateType<number>;
 }
 
 export type DeviceState = Partial<
     DeviceStateOnOf &
-    DeviceStateBrightness
+    DeviceStateBrightness &
+    DeviceStateTemperature &
+    DeviceStateHumidity &
+    DeviceStateMotion
 >;
-
-export type DeviceStateKeys = keyof DeviceState;

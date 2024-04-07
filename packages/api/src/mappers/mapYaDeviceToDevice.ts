@@ -1,32 +1,30 @@
-import { Device, DeviceTypes } from '@homemap/shared';
+import { Device, DeviceSubtypes, DeviceTypes } from '@homemap/shared';
 
 import { YaDevice } from '../yaClient/model/YaDevice';
 import { mapYaCapabilitiesToState } from './mapYaCapabilitiesToState';
+import { mapYaPropertiesToState } from './mapYaPropertiesToState';
+import { mapYaDeviceTypeToDeviceType, mapYaDeviceTypeToSubtype } from './deviceType';
 
 export const mapYaDeviceToDevice = (yaDevice: YaDevice): Device => {
-    const type = yaDevice.type.replace('devices.types.', '');
-
-    switch(type) {
-        case DeviceTypes.Light:
-            return {
-                id: yaDevice.id,
-                name: yaDevice.name,
-                type: DeviceTypes.Light,
-                state: mapYaCapabilitiesToState(yaDevice.capabilities),
-            }
-        case DeviceTypes.Switch:
-            return {
-                id: yaDevice.id,
-                name: yaDevice.name,
-                type: DeviceTypes.Switch,
-                state: mapYaCapabilitiesToState(yaDevice.capabilities),
-            }
-        case DeviceTypes.Unknown:
-        default:
-            return {
-                id: yaDevice.id,
-                name: yaDevice.name,
-                type: DeviceTypes.Unknown,
-            }
+    let type = mapYaDeviceTypeToDeviceType(yaDevice.type);
+    let subtype = mapYaDeviceTypeToSubtype(yaDevice.type);
+    const capabilitiesState = mapYaCapabilitiesToState(yaDevice.capabilities);
+    const propertiesState = mapYaPropertiesToState(yaDevice.properties);
+    const state = {
+        ...capabilitiesState,
+        ...propertiesState,
     }
+
+    if (Object.keys(state).length === 0) {
+        type = DeviceTypes.Unknown;
+        subtype = DeviceSubtypes.Unknown;
+    }
+
+    return {
+        id: yaDevice.id,
+        name: yaDevice.name,
+        type,
+        subtype,
+        state,
+    };
 }

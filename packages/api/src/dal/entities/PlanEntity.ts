@@ -1,5 +1,5 @@
 import { CreationOptional, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { Plan, PlanInfo } from '@homemap/shared';
+import { DeviceSubtypes, DeviceTypes, Plan, PlanInfo } from '@homemap/shared';
 
 import MediaStorage from '../../services/mediaStorage';
 
@@ -13,7 +13,9 @@ export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreation
             id: this.id,
             width: this.json.width,
             height: this.json.height,
-            devices: this.json.devices,
+            devices: {
+                ...this.json.devices,
+            },
             background: {
                 ...this.json.background,
                 ...(

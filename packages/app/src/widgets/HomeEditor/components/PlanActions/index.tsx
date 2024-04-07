@@ -4,6 +4,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExportIcon from '@mui/icons-material/Upgrade';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import SyncIcon from '@mui/icons-material/Sync';
 
 import ImportIcon from '../../../../common/components/Icons/ImportIcon';
 import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
@@ -41,7 +42,7 @@ const PlanActions = ({
     const handleClickSettings = () => onClick({ type: PlanActionsEnum.Settings });
     const handleClickExport = () => onClick({ type: PlanActionsEnum.Export });
     const handleClickExitToView = () => onClick({ type: PlanActionsEnum.ExitToView });
-
+    const handleClickSyncDevices = () => onClick({ type: PlanActionsEnum.SyncDevices });
     return (
         <Box sx={{
             p: "8px",
@@ -67,6 +68,10 @@ const PlanActions = ({
 
             <Button onClick={handleClickSettings} startIcon={<SettingsIcon />}>
                 Параметры
+            </Button>
+
+            <Button onClick={handleClickSyncDevices} startIcon={<SyncIcon />}>
+                Синхр. устройства
             </Button>
 
             <Divider orientation="vertical" />

@@ -6,9 +6,6 @@ import {
     DialogContent,
     DialogTitle,
     IconButton,
-    List,
-    ListItemButton,
-    ListItemText,
     Typography,
 } from '@mui/material';
 
@@ -16,6 +13,7 @@ import { Collection, Device, DeviceTypes, PlanDevice } from '@homemap/shared';
 
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add';
+import DeviceList from '../../../../components/DeviceList';
 
 export type Props = {
     devices: Collection<Device>;
@@ -65,20 +63,13 @@ const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelecte
                 </Button>
             </Box>
             <Box sx={{p: "0 8px"}}>
-                <List component="div" sx={{m: "0 -8px", p: 0}}>
-                    {
-                        Object.keys(devicesOnPlan).map(key => (
-                            <ListItemButton
-                                key={key}
-                                selected={key === selectedDeviceId}
-                                onClick={() => handleDeviceSelected(key)}
-                                
-                            >
-                                <ListItemText primary={devicesOnPlan[key].name} />
-                            </ListItemButton>
-                        ))
-                    }
-                </List>
+                <DeviceList
+                    items={devicesOnPlan}
+                    selectedItemId={selectedDeviceId}
+                    withTooltip
+                    onItemClick={handleDeviceSelected}
+                    sx={{m: "0 -8px", p: 0}}
+                />
             </Box>
             <Dialog
                 open={addDeviceModalOpened}
@@ -98,18 +89,11 @@ const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelecte
                     <CloseIcon />
                 </IconButton>
                 <DialogContent dividers={true}>
-                    <List component="div" sx={{padding: 0, width: 400 }}>
-                        {
-                            Object.keys(supportedDevicesNotOnMap).map(key => (
-                                <ListItemButton
-                                    key={key}
-                                    onClick={(e) => handleDeviceAddClick(key, e)}
-                                >
-                                    <ListItemText primary={supportedDevicesNotOnMap[key].name} />
-                                </ListItemButton>
-                            ))
-                        }
-                    </List>
+                    <DeviceList
+                        items={supportedDevicesNotOnMap}
+                        onItemClick={handleDeviceAddClick}
+                        sx={{padding: 0, width: 400 }}
+                    />
                 </DialogContent>
             </Dialog>
         </>
