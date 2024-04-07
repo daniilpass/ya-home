@@ -21,7 +21,7 @@ const ForeignObjectWrapper = ({ children, ...props }: ForeignObjectWrapperProps)
                 height: ref.current.scrollHeight,
             })
         }
-    }, []);
+    }, [ref.current?.scrollWidth, ref.current?.scrollHeight]);
 
     return (
         <foreignObject
