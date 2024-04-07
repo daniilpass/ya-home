@@ -1,13 +1,21 @@
 import { Size } from '@homemap/shared';
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import useResizeObserver from "use-resize-observer";
 
 export type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement> & {
+    rootClassName?: string;
+    rootStyle?: React.CSSProperties;
     onFit?: (rect: Size) => void;
 };
 
-export const ForeignObjectWrapper = ({ onFit, children, ...props }: ForeignObjectWrapperProps) => {
+export const ForeignObjectWrapper = ({
+    children,
+    rootClassName,
+    rootStyle,
+    onFit,
+    ...props
+}: ForeignObjectWrapperProps) => {
     const [size, setSize] = useState<Size>({ width: 1, height: 1});
     const childRef = useRef<HTMLDivElement>(null);
     const { width, height} = useResizeObserver<HTMLDivElement>({ ref: childRef });
@@ -18,8 +26,8 @@ export const ForeignObjectWrapper = ({ onFit, children, ...props }: ForeignObjec
         }
 
         const newSize = {
-            width: childRef.current.scrollWidth,
-            height: childRef.current.scrollHeight,
+            width: childRef.current.offsetWidth,
+            height: childRef.current.offsetHeight,
         };
 
         setSize(newSize);
@@ -36,7 +44,13 @@ export const ForeignObjectWrapper = ({ onFit, children, ...props }: ForeignObjec
                 overflow: 'visible',
             }}
         >
-            <div ref={childRef}>{children}</div>
+            <div
+                ref={childRef}
+                className={rootClassName}
+                style={rootStyle}
+            >
+                {children}
+            </div>
         </foreignObject>
     )
 }
