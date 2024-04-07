@@ -70,7 +70,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
                     ))}
                     {isNoData && (
                         <DeviceIcon
-                            name={DeviceIconName.UnknownSensor}
+                            name={DeviceIconName.Sensor}
                             sx={{fill: 'white', verticalAlign: 'middle'}}
                         />
                     )}

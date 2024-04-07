@@ -44,6 +44,19 @@ export const getDeviceUnitTitle = (unit: DeviceUnits) => {
     }
 }
 
+export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconName | undefined => {
+    switch (type) {
+        case DeviceTypes.Switch:
+        case DeviceTypes.Light:
+            return DeviceIconName.Ligth;
+        case DeviceTypes.Sensor:
+            return DeviceIconName.Sensor;
+        case DeviceTypes.Unknown:
+        default:
+            return undefined;
+    }
+}
+
 export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconName | null => {
     switch (stateKey) {
         case DeviceStateKeys.On:

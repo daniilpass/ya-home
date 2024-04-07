@@ -7,12 +7,12 @@ export enum DeviceIconName {
     Ligth = 'bulb',
     Temperature = 'temperature',
     Humidity = 'humidity',
-    UnknownSensor = 'unknownSensor'
+    Sensor = 'sensor'
 };
 
 export const icons = {
     [DeviceIconName.Ligth]: LightbulbIcon,
     [DeviceIconName.Temperature]: ThermostatIcon,
     [DeviceIconName.Humidity]: WaterDropIcon,
-    [DeviceIconName.UnknownSensor]: SensorsIcon,
+    [DeviceIconName.Sensor]: SensorsIcon,
 }

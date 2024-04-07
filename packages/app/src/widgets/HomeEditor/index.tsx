@@ -6,7 +6,6 @@ import { Bounds, Collection, Device, DeviceTypes, Plan, PlanDevice, Point } from
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
 import Toolbar from '../../common/components/Toolbar';
-import { DeviceIconName } from '../../components/DeviceIcon';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
@@ -15,6 +14,7 @@ import DevicesList from './components/DevicesList';
 import DeviceProperties from './components/DeviceProperties';
 import PlanActions, { PlanActionEvent } from './components/PlanActions';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { getDeviceDefaultIcon } from '../../utils/device';
 
 import actions from './actions';
 import { exportPlan, importPlan, toRelativePosition } from './tools';
@@ -279,7 +279,8 @@ const HomeEditor = ({ planId }: Props) => {
     }
 
     const handleAddDevice = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-        const icon: DeviceIconName = DeviceIconName.Ligth;
+        const device = allDevices[id];
+        const icon = getDeviceDefaultIcon(device.type);
         const position = toRelativePosition(
             [e.clientX, e.clientY], 
             {
@@ -288,7 +289,7 @@ const HomeEditor = ({ planId }: Props) => {
             },
             mapTransform?.scale ?? 1,
         );
-        const newDevice = actions.addDevice(allDevices[id], { icon, position }, planBounds);
+        const newDevice = actions.addDevice(device, { icon, position }, planBounds);
 
         const updatedplanDevices = {
             [id]: newDevice,
