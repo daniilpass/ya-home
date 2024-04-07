@@ -1,6 +1,7 @@
 import {MouseEvent as ReactMouseEvent, useCallback} from 'react';
 
 import { MouseButton } from '@homemap/shared';
+import useBodyCursor from './useBodyCursor';
 
 const EVENT_MOUSEMOVE = 'mousemove';
 const EVENT_MOUSEUP = 'mouseup';
@@ -21,10 +22,14 @@ export const useDrag = (
     onDrag?: onDragCallback,
     button: MouseButton = MouseButton.LEFT,
 ) => {
+    const { setCursor, resetCursor } = useBodyCursor();
+
     const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
         if (dragStartEvent.button !== button || !onDrag) {
             return;
         }
+
+        setCursor('move');
 
         const clientXStart = dragStartEvent.clientX;
         const clientYStart = dragStartEvent.clientY;
@@ -41,14 +46,15 @@ export const useDrag = (
             onDrag(extendedEvent, options);
         }
 
+        const endDrag = () => {
+            resetCursor();
+            document.removeEventListener(EVENT_MOUSEMOVE, handleDrag);
+        }
+    
         document.addEventListener(EVENT_MOUSEMOVE, handleDrag);
-        document.addEventListener(EVENT_MOUSEUP, () => {
-            document.removeEventListener(EVENT_MOUSEMOVE, handleDrag)
-        });
-        document.addEventListener(EVENT_WHEEL, () => {
-            document.removeEventListener(EVENT_MOUSEMOVE, handleDrag)
-        });
-    }, [button, onDrag])
+        document.addEventListener(EVENT_MOUSEUP, endDrag);
+        document.addEventListener(EVENT_WHEEL, endDrag);
+    }, [button, onDrag, resetCursor, setCursor])
 
     return onDragStart;
 }

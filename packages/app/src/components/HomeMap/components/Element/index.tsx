@@ -8,6 +8,7 @@ import {EditActionMove} from '../EditAction';
 import { DeviceIconName } from '../../../DeviceIcon';
 import LightElement from './Light';
 import SensorElement from './Sensor';
+import './style.scss';
 
 type Props = {
     type: DeviceTypes;
@@ -38,11 +39,22 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
         }
     }, [moveRef, isEditMode, editElementDrag]);
 
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (!isEditMode) {
+            return;   
+        }
+        onDragStart(e);
+    }
+
+    const isShowEditAction = isEditMode && type !== DeviceTypes.Sensor;
+
+    const className = isEditMode ? 'element--movable' : undefined;
+
     return (
         <g
-            // TODO: all draggable concept
-            // onMouseDown={onDragStart}
-            // ref={moveRef}
+            onMouseDown={handleMouseDown}
+            ref={moveRef}
+            className={className}
         >
             {(type === DeviceTypes.Light || type === DeviceTypes.Switch) && (
                 <LightElement
@@ -60,12 +72,10 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
                     substate={substate}
                 />
             )}
-            {isEditMode && (
+            {isShowEditAction && (
                 <EditActionMove
                     x={position[0]}
                     y={position[1]}
-                    onMouseDown={onDragStart}
-                    ref={moveRef}
                 />
             )}
         </g>
