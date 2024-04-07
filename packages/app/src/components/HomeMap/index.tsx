@@ -18,7 +18,7 @@ import { useDispatch } from '../../store/hooks';
 
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
-import { DragEvent } from './hooks/useDrage';
+import { DragEvent } from './hooks/useDrag';
 import { normilizePosition } from './tools';
 export type MapTransform = {
     scale: number;

@@ -1,4 +1,4 @@
-import {MouseEvent as ReactMouseEvent} from 'react';
+import {MouseEvent as ReactMouseEvent, useCallback} from 'react';
 
 import { MouseButton } from '@homemap/shared';
 
@@ -20,7 +20,7 @@ export const useDrag = (
     onDrag?: onDragCallback,
     button: MouseButton = MouseButton.LEFT,
 ) => {
-    const onDragStart = (dragStartEvent: DragStartEvent, options?: any) => {
+    const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
         if (dragStartEvent.button !== button || !onDrag) {
             return;
         }
@@ -36,7 +36,7 @@ export const useDrag = (
                 clientYDiff: clientYStart - dragEvent.clientY,
                 pageXDiff: pageXStart - dragEvent.pageX,
                 pageYDiff: pageYStart - dragEvent.pageY,
-            })
+            });
             onDrag(extendedEvent, options);
         }
 
@@ -44,7 +44,7 @@ export const useDrag = (
         document.addEventListener(EVENT_MOUSEUP, () => {
             document.removeEventListener(EVENT_MOUSEMOVE, handleDrag)
         });
-    }
+    }, [button, onDrag])
 
     return onDragStart;
 }

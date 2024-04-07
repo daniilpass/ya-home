@@ -8,7 +8,7 @@ import Shadow from '../Shadow';
 import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
 import { DeviceIconName } from '../../../DeviceIcon';
-import { DragEvent } from '../../hooks/useDrage';
+import { DragEvent } from '../../hooks/useDrag';
 
 import './style.scss';
 

@@ -3,7 +3,7 @@ import {FC, useEffect, useRef} from 'react';
 import { DeviceState,  DeviceTypes,  MouseButton, Point } from '@homemap/shared';
 
 import {useTransformContext} from '../../providers/TransformContextProvider';
-import {DragEvent, useDrag} from '../../hooks/useDrage';
+import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 import { DeviceIconName } from '../../../DeviceIcon';
 import LightElement from './Light';

@@ -6,7 +6,7 @@ import { DeviceState, Point } from '@homemap/shared';
 import {pointsToPathDirections} from '../../tools';
 import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';
-import {DragEvent, useDrag} from '../../hooks/useDrage';
+import {DragEvent, useDrag} from '../../hooks/useDrag';
 
 import './styles.css';
 

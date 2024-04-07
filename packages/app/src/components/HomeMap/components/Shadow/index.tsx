@@ -2,7 +2,7 @@ import {FC} from 'react';
 
 import { DeviceState, Point } from '@homemap/shared';
 
-import {DragEvent, useDrag} from '../../hooks/useDrage';
+import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 
 import './styles.css';
