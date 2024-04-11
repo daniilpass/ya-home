@@ -10,7 +10,7 @@ const RootLayout = () => {
         <>
             <AlertContainer />
             <DialogContainer />
-            <ErrorBoundary fallback={<ErrorFallback />} >
+            <ErrorBoundary FallbackComponent={ErrorFallback} >
                 <Outlet />
             </ErrorBoundary>
         </>     

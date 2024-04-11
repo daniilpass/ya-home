@@ -2,6 +2,7 @@ import DialogComponent from '../../common/components/Dialog';
 import { routes } from '../../app/router';
 
 import { DialogProps } from './types';
+import ErrorContent from './ErrorContent';
 
 const CrashDialog = ({ dialog }: DialogProps) => {
     const handleSubmit = () => {
@@ -17,7 +18,7 @@ const CrashDialog = ({ dialog }: DialogProps) => {
             open={dialog?.open || false}
             type="error"
             title="Ошибка"
-            content={dialog?.content}
+            content={<ErrorContent title={dialog?.content} error={dialog?.error}  />}
             labelSubmit='На главную'
             labelClose='Перезагрузить'
             onSubmit={handleSubmit}

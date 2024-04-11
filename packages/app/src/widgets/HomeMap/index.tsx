@@ -27,8 +27,11 @@ const HomeMapWidget = ({ planId }: Props) => {
                 setPlan(plan);
                 setIsLoading(false);
             })
-            .catch(() => {
-                dispatch.dialog.crash('Не удалось загрузить план');
+            .catch((error) => {
+                dispatch.dialog.crash({
+                    content: 'Не удалось загрузить план',
+                    error,
+                });
             });
     }, [planId, dispatch]);
 

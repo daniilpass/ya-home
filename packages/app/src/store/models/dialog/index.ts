@@ -2,7 +2,7 @@ import { createModel } from "@rematch/core";
 
 import { RootModel } from '../root';
 
-import { DialogSettings, DialogState } from './types';
+import { DialogShowPayload, DialogSettings, DialogState } from './types';
 
 const INITIAL_STATE: DialogState = {
     active: undefined,
@@ -11,7 +11,7 @@ const INITIAL_STATE: DialogState = {
 export const dialog = createModel<RootModel>()({
     state: INITIAL_STATE,
     reducers: {
-        show(state, { content, type }: Pick<DialogSettings, 'content' | 'type'>): DialogState {
+        show(state, { content, type, error }: Pick<DialogSettings, 'content' | 'type' | 'error'>): DialogState {
             if (state.active?.open) {
                 return state;
             }
@@ -20,6 +20,7 @@ export const dialog = createModel<RootModel>()({
                 active: {
                     content,
                     type,
+                    error,
                     open: true,
                 },
             };
@@ -38,11 +39,11 @@ export const dialog = createModel<RootModel>()({
         }
     },
     effects: (dispatch) => ({
-        error(content: string) {
-            dispatch.dialog.show({ content, type: 'error' });
+        error({ content, error }: DialogShowPayload) {
+            dispatch.dialog.show({ content, type: 'error', error });
         },
-        crash(content: string) {
-            dispatch.dialog.show({ content, type: 'crash' });
+        crash({ content, error }: DialogShowPayload) {
+            dispatch.dialog.show({ content, type: 'crash', error });
         },
         close() {
             dispatch.dialog.setClose();

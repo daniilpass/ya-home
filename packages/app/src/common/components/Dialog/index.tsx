@@ -1,10 +1,11 @@
 import { Button, Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { ReactNode } from 'react';
 
 export type DialogProps = {
     open: boolean;
     type?: 'success' | 'error' | 'info' | 'warning',
     title: string;
-    content?: string;
+    content?: ReactNode;
     labelSubmit?: string;
     labelClose?: string;
     hideSubmit?: boolean;

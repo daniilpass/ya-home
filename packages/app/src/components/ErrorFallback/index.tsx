@@ -1,12 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch } from '../../store/hooks';
 
-const ErrorFallback = () => {
+type ErrorFallbackProps = {
+    error: Error;
+}
+
+const ErrorFallback = ({ error }: ErrorFallbackProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch.dialog.crash('Что-то важное сломалось');
-    }, [dispatch]);
+        dispatch.dialog.crash({
+            content: 'Что-то важное сломалось',
+            error,
+        });
+    }, [dispatch, error]);
 
     return <div></div>;
 }

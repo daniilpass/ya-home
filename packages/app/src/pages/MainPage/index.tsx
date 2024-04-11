@@ -31,8 +31,11 @@ const MainPage = () => {
                     setIsEmpty(true);
                 }
             })
-            .catch(() => {
-                dispatch.dialog.crash('Не удалось зарузить список планов');
+            .catch((error) => {
+                dispatch.dialog.crash({
+                    content: 'Не удалось зарузить список планов',
+                    error,
+                });
             });
     }, [navigate, dispatch]);
 
