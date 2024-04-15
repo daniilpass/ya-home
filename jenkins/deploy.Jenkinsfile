@@ -1,6 +1,10 @@
 DOCKER_REGISTRY = '192.168.50.55:8082';
 
 def buildAndDeploy() {
+    stage('Checkout SCM') {
+        checkout scm
+    }
+
     stage('Build image: API') {
         sh "docker build . -f docker/Dockerfile.api -t ${DOCKER_REGISTRY}/homemap-api:latest"
     }
