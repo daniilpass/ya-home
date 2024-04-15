@@ -3,7 +3,7 @@ IMAGE_TAG = 'latest';
 APP_IMAGE_NAME = "${DOCKER_REGISTRY}/homemap-api:${IMAGE_TAG}";
 API_IMAGE_NAME = "${DOCKER_REGISTRY}/homemap-app:${IMAGE_TAG}";
 
-def run() {
+def runPipeline() {
     stage('Checkout SCM') {
         checkout scm
     }
@@ -26,5 +26,5 @@ def run() {
 }
 
 node('agent1') {
-    run()
+    runPipeline()
 }
