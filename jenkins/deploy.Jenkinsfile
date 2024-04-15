@@ -16,6 +16,12 @@ def runPipeline() {
         sh "docker build . -f docker/Dockerfile.app -t ${APP_IMAGE_NAME}"
     }
 
+    stage('Auth') {
+        withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'user', passwordVariable: 'password')]) {
+            sh "docker login -u ${user} -p ${password} ${DOCKER_REGISTRY}"
+        }
+    }
+
     stage('Publish API image') {
         sh "docker push ${API_IMAGE_NAME}"
     }
