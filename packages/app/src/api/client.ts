@@ -22,11 +22,18 @@ const request = <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TP
         if (!response.ok) {
             return Promise.reject(response);
         }
-        return response.json();
+
+        return response.json().catch(() => {});
     })
     .then(data => data as TResponse)
     .catch(errorResponse => {
-        const error = `${errorResponse.status}: ${errorResponse.statusText}`;
+        const { status, statusText } = errorResponse;
+
+        if (status === 401) {
+            window.location.href = '/auth';
+        }
+
+        const error = `${status}: ${statusText}`;
         throw error;
     })
 }
@@ -80,6 +87,16 @@ const getMediaUrl = (mediaId: string) => {
     return `${API_BASE_URL}${ENDPOINTS.media.url}/${mediaId}`
 }
 
+const getAuthUrl = () => {
+    return request<string>(ENDPOINTS.getAuthUrl);
+}
+
+const auth = (code: string) => {
+    return request<string>(ENDPOINTS.auth, null, {
+        code,
+    });
+}
+
 const ApiClient = {
     ping,
     lightToggle,
@@ -91,6 +108,8 @@ const ApiClient = {
     updatePlan,
     createPlan,
     getMediaUrl,
+    getAuthUrl,
+    auth,
 }
 
 export default ApiClient;

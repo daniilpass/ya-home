@@ -8,7 +8,7 @@ const StyledButton = styled(Button)<RouterLinkButtonProps>({});
 
 const RouterLinkButton = (props: RouterLinkButtonProps) => (
     <StyledButton LinkComponent={Link} {...props}>
-        На главную
+        {props.children}
     </StyledButton>
 );
 

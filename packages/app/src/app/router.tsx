@@ -9,11 +9,13 @@ import MainPage from '../pages/MainPage';
 import ViewPage from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import AuthPage from '../pages/AuthPage';
 
 export const routes = {
     root: '/',
     view: '/view',
     edit: '/edit',
+    auth: '/auth',
 }
 
 export const router = createBrowserRouter(
@@ -28,6 +30,8 @@ export const router = createBrowserRouter(
             <Route path={routes.edit}>
                 <Route path=":id" element={<EditPage />} />
             </Route>
+
+            <Route path={routes.auth} element={<AuthPage />} />
 
             <Route path="*" element={<NotFoundPage />} />
         </Route>

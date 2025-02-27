@@ -29,7 +29,15 @@ const ENDPOINTS = {
     ping: {
         method: 'GET',
         url: '/stats/ping',
-    }
+    },
+    getAuthUrl: {
+        method: 'GET',
+        url: '/auth/url',
+    },
+    auth: {
+        method: 'GET',
+        url: '/auth?code=:code',
+    },
 }
 
 export default ENDPOINTS;
