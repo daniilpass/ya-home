@@ -1,69 +1,73 @@
+import { Request } from 'express';
+
 import { Collection, Device, DeviceAction, DeviceActionResult, Token } from '@homemap/shared';
-import yaClient from '../../yaClient';
+import { YaClient } from '../../yaClient';
 import { YaLoginInfo } from '../../yaClient/model/YaLoginInfo';
 import { YaUserInfoResponse } from '../../yaClient/model/responses/YaUserInfoResponse';
 import { mapDeviceActionToYaDevicesActions, mapToRecord, mapYaDeviceActionsResultToDeviceActionsResult, mapYaDeviceToDevice } from '../../mappers';
 import { YaDevicesActionsRequest } from '../../yaClient/model/requests/YaDevicesActionsRequest';
 import { YaDevicesActionsResponse } from '../../yaClient/model/responses/YaDevicesActionsResponse';
 import { cache } from '../../utils/cache';
+import { getYaToken } from '../../utils/cookie';
 
-/**
- * Ключ кеширования состояни устройств пользователя.
- * Константа, пока нет подддержки нескольких пользователей.
- */
-const CACHE_KEY_DEVICES = 'user_devices';
+export class YaService {
+    private yaClient: YaClient;
 
-const getUserInfo = async (): Promise<YaLoginInfo> => {
-    return yaClient.getLoginInfo();
-}
+    /**
+     * Ключ кеширования состояния устройств пользователя.
+     * Завязан на токен.
+     */
+    private cacheDevicesKey: string;
 
-const getUserId = async (): Promise<string> => {
-    const { id: userId } = await getUserInfo();
-    return userId;
-}
+    constructor(req: Request<unknown, unknown, unknown, unknown>) {
+        const token = getYaToken(req);
+        this.yaClient = new YaClient(token);
+        this.cacheDevicesKey = token;
+    }
 
-const getUserDevices = async (): Promise<Collection<Device>> => {
-    let result = cache.get<Collection<Device>>(CACHE_KEY_DEVICES);
-
-    if (!result) {
-        const response: YaUserInfoResponse = await yaClient.getUserInfo();
-        result = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
-        cache.set<Collection<Device>>(CACHE_KEY_DEVICES, result);
+    getUserInfo(): Promise<YaLoginInfo> {
+        return this.yaClient.getLoginInfo();
     }
     
-    return result;
-}
-
-const postDeviceAction = async (deviceAction: DeviceAction): Promise<Collection<DeviceActionResult>> => {
-    const deviceActionRequest: YaDevicesActionsRequest = {
-        devices: [
-            mapDeviceActionToYaDevicesActions(deviceAction)
-        ],
-    };
-
-    const response: YaDevicesActionsResponse = await yaClient.postDevicesActions(deviceActionRequest);
-    const result: Collection<DeviceActionResult> = mapToRecord(
-        response.devices,
-        'id',
-        mapYaDeviceActionsResultToDeviceActionsResult,
-    );
-
-    return result;
-}
-
-export const getToken = (code: string): Promise<Token> => {
-    return yaClient.getToken(code);
-}
-
-export const getAuthUrl = (): string => {
-    return yaClient.getAuthUrl();
-}
-
-export const YaService = {
-    getToken,
-    getAuthUrl,
-    getUserInfo,
-    getUserId,
-    getUserDevices,
-    postDeviceAction,
+    async getUserId(): Promise<string> {
+        const { id: userId } = await this.getUserInfo();
+        return userId;
+    }
+    
+    async getUserDevices (): Promise<Collection<Device>> {
+        let result = cache.get<Collection<Device>>(this.cacheDevicesKey);
+    
+        if (!result) {
+            const response: YaUserInfoResponse = await this.yaClient.getUserInfo();
+            result = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
+            cache.set<Collection<Device>>(this.cacheDevicesKey, result);
+        }
+        
+        return result;
+    }
+    
+    async postDeviceAction(deviceAction: DeviceAction): Promise<Collection<DeviceActionResult>> {
+        const deviceActionRequest: YaDevicesActionsRequest = {
+            devices: [
+                mapDeviceActionToYaDevicesActions(deviceAction)
+            ],
+        };
+    
+        const response: YaDevicesActionsResponse = await this.yaClient.postDevicesActions(deviceActionRequest);
+        const result: Collection<DeviceActionResult> = mapToRecord(
+            response.devices,
+            'id',
+            mapYaDeviceActionsResultToDeviceActionsResult,
+        );
+    
+        return result;
+    }
+    
+    getToken(code: string): Promise<Token> {
+        return this.yaClient.getToken(code);
+    }
+    
+    getAuthUrl(): string {
+        return this.yaClient.getAuthUrl();
+    }
 }

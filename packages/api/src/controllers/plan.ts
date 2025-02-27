@@ -7,7 +7,7 @@ import ValidationService from '../services/validationService';
 
 export const getUserPlans = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const plans: Collection<PlanInfo> = await PlanService.getUserPlans();
+        const plans: Collection<PlanInfo> = await new PlanService(req).getUserPlans();
 
         res.json(plans);        
     } catch (error) {
@@ -18,7 +18,7 @@ export const getUserPlans = async (req: Request, res: Response, next: NextFuncti
 export const getUserPlanById = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
         const planId = Number(req.params.id);
-        const plan: Plan = await PlanService.getUserPlanById(planId);
+        const plan: Plan = await new PlanService(req).getUserPlanById(planId);
 
         res.json(plan);
     } catch (error) {
@@ -30,7 +30,7 @@ export const createUserPlan = async (req: Request, res: Response, next: NextFunc
     try {
         ValidationService.validatePlan(req.body);
 
-        const plan: Plan = await PlanService.createUserPlan(req.body);
+        const plan: Plan = await new PlanService(req).createUserPlan(req.body);
 
         res.json(plan);
     } catch (error) {
@@ -43,7 +43,7 @@ export const updateUserPlan = async (req: Request<{id: string}>, res: Response, 
         ValidationService.validatePlan(req.body);
 
         const planId = Number(req.params.id);
-        const plan: Plan = await PlanService.updateUserPlan(planId, req.body);
+        const plan: Plan = await new PlanService(req).updateUserPlan(planId, req.body);
 
         res.json(plan);
     } catch (error) {

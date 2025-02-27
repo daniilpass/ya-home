@@ -9,7 +9,7 @@ export const getUserMedia = async (req: Request<{id: string}>, res: Response, ne
         const mediaId = req.params.id;
         MediaStorage.assertMediaId(mediaId);
 
-        const userId = await YaService.getUserId();
+        const userId = await new YaService(req).getUserId();
         const media = await MediaStorage.findMedia(userId, mediaId);
         if (!media) {
             throw new NotFoundError();
