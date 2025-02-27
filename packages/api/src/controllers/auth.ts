@@ -30,7 +30,7 @@ export const getToken = async (req: Request<unknown, unknown, unknown, QueryPara
 export const auth = async (req: Request<unknown, unknown, unknown, QueryParams>, res: Response, next: NextFunction) => {
     try {
         const token: Token = await new YaService(req).getToken(req.query.code);
-        res.cookie(YA_COOKIE_NAME, token.access_token, { maxAge: token.expires_in, httpOnly: true });
+        res.cookie(YA_COOKIE_NAME, token.access_token, { maxAge: token.expires_in * 1000, httpOnly: true });
         res.status(200).end();
     } catch (error) {
         next(error);
