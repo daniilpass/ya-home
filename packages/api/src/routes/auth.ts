@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { getAuthUrl, getToken } from '../controllers/auth';
+import { auth, getAuthUrl } from '../controllers/auth';
 
 const router = express.Router();
 
 router.get('/auth/url', getAuthUrl);
 
-router.get('/auth/token', getToken);
+router.get('/auth', auth);
 
 export default router;

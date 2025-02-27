@@ -8,6 +8,7 @@ export const YAPI_CLIENT_ID =  process.env.YAPI_CLIENT_ID || '';
 export const YAPI_CLIENT_SECRET =  process.env.YAPI_CLIENT_SECRET || '';
 // TODO: delete all mentions
 export const YAPI_AUTH_TOKEN =  process.env.YAPI_AUTH_TOKEN;
+export const YA_COOKIE_NAME = 'yaToken';
 export const CACHE_TTL = Number(process.env.CACHE_TTL) || 5;
 export const DB_STORAGE_PATH = './appData';
 export const MEDIA_STORAGE_PATH = './appData/media';
