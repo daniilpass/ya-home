@@ -3,7 +3,7 @@ import express from "express";
 import { PORT } from '../constants';
 
 import { errorHandler, requestLogger } from '../middlewares';
-import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter } from '../routes';
+import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter, authRouter } from '../routes';
 import { logger } from '../utils';
 
 export const bootstrapServer = () => {
@@ -21,6 +21,7 @@ export const bootstrapServer = () => {
     app.use('/api', planRouter);
     app.use('/api', statsRouter);
     app.use('/api', mediaRouter);
+    app.use('/api', authRouter);
 
     app.use(errorHandler);
     

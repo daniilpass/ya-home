@@ -1,4 +1,4 @@
-import { Collection, Device, DeviceAction, DeviceActionResult } from '@homemap/shared';
+import { Collection, Device, DeviceAction, DeviceActionResult, Token } from '@homemap/shared';
 import yaClient from '../../yaClient';
 import { YaLoginInfo } from '../../yaClient/model/YaLoginInfo';
 import { YaUserInfoResponse } from '../../yaClient/model/responses/YaUserInfoResponse';
@@ -51,7 +51,17 @@ const postDeviceAction = async (deviceAction: DeviceAction): Promise<Collection<
     return result;
 }
 
+export const getToken = (code: string): Promise<Token> => {
+    return yaClient.getToken(code);
+}
+
+export const getAuthUrl = (): string => {
+    return yaClient.getAuthUrl();
+}
+
 export const YaService = {
+    getToken,
+    getAuthUrl,
     getUserInfo,
     getUserId,
     getUserDevices,

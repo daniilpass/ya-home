@@ -1,8 +1,12 @@
 import { logger } from './utils';
 
 export const PORT = process.env.PORT || 3000;
-export const YAPI_LOGIN_BASE_URL =  process.env.YAPI_LOGIN_BASE_URL;
-export const YAPI_IOT_BASE_URL =  process.env.YAPI_IOT_BASE_URL;
+export const YAPI_LOGIN_BASE_URL = process.env.YAPI_LOGIN_BASE_URL;
+export const YAPI_IOT_BASE_URL = process.env.YAPI_IOT_BASE_URL;
+export const YAPI_OAUTH_BASE_URL = process.env.YAPI_OAUTH_BASE_URL;
+export const YAPI_CLIENT_ID =  process.env.YAPI_CLIENT_ID || '';
+export const YAPI_CLIENT_SECRET =  process.env.YAPI_CLIENT_SECRET || '';
+// TODO: delete all mentions
 export const YAPI_AUTH_TOKEN =  process.env.YAPI_AUTH_TOKEN;
 export const CACHE_TTL = Number(process.env.CACHE_TTL) || 5;
 export const DB_STORAGE_PATH = './appData';
