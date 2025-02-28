@@ -12,13 +12,13 @@ export class YaClient {
     private iotClient: AxiosInstance;
     private loginClient: AxiosInstance;
 
-    constructor(token: string) {
+    constructor(token: string | undefined) {
         this.iotClient = axios.create({
             baseURL: YAPI_IOT_BASE_URL,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                ...(token ? { 'Authorization': `Bearer ${token}` } : undefined),
             }
         });
         this.iotClient.interceptors.request.use(this.logRequest);
@@ -29,7 +29,7 @@ export class YaClient {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `OAuth ${token}`,
+                ...(token ? {'Authorization': `OAuth ${token}` } : undefined),
             }
         });
         this.loginClient.interceptors.request.use(this.logRequest);

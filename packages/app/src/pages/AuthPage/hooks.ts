@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import ApiClient from '../../api';
 import { routes } from '../../app/router';
+import { setYaToken } from '../../services/storage';
 
 export const useAuthUrl = () => {
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ export const useAuth = (code: string) => {
     useEffect(() => {
         ApiClient
             .auth(code)
-            .then(() => {
+            .then((token) => {
+                setYaToken(token);
                 navigate(routes.root);
             })
             .catch(() => {

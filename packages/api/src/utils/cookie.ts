@@ -1,6 +1,6 @@
 import { Request } from "express";
-import { YA_COOKIE_NAME } from '../constants';
+import { YA_TOKEN_KEY } from '@homemap/shared';
 
-export const getYaToken = (req: Request<unknown, unknown, unknown, unknown>) => {
-    return req.cookies[YA_COOKIE_NAME];
+export const getYaToken = (req: Request<unknown, unknown, unknown, unknown>): string | undefined => {
+    return req.cookies[YA_TOKEN_KEY];
 }

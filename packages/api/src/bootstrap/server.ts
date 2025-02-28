@@ -21,14 +21,19 @@ export const bootstrapServer = () => {
 
     app.use(cookieParser())
 
+    // Allow anonymous access
+    // to Auth
     app.use('/api', authRouter);
+    // to Status
+    app.use('/api', statsRouter);
 
+    // Enable auth
     app.use(cookieAuth)
+    // app.use(headerAuth);
 
     app.use('/api', loginRouter);
     app.use('/api', devicesRouter);
     app.use('/api', planRouter);
-    app.use('/api', statsRouter);
     app.use('/api', mediaRouter);
 
     app.use(errorHandler);

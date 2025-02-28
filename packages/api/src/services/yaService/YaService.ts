@@ -17,7 +17,7 @@ export class YaService {
      * Ключ кеширования состояния устройств пользователя.
      * Завязан на токен.
      */
-    private cacheDevicesKey: string;
+    private cacheDevicesKey: string | undefined;
 
     constructor(req: Request<unknown, unknown, unknown, unknown>) {
         const token = getYaToken(req);
@@ -35,12 +35,12 @@ export class YaService {
     }
     
     async getUserDevices (): Promise<Collection<Device>> {
-        let result = cache.get<Collection<Device>>(this.cacheDevicesKey);
+        let result = this.cacheDevicesKey && cache.get<Collection<Device>>(this.cacheDevicesKey);
     
         if (!result) {
             const response: YaUserInfoResponse = await this.yaClient.getUserInfo();
             result = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
-            cache.set<Collection<Device>>(this.cacheDevicesKey, result);
+            this.cacheDevicesKey && cache.set<Collection<Device>>(this.cacheDevicesKey, result);
         }
         
         return result;

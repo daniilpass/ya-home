@@ -6,7 +6,6 @@ export const YAPI_IOT_BASE_URL = process.env.YAPI_IOT_BASE_URL;
 export const YAPI_OAUTH_BASE_URL = process.env.YAPI_OAUTH_BASE_URL;
 export const YAPI_CLIENT_ID =  process.env.YAPI_CLIENT_ID || '';
 export const YAPI_CLIENT_SECRET =  process.env.YAPI_CLIENT_SECRET || '';
-export const YA_COOKIE_NAME = 'yaToken';
 export const CACHE_TTL = Number(process.env.CACHE_TTL) || 5;
 export const DB_STORAGE_PATH = './appData';
 export const MEDIA_STORAGE_PATH = './appData/media';

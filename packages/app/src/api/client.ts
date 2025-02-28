@@ -1,5 +1,5 @@
 
-import { Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, Device, DeviceAction, Plan, PlanInfo, Token } from '@homemap/shared';
 
 import {API_BASE_URL} from '../configuration';
 
@@ -83,16 +83,12 @@ const createPlan = (plan: Plan): Promise<Plan> => {
     return request<Plan>(ENDPOINTS.createPlan, plan);
 }
 
-const getMediaUrl = (mediaId: string) => {
-    return `${API_BASE_URL}${ENDPOINTS.media.url}/${mediaId}`
-}
-
 const getAuthUrl = () => {
     return request<string>(ENDPOINTS.getAuthUrl);
 }
 
 const auth = (code: string) => {
-    return request<string>(ENDPOINTS.auth, null, {
+    return request<Token>(ENDPOINTS.auth, null, {
         code,
     });
 }
@@ -107,7 +103,6 @@ const ApiClient = {
     getPlans,
     updatePlan,
     createPlan,
-    getMediaUrl,
     getAuthUrl,
     auth,
 }
