@@ -1,6 +1,6 @@
 import { Collection, DeviceTypes } from '@homemap/shared';
 
-import {logger} from '../../common/tools';
+import { Logger } from '../../common/tools';
 import ApiClient from '../../api';
 import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../configuration';
 
@@ -11,11 +11,15 @@ import {Substate} from './model/Substate';
 import { store } from '../../store';
 import { PollingState } from './types';
 
+let mapServiceInstanceCounter = 0;
+
 class MapService {
+    private id = mapServiceInstanceCounter++;
     private state: MapState;
     private pollInterval: number;
     private pollIntervalId?: number;
     private pollingState: PollingState = PollingState.Stopped;
+    private logger = new Logger(`MapService-${this.id}`);
 
     onUpdate?: (elements: Record<string, Element>) => void;
 
@@ -25,7 +29,7 @@ class MapService {
         this.pollInterval = API_POLL_INTERVAL;
         this.state = new MapState(elements, API_SYNC_TIMEOUT);
 
-        document.addEventListener('visibilitychange', this.visibilityChanged.bind(this));
+        this.subscribeToEvents();
     }
 
     async start() {
@@ -42,8 +46,23 @@ class MapService {
         clearInterval(this.pollIntervalId);
     }
 
-    private visibilityChanged() {
-        logger.debug('[MapService] visibilityChanged to', document.visibilityState);
+    finalize() {
+        this.logger.debug('finalized');
+
+        this.stop();
+        this.unsubscribeFromEvents();
+    }
+
+    private subscribeToEvents() {
+        document.addEventListener('visibilitychange', this.visibilityChanged);
+    }
+
+    private unsubscribeFromEvents() {
+        document.removeEventListener('visibilitychange', this.visibilityChanged);
+    }
+
+    private visibilityChanged = () => {
+        this.logger.debug('visibilityChanged to', document.visibilityState);
 
         if (document.visibilityState === 'hidden') {
             this.stop();
@@ -53,7 +72,7 @@ class MapService {
     }
 
     private async tick() {
-        logger.debug('[MapService] tick');
+        this.logger.debug('tick');
     
         await this.getAndUpdateElementsState();
     
@@ -130,7 +149,7 @@ class MapService {
                 updatePromise = ApiClient.lightOn(deviceId);
                 break;
             default:
-                logger.error(UNKNOWN_STATE, device.state);
+                this.logger.error(UNKNOWN_STATE, device.state);
         }
 
         updatePromise?.then(() => {

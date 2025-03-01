@@ -21,7 +21,7 @@ export const useMapService = (plan: Plan | undefined) => {
         }
         mapServiceRef.current.start();
         return () => {
-            mapServiceRef.current?.stop();
+            mapServiceRef.current?.finalize();
         }
     }, [plan]);
 
