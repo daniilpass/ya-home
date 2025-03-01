@@ -1,2 +1,2 @@
 export {mergeDeep} from './mergeDeep';
-export {loggerInstance as logger} from './logger'
+export {loggerInstance as logger, Logger} from './logger'

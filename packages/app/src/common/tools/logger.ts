@@ -1,27 +1,29 @@
 import {LOGGER_ENABLED} from '../../configuration';
 
-class Logger {
+export class Logger {
     enabled = LOGGER_ENABLED;
 
-    debug(...data: any[]) {
-        this.enabled && console.debug(...data);
+    constructor(public name: string) {}
+
+    debug(message: string, ...data: any[]) {
+        this.enabled && console.debug(`${[this.name]} ${message}`, ...data);
     }
 
-    info(...data: any[]) {
-        this.enabled && console.info(...data);
+    info(message: string,...data: any[]) {
+        this.enabled && console.info(`${[this.name]} ${message}`, ...data);
     }
 
-    log(...data: any[]) {
-        this.enabled && console.log(...data);
+    log(message: string,...data: any[]) {
+        this.enabled && console.log(`${[this.name]} ${message}`, ...data);
     }
 
-    warn(...data: any[]) {
-        this.enabled && console.warn(...data);
+    warn(message: string,...data: any[]) {
+        this.enabled && console.warn(`${[this.name]} ${message}`, ...data);
     }
 
-    error(...data: any[]) {
-        this.enabled && console.error(...data);
+    error(message: string,...data: any[]) {
+        this.enabled && console.error(`${[this.name]} ${message}`, ...data);
     }
 }
 
-export const loggerInstance = new Logger();
+export const loggerInstance = new Logger('DEFAULT');
