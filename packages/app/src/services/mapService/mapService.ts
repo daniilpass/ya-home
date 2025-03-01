@@ -9,11 +9,14 @@ import {UNKNOWN_STATE} from "./constants";
 import {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import { store } from '../../store';
+import { PollingState } from './types';
 
 class MapService {
-    state: MapState;
-    pollInterval: number;
-    pollIntervalId?: number;
+    private state: MapState;
+    private pollInterval: number;
+    private pollIntervalId?: number;
+    private pollingState: PollingState = PollingState.Stopped;
+
     onUpdate?: (elements: Record<string, Element>) => void;
 
     constructor(
@@ -21,29 +24,57 @@ class MapService {
     ) {
         this.pollInterval = API_POLL_INTERVAL;
         this.state = new MapState(elements, API_SYNC_TIMEOUT);
+
+        document.addEventListener('visibilitychange', this.visibilityChanged.bind(this));
     }
 
     async start() {
+        this.pollingState = PollingState.Started;
+
         this.handleUpdate();
+
         await this.tick();
     }
 
     stop() {
+        this.pollingState = PollingState.Stopped;
+
         clearInterval(this.pollIntervalId);
     }
 
-    async tick() {
+    private visibilityChanged() {
+        logger.debug('[MapService] visibilityChanged to', document.visibilityState);
+
+        if (document.visibilityState === 'hidden') {
+            this.stop();
+        } else if (this.pollingState === PollingState.Stopped) {
+            this.start();
+        }
+    }
+
+    private async tick() {
+        logger.debug('[MapService] tick');
+    
         await this.getAndUpdateElementsState();
+    
         this.handleUpdate();
-        // Planning next tick
+
+        this.scheduleNextTick();
+    }
+
+    private scheduleNextTick() {
+        if (this.pollingState === PollingState.Stopped) {
+            return;
+        }
+
         this.pollIntervalId = window.setTimeout(this.tick.bind(this), this.pollInterval);
     }
 
-    handleUpdate() {
+    private handleUpdate() {
         this.onUpdate && this.onUpdate(this.state.elements);
     }
 
-    async getAndUpdateElementsState() {
+    private async getAndUpdateElementsState() {
         await ApiClient
             .getDevices()
             .then((data) => {
