@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { YAPI_CLIENT_ID, YAPI_CLIENT_SECRET, YAPI_IOT_BASE_URL, YAPI_LOGIN_BASE_URL, YAPI_OAUTH_BASE_URL } from '../constants';
+import { YAPI_CLIENT_ID, YAPI_CLIENT_SECRET, YAPI_IOT_BASE_URL, YAPI_LOGIN_BASE_URL, YAPI_OAUTH_BASE_URL, YAPI_OAUTH_REDIRECT_URL } from '../constants';
 import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse';
 import { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest';
 import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse';
@@ -54,7 +54,8 @@ export class YaClient {
     }
 
     getAuthUrl() {
-        return `${YAPI_OAUTH_BASE_URL}/authorize?force_confirm=true&response_type=code&client_id=${YAPI_CLIENT_ID}`;
+        const redirectParams = YAPI_OAUTH_REDIRECT_URL ? `&redirect_uri=${YAPI_OAUTH_REDIRECT_URL}` : '';
+        return `${YAPI_OAUTH_BASE_URL}/authorize?force_confirm=true&response_type=code&client_id=${YAPI_CLIENT_ID}${redirectParams}`;
     }
 
     getToken(code: string): Promise<YaTokenResponse> {
