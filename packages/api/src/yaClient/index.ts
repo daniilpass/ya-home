@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { YAPI_CLIENT_ID, YAPI_CLIENT_SECRET, YAPI_IOT_BASE_URL, YAPI_LOGIN_BASE_URL, YAPI_OAUTH_BASE_URL, YAPI_OAUTH_REDIRECT_URL } from '../constants';
 import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse';
@@ -7,6 +7,8 @@ import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResp
 import { YaTokenResponse } from './model/responses/YaTokenResponse';
 import { YaLoginInfo } from './model/YaLoginInfo';
 import { logger } from '../utils';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
+import { BadRequestError } from '../errors';
 
 export class YaClient {
     private iotClient: AxiosInstance;
@@ -53,6 +55,22 @@ export class YaClient {
         return response;
     }
 
+    private handleError = (error: Error | AxiosError): never => {
+        if (axios.isAxiosError(error)) {
+            this.handleAxiosError(error);
+        }
+    
+        throw error;
+    }
+
+    private handleAxiosError = ({ message, response }: AxiosError): never => {
+        if (response?.status === 401) {
+            throw new UnauthorizedError(message);
+        }
+        
+        throw new BadRequestError(message);
+    }
+
     getAuthUrl() {
         const redirectParams = YAPI_OAUTH_REDIRECT_URL ? `&redirect_uri=${YAPI_OAUTH_REDIRECT_URL}` : '';
         return `${YAPI_OAUTH_BASE_URL}/authorize?force_confirm=true&response_type=code&client_id=${YAPI_CLIENT_ID}${redirectParams}`;
@@ -65,18 +83,30 @@ export class YaClient {
         params.append('client_id', YAPI_CLIENT_ID);
         params.append('client_secret', YAPI_CLIENT_SECRET);
 
-        return axios.post<YaTokenResponse>(`${YAPI_OAUTH_BASE_URL}/token`, params).then(response => response.data);
+        return axios
+            .post<YaTokenResponse>(`${YAPI_OAUTH_BASE_URL}/token`, params)
+            .then(response => response.data)
+            .catch(this.handleError);
     }
 
     getLoginInfo(): Promise<YaLoginInfo> {
-        return this.loginClient.get<YaLoginInfo>('/info').then(response => response.data);
+        return this.loginClient
+            .get<YaLoginInfo>('/info')
+            .then(response => response.data)
+            .catch(this.handleError);
     }
 
     getUserInfo(): Promise<YaUserInfoResponse> {
-        return this.iotClient.get<YaUserInfoResponse>('/user/info').then(response => response.data);
+        return this.iotClient
+            .get<YaUserInfoResponse>('/user/info')
+            .then(response => response.data)
+            .catch(this.handleError);
     }
 
     postDevicesActions(data: YaDevicesActionsRequest): Promise<YaDevicesActionsResponse> {
-        return this.iotClient.post<YaDevicesActionsResponse>('/devices/actions', data).then(response => response.data);
+        return this.iotClient
+            .post<YaDevicesActionsResponse>('/devices/actions', data)
+            .then(response => response.data)
+            .catch(this.handleError);
     }
 }

@@ -19,7 +19,7 @@ export const useAuthUrl = () => {
             .catch(() => {
                 dispatch.dialog.crash('Не удалось получить URL авторизации');
             });
-    });
+    }, [dispatch]);
 
     return url;
 }

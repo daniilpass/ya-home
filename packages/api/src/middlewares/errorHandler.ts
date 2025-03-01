@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from '../errors/AppError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { SchemaValidationError } from '../errors/SchemaValidationError';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
 
 type ErrorJson = {
     error: string;
@@ -11,6 +12,8 @@ type ErrorJson = {
 
 const getErrorStatusCode = (error: Error): number => {
     switch (true) {
+        case error instanceof UnauthorizedError:
+            return 401;
         case error instanceof NotFoundError:
             return 404;
         case error instanceof AppError:
