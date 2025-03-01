@@ -9,6 +9,7 @@ import { YaDevicesActionsRequest } from '../../yaClient/model/requests/YaDevices
 import { YaDevicesActionsResponse } from '../../yaClient/model/responses/YaDevicesActionsResponse';
 import { cache } from '../../utils/cache';
 import { getYaToken } from '../../utils/cookie';
+import { decryptByClientSecret, encryptTokenByClientSecret } from '../../utils/crypto';
 
 export class YaService {
     private yaClient: YaClient;
@@ -20,9 +21,12 @@ export class YaService {
     private cacheDevicesKey: string | undefined;
 
     constructor(req: Request<unknown, unknown, unknown, unknown>) {
-        const token = getYaToken(req);
+        const encryptedToken = getYaToken(req);
+
+        const token = encryptedToken ? decryptByClientSecret(encryptedToken) : undefined;
         this.yaClient = new YaClient(token);
-        this.cacheDevicesKey = token;
+    
+        this.cacheDevicesKey = encryptedToken;
     }
 
     getUserInfo(): Promise<YaLoginInfo> {
@@ -63,8 +67,9 @@ export class YaService {
         return result;
     }
     
-    getToken(code: string): Promise<Token> {
-        return this.yaClient.getToken(code);
+    async getToken(code: string): Promise<Token> {
+        const token = await this.yaClient.getToken(code);
+        return encryptTokenByClientSecret(token);
     }
     
     getAuthUrl(): string {
