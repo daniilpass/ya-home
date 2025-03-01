@@ -1,6 +1,6 @@
 {
   "short_name": "Мой дом",
-  "name": "Карта умного дома",
+  "name": "Мой дом",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#97cbfe",
+  "background_color": "#1d1d42"
 }
