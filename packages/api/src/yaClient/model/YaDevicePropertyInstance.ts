@@ -2,4 +2,5 @@
 export enum YaDevicePropertyInstance {
     Temperature = 'temperature',
     Humidity = 'humidity',
+    Motion = 'motion',
 }

@@ -1,4 +1,7 @@
 import { DeviceUnits } from '../DeviceUnits';
+import { MotionValue } from './types';
+
+export { MotionValue } from './types';
 
 export enum DeviceStateKeys {
     On = 'on',
@@ -31,7 +34,7 @@ export type DeviceStateHumidity = {
 }
 
 export type DeviceStateMotion = {
-    [DeviceStateKeys.Motion]: DeviceStateType<number>;
+    [DeviceStateKeys.Motion]: DeviceStateType<MotionValue>;
 }
 
 export type DeviceState = Partial<

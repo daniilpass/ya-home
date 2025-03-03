@@ -1,20 +1,22 @@
-import { DeviceState, DeviceUnits } from '@homemap/shared';
+import { DeviceState, DeviceUnits, MotionValue } from '@homemap/shared';
 
 import { YaDeviceProperty, YaDevicePropertyEvent, YaDevicePropertyFloat } from '../yaClient/model/YaDeviceProperty';
 import { YaDevicePropertyType } from '../yaClient/model/YaDevicePropertyType';
 import { YaDevicePropertyInstance } from '../yaClient/model/YaDevicePropertyInstance';
 import { mapYaDeviceUnitToDeviceUnit } from './mapYaDeviceUnitToDeviceUnit';
+import { logger } from '../utils';
 
-const mapYaPropertyFloatToState = (property: YaDevicePropertyFloat): DeviceState | null => {
+const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDevicePropertyEvent): DeviceState | null => {
     let state: DeviceState = {};
-    const unit: DeviceUnits = mapYaDeviceUnitToDeviceUnit(property.parameters.unit);
+    const unit: DeviceUnits = 'unit' in property.parameters ? mapYaDeviceUnitToDeviceUnit(property.parameters.unit) : DeviceUnits.Default;
+    const updatedAt: number = property.last_updated * 1000;
 
-    // TODO: add last_updated to state
     switch (property.parameters.instance) {
         case YaDevicePropertyInstance.Humidity: {
             state.humidity = {
                 value: Number(property.state.value),
                 unit,
+                updatedAt,
             }
             break;
         }
@@ -22,6 +24,16 @@ const mapYaPropertyFloatToState = (property: YaDevicePropertyFloat): DeviceState
             state.temperature = {
                 value: Number(property.state.value),
                 unit,
+                updatedAt,
+            }
+            break;
+        }
+        case YaDevicePropertyInstance.Motion: {
+            logger.error('MAP motion' + property.state.value)
+            state.motion = {
+                value: <MotionValue>property.state.value,
+                unit,
+                updatedAt,
             }
             break;
         }
@@ -39,15 +51,12 @@ export const mapYaPropertiesToState = (yaProperties: YaDeviceProperty[]): Device
         }
 
         switch (property.type) {
+            case YaDevicePropertyType.Event:
             case YaDevicePropertyType.Float: {
-                const mappedState = mapYaPropertyFloatToState(property);
+                const mappedState = mapYaPropertyToState(property);
                 if (mappedState) {
                     Object.assign(state, mappedState);
                 }
-                break;
-            }
-            case YaDevicePropertyType.Event: {
-                //TODO: implement
                 break;
             }
         }
