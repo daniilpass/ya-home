@@ -14,7 +14,7 @@ export enum DeviceStateKeys {
 export type DeviceStateType<T = unknown> = {
     value: T,
     unit: DeviceUnits,
-    updatedAt?: number,
+    updatedAt: number,
 }
 
 export type DeviceStateOnOf = {

@@ -11,6 +11,8 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
         if (capability.state?.value === undefined) {
             continue;
         }
+    
+        const updatedAt: number = capability.state_changed_at * 1000;
 
         switch (capability.type) {
             case YaDeviceCapabilityType.OnOff: {
@@ -18,6 +20,7 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
                     state.on = {
                         value: Boolean(capability.state.value),
                         unit: DeviceUnits.Boolean,
+                        updatedAt,
                     }
                 }
                 break;
@@ -27,6 +30,7 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
                     state.brightness = {
                         value: Number(capability.state.value),
                         unit: DeviceUnits.Percent,
+                        updatedAt,
                     }
                 }
                 break;
