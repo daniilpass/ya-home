@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { DeviceIconName, icons } from './icons';
+import { DeviceIconName, Icons } from './icons';
 import { SxProps, Theme } from '@mui/material';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const DeviceIcon: FC<Props> = ({name, sx}) => {
-    const Icon = icons[name];
+    const Icon = Icons[name];
     return Icon ? <Icon sx={sx} /> : null;
 };
 

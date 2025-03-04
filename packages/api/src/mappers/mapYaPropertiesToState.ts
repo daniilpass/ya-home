@@ -29,7 +29,6 @@ const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDeviceProperty
             break;
         }
         case YaDevicePropertyInstance.Motion: {
-            logger.error('MAP motion' + property.state.value)
             state.motion = {
                 value: <MotionValue>property.state.value,
                 unit,
