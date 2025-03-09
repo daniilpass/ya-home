@@ -1,5 +1,6 @@
-import express from "express";
-import cookieParser from "cookie-parser";
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 import { PORT } from '../constants';
 
@@ -13,6 +14,8 @@ export const bootstrapServer = () => {
 
     const app = express();
     
+    app.use(compression());
+
     app.use(requestLogger);
 
     app.use(express.json({
