@@ -52,7 +52,7 @@ const HomeMapWidget = ({ planId }: Props) => {
                         allowInitialScale={true}
                         allowRotate={true}
                         allowInitialRotate={true}
-                        transition
+                        // transition
                         onReady={() => setMapReady(true)}
                     />
                     <FabEdit planId={plan.id} />

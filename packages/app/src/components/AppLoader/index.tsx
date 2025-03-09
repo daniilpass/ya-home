@@ -8,6 +8,8 @@ type Props = {
     opacity?: 'full' | 'half'
 }
 
+const transitionDuration = 400;
+
 const AppLoader: FC<Props> = ({
     isLoading,
     opacity = 'full',
@@ -19,7 +21,7 @@ const AppLoader: FC<Props> = ({
                 background: opacity === 'full' ? '#97cbfe' : undefined,
             }}
             open={isLoading}
-            transitionDuration={1000}
+            transitionDuration={transitionDuration}
             appear={false}
         >
             <Box sx={{
