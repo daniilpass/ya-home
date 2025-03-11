@@ -25,12 +25,12 @@ export const useMapService = (plan: Plan | undefined) => {
         }
     }, [plan]);
 
-    const switchLight = (id: string) => {
-        mapServiceRef.current?.switchLight(id);
+    const actionSwitch = (id: string) => {
+        mapServiceRef.current?.actionSwitch(id);
     };
 
     return [
         data,
-        switchLight,
+        actionSwitch,
     ] as const;
 }

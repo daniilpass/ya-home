@@ -1,4 +1,4 @@
-import { Collection, DeviceTypes } from '@homemap/shared';
+import { Collection, isSwitchableDeviceType } from '@homemap/shared';
 
 import { Logger } from '../../common/tools';
 import ApiClient from '../../api';
@@ -103,14 +103,14 @@ class MapService {
             });
     }
 
-    switchLight(deviceId: string) {
+    actionSwitch(deviceId: string) {
         const device = this.state.elements[deviceId];
 
         if (!device || device.substate !== Substate.Synced) {
             return;
         }
 
-        if (device.type !== DeviceTypes.Light && device.type !== DeviceTypes.Switch) {
+        if (!isSwitchableDeviceType(device.type)) {
             return;
         }
 

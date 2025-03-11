@@ -18,7 +18,7 @@ type Props = {
     onClick?: () => void;
 }
 
-const LightElement: FC<Props> = ({ position, icon, state, substate, onClick }) => {
+const SwitchableElement: FC<Props> = ({ position, icon, state, substate, onClick }) => {
     const { rotate } = useTransformContext();
 
     const elementClassName = cx('element', {
@@ -60,4 +60,4 @@ const LightElement: FC<Props> = ({ position, icon, state, substate, onClick }) =
     )
 }
 
-export default LightElement;
+export default SwitchableElement;

@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep'
-import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, DeviceTypes, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, isSwitchableDevice, Plan, PlanInfo } from '@homemap/shared';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: "json" };
 import { default as planResponseJson } from '../responses/plan.json' assert { type: "json" };
@@ -84,7 +84,7 @@ export class ResponseFactory {
             const deviceIds = Object.keys(this.planResponse.devices);
             const deviceToUpdateId = deviceIds[Math.floor(Math.random() * deviceIds.length)];
             const deviceToUpdate = this.devicesResponse[deviceToUpdateId];
-            if (deviceToUpdate.type === DeviceTypes.Switch || deviceToUpdate.type === DeviceTypes.Light) {
+            if (isSwitchableDevice(deviceToUpdate)) {
                 this.devicesResponse[deviceToUpdateId].state = {
                     ...deviceToUpdate.state,
                     on: {

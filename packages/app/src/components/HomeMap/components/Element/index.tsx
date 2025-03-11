@@ -1,12 +1,12 @@
 import {FC, useEffect, useRef} from 'react';
 
-import { DeviceState,  DeviceTypes,  MouseButton, Point } from '@homemap/shared';
+import { DeviceState, DeviceTypes, MouseButton, Point, isSwitchableDeviceType } from '@homemap/shared';
 
 import {useTransformContext} from '../../providers/TransformContextProvider';
 import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 import { DeviceIconName } from '../../../DeviceIcon';
-import LightElement from './Light';
+import SwitchableElement from './Switchable';
 import SensorElement from './Sensor';
 import './style.scss';
 
@@ -56,8 +56,8 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
             ref={moveRef}
             className={className}
         >
-            {(type === DeviceTypes.Light || type === DeviceTypes.Switch) && (
-                <LightElement
+            {isSwitchableDeviceType(type) && (
+                <SwitchableElement
                     position={position}
                     icon={icon as DeviceIconName}
                     state={state}

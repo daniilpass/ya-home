@@ -1,4 +1,5 @@
 export * from './devices';
+export * from './devicesByStrategy';
 export * from './deviceTypes'
 export * from './deviceStates';
 export * from './DeviceUnits';

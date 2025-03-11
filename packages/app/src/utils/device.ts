@@ -1,4 +1,4 @@
-import { DeviceStateKeys, DeviceStateType, DeviceSubtypes, DeviceTypes, DeviceUnits, MotionValue, timezoneOffsetInSeconds, UNICODE } from '@homemap/shared';
+import { DeviceStateKeys, DeviceStateType, DeviceSubtypes, DeviceTypes, DeviceUnits, MotionValue, UNICODE } from '@homemap/shared';
 import { DeviceIconName } from '../components/DeviceIcon';
 import { defaultSensorColor, recentMotionIntervalMs } from './constants';
 import { getDateString, getStartOfTheDay, getTimeString } from './date';
@@ -23,6 +23,8 @@ export const deviceTypeToName = (type: DeviceTypes, subtype: DeviceSubtypes) => 
             return 'Свет';
         case DeviceTypes.Switch:
             return 'Выключатель';
+        case DeviceTypes.Socket:
+            return 'Розетка';
         case DeviceTypes.Sensor:
             return sensorSubtypeToName(subtype);
         case DeviceTypes.Unknown:
@@ -53,9 +55,11 @@ export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconName | undefi
             return DeviceIconName.Ligth;
         case DeviceTypes.Sensor:
             return DeviceIconName.Sensor;
+        case DeviceTypes.Socket:
+            return DeviceIconName.Socket;
         case DeviceTypes.Unknown:
         default:
-            return undefined;
+            return DeviceIconName.Unknown;
     }
 }
 

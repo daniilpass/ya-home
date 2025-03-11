@@ -18,7 +18,7 @@ const HomeMapWidget = ({ planId }: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [mapReady, setMapReady] = useState<boolean>(false);
     const [plan, setPlan] = useState<Plan>();
-    const [data, switchLight] = useMapService(plan);
+    const [data, actionSwitch] = useMapService(plan);
 
     useEffect(() => {
         ApiClient
@@ -33,7 +33,7 @@ const HomeMapWidget = ({ planId }: Props) => {
     }, [planId, dispatch]);
 
     const handleElementClick = (id: string) => {
-        switchLight(id);
+        actionSwitch(id);
     };
 
     return (

@@ -3,6 +3,8 @@ import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import PowerIcon from '@mui/icons-material/Power';
 
 export enum DeviceIconName {
     Ligth = 'bulb',
@@ -10,6 +12,8 @@ export enum DeviceIconName {
     Humidity = 'humidity',
     Sensor = 'sensor',
     Motion = 'motion',
+    Socket = 'socket',
+    Unknown = 'unknown',
 };
 
 export const Icons = {
@@ -18,4 +22,6 @@ export const Icons = {
     [DeviceIconName.Humidity]: WaterDropIcon,
     [DeviceIconName.Sensor]: SensorsIcon,
     [DeviceIconName.Motion]: DirectionsRunIcon,
+    [DeviceIconName.Socket]: PowerIcon,
+    [DeviceIconName.Unknown]: HelpOutlineIcon,
 }
