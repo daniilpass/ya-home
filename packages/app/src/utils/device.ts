@@ -62,7 +62,7 @@ export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefi
     switch (type) {
         case DeviceTypes.Switch:
         case DeviceTypes.Light:
-            return deviceIcons.Ligth;
+            return deviceIcons.Light;
         case DeviceTypes.Sensor:
             return deviceIcons.Sensor;
         case DeviceTypes.Socket:
@@ -73,10 +73,8 @@ export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefi
     }
 }
 
-export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | null => {
+export const getSensorStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | null => {
     switch (stateKey) {
-        case DeviceStateKeys.On:
-            return deviceIcons.Ligth;
         case DeviceStateKeys.Temperature:
             return deviceIcons.Temperature;
         case DeviceStateKeys.Humidity:
@@ -84,7 +82,7 @@ export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | 
         case DeviceStateKeys.Motion:
             return deviceIcons.Motion;
         default:
-            return null;
+            return deviceIcons.Sensor;
     }
 }
 

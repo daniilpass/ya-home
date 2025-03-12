@@ -1,21 +1,47 @@
-enum DeviceIconDefault {
-    Ligth = 'bulb',
+enum DeviceIconLight {
+    Light = 'bulb',
+    Chandelier = 'chandelier',
+    LED = 'led',
+}
+
+enum DeviceIconElecticity {
+    Socket = 'socket',
+    Cord = 'cord',
+}
+
+enum DeviceIconMedia {
+    Projector = 'projector',
+    TV = 'tv',
+}
+enum DeviceIconHousehold {
+    Fan = 'fan',
+}
+
+enum DeviceIconSensors {
+    Sensor = 'sensor',
     Temperature = 'temperature',
     Humidity = 'humidity',
-    Sensor = 'sensor',
     Motion = 'motion',
-    Socket = 'socket',
-    Unknown = 'unknown',
-};
+}
 
 enum DeviceIconExtra {
     Blank = 'blank',
+    Unknown = 'unknown',
 };
 
 export const deviceIcons = {
-    ...DeviceIconDefault,
+    ...DeviceIconLight,
+    ...DeviceIconElecticity,
+    ...DeviceIconMedia,
+    ...DeviceIconHousehold,
+    ...DeviceIconSensors,
     ...DeviceIconExtra,
 };
 
-export type DeviceIconType = DeviceIconDefault | DeviceIconExtra;
-
+export type DeviceIconType =
+    DeviceIconLight |
+    DeviceIconElecticity |
+    DeviceIconMedia |
+    DeviceIconHousehold |
+    DeviceIconSensors |
+    DeviceIconExtra;

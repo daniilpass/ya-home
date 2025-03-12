@@ -109,21 +109,15 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
                 </Button>
             </Box>
 
-            <PropertiesGroup title="Иконка">
-                <IconPicker
-                    value={device.icon as DeviceIconType}
-                    // TODO: prepare icons list
-                    options={[
-                        deviceIcons.Humidity,
-                        deviceIcons.Ligth,
-                        deviceIcons.Motion,
-                        deviceIcons.Sensor,
-                        deviceIcons.Socket,
-                        deviceIcons.Temperature,
-                    ]}
-                    onChange={handleDeviceIconChanged}
-                />
-            </PropertiesGroup>
+            {device.type !== DeviceTypes.Sensor && (
+                <PropertiesGroup title="Иконка">
+                    <IconPicker
+                        value={device.icon as DeviceIconType}
+                        options={Object.values(deviceIcons)}
+                        onChange={handleDeviceIconChanged}
+                    />
+                </PropertiesGroup>
+            )}
 
             <PropertiesGroup title="Позиция">
                 <PointInput

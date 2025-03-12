@@ -2,7 +2,7 @@ import { DeviceStateKeys, DeviceStateType } from '@homemap/shared';
 
 import { THIN_SPACE } from '../../../../../constants/symbols';
 import { DeviceIcon } from '../../../../DeviceIcon';
-import { getDeviceStateIcon, getDeviceUnitTitle, getSensorColor, getSensorStateValue } from '../../../../../utils/device';
+import { getSensorStateIcon, getDeviceUnitTitle, getSensorColor, getSensorStateValue } from '../../../../../utils/device';
 
 import './style.scss';
 
@@ -16,7 +16,7 @@ type SensorInformerProps = {
 export const SensorInformer = ({ type, state }: SensorInformerProps) => {
     const sensorValue = getSensorStateValue(type, state)!.toString();
     const sensorUnit = getDeviceUnitTitle(state.unit);
-    const sensorIcon = getDeviceStateIcon(type);
+    const sensorIcon = getSensorStateIcon(type);
     const sensorColor = getSensorColor(type, state);
 
     return (
