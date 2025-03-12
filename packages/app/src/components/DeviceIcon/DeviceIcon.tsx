@@ -1,15 +1,16 @@
 import { FC } from 'react';
-
-import { DeviceIconName, Icons } from './icons';
 import { SxProps, Theme } from '@mui/material';
+import { deviceIcons, DeviceIconType } from '@homemap/shared';
+
+import { Icons } from './icons';
 
 type Props = {
-    name: DeviceIconName,
+    name: DeviceIconType,
     sx?: SxProps<Theme>,
 }
 
 const DeviceIcon: FC<Props> = ({name, sx}) => {
-    const Icon = Icons[name] ?? Icons[DeviceIconName.Blank];
+    const Icon = Icons[name] ?? Icons[deviceIcons.Blank];
     return Icon ? <Icon sx={sx} /> : null;
 };
 

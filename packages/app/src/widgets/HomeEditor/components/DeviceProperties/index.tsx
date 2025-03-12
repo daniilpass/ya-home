@@ -1,14 +1,13 @@
 import { Box, Button, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Bounds, DeviceTypes, PlanDevice, Point } from '@homemap/shared';
-
-import DeleteIcon from '@mui/icons-material/Delete';
+import { deviceIcons, DeviceIconType } from '@homemap/shared';
 
 import PointInput from '../../../../common/components/PointInput';
 import PointsList from '../../../../common/components/PointsList';
 import actions from '../../actions';
 import { IconPicker } from '../IconPicker';
-import { DeviceIconName } from '../../../../components/DeviceIcon';
 import { PropertiesGroup } from './PropertiesGroup';
 
 export type Props = {
@@ -32,7 +31,7 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
         onDelete(device.id);
     }
 
-    const handleDeviceIconChanged = (icon: DeviceIconName) => {
+    const handleDeviceIconChanged = (icon: DeviceIconType) => {
         const updatedDevice = actions.updateDeviceIcon(device, icon);
         onChange(updatedDevice);
     }
@@ -112,15 +111,15 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
 
             <PropertiesGroup title="Иконка">
                 <IconPicker
-                    value={device.icon as DeviceIconName}
+                    value={device.icon as DeviceIconType}
                     // TODO: prepare icons list
                     options={[
-                        DeviceIconName.Humidity,
-                        DeviceIconName.Ligth,
-                        DeviceIconName.Motion,
-                        DeviceIconName.Sensor,
-                        DeviceIconName.Socket,
-                        DeviceIconName.Temperature,
+                        deviceIcons.Humidity,
+                        deviceIcons.Ligth,
+                        deviceIcons.Motion,
+                        deviceIcons.Sensor,
+                        deviceIcons.Socket,
+                        deviceIcons.Temperature,
                     ]}
                     onChange={handleDeviceIconChanged}
                 />

@@ -1,5 +1,15 @@
-import { DeviceStateKeys, DeviceStateType, DeviceSubtypes, DeviceTypes, DeviceUnits, MotionValue, UNICODE } from '@homemap/shared';
-import { DeviceIconName } from '../components/DeviceIcon';
+import { 
+    DeviceStateKeys,
+    DeviceStateType,
+    DeviceSubtypes,
+    DeviceTypes,
+    DeviceUnits,
+    MotionValue,
+    UNICODE,
+    deviceIcons,
+    DeviceIconType,
+} from '@homemap/shared';
+
 import { defaultSensorColor, recentMotionIntervalMs } from './constants';
 import { getDateString, getStartOfTheDay, getTimeString } from './date';
 
@@ -48,31 +58,31 @@ export const getDeviceUnitTitle = (unit: DeviceUnits) => {
     }
 }
 
-export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconName | undefined => {
+export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefined => {
     switch (type) {
         case DeviceTypes.Switch:
         case DeviceTypes.Light:
-            return DeviceIconName.Ligth;
+            return deviceIcons.Ligth;
         case DeviceTypes.Sensor:
-            return DeviceIconName.Sensor;
+            return deviceIcons.Sensor;
         case DeviceTypes.Socket:
-            return DeviceIconName.Socket;
+            return deviceIcons.Socket;
         case DeviceTypes.Unknown:
         default:
-            return DeviceIconName.Unknown;
+            return deviceIcons.Unknown;
     }
 }
 
-export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconName | null => {
+export const getDeviceStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | null => {
     switch (stateKey) {
         case DeviceStateKeys.On:
-            return DeviceIconName.Ligth;
+            return deviceIcons.Ligth;
         case DeviceStateKeys.Temperature:
-            return DeviceIconName.Temperature;
+            return deviceIcons.Temperature;
         case DeviceStateKeys.Humidity:
-            return DeviceIconName.Humidity;
+            return deviceIcons.Humidity;
         case DeviceStateKeys.Motion:
-            return DeviceIconName.Motion;
+            return deviceIcons.Motion;
         default:
             return null;
     }

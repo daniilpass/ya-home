@@ -1,7 +1,7 @@
 import { Bounds, Device, PlanDevice, Point } from '@homemap/shared';
+import { DeviceIconType } from '@homemap/shared';
 
 import { getMagnetPoints, limitPosition, applyPositionDiff } from '../tools';
-import { DeviceIconName } from '../../../components/DeviceIcon';
 
 export const addDevice = (device: Device, properties: Pick<PlanDevice, 'icon' | 'position'>, bounds: Partial<Bounds>): PlanDevice => {
     const newDevice: PlanDevice = {
@@ -32,7 +32,7 @@ export const updateDevicePositionByDiff = (device: PlanDevice, positionDiff: Poi
     return updateDevicePosition(device, newPosition, bounds, isMagnetic);
 }
 
-export const updateDeviceIcon = (device: PlanDevice, newIcon: DeviceIconName): PlanDevice => {
+export const updateDeviceIcon = (device: PlanDevice, newIcon: DeviceIconType): PlanDevice => {
     return {
         ...device,
         icon: newIcon,

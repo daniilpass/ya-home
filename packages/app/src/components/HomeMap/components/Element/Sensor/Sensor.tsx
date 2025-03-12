@@ -1,7 +1,7 @@
-import { DeviceState, DeviceStateKeys, DeviceStateType, Point } from '@homemap/shared';
+import { DeviceState, DeviceStateKeys, DeviceStateType, Point, deviceIcons } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
-import { DeviceIcon, DeviceIconName } from '../../../../DeviceIcon';
+import { DeviceIcon } from '../../../../DeviceIcon';
 import { ForeignObjectWrapper } from '../../ForeignObjectWrapper';
 
 import { SensorInformer } from './Informer';
@@ -41,7 +41,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
                 ))}
                 {isNoData && (
                     <DeviceIcon
-                        name={DeviceIconName.Sensor}
+                        name={deviceIcons.Sensor}
                         sx={{fill: 'white', verticalAlign: 'middle'}}
                     />
                 )}

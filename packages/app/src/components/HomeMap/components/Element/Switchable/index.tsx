@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import cx from 'classnames'
 
-import { DeviceState, Point } from '@homemap/shared';
+import { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 
 import {Substate} from '../../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../../providers/TransformContextProvider';
 import {ELEMENT_RADIUS, ICON_SIZE} from '../../../constants';
-import { DeviceIcon, DeviceIconName } from '../../../../DeviceIcon';
+import { DeviceIcon } from '../../../../DeviceIcon';
 
 import './styles.css';
 
 type Props = {
     position: Point;
-    icon?: DeviceIconName;
+    icon?: DeviceIconType;
     state?: DeviceState | null;
     substate?: string;
     onClick?: () => void;

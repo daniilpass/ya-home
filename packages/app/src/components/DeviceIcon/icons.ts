@@ -6,25 +6,19 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import PowerIcon from '@mui/icons-material/Power';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import { deviceIcons, DeviceIconType } from '@homemap/shared';
 
-export enum DeviceIconName {
-    Ligth = 'bulb',
-    Temperature = 'temperature',
-    Humidity = 'humidity',
-    Sensor = 'sensor',
-    Motion = 'motion',
-    Socket = 'socket',
-    Unknown = 'unknown',
-    Blank = 'blank',
+type IconsType = {
+    [key in DeviceIconType]: any;
 };
 
-export const Icons = {
-    [DeviceIconName.Ligth]: LightbulbIcon,
-    [DeviceIconName.Temperature]: ThermostatIcon,
-    [DeviceIconName.Humidity]: WaterDropIcon,
-    [DeviceIconName.Sensor]: SensorsIcon,
-    [DeviceIconName.Motion]: DirectionsRunIcon,
-    [DeviceIconName.Socket]: PowerIcon,
-    [DeviceIconName.Unknown]: QuestionMarkIcon,
-    [DeviceIconName.Blank]: CheckBoxOutlineBlankIcon,
-}
+export const Icons: IconsType = {
+    [deviceIcons.Ligth]: LightbulbIcon,
+    [deviceIcons.Temperature]: ThermostatIcon,
+    [deviceIcons.Humidity]: WaterDropIcon,
+    [deviceIcons.Sensor]: SensorsIcon,
+    [deviceIcons.Motion]: DirectionsRunIcon,
+    [deviceIcons.Socket]: PowerIcon,
+    [deviceIcons.Unknown]: QuestionMarkIcon,
+    [deviceIcons.Blank]: CheckBoxOutlineBlankIcon,
+};
