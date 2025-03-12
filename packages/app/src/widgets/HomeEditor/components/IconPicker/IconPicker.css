@@ -1,0 +1,13 @@
+.icon-picker__input {
+    width: 100%;
+}
+
+.icon-picker__input .icon-picker__input-select {
+    margin-bottom: -6px;
+    padding: 8px;
+}
+
+.icon-picker__input-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

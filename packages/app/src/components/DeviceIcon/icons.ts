@@ -3,8 +3,9 @@ import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import PowerIcon from '@mui/icons-material/Power';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 export enum DeviceIconName {
     Ligth = 'bulb',
@@ -14,6 +15,7 @@ export enum DeviceIconName {
     Motion = 'motion',
     Socket = 'socket',
     Unknown = 'unknown',
+    Blank = 'blank',
 };
 
 export const Icons = {
@@ -23,5 +25,6 @@ export const Icons = {
     [DeviceIconName.Sensor]: SensorsIcon,
     [DeviceIconName.Motion]: DirectionsRunIcon,
     [DeviceIconName.Socket]: PowerIcon,
-    [DeviceIconName.Unknown]: HelpOutlineIcon,
+    [DeviceIconName.Unknown]: QuestionMarkIcon,
+    [DeviceIconName.Blank]: CheckBoxOutlineBlankIcon,
 }

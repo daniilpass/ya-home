@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import { Bounds, DeviceTypes, PlanDevice, Point } from '@homemap/shared';
 
@@ -7,6 +7,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PointInput from '../../../../common/components/PointInput';
 import PointsList from '../../../../common/components/PointsList';
 import actions from '../../actions';
+import { IconPicker } from '../IconPicker';
+import { DeviceIconName } from '../../../../components/DeviceIcon';
+import { PropertiesGroup } from './PropertiesGroup';
 
 export type Props = {
     device: PlanDevice,
@@ -27,6 +30,11 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
 
     const handleDeviceDelete = () => {
         onDelete(device.id);
+    }
+
+    const handleDeviceIconChanged = (icon: DeviceIconName) => {
+        const updatedDevice = actions.updateDeviceIcon(device, icon);
+        onChange(updatedDevice);
     }
 
     /**
@@ -99,49 +107,60 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
                     onClick={() => handleDeviceDelete()}
                 >
                     Удалить
-                </Button> 
+                </Button>
             </Box>
-                                        
-            <Divider variant="middle" textAlign="left">Позиция</Divider>
 
-            <Box sx={{p: 2}}>
+            <PropertiesGroup title="Иконка">
+                <IconPicker
+                    value={device.icon as DeviceIconName}
+                    // TODO: prepare icons list
+                    options={[
+                        DeviceIconName.Humidity,
+                        DeviceIconName.Ligth,
+                        DeviceIconName.Motion,
+                        DeviceIconName.Sensor,
+                        DeviceIconName.Socket,
+                        DeviceIconName.Temperature,
+                    ]}
+                    onChange={handleDeviceIconChanged}
+                />
+            </PropertiesGroup>
+
+            <PropertiesGroup title="Позиция">
                 <PointInput
                     value={device.position}
                     onChange={(value) => handleDevicePositionChange(value)}
                 />
-            </Box>
+            </PropertiesGroup>
 
             {isShowLightProperties && (
                 <>
-                    <Divider variant="middle" textAlign="left">Линия ламп</Divider>
-                    <Box sx={{p: 2}}>
+                    <PropertiesGroup title="Линия ламп">
                         <PointsList
                             value={device.area?.bulbsLinePoints || []}
                             onChange={(index, value) => handleBulbsLinePointChange(index, value)}
                             onAdd={() => handleBulbsLinePointAdd()}
                             onDelete={(index) => handleBulbsLinePointDelete(index)}
                         />
-                    </Box>
+                    </PropertiesGroup>
 
-                    <Divider variant="middle" textAlign="left">Тень</Divider>
-                    <Box sx={{p: 2}}>
+                    <PropertiesGroup title="Тень">
                         <PointsList
                             value={device.area?.shadowPoints || []}
                             onChange={(index, value) => handleShadowPointChange(index, value)}
                             onAdd={() => handleShadowPointAdd()}
                             onDelete={(index) => handleShadowPointDelete(index)}
                         />
-                    </Box>
+                    </PropertiesGroup>
 
-                    <Divider variant="middle" textAlign="left">Маска тени</Divider>
-                    <Box sx={{p: 2}}>
+                    <PropertiesGroup title="Маска тени">
                         <PointsList
                             value={device.area?.shadowMaskPoints || []}
                             onChange={(index, value) => handleShadowMaskPointChange(index, value)}
                             onAdd={() => handleShadowMaskPointAdd()}
                             onDelete={(index) => handleShadowMaskPointDelete(index)}
                         />
-                    </Box>
+                    </PropertiesGroup>
                 </>
             )}
         </>

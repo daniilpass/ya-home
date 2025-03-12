@@ -9,7 +9,7 @@ type Props = {
 }
 
 const DeviceIcon: FC<Props> = ({name, sx}) => {
-    const Icon = Icons[name];
+    const Icon = Icons[name] ?? Icons[DeviceIconName.Blank];
     return Icon ? <Icon sx={sx} /> : null;
 };
 
