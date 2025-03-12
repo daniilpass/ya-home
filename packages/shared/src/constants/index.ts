@@ -1,3 +1,5 @@
+export * from './colors';
+
 export const YA_TOKEN_KEY = 'ya-token';
 
 export const UNICODE = {
@@ -7,3 +9,4 @@ export const UNICODE = {
 }
 
 export const timezoneOffsetInSeconds = new Date().getTimezoneOffset() * 60 * 1000;
+

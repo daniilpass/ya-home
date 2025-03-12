@@ -1,7 +1,7 @@
 
 import { useCallback, useMemo } from 'react';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { DeviceIconType } from '@homemap/shared';
+import { COLORS, DeviceIconType } from '@homemap/shared';
 
 import { DeviceIcon } from '../../../../components/DeviceIcon'
 
@@ -21,7 +21,7 @@ export const IconPicker = ({
     const iconOptions = useMemo(() => {
         return options.map((option) => (
             <MenuItem key={option} value={option}>
-                <DeviceIcon name={option}/>
+                <DeviceIcon name={option} sx={{ fill: COLORS.primary }}/>
             </MenuItem>
         ))
     }, [options]);
