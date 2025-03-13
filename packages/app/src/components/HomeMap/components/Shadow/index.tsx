@@ -53,7 +53,7 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDr
                     key={index}
                     x={x}
                     y={y}
-                    onMouseDown={(e) => onDragStart(e, {index})}
+                    onPointerDown={(e) => onDragStart(e, {index})}
                 />
             ))}
             {isEditMode && maskPoints && maskPoints.map(([x, y], index) => (
@@ -61,7 +61,7 @@ const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDr
                     key={index}
                     x={x}
                     y={y}
-                    onMouseDown={(e) => onMaskDragStart(e, {index})}
+                    onPointerDown={(e) => onMaskDragStart(e, {index})}
                 />
             ))}
         </>

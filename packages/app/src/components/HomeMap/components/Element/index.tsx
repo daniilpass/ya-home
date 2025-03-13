@@ -31,7 +31,7 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
         // Start drag newly added device
         if (moveRef?.current && isEditMode && editElementDrag) {
             const bounds = (moveRef.current as Element).getBoundingClientRect();
-            const event = new MouseEvent('mousedown', {
+            const event = new MouseEvent('pointerdown', {
                 button: MouseButton.LEFT,
                 clientX: bounds.left + bounds.width / 2,
                 clientY: bounds.top + bounds.height / 2,
@@ -40,7 +40,7 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
         }
     }, [moveRef, isEditMode, editElementDrag]);
 
-    const handleMouseDown = (e: React.MouseEvent) => {
+    const handlePointerDown = (e: React.MouseEvent) => {
         if (!isEditMode) {
             return;   
         }
@@ -56,7 +56,7 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
 
     return (
         <g
-            onMouseDown={handleMouseDown}
+            onPointerDown={handlePointerDown}
             ref={moveRef}
             className={rootClassName}
         >

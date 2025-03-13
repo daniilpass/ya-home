@@ -97,7 +97,7 @@ const HomeMap: FC<Props> = ({
     const [isBackgroundError, setIsBackgroundError] = useState<boolean>(false);
     const [scale, rotate, translate] = useResize(
         wrapperRef,
-        layoutRef,
+        svgRef,
         {
             allowScale,
             allowInitialScale,

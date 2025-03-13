@@ -16,7 +16,7 @@ type DragOptions = {
 
 export const useResize = (
     wrapperRef: RefObject<HTMLDivElement>,
-    layoutRef: RefObject<HTMLDivElement>,
+    layoutRef: RefObject<SVGSVGElement>,
     configuration?: {
         allowScale?: boolean,
         allowInitialScale?: boolean,
@@ -120,7 +120,7 @@ export const useResize = (
         ]);
     }, []);
 
-    const onDragStart = useDrag(onDrag, MouseButton.MIDDLE);
+    const onDragStart = useDrag(onDrag, MouseButton.LEFT, true);
 
     useLayoutEffect(() => {
         const wrapper = layoutRef.current;
@@ -128,12 +128,14 @@ export const useResize = (
             return;
         }
 
-        const handleDragStart = (e: MouseEvent) => onDragStart(e, { scale, translate });
+        const handleDragStart = (e: MouseEvent) => {
+            onDragStart(e, { scale, translate });
+        }
         
-        wrapper.addEventListener('mousedown', handleDragStart);
+        wrapper.addEventListener('pointerdown', handleDragStart);
 
         return () => {
-            wrapper.removeEventListener('mousedown', handleDragStart);
+            wrapper.removeEventListener('pointerdown', handleDragStart);
         }
     }, [allowDrag, layoutRef, onDragStart, scale, translate])
 

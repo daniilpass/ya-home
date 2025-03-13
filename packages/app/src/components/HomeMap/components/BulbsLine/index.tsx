@@ -40,7 +40,7 @@ const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}
                     key={index}
                     x={x}
                     y={y}
-                    onMouseDown={(e) => onDragStart(e, {index})}
+                    onPointerDown={(e) => onDragStart(e, {index})}
                 />
             ))}
         </>
