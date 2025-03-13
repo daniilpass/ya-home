@@ -15,6 +15,7 @@ type Props = {
     element: PlanDevice;
     data?: Element;
     isEditMode?: boolean;
+    selectable?: boolean;
     onElementClick?: () => void;
     onElementDrag?: (event: DragEvent) => void;
     onBulbsLinePointDrag?: (index: number, event: DragEvent) => void;
@@ -26,6 +27,7 @@ const ElementGroup: FC<Props> = ({
     element,
     data,
     isEditMode,
+    selectable,
     onElementClick,
     onElementDrag,
     onBulbsLinePointDrag,
@@ -69,6 +71,7 @@ const ElementGroup: FC<Props> = ({
                 state={state}
                 substate={substate}
                 isEditMode={isEditMode}
+                selectable={selectable}
                 onClick={onElementClick}
                 onDrag={onElementDrag}
             />

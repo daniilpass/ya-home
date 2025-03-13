@@ -251,6 +251,7 @@ const HomeMap: FC<Props> = ({
                                     element={element}
                                     data={data?.[id]}
                                     isEditMode={id === editElementId}
+                                    selectable={isEditorMode}
                                     onElementClick={() => handleElementClick(id)}
                                     onElementDrag={(event) => handleElementDrag(id, event)}
                                     onBulbsLinePointDrag={(index, event) => handleBulbsLinePointDrag(id, index, event)}

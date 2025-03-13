@@ -1,3 +1,16 @@
+@import '../../../../common/styles/colors.module.scss';
+
 .element--movable {
     cursor: move;
+}
+
+.element--selectable {
+    cursor: pointer;
+    pointer-events: bounding-box;
+}
+
+.element--selectable:hover {
+    cursor: pointer;
+    outline: solid 2px $primary-dark;
+    outline-offset: 6px;
 }

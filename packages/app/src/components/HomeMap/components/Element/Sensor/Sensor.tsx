@@ -12,9 +12,10 @@ export type SensorElementProps = {
     state: DeviceState;
     // TODO: show pending and lost state
     substate?: string;
+    onClick?: () => void;
 }
 
-export const SensorElement = ({ position, state, substate }: SensorElementProps) => {
+export const SensorElement = ({ position, state, substate, onClick }: SensorElementProps) => {
     const { rotate } = useTransformContext();
 
     const elementStyle = {
@@ -30,6 +31,7 @@ export const SensorElement = ({ position, state, substate }: SensorElementProps)
             y={position[1]}
             rootClassName='sensor'
             rootStyle={elementStyle}
+            onClick={onClick}
         >
             <>
                 {stateEntries.map(([stateKey, stateEntry]) => (

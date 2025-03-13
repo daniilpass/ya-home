@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import {FC, useEffect, useRef} from 'react';
 
 import { DeviceState, DeviceTypes, MouseButton, Point, isSwitchableDeviceType, DeviceIconType } from '@homemap/shared';
@@ -16,11 +17,12 @@ type Props = {
     state?: DeviceState | null;
     substate?: string;
     isEditMode?: boolean;
+    selectable?: boolean;
     onClick?: () => void;
     onDrag?: (event: DragEvent) => void;
 }
 
-const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, onClick, onDrag}) => {
+const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, selectable, onClick, onDrag}) => {
     const { editElementDrag } = useTransformContext();
     const onDragStart = useDrag(onDrag);
     const moveRef = useRef<SVGGElement>(null);
@@ -47,13 +49,16 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
 
     const isShowEditAction = isEditMode && type !== DeviceTypes.Sensor;
 
-    const className = isEditMode ? 'element--movable' : undefined;
+    const rootClassName = cx({
+        'element--movable': isEditMode,
+        'element--selectable': selectable,
+    });
 
     return (
         <g
             onMouseDown={handleMouseDown}
             ref={moveRef}
-            className={className}
+            className={rootClassName}
         >
             {isSwitchableDeviceType(type) && (
                 <SwitchableElement
@@ -69,6 +74,7 @@ const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, 
                     position={position}
                     state={state ?? {}}
                     substate={substate}
+                    onClick={onClick}
                 />
             )}
             {isShowEditAction && (

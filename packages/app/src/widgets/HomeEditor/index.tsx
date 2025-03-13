@@ -307,6 +307,11 @@ const HomeEditor = ({ planId }: Props) => {
         setSelectedPlanDeviceDrag(false);
     }
 
+    const handleClickDevice = (id: string) => {
+        setSelectedPlanDeviceId(id);
+        setSelectedPlanDeviceDrag(false);
+    }
+
     /**
      * Drag hanlders
      */
@@ -366,6 +371,7 @@ const HomeEditor = ({ planId }: Props) => {
                             editElementId={selectedPlanDeviceId}
                             editElementDrag={selectedPlanDeviceDrag}
                             isEditorMode={true}
+                            onElementClick={handleClickDevice}
                             onElementDrag={handleDragDevice}
                             onBulbsLinePointDrag={handleBulbsLinePointDrag}
                             onShadowPointDrag={handleShadowPointDrag}
