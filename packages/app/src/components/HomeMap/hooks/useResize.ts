@@ -128,7 +128,7 @@ export const useResize = (
             return;
         }
 
-        const handleDragStart = (e: MouseEvent) => {
+        const handleDragStart = (e: PointerEvent) => {
             onDragStart(e, { scale, translate });
         }
         

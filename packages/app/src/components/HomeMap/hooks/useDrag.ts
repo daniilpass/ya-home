@@ -1,9 +1,9 @@
-import {MouseEvent as ReactMouseEvent, useCallback} from 'react';
+import {PointerEvent as ReactPointerEvent, useCallback} from 'react';
 
 import { MouseButton } from '@homemap/shared';
 import useBodyCursor from './useBodyCursor';
 
-export type DragStartEvent = ReactMouseEvent<Element, MouseEvent> | MouseEvent;
+export type DragStartEvent = ReactPointerEvent<Element> | PointerEvent;
 
 export type DragEvent = MouseEvent & {
     clientXDiff: number;
@@ -23,6 +23,10 @@ export const useDrag = (
     const { setCursor, resetCursor } = useBodyCursor();
 
     const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
+        if (!dragStartEvent.isPrimary) {
+            return;
+        }
+
         if (dragStartEvent.button !== button || !onDrag) {
             return;
         }
@@ -38,18 +42,28 @@ export const useDrag = (
         const pageXStart = dragStartEvent.pageX;
         const pageYStart = dragStartEvent.pageY;
 
-        const handleDrag = (dragEvent: MouseEvent) => {
+        const handleDrag = (dragEvent: PointerEvent) => {
+            if (!dragEvent.isPrimary) {
+                return;
+            }
+
             const extendedEvent = Object.assign(dragEvent,{
                 clientXDiff: clientXStart - dragEvent.clientX,
                 clientYDiff: clientYStart - dragEvent.clientY,
                 pageXDiff: pageXStart - dragEvent.pageX,
                 pageYDiff: pageYStart - dragEvent.pageY,
             });
+
             onDrag(extendedEvent, options);
         }
 
-        const endDrag = () => {
+        const endDrag = (e: PointerEvent | WheelEvent) => {
+            if ('isPrimary' in e && !e.isPrimary) {
+                return;
+            }
+
             resetCursor();
+
             document.removeEventListener('pointermove', handleDrag);
             document.removeEventListener('pointerup', endDrag);
             document.addEventListener('pointercancel', endDrag);
