@@ -66,7 +66,7 @@ export const useDrag = (
             document.removeEventListener('pointerdown', preventMultiTouch);
             document.removeEventListener('pointermove', handleDrag);
             document.removeEventListener('pointerup', endDrag);
-            document.addEventListener('pointercancel', endDrag);
+            document.removeEventListener('pointercancel', endDrag);
             document.removeEventListener('wheel', endDrag);
             
         }

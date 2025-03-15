@@ -140,7 +140,7 @@ export const useResize = (
 
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
-            layout.addEventListener('pointerdown', handleDragStart);
+            layout.removeEventListener('pointerdown', handleDragStart);
         }
     }, [allowDrag, wrapperRef, layoutRef, onDragStart, scale, translate])
 
