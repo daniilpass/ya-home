@@ -3,6 +3,8 @@ import {PointerEvent as ReactPointerEvent, useCallback} from 'react';
 import { MouseButton } from '@homemap/shared';
 import { setCursor, resetCursor } from '../tools/cursors';
 
+const dragFreq = 1000 / 60;
+
 export type DragStartEvent = ReactPointerEvent<Element> | PointerEvent;
 
 export type DragEvent = PointerEvent & {
@@ -22,6 +24,8 @@ export const useDrag = (
     endDragCallback?: (e: PointerEvent | WheelEvent) => void,
 ) => {
     const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
+        let lastEventTime = Date.now();
+
         if (!dragStartEvent.isPrimary && !multiTouch) {
             return;
         }
@@ -44,6 +48,13 @@ export const useDrag = (
         const pageYStart = dragStartEvent.pageY;
 
         const handleDrag = (dragEvent: PointerEvent) => {
+            const now = Date.now();
+            if (now - lastEventTime < dragFreq) {
+                return;
+            } else {
+                lastEventTime = now;
+            }
+
             if (!dragEvent.isPrimary && !multiTouch) {
                 return;
             }
