@@ -1,13 +1,15 @@
-import {RefObject, useState, useLayoutEffect, useCallback} from 'react';
+import {RefObject, useState, useLayoutEffect, useCallback, useRef} from 'react';
 
 import { MouseButton, Point } from '@homemap/shared';
 
 import {DragEvent, useDrag} from './useDrag';
+import { usePinchScale } from './usePinchScale';
 
 const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
 const MAX_SCALE = 4;
 const SCALE_FACTOR = 0.1;
+const PINCH_SCALE_FACTOR = 0.025;
 
 type DragOptions = { 
     scale: number,
@@ -33,7 +35,6 @@ export const useResize = (
     const [minScale, setMinScale] = useState(MIN_SCALE);
     const [rotate, setRotate] = useState(0);
     const [translate, setTranslate] = useState<Point>([0, 0]);
-
     const {
         allowScale = false,
         allowInitialScale = false,
@@ -120,7 +121,7 @@ export const useResize = (
         ]);
     }, []);
 
-    const onDragStart = useDrag(onDrag, MouseButton.LEFT, true);
+    const onDragStart = useDrag(onDrag, MouseButton.ANY, true);
 
     useLayoutEffect(() => {
         const wrapper = layoutRef.current;
@@ -138,6 +139,29 @@ export const useResize = (
             wrapper.removeEventListener('pointerdown', handleDragStart);
         }
     }, [allowDrag, layoutRef, onDragStart, scale, translate])
+
+
+    /**
+     * Pinch
+     */
+    const pinchScale = useRef<number>(0);
+
+    const onPinchScaleStart = useCallback(() => {
+        pinchScale.current = scale;
+    }, [scale]);
+
+    const onPinchScale = useCallback((direction: string, distance: number) => {
+        const scale = pinchScale.current; // hide state
+        const sign = direction === 'up' ? -1 : 1;
+        const delta = sign * scale * PINCH_SCALE_FACTOR;
+        const newScale = Math.min(Math.max(minScale, scale - delta), MAX_SCALE);
+
+        pinchScale.current = newScale;
+        setScale(newScale);
+
+    }, [minScale]);
+
+    usePinchScale(wrapperRef, layoutRef, onPinchScale, onPinchScaleStart);
 
     return [scale, rotate, translate] as const;
 }

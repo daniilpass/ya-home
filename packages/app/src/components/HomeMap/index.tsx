@@ -20,6 +20,7 @@ import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 import { DragEvent } from './hooks/useDrag';
 import { normilizePosition } from './tools';
+import { usePinchScale } from './hooks/usePinchScale';
 export type MapTransform = {
     scale: number;
     rotate: number;
