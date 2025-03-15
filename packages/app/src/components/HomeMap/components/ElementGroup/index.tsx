@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useCallback} from 'react';
 import cx from 'classnames';
 
 import { PlanDevice, DeviceIconType } from '@homemap/shared';
@@ -16,11 +16,11 @@ type Props = {
     data?: Element;
     isEditMode?: boolean;
     selectable?: boolean;
-    onElementClick?: () => void;
-    onElementDrag?: (event: DragEvent) => void;
-    onBulbsLinePointDrag?: (index: number, event: DragEvent) => void;
-    onShadowPointDrag?: (index: number, event: DragEvent) => void;
-    onShadowMaskPointDrag?: (index: number, event: DragEvent) => void;
+    onElementClick?: (id: Element['id']) => void;
+    onElementDrag?: (id: Element['id'], event: DragEvent) => void;
+    onBulbsLinePointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
+    onShadowPointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
+    onShadowMaskPointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
 }
 
 const ElementGroup: FC<Props> = ({
@@ -34,6 +34,7 @@ const ElementGroup: FC<Props> = ({
     onShadowPointDrag,
     onShadowMaskPointDrag,
 }) => {
+    console.log('HELLO ElementGroup')
     const {id, type, position, icon, area} = element;
     const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
     const {state, substate} = data || {};
@@ -41,6 +42,26 @@ const ElementGroup: FC<Props> = ({
     const rootClassName = cx({
         'group--edit': isEditMode,
     });
+
+    const handleShadowPointDrag = useCallback((index: number, event: DragEvent) => {
+        onShadowPointDrag?.(element.id, index, event);
+    }, [element.id, onShadowPointDrag]);
+
+    const handleShadowMaskPointDrag= useCallback((index: number, event: DragEvent) => {
+        onShadowMaskPointDrag?.(element.id, index, event);
+    }, [element.id, onShadowMaskPointDrag]);
+
+    const handleBulbsLinePointDrag = useCallback((index: number, event: DragEvent) => {
+        onBulbsLinePointDrag?.(element.id, index, event);
+    }, [element.id, onBulbsLinePointDrag]);
+
+    const handleElementClick = useCallback(() => {
+        onElementClick?.(element.id);
+    }, [element.id, onElementClick]);
+
+    const handleElementDrag = useCallback((event: DragEvent) => {
+        onElementDrag?.(element.id, event);
+    }, [element.id, onElementDrag]);
 
     return (
         <g className={rootClassName}>
@@ -51,8 +72,8 @@ const ElementGroup: FC<Props> = ({
                     maskPoints={shadowMaskPoints}
                     state={state}
                     isEditMode={isEditMode}
-                    onPointDrag={onShadowPointDrag}
-                    onMaskPointDrag={onShadowMaskPointDrag}
+                    onPointDrag={handleShadowPointDrag}
+                    onMaskPointDrag={handleShadowMaskPointDrag}
                 />
             )}
             {bulbsLinePoints && (
@@ -61,7 +82,7 @@ const ElementGroup: FC<Props> = ({
                     state={state}
                     substate={substate}
                     isEditMode={isEditMode}
-                    onPointDrag={onBulbsLinePointDrag}
+                    onPointDrag={handleBulbsLinePointDrag}
                 />
             )}
             <ElementComponent
@@ -72,8 +93,8 @@ const ElementGroup: FC<Props> = ({
                 substate={substate}
                 isEditMode={isEditMode}
                 selectable={selectable}
-                onClick={onElementClick}
-                onDrag={onElementDrag}
+                onClick={handleElementClick}
+                onDrag={handleElementDrag}
             />
         </g>
     )

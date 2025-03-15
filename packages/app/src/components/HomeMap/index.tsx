@@ -142,43 +142,44 @@ const HomeMap: FC<Props> = ({
         handleReady();
     }
 
-    const handleElementClick = (id: string) => {
+    const handleElementClick = useCallback((id: string) => {
         onElementClick && onElementClick(id);
-    }
+    }, [onElementClick]);
 
-    const handleElementDrag = (id: string, { pageXDiff, pageYDiff }: DragEvent) => {
+    const handleElementDrag = useCallback((id: string, { pageXDiff, pageYDiff }: DragEvent) => {
         if (!onElementDrag) {
             return;
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onElementDrag(id, position);
-    }
+    }, [onElementDrag, scale])
 
-    const handleBulbsLinePointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+    const handleBulbsLinePointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onBulbsLinePointDrag) {
             return;
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onBulbsLinePointDrag(id, index, position);
-    }
+    }, [onBulbsLinePointDrag, scale]);
 
-    const handleShadowPointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+    const handleShadowPointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowPointDrag) {
             return;
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onShadowPointDrag(id, index, position);
-    }
+    }, [onShadowPointDrag, scale]);
 
-    const handleShadowMaskPointDrag = (id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+    const handleShadowMaskPointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowMaskPointDrag) {
             return;
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onShadowMaskPointDrag(id, index, position);
-    }
+    }, [onShadowMaskPointDrag, scale]);
 
     const sortedElements = useMemo(() => {
+        console.log('HELLO useMemo sortedElements')
         const elementsEntries = Object.entries(elements)
     
         // TODO: implement z-index for plan devices
@@ -225,6 +226,29 @@ const HomeMap: FC<Props> = ({
         'map-layout--transitional': transition && !allowDrag && !allowZoom,
     }, classes?.layout);
 
+
+    const sortedElemensDOM = useMemo(() => sortedElements.map(([id, element]) => (
+        <ElementGroup
+            key={id}
+            element={element}
+            data={data?.[id]}
+            isEditMode={id === editElementId}
+            selectable={isEditorMode}
+            onElementClick={handleElementClick}
+            onElementDrag={handleElementDrag}
+            onBulbsLinePointDrag={handleBulbsLinePointDrag}
+            onShadowPointDrag={handleShadowPointDrag}
+            onShadowMaskPointDrag={handleShadowMaskPointDrag}
+        />
+    )), [
+        data, editElementId, isEditorMode, sortedElements,
+        handleBulbsLinePointDrag,
+        handleElementClick,
+        handleElementDrag,
+        handleShadowMaskPointDrag,
+        handleShadowPointDrag, 
+    ])
+
     return (
         <TransformContextProvider value={{scale, rotate, editElementDrag}}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
@@ -245,22 +269,7 @@ const HomeMap: FC<Props> = ({
 
                     {/* Map */}
                     <svg className="map-layout__svg" ref={svgRef}>
-                        {
-                            sortedElements.map(([id, element]) => (
-                                <ElementGroup
-                                    key={id}
-                                    element={element}
-                                    data={data?.[id]}
-                                    isEditMode={id === editElementId}
-                                    selectable={isEditorMode}
-                                    onElementClick={() => handleElementClick(id)}
-                                    onElementDrag={(event) => handleElementDrag(id, event)}
-                                    onBulbsLinePointDrag={(index, event) => handleBulbsLinePointDrag(id, index, event)}
-                                    onShadowPointDrag={(index, event) => handleShadowPointDrag(id, index, event)}
-                                    onShadowMaskPointDrag={(index, event) => handleShadowMaskPointDrag(id, index, event)}
-                                />
-                            ))
-                        }
+                        {sortedElemensDOM}
                     </svg>
                 </div>
             </div>
