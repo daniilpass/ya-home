@@ -8,6 +8,7 @@
     overflow: hidden;
 
     user-select: none;
+    touch-action: none;
 }
 
 .map-layout--transitional {

@@ -81,7 +81,7 @@ export const usePinchScale = (
     const onDragStart = useDrag(onDrag, MouseButton.LEFT, false, true, onDragEnd);
 
     useLayoutEffect(() => {
-        const wrapper = layoutRef.current;
+        const wrapper = wrapperRef.current;
         if(!wrapper){
             return;
         }
@@ -99,5 +99,5 @@ export const usePinchScale = (
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
         }
-    }, [layoutRef, onDragStart, onScaleStart]);
+    }, [wrapperRef, onDragStart, onScaleStart]);
 }

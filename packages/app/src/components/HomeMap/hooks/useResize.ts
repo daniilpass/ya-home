@@ -124,8 +124,10 @@ export const useResize = (
     const onDragStart = useDrag(onDrag, MouseButton.ANY, true);
 
     useLayoutEffect(() => {
-        const wrapper = layoutRef.current;
-        if(!allowDrag || !wrapper){
+        const wrapper = wrapperRef.current;
+        const layout = layoutRef.current;
+
+        if(!allowDrag || !wrapper|| !layout){
             return;
         }
 
@@ -134,11 +136,13 @@ export const useResize = (
         }
         
         wrapper.addEventListener('pointerdown', handleDragStart);
+        layout.addEventListener('pointerdown', handleDragStart);
 
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
+            layout.addEventListener('pointerdown', handleDragStart);
         }
-    }, [allowDrag, layoutRef, onDragStart, scale, translate])
+    }, [allowDrag, wrapperRef, layoutRef, onDragStart, scale, translate])
 
 
     /**
