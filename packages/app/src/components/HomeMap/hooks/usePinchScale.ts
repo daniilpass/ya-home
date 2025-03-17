@@ -1,10 +1,10 @@
 import {RefObject, useLayoutEffect, useCallback, useRef} from 'react';
 
-import { MouseButton, Point } from '@homemap/shared';
+import { Point } from '@homemap/shared';
 
 import {DragEvent, useDrag} from './useDrag';
 
-const MOVE_BOUND = 0.4;
+const MOVE_BOUND = 1;
 
 type DragOptions = { 
     scale: number,

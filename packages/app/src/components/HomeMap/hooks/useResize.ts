@@ -1,6 +1,6 @@
 import {RefObject, useState, useLayoutEffect, useCallback, useRef} from 'react';
 
-import { MouseButton, Point } from '@homemap/shared';
+import { Point } from '@homemap/shared';
 
 import {DragEvent, useDrag} from './useDrag';
 import { usePinchScale } from './usePinchScale';
@@ -9,7 +9,7 @@ const WHEEL_EVENT = 'wheel';
 const MIN_SCALE = 0.125;
 const MAX_SCALE = 4;
 const SCALE_FACTOR = 0.1;
-const PINCH_SCALE_FACTOR = 0.025;
+const PINCH_SCALE_FACTOR = 0.1;
 
 type DragOptions = { 
     scale: number,
