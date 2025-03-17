@@ -46,7 +46,7 @@ const HomeEditor = ({ planId }: Props) => {
     const [mapReady, setMapReady] = useState<boolean>(false);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
-    const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
+    const mapTransform = useRef<{scale: number, bounds: DOMRect} | undefined>();
 
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
@@ -260,10 +260,9 @@ const HomeEditor = ({ planId }: Props) => {
     /**
      * Map handlers
      */
-    const handleTransform = useCallback(
-        ({scale, bounds}: MapTransform) => setMapTransform({scale, bounds}),
-        [setMapTransform],
-    );
+    const handleTransform = useCallback(({scale, bounds}: MapTransform) => {
+        mapTransform.current = {scale, bounds}
+    }, []);
 
     /**
      * Device hanlders
@@ -277,24 +276,25 @@ const HomeEditor = ({ planId }: Props) => {
         setHasUnsavedChanges(true);
     }, [planDevices, setPlanDevices]);
 
-    const handleDeleteDevice = (deviceId: string) => {
+    const handleDeleteDevice = useCallback((deviceId: string) => {
         const updatedplanDevices = {...planDevices}
         delete updatedplanDevices[deviceId];
         setPlanDevices(updatedplanDevices);
         setSelectedPlanDevice(undefined);
         setHasUnsavedChanges(true);
-    }
+    }, [planDevices, setPlanDevices])
 
-    const handleAddDevice = (id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleAddDevice = useCallback((id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
+        const { bounds, scale } = mapTransform.current || {};
         const device = allDevices[id];
         const icon = getDeviceDefaultIcon(device.type);
         const position = toRelativePosition(
             [e.clientX, e.clientY], 
             {
-                top: mapTransform?.bounds.top ?? 0,
-                left: mapTransform?.bounds.left ?? 0,
+                top: bounds?.top ?? 0,
+                left: bounds?.left ?? 0,
             },
-            mapTransform?.scale ?? 1,
+            scale ?? 1,
         );
         const newDevice = actions.addDevice(device, { icon, position }, planBounds);
 
@@ -307,12 +307,12 @@ const HomeEditor = ({ planId }: Props) => {
         setSelectedPlanDevice(newDevice);
         setSelectedPlanDeviceDrag(true);
         setHasUnsavedChanges(true);
-    }
+    }, [allDevices, planBounds, planDevices, setPlanDevices]);
 
-    const handleSelectDevice = (id: string) => {
+    const handleSelectDevice = useCallback((id: string) => {
         setSelectedPlanDevice(planDevices[id]);
         setSelectedPlanDeviceDrag(false);
-    }
+    }, [planDevices]);
 
     const handleClickDevice = useCallback((id: string) => {
         setSelectedPlanDevice(planDevices[id]);

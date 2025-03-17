@@ -1,4 +1,4 @@
-import { useState, useMemo, MouseEvent as ReactMouseEvent } from 'react';
+import { useState, useMemo, MouseEvent as ReactMouseEvent, memo } from 'react';
 import { 
     Box,
     Button,
@@ -100,4 +100,4 @@ const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelecte
     )
 }
 
-export default DevicesList;
+export default memo(DevicesList);

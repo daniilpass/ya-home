@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -160,4 +161,4 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
     )
 }
 
-export default DeviceProperties;
+export default memo(DeviceProperties);
