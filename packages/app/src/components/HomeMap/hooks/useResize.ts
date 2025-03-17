@@ -121,7 +121,7 @@ export const useResize = (
         ]);
     }, []);
 
-    const onDragStart = useDrag(onDrag, MouseButton.ANY, true);
+    const onDragStart = useDrag({ onDrag, strict: true });
 
     useLayoutEffect(() => {
         const wrapper = wrapperRef.current;

@@ -47,16 +47,23 @@ const HomeEditor = ({ planId }: Props) => {
     // Plan state
     const [plan, setPlan] = useState<Plan>();
     const [mapTransform, setMapTransform] = useState<{scale: number, bounds: DOMRect} | undefined>();
+
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
-    const [selectedPlanDeviceId, setSelectedPlanDeviceId] = useState<string | undefined>(undefined);
+    const [selectedPlanDevice, setSelectedPlanDevice] = useState<PlanDevice | undefined>(undefined);
     const [selectedPlanDeviceDrag, setSelectedPlanDeviceDrag] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (selectedPlanDevice?.id) {
+            setSelectedPlanDevice(plan?.devices[selectedPlanDevice.id]);
+        }
+    }, [plan?.devices, selectedPlanDevice?.id])
+
     // Plan settings dialog state
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
     const [planSettingsValue, setPlanSettingsValue] = useState<PlanSettingsValue>();
 
     const planDevices = useMemo(() => plan?.devices ?? {}, [plan]);
-    const selectedPlanDevice = selectedPlanDeviceId && planDevices[selectedPlanDeviceId];
 
     const planBounds: Partial<Bounds> = useMemo(() => ({
         top: 0,
@@ -136,7 +143,7 @@ const HomeEditor = ({ planId }: Props) => {
     /**
      * Plan handlers
      */
-    const setplanDevices = useCallback((updatedDevices: Collection<PlanDevice>) => {
+    const setPlanDevices = useCallback((updatedDevices: Collection<PlanDevice>) => {
         setPlan({
             ...plan!,
             devices: updatedDevices,
@@ -263,18 +270,18 @@ const HomeEditor = ({ planId }: Props) => {
      */
     
     const handleChangeDevice = useCallback((device: PlanDevice) => {
-        setplanDevices({
+        setPlanDevices({
             ...planDevices,
             [device.id]: device,
         });
         setHasUnsavedChanges(true);
-    }, [planDevices, setplanDevices]);
+    }, [planDevices, setPlanDevices]);
 
     const handleDeleteDevice = (deviceId: string) => {
         const updatedplanDevices = {...planDevices}
         delete updatedplanDevices[deviceId];
-        setplanDevices(updatedplanDevices);
-        setSelectedPlanDeviceId(undefined);
+        setPlanDevices(updatedplanDevices);
+        setSelectedPlanDevice(undefined);
         setHasUnsavedChanges(true);
     }
 
@@ -296,46 +303,62 @@ const HomeEditor = ({ planId }: Props) => {
             ...planDevices,
         };
 
-        setplanDevices(updatedplanDevices);
-        setSelectedPlanDeviceId(id);
+        setPlanDevices(updatedplanDevices);
+        setSelectedPlanDevice(newDevice);
         setSelectedPlanDeviceDrag(true);
         setHasUnsavedChanges(true);
     }
 
     const handleSelectDevice = (id: string) => {
-        setSelectedPlanDeviceId(id);
+        setSelectedPlanDevice(planDevices[id]);
         setSelectedPlanDeviceDrag(false);
     }
 
     const handleClickDevice = useCallback((id: string) => {
-        setSelectedPlanDeviceId(id);
+        setSelectedPlanDevice(planDevices[id]);
         setSelectedPlanDeviceDrag(false);
-    }, [])
+    }, [planDevices])
 
     /**
      * Drag hanlders
      */
     const handleDragDevice = useCallback((id: string, positionDiff: Point) => {
-        const device = planDevices[id];
-        const updatedDevice = actions.updateDevicePositionByDiff(device, positionDiff, planBounds, true)
+        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true)
+        setSelectedPlanDevice(updatedDevice);
+    }, [planBounds, planDevices]);
+
+    const handleDragDeviceEnd = useCallback((id: string, positionDiff: Point) => {
+        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true)
         handleChangeDevice(updatedDevice);
     }, [handleChangeDevice, planBounds, planDevices]);
 
     const handleBulbsLinePointDrag = useCallback((id: string, index: number, position: Point) => {
-        const device = planDevices[id];
-        const updatedDevice = actions.updateDeviceBulbsPointByDiff(device, index, position, planBounds, true);
-        handleChangeDevice(updatedDevice);
-    }, [handleChangeDevice, planBounds, planDevices])
+        const updatedDevice = actions.updateDeviceBulbsPointByDiff(planDevices[id], index, position, planBounds, true);
+        setSelectedPlanDevice(updatedDevice);
+    }, [planBounds, planDevices])
     
+    const handleBulbsLinePointDragEnd = useCallback((id: string, index: number, position: Point) => {
+        const updatedDevice = actions.updateDeviceBulbsPointByDiff(planDevices[id], index, position, planBounds, true);
+        handleChangeDevice(updatedDevice);
+    }, [handleChangeDevice, planBounds, planDevices]);
+
     const handleShadowPointDrag = useCallback((id: string, index: number, position: Point) => {
-        const device = planDevices[id];
-        const updatedDevice = actions.updateDeviceShadowPointByDiff(device, index, position, planBounds, true);
+        const updatedDevice = actions.updateDeviceShadowPointByDiff(planDevices[id], index, position, planBounds, true);
+        setSelectedPlanDevice(updatedDevice);
+    }, [planBounds, planDevices]);
+
+    const handleShadowPointDragEnd = useCallback((id: string, index: number, position: Point) => {
+        const updatedDevice = actions.updateDeviceShadowPointByDiff(planDevices[id], index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }, [handleChangeDevice, planBounds, planDevices]);
 
     const handleShadowMaskPointDrag = useCallback((id: string, index: number, position: Point) => {
-        const device = planDevices[id];
-        const updatedDevice = actions.updateDeviceShadowMaskPointByDiff(device, index, position, planBounds, true);
+        const updatedDevice = actions.updateDeviceShadowMaskPointByDiff(planDevices[id], index, position, planBounds, true);
+        setSelectedPlanDevice(updatedDevice);
+    }, [planBounds, planDevices]);
+
+    const handleShadowMaskPointDragEnd = useCallback((id: string, index: number, position: Point) => {
+        const updatedDevice = actions.updateDeviceShadowMaskPointByDiff(planDevices[id], index, position, planBounds, true);
         handleChangeDevice(updatedDevice);
     }, [handleChangeDevice, planBounds, planDevices]);
 
@@ -354,7 +377,7 @@ const HomeEditor = ({ planId }: Props) => {
                             <DevicesList
                                 devices={allDevices}
                                 devicesOnPlan={planDevices}
-                                selectedDeviceId={selectedPlanDeviceId}
+                                selectedDeviceId={selectedPlanDevice?.id}
                                 onDeviceSelected={handleSelectDevice}
                                 onDeviceAddClick={handleAddDevice}
                             />
@@ -368,14 +391,18 @@ const HomeEditor = ({ planId }: Props) => {
                             allowZoom={true}
                             allowDrag={true}
                             allowInitialScale={true}
-                            editElementId={selectedPlanDeviceId}
+                            editableElement={selectedPlanDevice}
                             editElementDrag={selectedPlanDeviceDrag}
                             isEditorMode={true}
                             onElementClick={handleClickDevice}
                             onElementDrag={handleDragDevice}
+                            onElementDragEnd={handleDragDeviceEnd}
                             onBulbsLinePointDrag={handleBulbsLinePointDrag}
+                            onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
                             onShadowPointDrag={handleShadowPointDrag}
+                            onShadowPointDragEnd={handleShadowPointDragEnd}
                             onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                            onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
                             onTansform={handleTransform}
                             onReady={() => setMapReady(true)}
                             classes={{

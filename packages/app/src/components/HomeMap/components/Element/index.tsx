@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import {FC, useEffect, useRef} from 'react';
+import {FC, useEffect, useRef } from 'react';
 
 import { DeviceState, DeviceTypes, MouseButton, Point, isSwitchableDeviceType, DeviceIconType } from '@homemap/shared';
 
@@ -20,11 +20,15 @@ type Props = {
     selectable?: boolean;
     onClick?: () => void;
     onDrag?: (event: DragEvent) => void;
+    onDragEnd?: (event: DragEvent) => void;
 }
 
-const Element: FC<Props> = ({type, position, icon, state, substate, isEditMode, selectable, onClick, onDrag}) => {
+const Element: FC<Props> = ({
+    type, position, icon, state, substate, isEditMode, selectable,
+    onClick, onDrag, onDragEnd,
+}) => {
     const { editElementDrag } = useTransformContext();
-    const onDragStart = useDrag(onDrag);
+    const onDragStart = useDrag({ onDrag, onDragEnd });
     const moveRef = useRef<SVGGElement>(null);
 
     useEffect(() => {

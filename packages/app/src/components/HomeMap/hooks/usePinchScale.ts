@@ -78,7 +78,7 @@ export const usePinchScale = (
         secondaryPointer.current = null;
     }, []);
 
-    const onDragStart = useDrag(onDrag, MouseButton.LEFT, false, true, onDragEnd);
+    const onDragStart = useDrag({ onDrag, onDragEnd, multiTouch: true });
 
     useLayoutEffect(() => {
         const wrapper = wrapperRef.current;

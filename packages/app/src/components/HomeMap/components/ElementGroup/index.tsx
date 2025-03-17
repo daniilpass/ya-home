@@ -18,9 +18,13 @@ type Props = {
     selectable?: boolean;
     onElementClick?: (id: Element['id']) => void;
     onElementDrag?: (id: Element['id'], event: DragEvent) => void;
+    onElementDragEnd?: (id: Element['id'], event: DragEvent) => void;
     onBulbsLinePointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
+    onBulbsLinePointDragEnd?: (id: Element['id'], index: number, event: DragEvent) => void;
     onShadowPointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
+    onShadowPointDragEnd?: (id: Element['id'], index: number, event: DragEvent) => void;
     onShadowMaskPointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
+    onShadowMaskPointDragEnd?: (id: Element['id'], index: number, event: DragEvent) => void;
 }
 
 const ElementGroup: FC<Props> = ({
@@ -30,11 +34,14 @@ const ElementGroup: FC<Props> = ({
     selectable,
     onElementClick,
     onElementDrag,
+    onElementDragEnd,
     onBulbsLinePointDrag,
+    onBulbsLinePointDragEnd,
     onShadowPointDrag,
+    onShadowPointDragEnd,
     onShadowMaskPointDrag,
+    onShadowMaskPointDragEnd,
 }) => {
-    console.log('HELLO ElementGroup')
     const {id, type, position, icon, area} = element;
     const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
     const {state, substate} = data || {};
@@ -47,13 +54,25 @@ const ElementGroup: FC<Props> = ({
         onShadowPointDrag?.(element.id, index, event);
     }, [element.id, onShadowPointDrag]);
 
-    const handleShadowMaskPointDrag= useCallback((index: number, event: DragEvent) => {
+    const handleShadowPointDragEnd = useCallback((index: number, event: DragEvent) => {
+        onShadowPointDragEnd?.(element.id, index, event);
+    }, [element.id, onShadowPointDragEnd]);
+
+    const handleShadowMaskPointDrag = useCallback((index: number, event: DragEvent) => {
         onShadowMaskPointDrag?.(element.id, index, event);
     }, [element.id, onShadowMaskPointDrag]);
+
+    const handleShadowMaskPointDragEnd = useCallback((index: number, event: DragEvent) => {
+        onShadowMaskPointDragEnd?.(element.id, index, event);
+    }, [element.id, onShadowMaskPointDragEnd]);
 
     const handleBulbsLinePointDrag = useCallback((index: number, event: DragEvent) => {
         onBulbsLinePointDrag?.(element.id, index, event);
     }, [element.id, onBulbsLinePointDrag]);
+
+    const handleBulbsLinePointDragEnd = useCallback((index: number, event: DragEvent) => {
+        onBulbsLinePointDragEnd?.(element.id, index, event);
+    }, [element.id, onBulbsLinePointDragEnd]);
 
     const handleElementClick = useCallback(() => {
         onElementClick?.(element.id);
@@ -62,6 +81,10 @@ const ElementGroup: FC<Props> = ({
     const handleElementDrag = useCallback((event: DragEvent) => {
         onElementDrag?.(element.id, event);
     }, [element.id, onElementDrag]);
+
+    const handleElementDragEnd = useCallback((event: DragEvent) => {
+        onElementDragEnd?.(element.id, event);
+    }, [element.id, onElementDragEnd]);
 
     return (
         <g className={rootClassName}>
@@ -73,7 +96,9 @@ const ElementGroup: FC<Props> = ({
                     state={state}
                     isEditMode={isEditMode}
                     onPointDrag={handleShadowPointDrag}
+                    onPointDragEnd={handleShadowPointDragEnd}
                     onMaskPointDrag={handleShadowMaskPointDrag}
+                    onMaskPointDragEnd={handleShadowMaskPointDragEnd}
                 />
             )}
             {bulbsLinePoints && (
@@ -83,6 +108,7 @@ const ElementGroup: FC<Props> = ({
                     substate={substate}
                     isEditMode={isEditMode}
                     onPointDrag={handleBulbsLinePointDrag}
+                    onPointDragEnd={handleBulbsLinePointDragEnd}
                 />
             )}
             <ElementComponent
@@ -95,6 +121,7 @@ const ElementGroup: FC<Props> = ({
                 selectable={selectable}
                 onClick={handleElementClick}
                 onDrag={handleElementDrag}
+                onDragEnd={handleElementDragEnd}
             />
         </g>
     )

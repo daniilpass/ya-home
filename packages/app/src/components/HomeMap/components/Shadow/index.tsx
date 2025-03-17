@@ -14,21 +14,37 @@ type Props = {
     state?: DeviceState | null;
     isEditMode?: boolean;
     onPointDrag?: (index: number, event: DragEvent) => void;
+    onPointDragEnd?: (index: number, event: DragEvent) => void;
     onMaskPointDrag?: (index: number, event: DragEvent) => void;
+    onMaskPointDragEnd?: (index: number, event: DragEvent) => void;
 }
 
-const Shadow: FC<Props> = ({id, points, maskPoints, state, isEditMode, onPointDrag, onMaskPointDrag}) => {
+const Shadow: FC<Props> = ({
+    id, points, maskPoints, state, isEditMode,
+    onPointDrag, onPointDragEnd, onMaskPointDrag, onMaskPointDragEnd
+}) => {
     const onDrag = (event: DragEvent, options: any) => {
         const {index} = options;
         onPointDrag && onPointDrag(index, event);
     }
+
+    const onDragEnd = (event: DragEvent, options: any) => {
+        const {index} = options;
+        onPointDragEnd && onPointDragEnd(index, event);
+    }
+
     const onMaskDrag = (event: DragEvent, options: any) => {
         const {index} = options;
         onMaskPointDrag && onMaskPointDrag(index, event);
     }
 
-    const onDragStart = useDrag(onDrag);
-    const onMaskDragStart = useDrag(onMaskDrag);
+    const onMaskDragEnd = (event: DragEvent, options: any) => {
+        const {index} = options;
+        onMaskPointDragEnd && onMaskPointDragEnd(index, event);
+    }
+
+    const onDragStart = useDrag({ onDrag, onDragEnd });
+    const onMaskDragStart = useDrag({ onDrag: onMaskDrag, onDragEnd: onMaskDragEnd });
 
     if (state?.on?.value) {
         return null;

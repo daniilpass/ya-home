@@ -16,9 +16,10 @@ type Props = {
     substate?: string;
     isEditMode?: boolean;
     onPointDrag?: (index: number, event: DragEvent) => void;
+    onPointDragEnd?: (index: number, event: DragEvent) => void;
 }
 
-const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}) => {
+const BulbsLine: FC<Props> = ({ points, state, substate, isEditMode, onPointDrag, onPointDragEnd }) => {
     const directions = pointsToPathDirections(points);
     const className = cx('element-bulbs-line', {
         'element-bulbs-line--on': state?.on?.value,
@@ -30,7 +31,12 @@ const BulbsLine: FC<Props> = ({points, state, substate, isEditMode, onPointDrag}
         onPointDrag && onPointDrag(index, event);
     }
 
-    const onDragStart = useDrag(onDrag);
+    const onDragEnd = (event: DragEvent, options: any) => {
+        const {index} = options;
+        onPointDragEnd && onPointDragEnd(index, event);
+    }
+
+    const onDragStart = useDrag({ onDrag, onDragEnd });
 
     return (
         <>

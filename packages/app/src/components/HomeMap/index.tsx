@@ -20,7 +20,7 @@ import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 import { DragEvent } from './hooks/useDrag';
 import { normilizePosition } from './tools';
-import { usePinchScale } from './hooks/usePinchScale';
+
 export type MapTransform = {
     scale: number;
     rotate: number;
@@ -33,7 +33,7 @@ export type Props = {
     width: Plan['width'];
     height: Plan['height'];
     elements?: Record<string, PlanDevice>;
-    editElementId?: string;
+    editableElement?: PlanDevice;
     editElementDrag?: boolean;
     isEditorMode?: boolean;
     data?: Record<string, Element>;
@@ -46,9 +46,13 @@ export type Props = {
     transition?: boolean;
     onElementClick?: (id: string) => void;
     onElementDrag?: (id: string, position: Point) => void;
+    onElementDragEnd?: (id: string, position: Point) => void;
     onBulbsLinePointDrag?: (id: string, index: number, position: Point) => void;
+    onBulbsLinePointDragEnd?: (id: string, index: number, position: Point) => void;
     onShadowPointDrag?: (id: string, index: number, position: Point) => void;
+    onShadowPointDragEnd?: (id: string, index: number, position: Point) => void;
     onShadowMaskPointDrag?: (id: string, index: number, position: Point) => void;
+    onShadowMaskPointDragEnd?: (id: string, index: number, position: Point) => void;
     onTansform?: (transfrom: MapTransform) => void;
     onReady?: () => void;
     onBackgroundLoad?: (e: SyntheticEvent<HTMLImageElement>) => void;
@@ -75,14 +79,18 @@ const HomeMap: FC<Props> = ({
     allowZoom,
     allowDrag,
     transition,
-    editElementId,
+    editableElement,
     editElementDrag = false,
     isEditorMode,
     onElementClick,
     onElementDrag,
+    onElementDragEnd,
     onBulbsLinePointDrag,
+    onBulbsLinePointDragEnd,
     onShadowPointDrag,
+    onShadowPointDragEnd,
     onShadowMaskPointDrag,
+    onShadowMaskPointDragEnd,
     onTansform,
     onReady,
     onBackgroundLoad,
@@ -154,6 +162,14 @@ const HomeMap: FC<Props> = ({
         onElementDrag(id, position);
     }, [onElementDrag, scale])
 
+    const handleElementDragEnd = useCallback((id: string, { pageXDiff, pageYDiff }: DragEvent) => {
+        if (!onElementDragEnd) {
+            return;
+        }
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onElementDragEnd(id, position);
+    }, [onElementDragEnd, scale])
+
     const handleBulbsLinePointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onBulbsLinePointDrag) {
             return;
@@ -161,6 +177,14 @@ const HomeMap: FC<Props> = ({
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onBulbsLinePointDrag(id, index, position);
     }, [onBulbsLinePointDrag, scale]);
+
+    const handleBulbsLinePointDragEnd = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+        if (!onBulbsLinePointDragEnd) {
+            return;
+        }
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onBulbsLinePointDragEnd(id, index, position);
+    }, [onBulbsLinePointDragEnd, scale]);
 
     const handleShadowPointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowPointDrag) {
@@ -170,6 +194,14 @@ const HomeMap: FC<Props> = ({
         onShadowPointDrag(id, index, position);
     }, [onShadowPointDrag, scale]);
 
+    const handleShadowPointDragEnd = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+        if (!onShadowPointDragEnd) {
+            return;
+        }
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onShadowPointDragEnd(id, index, position);
+    }, [onShadowPointDragEnd, scale]);
+
     const handleShadowMaskPointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onShadowMaskPointDrag) {
             return;
@@ -178,8 +210,17 @@ const HomeMap: FC<Props> = ({
         onShadowMaskPointDrag(id, index, position);
     }, [onShadowMaskPointDrag, scale]);
 
+    const handleShadowMaskPointDragEnd = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
+        if (!onShadowMaskPointDragEnd) {
+            return;
+        }
+        const position = normilizePosition(pageXDiff, pageYDiff, scale);
+        onShadowMaskPointDragEnd(id, index, position);
+    }, [onShadowMaskPointDragEnd, scale]);
+
+    const editableElementId = editableElement?.id;
+
     const sortedElements = useMemo(() => {
-        console.log('HELLO useMemo sortedElements')
         const elementsEntries = Object.entries(elements)
     
         // TODO: implement z-index for plan devices
@@ -196,15 +237,15 @@ const HomeMap: FC<Props> = ({
             }
         })
 
-        // In edit mode, bring the edit element to the top.
-        if (editElementId) {
-            const editElementIndex = elementsEntries.findIndex(([id]) => id === editElementId);
+        // In edit mode, hide the edit element.
+        if (editableElementId) {
+            const editElementIndex = elementsEntries.findIndex(([id]) => id === editableElementId);
             elementsEntries.splice(editElementIndex, 1);
-            elementsEntries.push([editElementId, elements[editElementId]]);
+            // elementsEntries.push([editableElementId, elements[editableElementId]]);
         }
         
         return elementsEntries;
-    }, [elements, editElementId]);
+    }, [elements, editableElementId]);
 
     const wrapperStyle: CSSProperties = {
         backgroundColor: background.color,
@@ -232,19 +273,21 @@ const HomeMap: FC<Props> = ({
             key={id}
             element={element}
             data={data?.[id]}
-            isEditMode={id === editElementId}
+            isEditMode={id === editableElementId}
             selectable={isEditorMode}
             onElementClick={handleElementClick}
             onElementDrag={handleElementDrag}
+            onElementDragEnd={handleElementDragEnd}
             onBulbsLinePointDrag={handleBulbsLinePointDrag}
             onShadowPointDrag={handleShadowPointDrag}
             onShadowMaskPointDrag={handleShadowMaskPointDrag}
         />
     )), [
-        data, editElementId, isEditorMode, sortedElements,
+        data, editableElementId, isEditorMode, sortedElements,
         handleBulbsLinePointDrag,
         handleElementClick,
         handleElementDrag,
+        handleElementDragEnd,
         handleShadowMaskPointDrag,
         handleShadowPointDrag, 
     ])
@@ -270,6 +313,23 @@ const HomeMap: FC<Props> = ({
                     {/* Map */}
                     <svg className="map-layout__svg" ref={svgRef}>
                         {sortedElemensDOM}
+                        {editableElement && (
+                            <ElementGroup
+                                key={editableElement.id}
+                                element={editableElement}
+                                data={data?.[editableElement.id]}
+                                isEditMode={true}
+                                onElementClick={handleElementClick}
+                                onElementDrag={handleElementDrag}
+                                onElementDragEnd={handleElementDragEnd}
+                                onBulbsLinePointDrag={handleBulbsLinePointDrag}
+                                onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
+                                onShadowPointDrag={handleShadowPointDrag}
+                                onShadowPointDragEnd={handleShadowPointDragEnd}
+                                onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                                onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
+                            />
+                        )}
                     </svg>
                 </div>
             </div>

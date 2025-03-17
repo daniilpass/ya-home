@@ -16,14 +16,23 @@ export type DragEvent = PointerEvent & {
 
 export type onDragCallback = (e: DragEvent, options?: any) => void;
 
-export const useDrag = (
-    onDrag?: onDragCallback,
-    button: MouseButton = MouseButton.LEFT,
+export type UseDragParams = {
+    button?: MouseButton,
     strict?: boolean,
     multiTouch?: boolean,
-    endDragCallback?: (e: PointerEvent | WheelEvent) => void,
-) => {
+    onDrag?: onDragCallback,
+    onDragEnd?: onDragCallback,
+}
+
+export const useDrag = ({
+    button = MouseButton.ANY,
+    strict = false,
+    multiTouch = false,
+    onDrag,
+    onDragEnd,
+}: UseDragParams) => {
     const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
+        let lastEvent: DragEvent | undefined;
         let lastEventTime = Date.now();
 
         if (!dragStartEvent.isPrimary && !multiTouch) {
@@ -59,18 +68,22 @@ export const useDrag = (
                 return;
             }
 
-            const extendedEvent = Object.assign(dragEvent,{
+            const extendedEvent: DragEvent = Object.assign(dragEvent,{
                 clientXDiff: clientXStart - dragEvent.clientX,
                 clientYDiff: clientYStart - dragEvent.clientY,
                 pageXDiff: pageXStart - dragEvent.pageX,
                 pageYDiff: pageYStart - dragEvent.pageY,
             });
 
+            lastEvent = extendedEvent;
+
             onDrag(extendedEvent, options);
         }
 
-        const endDrag = (e: PointerEvent | WheelEvent) => {
-            endDragCallback?.(e);
+        const endDrag = () => {
+            if (lastEvent && onDragEnd) {
+                onDragEnd(lastEvent, options);
+            }
 
             resetCursor();
 
@@ -88,7 +101,7 @@ export const useDrag = (
             }
 
             if (!e.isPrimary) {
-                endDrag(e);
+                endDrag();
             }
         }
 
@@ -97,7 +110,7 @@ export const useDrag = (
         document.addEventListener('pointerup', endDrag);
         document.addEventListener('pointercancel', endDrag);
         document.addEventListener('wheel', endDrag);
-    }, [button, onDrag, endDragCallback, strict, multiTouch]);
+    }, [button, onDrag, onDragEnd, strict, multiTouch]);
 
     return onDragStart;
 }
