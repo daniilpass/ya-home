@@ -14,11 +14,12 @@ import { PropertiesGroup } from './PropertiesGroup';
 export type Props = {
     device: PlanDevice,
     bounds: Partial<Bounds>,
+    hideTitle?: boolean;
     onChange: (device: PlanDevice) => void;
     onDelete: (deviceId: string) => void;
 }
 
-const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
+const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Props) => {
     /**
      * Device hanlders
      */
@@ -99,9 +100,11 @@ const DeviceProperties = ({ device, bounds, onChange, onDelete }: Props) => {
     return (
         <>
             <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
-                <Typography component="h1" variant="h5" align="center" marginBottom={1}>
-                    {device.name}
-                </Typography>
+                {!hideTitle && (
+                    <Typography component="h1" variant="h5" align="center" marginBottom={1}>
+                        {device.name}
+                    </Typography>
+                )}
                 <Button
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeviceDelete()}

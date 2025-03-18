@@ -42,7 +42,7 @@ const Element: FC<Props> = ({
             })
             onDragStart(event);
         }
-    }, [moveRef, isEditMode, editElementDrag]);
+    }, [moveRef, isEditMode, editElementDrag, onDragStart]);
 
     const handlePointerDown = (e: React.PointerEvent) => {
         if (!isEditMode) {

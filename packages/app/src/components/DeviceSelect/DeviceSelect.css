@@ -1,0 +1,10 @@
+.device-select {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+}
+
+.MuiSelect-select.device-select__select{
+    padding: 0;
+    padding-left: 8px;
+}

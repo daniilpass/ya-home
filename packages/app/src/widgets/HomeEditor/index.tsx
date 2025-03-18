@@ -9,9 +9,6 @@ import Toolbar from '../../common/components/Toolbar';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
-
-import DevicesList from './components/DevicesList';
-import DeviceProperties from './components/DeviceProperties';
 import PlanActions, { PlanActionEvent } from './components/PlanActions';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { getDeviceDefaultIcon } from '../../utils/device';
@@ -22,6 +19,7 @@ import { PlanActionsEnum } from './components/PlanActions/constants';
 import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
 
 import './style.css';
+import { DeviceToolbar } from './components/DeviceToolbar';
 
 export type Props = {
     planId: number;
@@ -51,6 +49,9 @@ const HomeEditor = ({ planId }: Props) => {
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});
     const [selectedPlanDevice, setSelectedPlanDevice] = useState<PlanDevice | undefined>(undefined);
+    /**
+     * @deprecated
+     */
     const [selectedPlanDeviceDrag, setSelectedPlanDeviceDrag] = useState<boolean>(false);
 
     useEffect(() => {
@@ -373,15 +374,17 @@ const HomeEditor = ({ planId }: Props) => {
                         />
                     </Toolbar>
                     <div className="editor-layout">
-                        <Toolbar position="left" >
-                            <DevicesList
-                                devices={allDevices}
-                                devicesOnPlan={planDevices}
-                                selectedDeviceId={selectedPlanDevice?.id}
-                                onDeviceSelected={handleSelectDevice}
-                                onDeviceAddClick={handleAddDevice}
-                            />
-                        </Toolbar>
+                        <DeviceToolbar
+                            devices={allDevices}
+                            devicesOnPlan={planDevices}
+                            selectedDevice={selectedPlanDevice}
+                            planBounds={planBounds}
+                            onSelectDevice={handleSelectDevice}
+                            onAddDevice={handleAddDevice}
+                            onChangeDevice={handleChangeDevice}
+                            onDeleteDevice={handleDeleteDevice}
+                        />
+
                         <HomeMap
                             data={sensorsData}
                             background={plan.background}
@@ -415,23 +418,15 @@ const HomeEditor = ({ planId }: Props) => {
                                 }
                             }}
                         />
-                        <Toolbar position="right" >
-                            {selectedPlanDevice && (
-                               <DeviceProperties
-                                    device={selectedPlanDevice}
-                                    bounds={planBounds}
-                                    onChange={handleChangeDevice}
-                                    onDelete={handleDeleteDevice}
-                                />
-                            )}
-                        </Toolbar>
                     </div>
+
                     <PlanSettingsDialog
                         open={planSettingsOpen}
                         onClose={handleCloseSettings}
                         value={planSettingsValue!}
                         onSubmit={handleChangePlanSettings}
                     />
+
                     <UnsavedChangesDialog
                         open={blocker.state === 'blocked'}
                         onSubmit={blocker.proceed!}

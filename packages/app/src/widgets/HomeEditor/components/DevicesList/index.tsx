@@ -23,6 +23,9 @@ export type Props = {
     onDeviceAddClick: (deviceId: string, event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
+/**
+ * @deprecated
+ */
 const DevicesList = ({ devices, devicesOnPlan, selectedDeviceId, onDeviceSelected, onDeviceAddClick }: Props) => {
     const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
 
