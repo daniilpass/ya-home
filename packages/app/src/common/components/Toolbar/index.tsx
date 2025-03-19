@@ -4,21 +4,23 @@ import cx from 'classnames';
 import './style.scss';
 
 type Props = {
-    position: 'top' | 'right' | 'left',
+    className?: string;
+    position: 'top' | 'right' | 'left' | 'bottom',
     withBorder?: boolean,
     children: ReactNode,
 }
 
-const Toolbar = ({ position, withBorder, children }: Props) => {
-    const className = cx('toolbar', {
+const Toolbar = ({ className, position, withBorder, children }: Props) => {
+    const rootClassName = cx('toolbar', {
         'toolbar--top': position === 'top',
         'toolbar--right': position === 'right',
         'toolbar--left': position === 'left',
+        'toolbar--bottom': position === 'bottom',
         'toolbar--border': withBorder,
-    });
+    }, className);
 
     return (
-        <div className={className}>
+        <div className={rootClassName}>
             {children}
         </div>
     );

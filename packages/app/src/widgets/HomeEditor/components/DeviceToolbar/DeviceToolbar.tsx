@@ -1,8 +1,10 @@
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import cx from 'classnames';
 import { Box, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-// import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { Bounds, Collection, COLORS, Device, PlanDevice } from '@homemap/shared';
 
@@ -10,6 +12,9 @@ import DeviceProperties from '../DeviceProperties'
 import Toolbar from '../../../../common/components/Toolbar';
 import DeviceSelect from '../../../../components/DeviceSelect';
 import DialogAddDevice from './DialogAddDevice';
+import { useIsMobile } from '../../hooks/useIsMobile';
+
+import './DeviceToolbar.css';
 
 type DeviceToolbarProps = {
     devices: Collection<Device>;
@@ -32,6 +37,27 @@ export const DeviceToolbar = ({
     onChangeDevice,
     onDeleteDevice,
 }: DeviceToolbarProps) => {
+    /**
+     * Edit view logic
+     */
+    const isMobile = useIsMobile();
+    const [isMobileEditMode, setIsMobileEditMode] = useState<boolean>(false);
+
+    const showProperties = isMobileEditMode || !isMobile;
+    const showDeviceSelect = !isMobileEditMode;
+    const showCloseEditMode = isMobileEditMode;
+
+    useEffect(() => {
+        setIsMobileEditMode(false);
+    }, [isMobile]);
+
+    const toggleMobileEditMode = useCallback(() => {
+        setIsMobileEditMode(!isMobileEditMode)
+    }, [isMobileEditMode])
+
+    /**
+     * Modal logic
+     */
     const [addDeviceModalOpened, setAddDeviceModalOpened] = useState<boolean>(false);
 
     const addDeviceModalOpen = useCallback(() => {
@@ -47,29 +73,60 @@ export const DeviceToolbar = ({
         onAddDevice(deviceId, e);
     }, [addDeviceModalClose, onAddDevice])
 
+    const className = cx('toolbar-device', {
+        'toolbar-device--mobile': isMobile,
+        'toolbar-device--mobile-open': isMobile && isMobileEditMode,
+    });
+    const positon = isMobile ? 'bottom' : 'left';
 
     return (
-        <Toolbar position="left" >
-            <Box sx={{
-                display: 'flex',
-                gap: '6px',
-                padding: '12px',
-                borderBottom: '1px solid #e6eaf2'
-            }}>
-                <IconButton onClick={addDeviceModalOpen} sx={{ color: COLORS.primary }}>
-                    <AddIcon />
-                </IconButton>
-                <DeviceSelect
-                    items={devicesOnPlan}
-                    selectedItemId={selectedDevice?.id}
-                    onChange={onSelectDevice}
-                />
-                {/* <IconButton sx={{ color: COLORS.primary }}>
-                    <EditIcon />
-                </IconButton> */}
-            </Box>
+        <Toolbar className={className} position={positon} >
+            {showCloseEditMode && (
+                <Box sx={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 2,
+                    backgroundColor: '#f3f4f6',
+                    display: 'flex',
+                    gap: '6px',
+                    padding: '12px',
+                    borderBottom: '1px solid #e6eaf2',
+                    justifyContent: 'flex-end',
+                }}>
+                    <IconButton onClick={toggleMobileEditMode} sx={{ color: COLORS.primary }}>
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
+            )}
+
+            {showDeviceSelect && (
+                <Box sx={{
+                    display: 'flex',
+                    gap: '6px',
+                    padding: '12px',
+                    borderBottom: '1px solid #e6eaf2'
+                }}>
+                    <IconButton onClick={addDeviceModalOpen} sx={{ color: COLORS.primary }}>
+                        <AddIcon />
+                    </IconButton>
+                    <DeviceSelect
+                        items={devicesOnPlan}
+                        selectedItemId={selectedDevice?.id}
+                        onChange={onSelectDevice}
+                    />
+                    {isMobile && (
+                        <IconButton
+                            onClick={toggleMobileEditMode}
+                            disabled={!selectedDevice}
+                            sx={{ color: COLORS.primary }}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                    )}
+                </Box>
+            )}
             
-            {selectedDevice && (
+            {showProperties && selectedDevice && (
                 <DeviceProperties
                     device={selectedDevice}
                     bounds={planBounds}

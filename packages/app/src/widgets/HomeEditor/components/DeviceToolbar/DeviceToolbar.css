@@ -1,0 +1,21 @@
+.toolbar-device {
+    min-height: 0;
+}
+
+.toolbar-device--mobile {
+    position: absolute;
+    bottom: 0;
+
+    flex-direction: column;
+
+    height: 65px;
+    width: 100vw;
+
+    max-height: 100%;
+    transition: min-height .25s ease-out;
+}
+
+.toolbar-device--mobile-open {
+    min-height: 100%;
+    transition: min-height .25s ease-out;
+}
