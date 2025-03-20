@@ -1,0 +1,15 @@
+.editor-topbar {
+    padding: 0 12px;
+    flex-direction: row;
+    align-items: center;
+    height: 65px;
+    border-bottom: 1px solid #e6eaf2;
+}
+
+.editor-topbar--mobile {
+    position: absolute;
+}
+
+.editor-topbar hr {
+    height: auto;
+}

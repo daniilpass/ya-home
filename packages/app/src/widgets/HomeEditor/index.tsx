@@ -1,25 +1,25 @@
 import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 import { Bounds, Collection, Device, DeviceTypes, Plan, PlanDevice, Point } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import HomeMap, { MapTransform } from '../../components/HomeMap';
-import Toolbar from '../../common/components/Toolbar';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
-import PlanActions, { PlanActionEvent } from './components/PlanActions';
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { getDeviceDefaultIcon } from '../../utils/device';
 
 import actions from './actions';
 import { exportPlan, importPlan, toRelativePosition } from './tools';
-import { PlanActionsEnum } from './components/PlanActions/constants';
 import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
+import { DeviceToolbar } from './components/DeviceToolbar';
+import { EditorTopbar,PlanActionsEnum, PlanActionEvent  } from './components/EditorTopbar';
+
 
 import './style.css';
-import { DeviceToolbar } from './components/DeviceToolbar';
 
 export type Props = {
     planId: number;
@@ -367,13 +367,11 @@ const HomeEditor = ({ planId }: Props) => {
             <AppLoader isLoading={isLoading || !mapReady} />
             {plan && (
                 <div className='editor-root'>
-                    <Toolbar position="top" withBorder>
-                        <PlanActions
-                            onClick={handleClickPlanAction}
+                    <Box>
+                        <EditorTopbar
                             actionsInProgress={actionsInProgress}
+                            onItemClick={handleClickPlanAction}
                         />
-                    </Toolbar>
-                    <div className="editor-layout">
                         <DeviceToolbar
                             devices={allDevices}
                             devicesOnPlan={planDevices}
@@ -384,41 +382,41 @@ const HomeEditor = ({ planId }: Props) => {
                             onChangeDevice={handleChangeDevice}
                             onDeleteDevice={handleDeleteDevice}
                         />
+                    </Box>
 
-                        <HomeMap
-                            data={sensorsData}
-                            background={plan.background}
-                            width={plan.width}
-                            height={plan.height}
-                            elements={planDevices}
-                            allowZoom={true}
-                            allowDrag={true}
-                            allowInitialScale={true}
-                            editableElement={selectedPlanDevice}
-                            editElementDrag={selectedPlanDeviceDrag}
-                            isEditorMode={true}
-                            onElementClick={handleClickDevice}
-                            onElementDrag={handleDragDevice}
-                            onElementDragEnd={handleDragDeviceEnd}
-                            onBulbsLinePointDrag={handleBulbsLinePointDrag}
-                            onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
-                            onShadowPointDrag={handleShadowPointDrag}
-                            onShadowPointDragEnd={handleShadowPointDragEnd}
-                            onShadowMaskPointDrag={handleShadowMaskPointDrag}
-                            onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
-                            onTansform={handleTransform}
-                            onReady={() => setMapReady(true)}
-                            classes={{
-                                wrapper: 'editor_map-wrapper',
-                                layout: 'editor_map-layout',
-                            }}
-                            styles={{
-                                wrapper: {
-                                    backgroundColor: undefined,
-                                }
-                            }}
-                        />
-                    </div>
+                    <HomeMap
+                        data={sensorsData}
+                        background={plan.background}
+                        width={plan.width}
+                        height={plan.height}
+                        elements={planDevices}
+                        allowZoom={true}
+                        allowDrag={true}
+                        allowInitialScale={true}
+                        editableElement={selectedPlanDevice}
+                        editElementDrag={selectedPlanDeviceDrag}
+                        isEditorMode={true}
+                        onElementClick={handleClickDevice}
+                        onElementDrag={handleDragDevice}
+                        onElementDragEnd={handleDragDeviceEnd}
+                        onBulbsLinePointDrag={handleBulbsLinePointDrag}
+                        onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
+                        onShadowPointDrag={handleShadowPointDrag}
+                        onShadowPointDragEnd={handleShadowPointDragEnd}
+                        onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                        onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
+                        onTansform={handleTransform}
+                        onReady={() => setMapReady(true)}
+                        classes={{
+                            wrapper: 'editor_map-wrapper',
+                            layout: 'editor_map-layout',
+                        }}
+                        styles={{
+                            wrapper: {
+                                backgroundColor: undefined,
+                            }
+                        }}
+                    />
 
                     <PlanSettingsDialog
                         open={planSettingsOpen}

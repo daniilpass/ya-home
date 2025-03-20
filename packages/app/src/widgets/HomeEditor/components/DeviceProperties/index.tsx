@@ -19,6 +19,7 @@ export type Props = {
     onDelete: (deviceId: string) => void;
 }
 
+// TODO: оптимизировать, при драге свойства обновляются - компонент ререндерится
 const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Props) => {
     /**
      * Device hanlders
@@ -140,6 +141,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                             onDelete={(index) => handleBulbsLinePointDelete(index)}
                         />
                     </PropertiesGroup>
+
 
                     <PropertiesGroup title="Тень">
                         <PointsList

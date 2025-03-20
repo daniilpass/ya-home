@@ -3,7 +3,7 @@ import { Button, ButtonProps } from '@mui/material';
 import Loader from '../Loader';
 
 export type LoadingButtonProps = ButtonProps & {
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
 const LoadingButton = ({

@@ -1,0 +1,9 @@
+.MuiMenuItem-root.menu-item {
+    padding: 0;
+}
+
+.MuiMenuItem-root.menu-item > * {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 12px 24px;
+}
