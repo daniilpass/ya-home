@@ -11,9 +11,9 @@ import { Bounds, Collection, COLORS, Device, PlanDevice } from '@homemap/shared'
 import DeviceProperties from '../DeviceProperties'
 import Toolbar from '../../../../common/components/Toolbar';
 import DeviceSelect from '../../../../components/DeviceSelect';
-import DialogAddDevice from './DialogAddDevice';
-import { useIsMobile } from '../../hooks/useIsMobile';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
+import DialogAddDevice from './DialogAddDevice';
 import './DeviceToolbar.css';
 
 type DeviceToolbarProps = {

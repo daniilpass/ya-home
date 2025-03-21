@@ -1,11 +1,11 @@
 
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { ColorResult } from 'react-color';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { Plan, Point, Size } from '@homemap/shared';
+import { COLORS, Plan, Point, Size } from '@homemap/shared';
 
 import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB } from '../../configuration';
 import PointInput from '../../common/components/PointInput';
@@ -14,6 +14,7 @@ import VisuallyHiddenInput from '../../common/components/VisuallyHiddenInput';
 import { readFileAsDataURL } from '../../utils/file';
 import HomeMap from '../HomeMap';
 import { useDispatch } from '../../store/hooks';
+import { PropertiesGroup } from '../FormProperties/PropertiesGroup';
 
 import './style.scss';
 
@@ -106,18 +107,40 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     return (
         <DialogContent dividers={true}>
             <Box sx={{
+                height: '200px',
+                marginBottom: 2,
+            }}>
+                <HomeMap
+                    background={{
+                        color,
+                        image,
+                    }}
+                    onBackgroundLoad={handleBackgroundLoad}
+                    width={value.width}
+                    height={value.height}
+                    allowScale={true}
+                    allowInitialScale={true}
+                    styles={{
+                        wrapper: {
+                            backgroundColor: undefined,
+                        }
+                    }}
+                />
+            </Box>
+
+            <Box sx={{
                 display: 'flex',
-                gap: 2
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                flexShrink: 0,
+                gap: 2,
+                width: '100%',
             }}>
                 <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flexShrink: 0,
+                    flex: '1',
                     gap: 2,
-                    width: 200,
                 }}>
-                    <Divider variant="middle" textAlign="left">Изображение</Divider>
-                    <Box>
+                    <PropertiesGroup title="Изображение">
                         <Button
                             component="label"
                             variant='contained'
@@ -132,23 +155,27 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                                 onChange={handleImageFileChange}
                             />
                         </Button>
-                        <Typography color="GrayText" sx={{
+                        <Typography variant="subtitle1" color="GrayText" sx={{
                             marginTop: 1,
                             textAlign: 'center',
                         }}>
                             Размером до {MAX_IMAGE_SIZE_MB}мб
                         </Typography>
-                    </Box>
+                    </PropertiesGroup>
+                    
+                    <PropertiesGroup title="Заливка">
+                        <ColorPickerButton
+                            color={color}
+                            onChange={handleColorChange}
+                            sx={{width: '100%'}}
+                        />
+                    </PropertiesGroup>
+                </Box>
 
-                    <Divider variant="middle" textAlign="left">Заливка</Divider>
-                    <ColorPickerButton
-                        color={color}
-                        onChange={handleColorChange}
-                        sx={{width: '100%'}}
-                    />
-
-                    <Divider variant="middle" textAlign="left">Размеры</Divider>
-                    <Box>
+                <Box sx={{
+                    flex: '1',
+                }}>
+                    <PropertiesGroup title="Размеры">
                         <PointInput
                             value={dimensions}
                             onChange={handleDimensionsChange}
@@ -164,28 +191,7 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                         >
                             Подогнать
                         </Button>
-                    </Box>
-                </Box>
-                <Box sx={{
-                    width: '600px',
-                    height: '400px',
-                }}>
-                    <HomeMap
-                        background={{
-                            color,
-                            image,
-                        }}
-                        onBackgroundLoad={handleBackgroundLoad}
-                        width={value.width}
-                        height={value.height}
-                        allowScale={true}
-                        allowInitialScale={true}
-                        styles={{
-                            wrapper: {
-                                backgroundColor: undefined,
-                            }
-                        }}
-                    />
+                    </PropertiesGroup>
                 </Box>
             </Box>
         </DialogContent>
@@ -227,9 +233,11 @@ const PlanSettingsDialog = ({
 
     return (
         <Dialog
+            classes={{
+                paper: 'dialog-plan-settings',
+            }}
             open={open}
             onClose={handleClose}
-            maxWidth="md"
             scroll="body"
         >
             <DialogTitle>Параметры</DialogTitle>
@@ -241,7 +249,7 @@ const PlanSettingsDialog = ({
                         position: 'absolute',
                         right: 8,
                         top: 8,
-                        color: (theme) => theme.palette.grey[500],
+                        color: COLORS.primary
                     }}
                 >
                     <CloseIcon />

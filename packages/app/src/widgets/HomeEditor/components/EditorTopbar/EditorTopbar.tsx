@@ -5,12 +5,11 @@ import SaveIcon from '@mui/icons-material/Save';
 import { COLORS } from '@homemap/shared';
 
 import Toolbar from '../../../../common/components/Toolbar'
-import { EditorTopbarProps, PlanActionsEnum, } from './types'
-
 import LoadingButton from '../../../../common/components/LoadingButton';
-import { useIsMobile } from '../../hooks/useIsMobile';
-import { EditorTopbarMenu } from './EditorTopbarMenu';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
+import { EditorTopbarMenu } from './EditorTopbarMenu';
+import { EditorTopbarProps, PlanActionsEnum, } from './types'
 import './EditorTopbar.css';
 
 export const EditorTopbar = ({ actionsInProgress, onItemClick }: EditorTopbarProps) => {
