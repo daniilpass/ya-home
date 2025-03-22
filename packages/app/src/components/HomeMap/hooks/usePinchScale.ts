@@ -33,7 +33,8 @@ const getDistance = (
 export const usePinchScale = (
     wrapperRef: RefObject<HTMLDivElement>,
     onScale: (dircetion: 'up' | 'down', distance: number) => void,
-    onScaleStart?: () => void,
+    onScaleStart: () => void,
+    disabled?: boolean,
 ) => {
     const primaryPointer = useRef<PointerInfo | null>(null);
     const secondaryPointer = useRef<PointerInfo | null>(null);
@@ -80,6 +81,10 @@ export const usePinchScale = (
     const onDragStart = useDrag({ onDrag, onDragEnd, multiTouch: true });
 
     useLayoutEffect(() => {
+        if (disabled) {
+            return;
+        }
+
         const wrapper = wrapperRef.current;
         if(!wrapper){
             return;
@@ -98,5 +103,5 @@ export const usePinchScale = (
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
         }
-    }, [wrapperRef, onDragStart, onScaleStart]);
+    }, [wrapperRef, onDragStart, onScaleStart, disabled]);
 }

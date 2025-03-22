@@ -25,7 +25,6 @@ const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Pr
     }, [index, onDrag]);
 
     const handleDragEnd = useCallback((event: DragEvent) => {
-        console.log('HELLO handleDragEnd', index)
         onDragEnd?.(index, event);
     }, [index, onDragEnd]);
 

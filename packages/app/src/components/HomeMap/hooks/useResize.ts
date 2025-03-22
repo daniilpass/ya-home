@@ -25,7 +25,6 @@ export const useResize = (
         allowRotate?: boolean,
         allowInitialRotate?: boolean,
         allowZoom?: boolean;
-        allowMove?: boolean;
         allowDrag?: boolean;
         naturalWidth: number;
         naturalHeight: number;
@@ -162,7 +161,7 @@ export const useResize = (
 
     }, [minScale]);
 
-    usePinchScale(wrapperRef, onPinchScale, onPinchScaleStart);
+    usePinchScale(wrapperRef, onPinchScale, onPinchScaleStart, !allowZoom);
 
     return [scale, rotate, translate] as const;
 }
