@@ -3,8 +3,6 @@ import {PointerEvent as ReactPointerEvent, useCallback} from 'react';
 import { MouseButton } from '@homemap/shared';
 import { setCursor, resetCursor } from '../tools/cursors';
 
-const dragFreq = 1000 / 60;
-
 export type DragStartEvent = ReactPointerEvent<Element> | PointerEvent;
 
 export type DragEvent = PointerEvent & {
@@ -24,6 +22,9 @@ export type UseDragParams = {
     onDragEnd?: onDragCallback,
 }
 
+const dragFreq = 1000 / 60;
+const minDragDistancePx = 4;
+
 export const useDrag = ({
     button = MouseButton.ANY,
     strict = false,
@@ -32,8 +33,9 @@ export const useDrag = ({
     onDragEnd,
 }: UseDragParams) => {
     const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
-        let lastEvent: DragEvent | undefined;
-        let lastEventTime = Date.now();
+        let lastDragEvent: DragEvent | undefined;
+        let lastDragEventTime = Date.now();
+        let dragFreeze = true;
 
         if (!dragStartEvent.isPrimary && !multiTouch) {
             return;
@@ -56,15 +58,46 @@ export const useDrag = ({
         const pageXStart = dragStartEvent.pageX;
         const pageYStart = dragStartEvent.pageY;
 
-        const handleDrag = (dragEvent: PointerEvent) => {
+        const checkThrottle = () => {
             const now = Date.now();
-            if (now - lastEventTime < dragFreq) {
-                return;
+
+            if (now - lastDragEventTime < dragFreq) {
+                return true;
             } else {
-                lastEventTime = now;
+                lastDragEventTime = now;
             }
 
+            return false
+        }
+
+        const checkMultiTouch = (dragEvent: PointerEvent) => {
             if (!dragEvent.isPrimary && !multiTouch) {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        const checkFreezeZone = (dragEvent: PointerEvent) => {
+            if (!dragFreeze) {
+                return false;
+            }
+
+            const diffX = clientXStart - dragEvent.clientX;
+            const diffY = clientYStart - dragEvent.clientY;
+            const distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+
+            if (distance < minDragDistancePx) {
+                return true;
+            }
+
+            dragFreeze = false;
+            return false;
+        }
+
+        const handleDrag = (dragEvent: PointerEvent) => {
+            if (checkThrottle() || checkMultiTouch(dragEvent) || checkFreezeZone(dragEvent)) {
                 return;
             }
 
@@ -75,24 +108,26 @@ export const useDrag = ({
                 pageYDiff: pageYStart - dragEvent.pageY,
             });
 
-            lastEvent = extendedEvent;
+            lastDragEvent = extendedEvent;
 
             onDrag(extendedEvent, options);
         }
 
         const endDrag = () => {
-            if (lastEvent && onDragEnd) {
-                onDragEnd(lastEvent, options);
+            if (lastDragEvent && onDragEnd) {
+                onDragEnd(lastDragEvent, options);
             }
 
             resetCursor();
 
+            window.requestAnimationFrame(() => {
+                document.removeEventListener('click', preventOtherPoinerEvents, true);
+            });
             document.removeEventListener('pointerdown', preventMultiTouch);
             document.removeEventListener('pointermove', handleDrag);
             document.removeEventListener('pointerup', endDrag);
             document.removeEventListener('pointercancel', endDrag);
             document.removeEventListener('wheel', endDrag);
-            
         }
 
         const preventMultiTouch = (e: PointerEvent ) => {
@@ -105,6 +140,16 @@ export const useDrag = ({
             }
         }
 
+        const preventOtherPoinerEvents = (e: Event) => {
+            // If no drag - allow event
+            if (!lastDragEvent) {
+                return;
+            }
+
+            e.stopPropagation();
+        }
+
+        document.addEventListener('click', preventOtherPoinerEvents, true);
         document.addEventListener('pointerdown', preventMultiTouch);
         document.addEventListener('pointermove', handleDrag);
         document.addEventListener('pointerup', endDrag);
