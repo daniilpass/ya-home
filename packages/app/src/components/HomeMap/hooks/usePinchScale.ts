@@ -32,7 +32,6 @@ const getDistance = (
     
 export const usePinchScale = (
     wrapperRef: RefObject<HTMLDivElement>,
-    layoutRef: RefObject<SVGSVGElement>,
     onScale: (dircetion: 'up' | 'down', distance: number) => void,
     onScaleStart?: () => void,
 ) => {

@@ -1,21 +1,59 @@
-import { PointerEventHandler, forwardRef} from 'react';
+import { useCallback, useEffect, useRef} from 'react';
 import { EDIT_ACTION_SIZE } from '../../../constants';
 import colors from '../../../../../common/styles/colors.module.scss';
+import { useDrag, DragEvent } from '../../../hooks/useDrag';
 
 import './styles.css';
 
 type Props = {
     x: number,
     y: number,
-    onPointerDown?: PointerEventHandler<Element>,
+    index: number;
+    draggable?: boolean;
+    onDrag?: (index: number, event: DragEvent) => void;
+    onDragEnd?: (index: number, event: DragEvent) => void;
 }
 
 const fillOpacity = 0.8;
+const strokeColor = colors.primaryDark;
 
-const EditActionMove = forwardRef<SVGGElement, Props>(({ x, y, onPointerDown }, ref) => {
-    const strokeColor = colors.primaryDark;
+const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Props) => {
+    const moveRef = useRef<SVGGElement>(null);
+
+    const handleDrag = useCallback((event: DragEvent) => {
+        onDrag?.(index, event);
+    }, [index, onDrag]);
+
+    const handleDragEnd = useCallback((event: DragEvent) => {
+        console.log('HELLO handleDragEnd', index)
+        onDragEnd?.(index, event);
+    }, [index, onDragEnd]);
+
+    const onDragStart = useDrag({ onDrag: handleDrag, onDragEnd: handleDragEnd });
+
+    const handlePointerDown = useCallback((e: PointerEvent) => {
+        e.stopPropagation();
+        onDragStart(e);
+    }, [onDragStart]);
+
+    useEffect(() => {
+        if (!draggable) {
+            return;
+        }
+
+        const element = moveRef.current;
+        element?.addEventListener('pointerdown', handlePointerDown);
+
+        return () => {
+            element?.removeEventListener('pointerdown', handlePointerDown)
+        }
+    }, [draggable, handlePointerDown]);
+
     return (
-        <g className='edit-action__move' onPointerDown={onPointerDown} ref={ref}>
+        <g 
+            ref={moveRef}
+            className='edit-action__move'
+        >
             <svg
                 width={EDIT_ACTION_SIZE}
                 height={EDIT_ACTION_SIZE}
@@ -39,6 +77,6 @@ const EditActionMove = forwardRef<SVGGElement, Props>(({ x, y, onPointerDown }, 
             </svg>
         </g>
     )
-});
+};
 
 export default EditActionMove;

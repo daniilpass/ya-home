@@ -121,7 +121,7 @@ export const useResize = (
         ]);
     }, []);
 
-    const onDragStart = useDrag({ onDrag, strict: true });
+    const onDragStart = useDrag({ onDrag });
 
     useLayoutEffect(() => {
         const wrapper = wrapperRef.current;
@@ -136,11 +136,8 @@ export const useResize = (
         }
         
         wrapper.addEventListener('pointerdown', handleDragStart);
-        layout.addEventListener('pointerdown', handleDragStart);
-
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
-            layout.removeEventListener('pointerdown', handleDragStart);
         }
     }, [allowDrag, wrapperRef, layoutRef, onDragStart, scale, translate])
 
@@ -165,7 +162,7 @@ export const useResize = (
 
     }, [minScale]);
 
-    usePinchScale(wrapperRef, layoutRef, onPinchScale, onPinchScaleStart);
+    usePinchScale(wrapperRef, onPinchScale, onPinchScaleStart);
 
     return [scale, rotate, translate] as const;
 }

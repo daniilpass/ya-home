@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import {FC, useEffect, useRef } from 'react';
+import {FC, useCallback, useEffect, useRef } from 'react';
 
 import { DeviceState, DeviceTypes, MouseButton, Point, isSwitchableDeviceType, DeviceIconType } from '@homemap/shared';
 
@@ -44,12 +44,15 @@ const Element: FC<Props> = ({
         }
     }, [moveRef, isEditMode, editElementDrag, onDragStart]);
 
-    const handlePointerDown = (e: React.PointerEvent) => {
+    const handlePointerDown = useCallback((e: PointerEvent) => {
         if (!isEditMode) {
             return;   
         }
+
+        e.stopPropagation();
+
         onDragStart(e);
-    }
+    }, [isEditMode, onDragStart]);
 
     const isShowEditAction = isEditMode && type !== DeviceTypes.Sensor;
 
@@ -58,9 +61,17 @@ const Element: FC<Props> = ({
         'element--selectable': selectable,
     });
 
+    useEffect(() => {
+        const element = moveRef.current;
+        element?.addEventListener('pointerdown', handlePointerDown);
+
+        return () => {
+            element?.removeEventListener('pointerdown', handlePointerDown)
+        }
+    }, [handlePointerDown])
+
     return (
         <g
-            onPointerDown={handlePointerDown}
             ref={moveRef}
             className={rootClassName}
         >
@@ -83,8 +94,10 @@ const Element: FC<Props> = ({
             )}
             {isShowEditAction && (
                 <EditActionMove
+                    index={0}
                     x={position[0]}
                     y={position[1]}
+                    draggable={false}
                 />
             )}
         </g>

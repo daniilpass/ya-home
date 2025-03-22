@@ -6,7 +6,7 @@ import { DeviceState, Point } from '@homemap/shared';
 import {pointsToPathDirections} from '../../tools';
 import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';
-import {DragEvent, useDrag} from '../../hooks/useDrag';
+import {DragEvent } from '../../hooks/useDrag';
 
 import './styles.css';
 
@@ -26,27 +26,17 @@ const BulbsLine: FC<Props> = ({ points, state, substate, isEditMode, onPointDrag
         'element-bulbs-line--lost': substate === Substate.Lost,
     });
 
-    const onDrag = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onPointDrag && onPointDrag(index, event);
-    }
-
-    const onDragEnd = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onPointDragEnd && onPointDragEnd(index, event);
-    }
-
-    const onDragStart = useDrag({ onDrag, onDragEnd });
-
     return (
         <>
             <path className={className} d={directions} />
             {isEditMode && points.map(([x, y], index) => (
                 <EditActionMove
                     key={index}
+                    index={index}
                     x={x}
                     y={y}
-                    onPointerDown={(e) => onDragStart(e, {index})}
+                    onDrag={onPointDrag}
+                    onDragEnd={onPointDragEnd}
                 />
             ))}
         </>

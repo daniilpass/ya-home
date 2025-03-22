@@ -1,9 +1,9 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
 import { DeviceState, Point } from '@homemap/shared';
 
-import {DragEvent, useDrag} from '../../hooks/useDrag';
-import {EditActionMove} from '../EditAction';
+import { DragEvent } from '../../hooks/useDrag';
+import { EditActionMove } from '../EditAction';
 
 import './styles.css';
 
@@ -23,29 +23,6 @@ const Shadow: FC<Props> = ({
     id, points, maskPoints, state, isEditMode,
     onPointDrag, onPointDragEnd, onMaskPointDrag, onMaskPointDragEnd
 }) => {
-    const onDrag = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onPointDrag && onPointDrag(index, event);
-    }
-
-    const onDragEnd = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onPointDragEnd && onPointDragEnd(index, event);
-    }
-
-    const onMaskDrag = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onMaskPointDrag && onMaskPointDrag(index, event);
-    }
-
-    const onMaskDragEnd = (event: DragEvent, options: any) => {
-        const {index} = options;
-        onMaskPointDragEnd && onMaskPointDragEnd(index, event);
-    }
-
-    const onDragStart = useDrag({ onDrag, onDragEnd });
-    const onMaskDragStart = useDrag({ onDrag: onMaskDrag, onDragEnd: onMaskDragEnd });
-
     if (state?.on?.value) {
         return null;
     }
@@ -67,17 +44,21 @@ const Shadow: FC<Props> = ({
             {isEditMode && points.map(([x, y], index) => (
                 <EditActionMove
                     key={index}
+                    index={index}
                     x={x}
                     y={y}
-                    onPointerDown={(e) => onDragStart(e, {index})}
+                    onDrag={onPointDrag}
+                    onDragEnd={onPointDragEnd}
                 />
             ))}
             {isEditMode && maskPoints && maskPoints.map(([x, y], index) => (
                 <EditActionMove
                     key={index}
+                    index={index}
                     x={x}
                     y={y}
-                    onPointerDown={(e) => onMaskDragStart(e, {index})}
+                    onDrag={onMaskPointDrag}
+                    onDragEnd={onMaskPointDragEnd}
                 />
             ))}
         </>
