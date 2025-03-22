@@ -5,12 +5,13 @@
 }
 
 .element--selectable {
-    cursor: pointer;
     pointer-events: bounding-box;
 }
 
-.element--selectable:hover {
-    cursor: pointer;
-    outline: solid 2px $primary-dark;
-    outline-offset: 6px;
+@media (hover: hover) {
+    .element--selectable:hover {
+        cursor: pointer;
+        outline: solid 2px $primary-dark;
+        outline-offset: 6px;
+    }
 }
