@@ -16,6 +16,7 @@ import { useDispatch } from '../../store/hooks';
 import { PropertiesGroup } from '../FormProperties/PropertiesGroup';
 
 import './style.scss';
+import { isValidImage } from '../../utils/image';
 
 export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;
 
@@ -57,26 +58,37 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     }
 
     const handleImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) {
-            return;
-        }
-        
-        if (file.size > MAX_IMAGE_SIZE_BYTES) {
-            dispatch.alerts.warning(`Выбранный файл больше ${MAX_IMAGE_SIZE_MB}мб`);
-            e.target.value = '';
-            return;
-        }
-
-        const imageDataURL = await readFileAsDataURL(file);
-
-        onChange({
-            ...value,
-            background: {
-                ...value.background,
-                image: imageDataURL,
+        try {
+            const file = e.target.files?.[0];
+            if (!file) {
+                return;
             }
-        });
+            
+            if (file.size > MAX_IMAGE_SIZE_BYTES) {
+                dispatch.alerts.warning(`Выбранный файл больше ${MAX_IMAGE_SIZE_MB}мб`);
+                e.target.value = '';
+                return;
+            }
+
+            const imageDataURL = await readFileAsDataURL(file);
+
+            const isValid = await isValidImage(imageDataURL);
+            if (!isValid) {
+                dispatch.alerts.warning('Неподдерживаемый тип изображения');
+                e.target.value = '';
+                return;
+            }
+
+            onChange({
+                ...value,
+                background: {
+                    ...value.background,
+                    image: imageDataURL,
+                }
+            });
+        } catch (e) {
+            dispatch.alerts.error('Ошибка при чтении изображения');
+        }
     }
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
