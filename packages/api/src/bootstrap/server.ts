@@ -4,16 +4,17 @@ import compression from 'compression';
 
 import { PORT } from '../constants';
 
-import { errorHandler, requestLogger } from '../middlewares';
 import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter, authRouter } from '../routes';
+import { cookieAuth, errorHandler, requestLogger, requestStatistics } from '../middlewares';
 import { logger } from '../utils';
-import { cookieAuth } from '../middlewares/auth';
 
 export const bootstrapServer = () => {
     logger.info("[server] Configure express");
 
     const app = express();
-    
+
+    app.use(requestStatistics);
+
     app.use(compression());
 
     app.use(requestLogger);
@@ -31,7 +32,7 @@ export const bootstrapServer = () => {
     app.use('/api', statsRouter);
 
     // Enable auth
-    app.use(cookieAuth)
+    app.use(cookieAuth);
     // app.use(headerAuth);
 
     app.use('/api', loginRouter);
