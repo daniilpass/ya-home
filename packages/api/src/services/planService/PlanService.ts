@@ -81,13 +81,10 @@ export class PlanService {
             existingPlan.json.background.image,
         );
     
-        // Update entity
-        existingPlan.json = planJson;
-        await existingPlan.save();
-    
         // Delete old image
         const existingImage = existingPlan.json.background.image;
-        if (existingImage && existingImage !== planJson.background.image) {
+        const newImage = planJson.background.image;
+        if (existingImage && newImage && existingImage !== newImage) {
             try {
                 await MediaStorage.deleteMedia(userId, existingImage);
             } catch {
@@ -95,6 +92,10 @@ export class PlanService {
                 logger.error(`[server] Error occured while trying to delete user media: ${existingImage}`);
             }
         }
+
+        // Update entity
+        existingPlan.json = planJson;
+        await existingPlan.save();
     
         return existingPlan.toModel();
     }
