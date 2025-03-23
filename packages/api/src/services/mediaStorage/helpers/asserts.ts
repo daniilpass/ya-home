@@ -12,8 +12,8 @@ export const assertMediaId = (mediaId: string) => {
 }
 
 
-export const assertImageMime = (mime: string) => {
-    if (!SUPPORTED_IMAGE_MIME.includes(mime)) {
+export const assertImageMime = (mime: string | undefined) => {
+    if (!mime || !SUPPORTED_IMAGE_MIME.includes(mime)) {
         throw new AppError(`Not supported mime: ${mime}`);
     }
 }

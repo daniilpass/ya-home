@@ -4,7 +4,6 @@ import { UserFile } from '../types/UserFile';
 import { createUserDir, getFileName, mimeToExtension, writeUserFile } from './fs';
 import { writeUserFileMeta } from './meta';
 
-
 export const saveUserFile = async (userId: string, file: UserFile): Promise<string> => {
     const fileId = uuid.new();
     const fileExt = mimeToExtension(file.meta.mime);

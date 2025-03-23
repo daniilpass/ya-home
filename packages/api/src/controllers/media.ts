@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import YaService from '../services/yaService';
 import MediaStorage from '../services/mediaStorage';
 import { NotFoundError} from '../errors';
+import { MIME } from '../services/mediaStorage/constants';
 
 export const getUserMedia = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
@@ -15,7 +16,7 @@ export const getUserMedia = async (req: Request<{id: string}>, res: Response, ne
             throw new NotFoundError();
         }
 
-        res.setHeader('Content-Type', media.meta.mime);
+        res.setHeader('Content-Type', media.meta.mime ?? MIME.applicationOctetStream);
         res.send(media.buffer);
     } catch (error) {
         next(error);

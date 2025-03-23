@@ -4,7 +4,7 @@ import path from 'path';
 import { MEDIA_STORAGE_PATH } from '../../../constants';
 import { META_EXTENSION, MIME_TO_EXTENSION } from '../constants';
 
-export const mimeToExtension = (mime: string): string | null => MIME_TO_EXTENSION[mime] ?? null;
+export const mimeToExtension = (mime: string | undefined): string => (mime && MIME_TO_EXTENSION[mime]) ?? '';
 
 export const getFileName = (fileId: string) => `${fileId}`;
 

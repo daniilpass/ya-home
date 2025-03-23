@@ -1,4 +1,4 @@
 export type FileMeta = {
-    mime: string;
-    name: string;    
+    mime?: string;
+    name?: string;    
 }

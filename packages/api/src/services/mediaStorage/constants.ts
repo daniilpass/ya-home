@@ -2,6 +2,7 @@ export const MIME = {
     imagePng: 'image/png',
     imageJpg: 'image/jpg',
     imageJpeg: 'image/jpeg',
+    applicationOctetStream: 'application/octet-stream'
 }
 
 export const EXTENSION = {
