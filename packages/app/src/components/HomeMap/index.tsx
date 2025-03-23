@@ -102,7 +102,7 @@ const HomeMap: FC<Props> = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
-    const isReadyRef = useRef<boolean>(false);
+    const isBackgroundReadyRef = useRef<boolean>(false);
     const [isBackgroundError, setIsBackgroundError] = useState<boolean>(false);
     const [scale, rotate, translate] = useResize(
         wrapperRef,
@@ -118,18 +118,29 @@ const HomeMap: FC<Props> = ({
             naturalHeight: height,
         });
 
-    const handleReady = useCallback(() => {
-        if (!isReadyRef.current) {
-            isReadyRef.current = true;
-            onReady?.();
+    const handleBackgroundReady = useCallback(() => {
+        if (isBackgroundReadyRef.current) {
+            return;
         }
-    }, [isReadyRef, onReady]);
 
+        isBackgroundReadyRef.current = true;
+        onReady?.();
+    }, [isBackgroundReadyRef, onReady]);
+
+    // No image - auto ready
     useEffect(() => {
         if (!background.image) {
-            handleReady();
+            handleBackgroundReady();
         }
-    }, [background.image, handleReady]);
+    }, [background.image, handleBackgroundReady]);
+
+    // Reset error state after image changed
+    useEffect(() => {
+
+        if (isBackgroundReadyRef.current) {
+            setIsBackgroundError(false);
+        }
+    }, [background.image]);
 
     useEffect(() => {
         if (!svgRef.current || !onTansform) {
@@ -140,14 +151,14 @@ const HomeMap: FC<Props> = ({
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         onBackgroundLoad?.(e);
-        handleReady();
+        handleBackgroundReady();
     }
 
     const handleBackgroundError = (e: SyntheticEvent<HTMLImageElement>) => {
         dispatch.alerts.error('Ошибка загрузки фона');
         setIsBackgroundError(true);
         onBackgroundError?.(e);
-        handleReady();
+        handleBackgroundReady();
     }
 
     const handleElementClick = useCallback((id: string) => {
