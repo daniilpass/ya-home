@@ -1,8 +1,8 @@
 import { uuid } from '../../../utils/uuid';
 import { UserFile } from '../types/UserFile';
 
-import { createUserDir, getFileName, mimeToExtension, writeUserFile } from './fs';
-import { writeUserFileMeta } from './meta';
+import { createUserDir, mimeToExtension, writeUserFile } from './fs';
+import { metaToBuffer } from './meta';
 
 export const saveUserFile = async (userId: string, file: UserFile): Promise<string> => {
     const fileId = uuid.new();
@@ -12,11 +12,10 @@ export const saveUserFile = async (userId: string, file: UserFile): Promise<stri
     // Create user dir
     await createUserDir(userId);
 
-    // Write file meta
-    await writeUserFileMeta(userId, fileId, file.meta);
-
     // Write file
-    await writeUserFile(userId, getFileName(fileId), file.buffer);
+    const fileBuffer = file.buffer;
+    const metaBuffer = metaToBuffer(file.meta);
+    await writeUserFile(userId, fileId, fileBuffer, metaBuffer);
 
     return fileId;
 }

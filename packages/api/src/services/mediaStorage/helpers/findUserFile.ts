@@ -1,14 +1,15 @@
 import { UserFile } from '../types/UserFile';
 
-import { getFileName, readUserFile } from './fs';
-import { readUserFileMeta } from './meta';
+import { readUserFile } from './fs';
+import { metaFromBuffer } from './meta';
 
 
 export const findUserFile = async (userId: string, fileId: string): Promise<UserFile | null> => {
     try {
+        const { fileBuffer, metaBuffer } = await readUserFile(userId, fileId);
         return {
-            buffer: await readUserFile(userId, getFileName(fileId)),
-            meta: await readUserFileMeta(userId, fileId),
+            buffer: fileBuffer,
+            meta: metaFromBuffer(metaBuffer),
         };
     } catch {
         return null;
