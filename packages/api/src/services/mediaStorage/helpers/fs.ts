@@ -16,14 +16,10 @@ export const writeUserMetaFile = (userId: string, fileId: string,metaContent: Bu
     return fs.writeFile(metaFilepath, metaContent);
 }
 
-export const writeUserFile = (userId: string, fileId: string, dataBase64: string) => {
+export const writeUserFile = (userId: string, fileId: string, data: Buffer | string) => {
     const dataFilename = getFileName(fileId);
     const dataFilepath = getUserFilepath(userId, dataFilename);
-    return fs.writeFile(
-        dataFilepath,
-        dataBase64,
-        'base64',
-    );
+    return fs.writeFile(dataFilepath, data, Buffer.isBuffer(data) ? 'binary' : 'base64');
 }
 
 export const getUserDir = (userId: string) => path.join(MEDIA_STORAGE_PATH, userId);

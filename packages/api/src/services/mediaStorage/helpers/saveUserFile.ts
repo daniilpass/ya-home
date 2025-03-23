@@ -1,11 +1,11 @@
 import { uuid } from '../../../utils/uuid';
-import { FileBase64 } from '../types/FileBase64';
+import { UserFile } from '../types/UserFile';
 
-import { createUserDir, getFileName, getUserFilepath, mimeToExtension, writeUserMetaFile, writeUserFile } from './fs';
+import { createUserDir, mimeToExtension, writeUserMetaFile, writeUserFile } from './fs';
 import { createFileMeta } from './meta';
 
 
-export const saveUserFile = async (userId: string, file: FileBase64): Promise<string> => {
+export const saveUserFile = async (userId: string, file: UserFile): Promise<string> => {
     const fileId = uuid.new();
 
     const fileExt = mimeToExtension(file.mime);
@@ -19,7 +19,7 @@ export const saveUserFile = async (userId: string, file: FileBase64): Promise<st
     await writeUserMetaFile(userId, fileId, metaContent);
 
     // Write file
-    await writeUserFile(userId, fileId, file.data);
+    await writeUserFile(userId, fileId, file.buffer);
 
     return fileId;
 }

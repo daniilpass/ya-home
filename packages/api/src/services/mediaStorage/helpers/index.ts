@@ -4,3 +4,4 @@ export * from './findUserFile';
 export * from './saveUserFile';
 export * from './fs';
 export * from './meta';
+export * from './image';

@@ -1,9 +1,11 @@
-import { FileBase64 } from './types/FileBase64';
+import { UserFile } from './types/UserFile';
 import { FileInfo } from './types/FileInfo';
-import { assertMediaId, assertMime, deleteUserFile, findUserFile, saveUserFile } from './helpers';
+import { assertImage, assertMediaId, deleteUserFile, findUserFile, imageFromBuffer, saveUserFile } from './helpers';
 
-const saveMedia = async (userId: string, media: FileBase64): Promise<string> => {
-    assertMime(media.mime);
+const saveMedia = async (userId: string, file: UserFile): Promise<string> => {
+    const media = await imageFromBuffer(file.buffer);
+
+    assertImage(media);
 
     const mediaId = await saveUserFile(userId, media);
     return mediaId;
@@ -28,7 +30,7 @@ const getMediaUrl = (mediaId: string) => {
 }
 
 export const MediaStorage = {
-    assertMime,
+    assertImage,
     assertMediaId,
     saveMedia,
     findMedia,

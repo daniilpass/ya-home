@@ -1,9 +1,9 @@
-import { FileBase64 } from '../types/FileBase64';
+import { UserFile } from '../types/UserFile';
 import { FileMeta } from '../types/FileMeta';
 import { getMetaFileName, readUserFile } from './fs';
 
 
-export const createFileMeta = (file: FileBase64, realFilename: string): Buffer => {
+export const createFileMeta = (file: UserFile, realFilename: string): Buffer => {
     const metaArr = [
         file.mime,
         realFilename,

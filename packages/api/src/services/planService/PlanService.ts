@@ -103,10 +103,9 @@ export class PlanService {
         if (!newImage) {
             return undefined;
         }
-    
-        const imageBase64 = newImage ? parseBase64DataUrl(newImage) : null;
-        if (imageBase64) {
-            const mediaId = await MediaStorage.saveMedia(userId, imageBase64);
+        const userImage = parseBase64DataUrl(newImage);
+        if (userImage) {
+            const mediaId = await MediaStorage.saveMedia(userId, userImage);
             return mediaId;
         } else {
             return existingImage;
