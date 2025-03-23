@@ -1,0 +1,1 @@
+export const YA_TOKEN_KEY = 'ya-token';

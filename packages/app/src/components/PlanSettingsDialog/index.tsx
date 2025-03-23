@@ -5,9 +5,8 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconBut
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { COLORS, Plan, Point, Size } from '@homemap/shared';
+import { COLORS, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, Plan, Point, Size } from '@homemap/shared';
 
-import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB } from '../../configuration';
 import PointInput from '../../common/components/PointInput';
 import ColorPickerButton from '../../common/components/ColorPickerButton';
 import VisuallyHiddenInput from '../../common/components/VisuallyHiddenInput';

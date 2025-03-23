@@ -16,7 +16,7 @@ export const MIME_TO_EXTENSION = {
     [MIME.imageJpeg]: EXTENSION.jpeg,
 }
 
-export const SUPPORTED_MIME = [
+export const SUPPORTED_IMAGE_MIME = [
     MIME.imagePng,
     MIME.imageJpg,
     MIME.imageJpeg,

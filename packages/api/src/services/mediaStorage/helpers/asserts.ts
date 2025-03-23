@@ -1,15 +1,9 @@
+import { MAX_IMAGE_SIZE_BYTES } from '@homemap/shared';
+
 import { AppError } from '../../../errors';
 import { uuid } from '../../../utils/uuid';
-import { SUPPORTED_MIME } from '../constants';
+import { SUPPORTED_IMAGE_MIME } from '../constants';
 import { FileImage } from '../types/FileImage';
-
-const isSupportedMime = (mime: string): boolean => SUPPORTED_MIME.includes(mime);
-
-export const assertMime = (mime: string) => {
-    if (!isSupportedMime(mime)) {
-        throw new AppError(`Not supported media: ${mime}`);
-    }
-}
 
 export const assertMediaId = (mediaId: string) => {
     if (!uuid.validate(mediaId)) {
@@ -17,6 +11,20 @@ export const assertMediaId = (mediaId: string) => {
     }
 }
 
+
+export const assertImageMime = (mime: string) => {
+    if (!SUPPORTED_IMAGE_MIME.includes(mime)) {
+        throw new AppError(`Not supported mime: ${mime}`);
+    }
+}
+
+export const assertImageSize = (sizeBytes: number) => {
+    if (sizeBytes > MAX_IMAGE_SIZE_BYTES) {
+        throw new AppError(`Max allowed size: ${MAX_IMAGE_SIZE_BYTES}`);
+    }
+}
+
 export const assertImage = (image: FileImage) => {
-    assertMime(image.mime);
+    assertImageMime(image.mime);
+    assertImageSize(image.size);
 }

@@ -9,17 +9,21 @@ const errorCantReadImage = "Can't read image";
 export const imageFromBuffer = async (buffer: Buffer): Promise<FileImage> => {
     try {
         const image = await Jimp.read(buffer);
+        const {
+            mime,
+            bitmap: { width, height }
+        } = image;
 
-        if (!image.mime) {
+        if (!mime || width === 0 || height === 0) {
             throw new AppError(errorUnsupportedImage);
         }
 
         const imageInfo: FileImage = {
             buffer,
             size: Buffer.byteLength(buffer),
-            width: image.bitmap.width,
-            height: image.bitmap.height,
-            mime: image.mime,
+            width,
+            height,
+            mime,
         }
     
         return imageInfo;
