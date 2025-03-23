@@ -1,4 +1,6 @@
+import { FileMeta } from './FileMeta';
+
 export type UserFile = {
     buffer: Buffer;
-    mime: string;
+    meta: FileMeta;
 }

@@ -16,7 +16,7 @@ export const getUserMedia = async (req: Request<{id: string}>, res: Response, ne
         }
 
         res.setHeader('Content-Type', media.meta.mime);
-        res.send(media.data);
+        res.send(media.buffer);
     } catch (error) {
         next(error);
     }

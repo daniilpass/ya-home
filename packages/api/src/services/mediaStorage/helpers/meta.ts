@@ -1,23 +1,26 @@
-import { UserFile } from '../types/UserFile';
 import { FileMeta } from '../types/FileMeta';
-import { getMetaFileName, readUserFile } from './fs';
+import { getMetaFileName, getUserFilepath, readUserFile, writeUserFile } from './fs';
 
 
-export const createFileMeta = (file: UserFile, realFilename: string): Buffer => {
-    const metaArr = [
-        file.mime,
-        realFilename,
-    ];
+const metaToArray = (fileMeta: FileMeta) => [
+    fileMeta.mime,
+    fileMeta.name,
+];
 
-    return Buffer.from(metaArr.join('\r\n'));
+const metaFromArray = (metaArray: string[]) => ({
+    mime: metaArray[0],
+    name: metaArray[1],
+})
+
+export const writeUserFileMeta = (userId: string, fileId: string, fileMeta: FileMeta) => {
+    const metaContentBuffer = Buffer.from(metaToArray(fileMeta).join('\r\n'));
+
+    return writeUserFile(userId, getMetaFileName(fileId), metaContentBuffer);
 }
 
 export  const readUserFileMeta = async (userId: string, fileId: string): Promise<FileMeta> => {
     const metaBuffer = await readUserFile(userId, getMetaFileName(fileId));
     const metaArr = metaBuffer.toString().split('\r\n');
 
-    return {
-        mime: metaArr[0],
-        name: metaArr[1],
-    }
+    return metaFromArray(metaArr);
 }

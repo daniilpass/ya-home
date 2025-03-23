@@ -23,7 +23,10 @@ export const imageFromBuffer = async (buffer: Buffer): Promise<FileImage> => {
             size: Buffer.byteLength(buffer),
             width,
             height,
-            mime,
+            meta: {
+                mime,
+                name: '',
+            }
         }
     
         return imageInfo;

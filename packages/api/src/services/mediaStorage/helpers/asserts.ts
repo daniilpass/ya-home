@@ -25,6 +25,6 @@ export const assertImageSize = (sizeBytes: number) => {
 }
 
 export const assertImage = (image: FileImage) => {
-    assertImageMime(image.mime);
+    assertImageMime(image.meta.mime);
     assertImageSize(image.size);
 }

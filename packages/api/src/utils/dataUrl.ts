@@ -9,7 +9,10 @@ export const parseBase64DataUrl = (dataUrl: string): UserFile | null => {
     }
 
     return {
-        mime: match.groups!['mime'],
         buffer: Buffer.from(match.groups!['data'], 'base64'),
+        meta: {
+            mime: match.groups!['mime'],
+            name: '',
+        },
     }
 }

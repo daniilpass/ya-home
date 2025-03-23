@@ -1,5 +1,4 @@
 import { UserFile } from './types/UserFile';
-import { FileInfo } from './types/FileInfo';
 import { assertImage, assertMediaId, deleteUserFile, findUserFile, imageFromBuffer, saveUserFile } from './helpers';
 
 const saveMedia = async (userId: string, file: UserFile): Promise<string> => {
@@ -11,7 +10,7 @@ const saveMedia = async (userId: string, file: UserFile): Promise<string> => {
     return mediaId;
 };
 
-const findMedia = (userId: string, mediaId: string): Promise<FileInfo | null> => {
+const findMedia = (userId: string, mediaId: string): Promise<UserFile | null> => {
     assertMediaId(mediaId);
 
     return findUserFile(userId, mediaId);
