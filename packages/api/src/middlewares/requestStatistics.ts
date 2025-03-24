@@ -14,6 +14,7 @@ const getUserAddress = (req: Request) => {
 
 const getStatisctics = (req: Request, res: Response, requestStart: number) => {
     return {
+        userId: req.userInfo?.yaUserId ?? 'anonymous',
         route: req.route?.path,
         path: req.path,
         method: req.method,

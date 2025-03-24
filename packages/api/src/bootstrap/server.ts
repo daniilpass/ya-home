@@ -5,7 +5,7 @@ import compression from 'compression';
 import { PORT } from '../constants';
 
 import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter, authRouter } from '../routes';
-import { cookieAuth, errorHandler, requestLogger, requestStatistics } from '../middlewares';
+import { auth, errorHandler, requestLogger, requestStatistics } from '../middlewares';
 import { logger } from '../utils';
 
 export const bootstrapServer = () => {
@@ -32,8 +32,7 @@ export const bootstrapServer = () => {
     app.use('/api', statsRouter);
 
     // Enable auth
-    app.use(cookieAuth);
-    // app.use(headerAuth);
+    app.use(auth);
 
     app.use('/api', loginRouter);
     app.use('/api', devicesRouter);

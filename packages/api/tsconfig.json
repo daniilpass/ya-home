@@ -4,10 +4,13 @@
         "module": "esnext",
         "moduleResolution": "node",
         "target": "es6",
-        "outDir": "./build",
+        "outDir": "./build"
     },
     "include": [
         "src/**/*"
+    ],
+    "files": [
+        "src/types/express.d.ts"
     ],
     "references": [
         {

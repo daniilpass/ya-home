@@ -11,11 +11,3 @@ export function encryptByClientSecret(rawInput: string) {
 export function decryptByClientSecret(hashedInput: string) {
     return CryptoJS.AES.decrypt(hashedInput, YAPI_CLIENT_SECRET).toString(CryptoJS.enc.Utf8);
 }
-
-export function encryptTokenByClientSecret(token: Token) {
-    return {
-        ...token,
-        refresh_token: encryptByClientSecret(token.refresh_token),
-        access_token: encryptByClientSecret(token.access_token),
-    };
-}
