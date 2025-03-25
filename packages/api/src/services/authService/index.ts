@@ -1,3 +1,8 @@
-import { AuthService } from './AuthService';
+import { authByCode, verifyAuth, refreshAuth } from './AuthService';
+export * from './errors';
 
-export default AuthService;
+export default {
+    authByCode,
+    verifyAuth,
+    refreshAuth,
+};

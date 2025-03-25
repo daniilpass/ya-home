@@ -5,7 +5,7 @@ import compression from 'compression';
 import { PORT } from '../constants';
 
 import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter, authRouter } from '../routes';
-import { auth, cookieTest, errorHandler, requestLogger, requestStatistics } from '../middlewares';
+import { auth, errorHandler, requestLogger, requestStatistics } from '../middlewares';
 import { logger } from '../utils';
 
 export const bootstrapServer = () => {
@@ -23,9 +23,7 @@ export const bootstrapServer = () => {
         limit: '10mb'
     }));
 
-    app.use(cookieParser())
-
-    app.use(cookieTest);
+    app.use(cookieParser());
 
     // Allow anonymous access
     // to Auth

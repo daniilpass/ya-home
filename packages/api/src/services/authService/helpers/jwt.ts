@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 
-import { UserJwt } from '../types/auth';
-import { YAPI_CLIENT_SECRET } from '../constants';
 import { ExpiringToken } from '@homemap/shared';
+
+import { YAPI_CLIENT_SECRET } from '../../../constants';
+import { UserJwt } from '../types';
 
 // TODO: move to config
 export const jwtExpiresInSec = 60 * 60 * 24;

@@ -1,35 +1,30 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 import { logger } from '../utils';
-import AuthService from '../services/authService';
+import AuthService, { JwtMissingError } from '../services/authService';
 
-export const cookieTest = (req: Request, res: Response, next: NextFunction) => {
-    const testServerCookieKey = 'server-ya-token';
-
-    logger.warn(`SEREVER COOKIE: ${req.cookies[testServerCookieKey + 'hss']}`);
-    logger.warn(`SEREVER COOKIE: ${req.cookies[testServerCookieKey + 'hs']}`);
-    logger.warn(`SEREVER COOKIE: ${req.cookies[testServerCookieKey + 'h']}`);
-    logger.warn(`SEREVER COOKIE: ${req.cookies[testServerCookieKey]}`);
-
-    // TODO: not working in "Ya Station Max Duo"
-    const maxAgeMs = 1000 * 60;
-    res.cookie(testServerCookieKey + 'hss', Date.now(), { maxAge: maxAgeMs, httpOnly: true, secure: true, sameSite: 'strict' });
-    res.cookie(testServerCookieKey + 'hs', Date.now(), { maxAge: maxAgeMs, httpOnly: true, secure: true });
-    res.cookie(testServerCookieKey + 'h', Date.now(), { maxAge: maxAgeMs, httpOnly: true });
-    res.cookie(testServerCookieKey, Date.now(), { maxAge: maxAgeMs });
-
-    next();
-}
-
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         AuthService.verifyAuth(req);
+        next();
     } catch (error: unknown) {
+        if (error instanceof jwt.TokenExpiredError || error instanceof JwtMissingError) {
+            await refresh(req, res, next);
+            return;
+        }
+
         logger.warn(`[auth] Auth verification failed. ${error?.toString()}`);
-
         res.status(401).end();
-        return;
     }
+}
 
-    next();
+const refresh = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await AuthService.refreshAuth(req, res);
+        next();
+    } catch (error: unknown) {
+        logger.warn(`[auth] Auth refresh failed. ${error?.toString()}`);
+        res.status(401).end();
+    }
 }

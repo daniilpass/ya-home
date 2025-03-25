@@ -1,79 +1,65 @@
 
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-
-import { AuthResult, Token } from '@homemap/shared';
+import { AuthResult, ExpiringToken, Token } from '@homemap/shared';
 
 import YaService from '../yaService';
-import { getYaToken, getUserJWT, patchRequestByUserInfo, patchResponseByAuthData } from '../../utils/auth';
-import { signJWT, verifyJWT } from '../../utils/jwt';
+import { signJWT, encryptToken, getYaToken, getUserJwt, patchRequestUserInfo, setYaToken, setUserJwt, tokenFromEncryptedString, verifyJWT } from './helpers';
 
-import { tokenFromEncryptedString, tokenToEncryptedString } from './helpers';
-import { UnauthorizedError } from '../../errors/UnauthorizedError';
-import { UserJwt } from '../../types/auth';
 
-// TODO: refreshAuth
+import { JwtMissingError, TokenMissingError } from './errors';
 
-const authByCode = async (req: Request, res: Response, code: string): Promise<AuthResult> => {
-    const token: Token = await new YaService(req).getToken(code);
+const issueUserJwt = async (req: Request, res: Response) => {
+    const yaUserId = await new YaService(req).getUserId();
+    patchRequestUserInfo(req, { yaUserId });
 
-    patchRequestByUserInfo(req, {
-        yaUserId: '',
-        yaToken: token,
-    });
-
-    const userId = await new YaService(req).getUserId();
-
-    patchRequestByUserInfo(req, {
-        yaUserId: userId,
-        yaToken: token,
-    });
-
-    const authResult: AuthResult = {
-        userJwt: signJWT({ yaUserId: userId }),
-        yaToken: {
-            token: tokenToEncryptedString(token),
-            expiresIn: token.expires_in,
-        }
-    }
-
-    patchResponseByAuthData(res, authResult);
-
-    return authResult
+    const userJwt = signJWT({ yaUserId });
+    setUserJwt(res, userJwt);
 }
 
-const verifyAuth = (req: Request) => {
-    const yaTokenString = getYaToken(req);
-    const userJwtString = getUserJWT(req);
+export const authByCode = async (req: Request, res: Response, code: string) => {
+    const yaToken = await new YaService(req).getToken(code);
+    patchRequestUserInfo(req, { yaToken });
 
-    if (!yaTokenString) {
-        throw new UnauthorizedError('Token is missing');
-    }
+    const yaTokenExpiring = encryptToken(yaToken);
+    setYaToken(res, yaTokenExpiring);
 
-    if (!userJwtString) {
-        throw new UnauthorizedError('User JWT is missing');
-    }
+    await issueUserJwt(req, res);
+}
 
-    let userJwt: UserJwt;
-    try {
-        userJwt = verifyJWT(userJwtString);
-    } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-            // TODO: reniew jwt
-        }
+export const refreshAuth = async (req: Request, res: Response) => {
+    // TODO: refresh ya token if needed
+    const yaToken = verifyToken(req);
+    patchRequestUserInfo(req, { yaToken });
 
-        throw error;
-    }
+    await issueUserJwt(req, res);
+}
 
-    const yaToken = tokenFromEncryptedString(yaTokenString);
+export const verifyAuth = (req: Request) => {
+    const yaToken = verifyToken(req);
+    const userJwt = verifyJwt(req);
 
-    patchRequestByUserInfo(req, {
+    patchRequestUserInfo(req, {
         yaUserId: userJwt.yaUserId,
         yaToken,
     });
 }
 
-export const AuthService = {
-    authByCode,
-    verifyAuth,
+const verifyToken = (req: Request) => {
+    const yaTokenString = getYaToken(req);
+    
+    if (!yaTokenString) {
+        throw new TokenMissingError();
+    }
+
+    return tokenFromEncryptedString(yaTokenString);
+}
+
+const verifyJwt = (req: Request) => {
+    const userJwtString = getUserJwt(req);
+
+    if (!userJwtString) {
+        throw new JwtMissingError();
+    }
+
+    return verifyJWT(userJwtString);
 }

@@ -8,19 +8,18 @@ import { mapDeviceActionToYaDevicesActions, mapToRecord, mapYaDeviceActionsResul
 import { YaDevicesActionsRequest } from '../../yaClient/model/requests/YaDevicesActionsRequest';
 import { YaDevicesActionsResponse } from '../../yaClient/model/responses/YaDevicesActionsResponse';
 import { cache } from '../../utils/cache';
-import { UserJwt } from '../../types/auth';
 
 export class YaService {
     private yaClient: YaClient;
 
     /**
      * Ключ кеширования состояния устройств пользователя.
-     * Завязан на токен.
+     * Завязан на userId.
      */
     private cacheDevicesKey: string | undefined;
 
     constructor(req: Request<unknown, unknown, unknown, unknown>) {
-        this.yaClient = new YaClient(req.userInfo?.yaToken.access_token);
+        this.yaClient = new YaClient(req.userInfo?.yaToken?.access_token);
         this.cacheDevicesKey = req.userInfo?.yaUserId;
     }
 
