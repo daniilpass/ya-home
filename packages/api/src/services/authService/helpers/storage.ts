@@ -19,8 +19,7 @@ export const getUserJwt  = (req: Request): string | undefined => {
 }
 
 export const setUserJwt = (res: Response, token: ExpiringToken) => {
-    // TODO: delete debug multiplier
-    setServerCookie(res, USER_JWT_KEY, token.token, token.expiresIn * 1000000);
+    setServerCookie(res, USER_JWT_KEY, token.token, token.expiresIn);
 }
 
 export const patchRequestUserInfo = (req: Request, partialUserInfo: Partial<RequestUserInfo>) => {
