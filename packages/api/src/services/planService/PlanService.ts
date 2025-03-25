@@ -8,20 +8,12 @@ import { logger } from '../../utils';
 import { PlanEntity } from '../../dal/entities';
 import { mapToRecord } from '../../mappers';
 
-import YaService from '../yaService';
 import MediaStorage from '../mediaStorage';
 
 const PLAN_LIMIT = 1;
 
 export class PlanService {
-    yaService: YaService;
-
-    constructor(req: Request) {
-        this.yaService = new YaService(req);
-    }
-
-    async getUserPlans(): Promise<Collection<PlanInfo>> {
-        const userId = await this.yaService.getUserId();
+    async getUserPlans(userId: string): Promise<Collection<PlanInfo>> {
         const planEntities = await PlanRepository.getUserPlanAll(userId);
     
         if (!planEntities) {
@@ -32,8 +24,7 @@ export class PlanService {
         return result;
     }
     
-    async getUserPlanById(planId: number): Promise<Plan> {
-        const userId = await this.yaService.getUserId();
+    async getUserPlanById(userId: string, planId: number): Promise<Plan> {
         const planEntity = await PlanRepository.getUserPlanById(userId, planId);
     
         if (!planEntity) {
@@ -43,9 +34,8 @@ export class PlanService {
         return planEntity.toModel();
     }
     
-    async createUserPlan(planPayload: Plan): Promise<Plan> {
+    async createUserPlan(userId: string, planPayload: Plan): Promise<Plan> {
         const { id: _, ...planJson } = planPayload;
-        const userId = await this.yaService.getUserId();
     
         // Find existing user plans
         const userPlans = await PlanRepository.getUserPlanAll(userId);
@@ -65,9 +55,8 @@ export class PlanService {
         return createdPlan.toModel();
     }
     
-    async updateUserPlan(planId: number, planPayload: Plan) {
+    async updateUserPlan(userId: string, planId: number, planPayload: Plan) {
         const { id: _, ...planJson }: Plan = planPayload;
-        const userId = await this.yaService.getUserId();
         const existingPlan = await PlanRepository.getUserPlanById(userId, planId);
     
         if (!existingPlan) {

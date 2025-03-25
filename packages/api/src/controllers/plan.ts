@@ -4,10 +4,16 @@ import { Collection, Plan, PlanInfo } from '@homemap/shared';
 
 import PlanService from '../services/planService';
 import ValidationService from '../services/validationService';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
 
 export const getUserPlans = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const plans: Collection<PlanInfo> = await new PlanService(req).getUserPlans();
+        const userId = req.userInfo?.yaUserId;
+        if (!userId) {
+            throw new UnauthorizedError();
+        }
+
+        const plans: Collection<PlanInfo> = await new PlanService().getUserPlans(userId);
 
         res.json(plans);        
     } catch (error) {
@@ -17,8 +23,13 @@ export const getUserPlans = async (req: Request, res: Response, next: NextFuncti
 
 export const getUserPlanById = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
+        const userId = req.userInfo?.yaUserId;
+        if (!userId) {
+            throw new UnauthorizedError();
+        }
+
         const planId = Number(req.params.id);
-        const plan: Plan = await new PlanService(req).getUserPlanById(planId);
+        const plan: Plan = await new PlanService().getUserPlanById(userId, planId);
 
         res.json(plan);
     } catch (error) {
@@ -28,9 +39,14 @@ export const getUserPlanById = async (req: Request<{id: string}>, res: Response,
 
 export const createUserPlan = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const userId = req.userInfo?.yaUserId;
+        if (!userId) {
+            throw new UnauthorizedError();
+        }
+
         ValidationService.validatePlan(req.body);
 
-        const plan: Plan = await new PlanService(req).createUserPlan(req.body);
+        const plan: Plan = await new PlanService().createUserPlan(userId, req.body);
 
         res.json(plan);
     } catch (error) {
@@ -39,11 +55,16 @@ export const createUserPlan = async (req: Request, res: Response, next: NextFunc
 }
 
 export const updateUserPlan = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
-    try {         
+    try {
+        const userId = req.userInfo?.yaUserId;
+        if (!userId) {
+            throw new UnauthorizedError();
+        }
+   
         ValidationService.validatePlan(req.body);
 
         const planId = Number(req.params.id);
-        const plan: Plan = await new PlanService(req).updateUserPlan(planId, req.body);
+        const plan: Plan = await new PlanService().updateUserPlan(userId, planId, req.body);
 
         res.json(plan);
     } catch (error) {
