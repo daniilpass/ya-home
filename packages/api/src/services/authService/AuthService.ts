@@ -1,5 +1,6 @@
 
 import { Request } from 'express';
+import jwt from 'jsonwebtoken';
 
 import { AuthResult, Token } from '@homemap/shared';
 
@@ -11,9 +12,12 @@ import { tokenFromEncryptedString, tokenToEncryptedString } from './helpers';
 import { UnauthorizedError } from '../../errors/UnauthorizedError';
 import { UserJwt } from '../../types/auth';
 
+// TODO: refreshAuth
+// TODO: test cookie httpOnly + secure
+
 const authByCode = async (req: Request, code: string): Promise<AuthResult> => {
     const token: Token = await new YaService(req).getToken(code);
-    
+
     patchRequestByUserInfo(req, {
         yaUserId: '',
         yaToken: token,
@@ -26,9 +30,12 @@ const authByCode = async (req: Request, code: string): Promise<AuthResult> => {
         yaToken: token,
     });
 
-    const authResult = {
+    const authResult: AuthResult = {
         userJwt: signJWT({ yaUserId: userId }),
-        token: tokenToEncryptedString(token),
+        yaToken: {
+            token: tokenToEncryptedString(token),
+            expiresIn: token.expires_in,
+        }
     }
 
     return authResult
@@ -50,6 +57,10 @@ const verifyAuth = (req: Request) => {
     try {
         userJwt = verifyJWT(userJwtString);
     } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            // TODO: reniew jwt
+        }
+
         throw error;
     }
 
