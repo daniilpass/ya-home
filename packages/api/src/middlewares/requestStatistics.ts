@@ -33,7 +33,7 @@ export const requestStatistics = (req: Request, res: Response, next: NextFunctio
             const statistics = getStatisctics(req, res, requestStart);
 
             // TODO: delete logging
-            logger.debug(`[statistics] response finished: ${JSON.stringify(statistics, null, 2)}`);
+            // logger.debug(`[statistics] response finished: ${JSON.stringify(statistics, null, 2)}`);
         } catch (error) {
             logger.error('[statistics] Error occured while trying get request statistics. Error:', error);
         }
