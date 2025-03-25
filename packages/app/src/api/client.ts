@@ -1,5 +1,5 @@
 
-import { AuthResult, Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
 
 import {API_BASE_URL} from '../configuration';
 
@@ -88,7 +88,7 @@ const getAuthUrl = () => {
 }
 
 const auth = (code: string) => {
-    return request<AuthResult>(ENDPOINTS.auth, null, {
+    return request<void>(ENDPOINTS.auth, null, {
         code,
     });
 }

@@ -18,9 +18,8 @@ export const getAuthUrl = async (req: Request, res: Response, next: NextFunction
 
 export const auth = async (req: Request<unknown, unknown, unknown, QueryParams>, res: Response, next: NextFunction) => {
     try {
-        const authResult = await AuthService.authByCode(req as Request, req.query.code);
-
-        res.json(authResult);
+        await AuthService.authByCode(req as Request, res, req.query.code);
+        res.status(200).end();
     } catch (error) {
         next(error);
     }
