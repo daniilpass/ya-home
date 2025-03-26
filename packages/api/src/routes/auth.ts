@@ -1,11 +1,13 @@
 import express from 'express';
 
-import { auth, getAuthUrl } from '../controllers/auth';
+import { auth, getAuthUrl, refresh } from '../controllers/auth';
 
 const router = express.Router();
 
 router.get('/auth/url', getAuthUrl);
 
-router.get('/auth', auth);
+router.head('/auth', auth);
+
+router.head('/auth/refresh', refresh);
 
 export default router;

@@ -41,5 +41,5 @@ export const useAuth = (code: string) => {
             .catch(() => {
                 dispatch.dialog.crash('Не удалось авторизоваться');
             });
-    });
+    }, [code, dispatch, navigate]);
 }

@@ -35,8 +35,12 @@ const ENDPOINTS = {
         url: '/auth/url',
     },
     auth: {
-        method: 'GET',
+        method: 'HEAD',
         url: '/auth?code=:code',
+    },
+    authRefresh: {
+        method: 'HEAD',
+        url: '/auth/refresh',
     },
 }
 

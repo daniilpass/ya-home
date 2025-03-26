@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../configuration';
 import {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 
-const request = <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {
+const requestRaw = async <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {
     let resource = `${API_BASE_URL}${endpoint.url}`;
     if (params) {
         for(const [key, value] of Object.entries(params)) {
@@ -18,24 +18,36 @@ const request = <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TP
         method: endpoint.method,
         headers: DEFAULT_HEADERS,
         body: payload ? JSON.stringify(payload) : undefined,
+        credentials: 'include',
     }).then(response => {
         if (!response.ok) {
             return Promise.reject(response);
         }
 
         return response.json().catch(() => {});
-    })
-    .then(data => data as TResponse)
-    .catch(errorResponse => {
-        const { status, statusText } = errorResponse;
+    }).then(data => data as TResponse);
+}
 
-        if (status === 401) {
-            window.location.href = '/auth';
-        }
+const request = async <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {
+    return requestRaw<TResponse, TPayload>(endpoint, payload, params)
+        .catch(async (errorResponse): Promise<TResponse> => {
+            if (errorResponse.status !== 401) {
+                throw errorResponse;
+            }
 
-        const error = `${status}: ${statusText}`;
-        throw error;
-    })
+            await requestRaw<void>(ENDPOINTS.authRefresh);
+            return requestRaw(endpoint, payload, params);
+        })
+        .catch(errorResponse => {
+            const { status, statusText } = errorResponse;
+
+            if (status === 401) {
+                window.location.href = '/auth';
+            }
+
+            const error = `${status}: ${statusText}`;
+            throw error;
+        });
 }
 
 const ping = () => {
