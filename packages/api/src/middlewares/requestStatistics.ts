@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
+
 import { logger } from '../utils';
+import StatisticsService from '../services/statisticsService';
+import { getErrorMessage } from '../utils/errors';
 
 const getXForwardedFor = (req: Request) => {
     const xffHeader = req.headers['x-forwarded-for'];
@@ -15,27 +18,26 @@ const getUserAddress = (req: Request) => {
 const getStatisctics = (req: Request, res: Response, requestStart: number) => {
     return {
         userId: req.userInfo?.yaUserId ?? 'anonymous',
-        route: req.route?.path,
+        route: req.route?.path as string,
         path: req.path,
         method: req.method,
         statusCode: res.statusCode,
-        duration: Math.ceil(performance.now() - requestStart),
+        timestamp: Math.floor(requestStart/ 1000),
+        duration: Math.ceil(Date.now() - requestStart),
         userAddress: getUserAddress(req),
-        userAgent: req.get('User-Agent'),
+        userAgent: req.get('User-Agent') ?? null,
     }
 }
 
 export const requestStatistics = (req: Request, res: Response, next: NextFunction) => {
-    const requestStart = performance.now();
+    const requestStart = Date.now();
 
     res.on('finish', function () {
         try {
             const statistics = getStatisctics(req, res, requestStart);
-
-            // TODO: delete logging
-            // logger.debug(`[statistics] response finished: ${JSON.stringify(statistics, null, 2)}`);
+            StatisticsService.logUserRequest(statistics);
         } catch (error) {
-            logger.error('[statistics] Error occured while trying get request statistics. Error:', error);
+            logger.error(`[statistics] Error occured while trying get request statistics. Error: ${getErrorMessage(error)}`);
         }
     });
 
