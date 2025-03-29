@@ -5,23 +5,27 @@ export class FlushableCollection<T> {
     private buffer: Array<T>;
     private index: number;
 
-    constructor(private size: number, private onFlush: FlushCallback<T>) {
+    constructor(private size: number, private intervalSec: number, private onFlush: FlushCallback<T>) {
         this.buffer = new Array(size);
         this.index = 0;
-    }
 
-    private get full() {
-        return this.index === this.size;
+        if (this.intervalSec > 0) {
+            setInterval(() => this.flush(), intervalSec * 1000);
+        }
     }
 
     private flush() {
-        this.onFlush(this.buffer);
+        if (this.index === 0) {
+            return;
+        }
+
+        this.onFlush(this.buffer.slice(0, this.index));
         this.buffer = new Array(this.size);
         this.index = 0;
     }
 
     private enshureFlush() {
-        if (this.full) {
+        if (this.index >= this.size) {
             this.flush();
         }
     }

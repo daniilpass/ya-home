@@ -1,5 +1,5 @@
 import { FlushableCollection } from '../../classes/FlushableCollection';
-import { STAT_BATCH_SIZE } from '../../constants';
+import { STAT_BATCH_SIZE, STAT_FLUSH_INTERVAL } from '../../constants';
 import { StatUserRequest } from '../../dal/entities';
 import { logger } from '../../utils';
 import { getErrorMessage } from '../../utils/errors';
@@ -9,7 +9,7 @@ export class StatisticsService {
     private userRequestBatch: FlushableCollection<UserRequestInfo>;
 
     constructor() {
-        this.userRequestBatch = new FlushableCollection<UserRequestInfo>(STAT_BATCH_SIZE, this.onFlushUserRequestBatch);
+        this.userRequestBatch = new FlushableCollection<UserRequestInfo>(STAT_BATCH_SIZE, STAT_FLUSH_INTERVAL, this.onFlushUserRequestBatch);
     }
 
     private async onFlushUserRequestBatch(batch: UserRequestInfo[]) {
