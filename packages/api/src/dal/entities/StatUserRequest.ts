@@ -7,7 +7,7 @@ export class StatUserRequest extends Model<InferAttributes<StatUserRequest>, Inf
     declare path: string;
     declare method: string;
     declare statusCode: number;
-    declare timestamp: number;
+    declare date: Date;
     declare duration: number;
     declare userAddress: string;
     declare userAgent: string | null;

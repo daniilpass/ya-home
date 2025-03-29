@@ -11,7 +11,7 @@ export const statUserRequestSchema: ModelAttributes = {
     path: DataTypes.STRING,
     method: DataTypes.STRING(7),
     statusCode: DataTypes.NUMBER,
-    timestamp: DataTypes.NUMBER,
+    date: DataTypes.DATE,
     duration: DataTypes.NUMBER,
     userAddress: DataTypes.STRING(45),
     userAgent: {

@@ -6,7 +6,7 @@ export type UserRequestInfo = Pick<StatUserRequest,
    | 'path'
    | 'method'
    | 'statusCode'
-   | 'timestamp'
+   | 'date'
    | 'duration'
    | 'userAddress'
    | 'userAgent'

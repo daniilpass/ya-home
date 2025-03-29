@@ -22,7 +22,7 @@ const getStatisctics = (req: Request, res: Response, requestStart: number) => {
         path: req.path,
         method: req.method,
         statusCode: res.statusCode,
-        timestamp: Math.floor(requestStart/ 1000),
+        date: new Date(requestStart),
         duration: Math.ceil(Date.now() - requestStart),
         userAddress: getUserAddress(req),
         userAgent: req.get('User-Agent') ?? null,
