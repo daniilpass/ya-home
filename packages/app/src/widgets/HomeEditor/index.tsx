@@ -18,7 +18,7 @@ import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
 import { DeviceToolbar } from './components/DeviceToolbar';
 import { EditorTopbar,PlanActionsEnum, PlanActionEvent  } from './components/EditorTopbar';
 
-
+import { LinearProgress } from './components/LinearProgress';
 import './style.css';
 
 export type Props = {
@@ -368,6 +368,7 @@ const HomeEditor = ({ planId }: Props) => {
             {plan && (
                 <div className='editor-root'>
                     <Box>
+                        {actionsInProgress.length > 0 && <LinearProgress />}
                         <EditorTopbar
                             actionsInProgress={actionsInProgress}
                             onItemClick={handleClickPlanAction}
