@@ -38,12 +38,16 @@ services:
     image: metabase/metabase:latest
     container_name: homemap-metabase
     restart: always
+    environment:
+      MB_DB_TYPE: h2
+      MB_DB_FILE: /metabase/storage/h2.db
     networks:
       - app-network
     ports:
       - 3001:3000
     volumes:
       - /homemap/server/appData:/metabase/appData:ro
+      - /homemap/metabase:/metabase/storage
 networks:
   app-network:
     driver: bridge
