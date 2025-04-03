@@ -11,17 +11,21 @@ import * as serviceWorker from './serviceWorker';
 import App from './app';
 import './index.css';
 
-const readyPromise = IS_DEMO ? serviceWorker.register() : serviceWorker.unregister();
+const swReadyPromise = IS_DEMO ? serviceWorker.register() : serviceWorker.unregister();
 
-readyPromise.finally(() => {
-    const root = ReactDOM.createRoot(
-        document.getElementById('root') as HTMLElement
-    );
-    
-    root.render(
-        <>
-            <CssBaseline />
-            <App />
-        </>
-    );
-});
+swReadyPromise
+    .then(() => {
+        const root = ReactDOM.createRoot(
+            document.getElementById('root') as HTMLElement
+        );
+
+        root.render(
+            <>
+                <CssBaseline />
+                <App />
+            </>
+        );
+    })
+    .catch((error) => {
+        document.getElementById('root')!.innerText = error.message ?? 'Ошибка загрузка ServiceWorker';
+    })

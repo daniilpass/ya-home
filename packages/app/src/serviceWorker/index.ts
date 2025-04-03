@@ -2,11 +2,11 @@ import { log, error } from './tools';
 
 const SW_URL = `${process.env.PUBLIC_URL}/service-worker.js`;
 
+const supported = () => "serviceWorker" in navigator;
+
 const registerServiceWorker = async (swUrl: string): Promise<void> => {
-    const isSWSupported = "serviceWorker" in navigator;
-    if (!isSWSupported) {
-        log('Service worker not supported by browser');
-        return;
+    if (!supported()) {
+        throw new Error('Service worker not supported by browser');
     }
 
     try {
@@ -21,7 +21,8 @@ const registerServiceWorker = async (swUrl: string): Promise<void> => {
             log("Service worker active");
         }
     } catch (err) {
-        error(`Service worker registration failed with ${error}`);
+        error(`Service worker registration failed: ${err}`)
+        throw new Error('Service worker registration failed');
     }
 };
 
@@ -36,6 +37,10 @@ export const register = (): Promise<void> => {
 };
 
 export const unregister = async () => {
+    if (!supported()) {
+        return;
+    }
+
     try {
         log(`Unregistering service worker, don't forget to close all application tabs`);
         const registrations = await navigator.serviceWorker.getRegistrations();
@@ -43,6 +48,6 @@ export const unregister = async () => {
             await registration.unregister();
         }
     } catch (err) {
-        error(`Service worker unregister failed with ${error}`);
+        error(`Service worker unregister failed with ${err}`);
     }
 };
