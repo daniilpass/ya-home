@@ -1,306 +1,556 @@
 {
-    "17c36c8d-3495-4015-a2cb-dc0abc7fe930": {
-        "id": "17c36c8d-3495-4015-a2cb-dc0abc7fe930",
+    "17c36c8d-000-000-000-dc0abc7fe930": {
+        "id": "17c36c8d-000-000-000-dc0abc7fe930",
         "name": "Зеркало в коридоре",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 0
             }
         }
     },
-    "18f70e85-5871-4ff8-bb88-ad32faae2938": {
-        "id": "18f70e85-5871-4ff8-bb88-ad32faae2938",
+    "18f70e85-000-000-000-ad32faff2938": {
+        "id": "18f70e85-000-000-000-ad32faff2938",
         "name": "Подсветка в ванной",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 0
             }
         }
     },
-    "269d79b5-b11a-4257-a1c7-eba6aba48328": {
-        "id": "269d79b5-b11a-4257-a1c7-eba6aba48328",
+    "1c12a380-000-000-000-f192ab199b6f": {
+        "id": "1c12a380-000-000-000-f192ab199b6f",
+        "name": "Движение в коридоре",
+        "type": "sensor",
+        "subtype": "motion",
+        "state": {
+            "motion": {
+                "value": "detected",
+                "unit": "default",
+                "updatedAt": 1743701827412
+            }
+        }
+    },
+    "2638d654-000-000-000-76c1f59a5e17": {
+        "id": "2638d654-000-000-000-76c1f59a5e17",
+        "name": "Проектор",
+        "type": "socket",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743442803962.475
+            }
+        }
+    },
+    "269d79b5-000-000-000-eba6aba48328": {
+        "id": "269d79b5-000-000-000-eba6aba48328",
         "name": "Зеркало в ванной",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743705576885
             }
         }
     },
-    "27e4855e-226b-42a2-a3de-1b1b3c7d66f3": {
-        "id": "27e4855e-226b-42a2-a3de-1b1b3c7d66f3",
+    "27e4855e-000-000-000-1b1b3c7d66f3": {
+        "id": "27e4855e-000-000-000-1b1b3c7d66f3",
         "name": "Бра в спальне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743032225097
             }
         }
     },
-    "29c47132-b7f3-47af-8132-1c2452fcaddc": {
-        "id": "29c47132-b7f3-47af-8132-1c2452fcaddc",
+    "29c47132-000-000-000-1c2452fcaddc": {
+        "id": "29c47132-000-000-000-1c2452fcaddc",
         "name": "Подсветка в гардеробе",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743282924153
             }
         }
     },
-    "343f829b-d835-4a74-8215-f9fadae29603": {
-        "id": "343f829b-d835-4a74-8215-f9fadae29603",
+    "2f84b3cc-000-000-000-77630eb19baf": {
+        "id": "2f84b3cc-000-000-000-77630eb19baf",
+        "name": "Ёлка",
+        "type": "socket",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1741723543610.5107
+            }
+        }
+    },
+    "343f829b-000-000-000-f9fadff29603": {
+        "id": "343f829b-000-000-000-f9fadff29603",
         "name": "Свет в спальне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743705598753
             }
         }
     },
-    "384d283d-c70d-4fc4-beb7-8e13825994ac": {
-        "id": "384d283d-c70d-4fc4-beb7-8e13825994ac",
+    "384d283d-000-000-000-8e13825994ac": {
+        "id": "384d283d-000-000-000-8e13825994ac",
         "name": "Свет на кухне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
-                "value": false,
-                "unit": "boolean"
+                "value": true,
+                "unit": "boolean",
+                "updatedAt": 1743691298360
             }
         }
     },
-    "39567e31-12d2-42dc-b018-d3788e8e0fd8": {
-        "id": "39567e31-12d2-42dc-b018-d3788e8e0fd8",
+    "39567e31-000-000-000-d3788e8e0fd8": {
+        "id": "39567e31-000-000-000-d3788e8e0fd8",
         "name": "Подсветка в шкафу",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 0
             }
         }
     },
-    "40530a81-e6a9-4e84-bc32-7676e8f0c806": {
-        "id": "40530a81-e6a9-4e84-bc32-7676e8f0c806",
+    "40530a81-000-000-000-7676e8f0c806": {
+        "id": "40530a81-000-000-000-7676e8f0c806",
         "name": "Витрина",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743256747851
             }
         }
     },
-    "4d3e0a3b-f544-4a1b-9428-3b5a69551efc": {
-        "id": "4d3e0a3b-f544-4a1b-9428-3b5a69551efc",
-        "name": "Свет в кабинете 1",
+    "4d3e0a3b-000-000-000-3b5a69551efc": {
+        "id": "4d3e0a3b-000-000-000-3b5a69551efc",
+        "name": "Свет в кабинете Д",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
-                "value": false,
-                "unit": "boolean"
+                "value": true,
+                "unit": "boolean",
+                "updatedAt": 1743705631043
             }
         }
     },
-    "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6": {
-        "id": "636f243b-3e8f-4b1f-9d5f-a9dd43f353c6",
+    "636f243b-000-000-000-a9dd43f353c6": {
+        "id": "636f243b-000-000-000-a9dd43f353c6",
         "name": "Люстра на кухне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743550490511
             }
         }
     },
-    "6ac9a76b-fce3-40d0-9be1-80c9cad59007": {
-        "id": "6ac9a76b-fce3-40d0-9be1-80c9cad59007",
-        "name": "Свет в туалете",
+    "6ac9a76b-000-000-000-80c9cad59007": {
+        "id": "6ac9a76b-000-000-000-80c9cad59007",
+        "name": "Свет в санузле",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743693809149
             }
         }
     },
-    "6f779d22-7c74-4622-bf65-1f595eb0b0c2": {
-        "id": "6f779d22-7c74-4622-bf65-1f595eb0b0c2",
+    "6f779d22-000-000-000-1f595eb0b0c2": {
+        "id": "6f779d22-000-000-000-1f595eb0b0c2",
         "name": "Коридор в спальне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743550490697
             }
         }
     },
-    "735de64f-469d-4078-ad9f-d8ee10e10a53": {
-        "id": "735de64f-469d-4078-ad9f-d8ee10e10a53",
+    "735de64f-000-000-000-d8ee10e10a53": {
+        "id": "735de64f-000-000-000-d8ee10e10a53",
         "name": "Правый трек",
         "type": "switch",
+        "subtype": "none",
         "state": {
-            "on": true
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743373549356.3472
+            }
         }
     },
-    "785daa2a-581d-44cd-8dbc-d069da522e03": {
-        "id": "785daa2a-581d-44cd-8dbc-d069da522e03",
+    "765af178-000-000-000-d8046b735112": {
+        "id": "765af178-000-000-000-d8046b735112",
+        "name": "Мастер выключатель",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": true,
+                "unit": "boolean",
+                "updatedAt": 0
+            }
+        }
+    },
+    "785daa2a-000-000-000-d069da522e03": {
+        "id": "785daa2a-000-000-000-d069da522e03",
         "name": "Подсветка в спальне",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743287548433
             }
         }
     },
-    "81924c48-3d90-4b9b-95ad-a9df8845b327": {
-        "id": "81924c48-3d90-4b9b-95ad-a9df8845b327",
+    "81924c48-000-000-000-a9df8845b327": {
+        "id": "81924c48-000-000-000-a9df8845b327",
         "name": "Левый трек",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743632979730
             }
         }
     },
-    "a0548812-7e7b-49cf-b233-215c664a21d7": {
-        "id": "a0548812-7e7b-49cf-b233-215c664a21d7",
+    "89a72fe1-000-000-000-ef6d14751fe2": {
+        "id": "89a72fe1-000-000-000-ef6d14751fe2",
+        "name": "Подсветка ТВ",
+        "type": "socket",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 0
+            }
+        }
+    },
+    "988c57f0-000-000-000-9ce4775d7293": {
+        "id": "988c57f0-000-000-000-9ce4775d7293",
+        "name": "Климат в кабинете А",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 25.17,
+                "unit": "celsius",
+                "updatedAt": 1743708227789
+            },
+            "humidity": {
+                "value": 22,
+                "unit": "percent",
+                "updatedAt": 1743707160761
+            }
+        }
+    },
+    "a0548812-000-000-000-215c664a21d7": {
+        "id": "a0548812-000-000-000-215c664a21d7",
         "name": "Свет в шкафу",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 0
             }
         }
     },
-    "a151a962-c27d-4f8a-8702-31a95d0ee206": {
-        "id": "a151a962-c27d-4f8a-8702-31a95d0ee206",
+    "a151a962-000-000-000-31a95d0ee206": {
+        "id": "a151a962-000-000-000-31a95d0ee206",
         "name": "Рабочая поверхность",
         "type": "switch",
+        "subtype": "none",
         "state": {
             "on": {
                 "value": false,
-                "unit": "boolean"
+                "unit": "boolean",
+                "updatedAt": 1743693827406
             }
         }
     },
-    "b6ac174c-fac9-4e1e-ba7e-5d8cbead9dae": {
-        "id": "b6ac174c-fac9-4e1e-ba7e-5d8cbead9dae",
-        "name": "Выключатель",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "bd5b5118-ed3b-4085-8687-c60271f9aec2": {
-        "id": "bd5b5118-ed3b-4085-8687-c60271f9aec2",
-        "name": "Свет в кабинете 2",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "cadeadfa-2e90-4099-920e-fbaaa4215877": {
-        "id": "cadeadfa-2e90-4099-920e-fbaaa4215877",
-        "name": "Свет в коридоре",
-        "type": "switch",
-        "state": {
-            "on": true
-        }
-    },
-    "d6e5f3ef-23fd-4655-8a70-e35d1b9c22e6": {
-        "id": "d6e5f3ef-23fd-4655-8a70-e35d1b9c22e6",
-        "name": "Свет в ванной",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "dea5a216-ff7a-4902-a8cc-1f9bf36e529e": {
-        "id": "dea5a216-ff7a-4902-a8cc-1f9bf36e529e",
-        "name": "Настольная лампа",
-        "type": "light",
-        "state": {
-            "on": false,
-            "brightness": 60
-        }
-    },
-    "ea89825e-9201-4a50-b431-050d6783e561": {
-        "id": "ea89825e-9201-4a50-b431-050d6783e561",
-        "name": "Люстра в спальне",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "ef20fa64-8ba2-4951-be45-f8cb95487957": {
-        "id": "ef20fa64-8ba2-4951-be45-f8cb95487957",
-        "name": "Свет в гардеробе",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "f78fa3cc-8df7-453d-9b5c-e706c9151b45": {
-        "id": "f78fa3cc-8df7-453d-9b5c-e706c9151b45",
-        "name": "Подсветка на кухне",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "fafaeae7-8ae3-4041-89dc-57ada747c31b": {
-        "id": "fafaeae7-8ae3-4041-89dc-57ada747c31b",
-        "name": "Зеркало в спальне",
-        "type": "switch",
-        "state": {
-            "on": {
-                "value": false,
-                "unit": "boolean"
-            }
-        }
-    },
-    "a2006658-ab80-4255-a7d5-73a793b0258f": {
-        "id": "a2006658-ab80-4255-a7d5-73a793b0258f",
+    "a2006658-000-000-000-73a793b0258f": {
+        "id": "a2006658-000-000-000-73a793b0258f",
         "name": "Климат в гостиной",
         "type": "sensor",
         "subtype": "climate",
         "state": {
             "temperature": {
-                "value": 26.64,
-                "unit": "celsius"
+                "value": 27.56,
+                "unit": "celsius",
+                "updatedAt": 1743708999545
+            },
+            "humidity": {
+                "value": 25,
+                "unit": "percent",
+                "updatedAt": 1743708999545
+            }
+        }
+    },
+    "a5b15b0b-000-000-000-d4831597090f": {
+        "id": "a5b15b0b-000-000-000-d4831597090f",
+        "name": "Движение санузел",
+        "type": "sensor",
+        "subtype": "motion",
+        "state": {
+            "motion": {
+                "value": "detected",
+                "unit": "default",
+                "updatedAt": 1743693807526
+            }
+        }
+    },
+    "b6ac174c-000-000-000-5d8cbead9dff": {
+        "id": "b6ac174c-000-000-000-5d8cbead9dff",
+        "name": "Вытяжка санузел",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1742589226434
+            }
+        }
+    },
+    "bc8ff2a4-000-000-000-e8d55da909d5": {
+        "id": "bc8ff2a4-000-000-000-e8d55da909d5",
+        "name": "Климат в спальне",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 26.7,
+                "unit": "celsius",
+                "updatedAt": 1743706507707
+            },
+            "humidity": {
+                "value": 31,
+                "unit": "percent",
+                "updatedAt": 1743706507707
+            }
+        }
+    },
+    "bd5b5118-000-000-000-c60271f9ffc2": {
+        "id": "bd5b5118-000-000-000-c60271f9ffc2",
+        "name": "Свет в кабинете А",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743635470171
+            }
+        }
+    },
+    "cadeadfa-000-000-000-fbaaa4215877": {
+        "id": "cadeadfa-000-000-000-fbaaa4215877",
+        "name": "Свет в коридоре",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743701947727
+            }
+        }
+    },
+    "ce25bc11-000-000-000-3681a7395039": {
+        "id": "ce25bc11-000-000-000-3681a7395039",
+        "name": "Климат в санузле",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 26.82,
+                "unit": "celsius",
+                "updatedAt": 0
+            },
+            "humidity": {
+                "value": 22,
+                "unit": "percent",
+                "updatedAt": 0
+            }
+        }
+    },
+    "d6e5f3ef-000-000-000-e35d1b9c22e6": {
+        "id": "d6e5f3ef-000-000-000-e35d1b9c22e6",
+        "name": "Свет в ванной",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743705576747
+            }
+        }
+    },
+    "db277551-000-000-000-0e0d9fff4e8f": {
+        "id": "db277551-000-000-000-0e0d9fff4e8f",
+        "name": "Климат в ванной",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 27.99,
+                "unit": "celsius",
+                "updatedAt": 1743707835158
             },
             "humidity": {
                 "value": 35,
-                "unit": "percent"
+                "unit": "percent",
+                "updatedAt": 1743707835158
+            }
+        }
+    },
+    "dc99174a-000-000-000-6c438a6d0423": {
+        "id": "dc99174a-000-000-000-6c438a6d0423",
+        "name": "Климат в кабинете Д",
+        "type": "sensor",
+        "subtype": "climate",
+        "state": {
+            "temperature": {
+                "value": 25.77,
+                "unit": "celsius",
+                "updatedAt": 1743707617767
+            },
+            "humidity": {
+                "value": 26,
+                "unit": "percent",
+                "updatedAt": 1743707617767
+            }
+        }
+    },
+    "dca48c73-000-000-000-4bff32e6ff20": {
+        "id": "dca48c73-000-000-000-4bff32e6ff20",
+        "name": "Движение ванна",
+        "type": "sensor",
+        "subtype": "motion",
+        "state": {
+            "motion": {
+                "value": "detected",
+                "unit": "default",
+                "updatedAt": 1743705569718
+            }
+        }
+    },
+    "dea5a216-000-000-000-1f9bf36e529e": {
+        "id": "dea5a216-000-000-000-1f9bf36e529e",
+        "name": "Настольная лампа",
+        "type": "light",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743614029406.0916
+            },
+            "brightness": {
+                "value": 100,
+                "unit": "percent",
+                "updatedAt": 1741779246960.868
+            }
+        }
+    },
+    "ea89825e-000-000-000-050d6783e561": {
+        "id": "ea89825e-000-000-000-050d6783e561",
+        "name": "Люстра в спальне",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743636423513
+            }
+        }
+    },
+    "ef20fa64-000-000-000-f8cb95487957": {
+        "id": "ef20fa64-000-000-000-f8cb95487957",
+        "name": "Свет в гардеробе",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1743705595602
+            }
+        }
+    },
+    "f78fa3cc-000-000-000-e706c9151b45": {
+        "id": "f78fa3cc-000-000-000-e706c9151b45",
+        "name": "Подсветка на кухне",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 1742672735429
+            }
+        }
+    },
+    "fafffff7-000-000-000-57ada747c31b": {
+        "id": "fafffff7-000-000-000-57ada747c31b",
+        "name": "Зеркало в спальне",
+        "type": "switch",
+        "subtype": "none",
+        "state": {
+            "on": {
+                "value": false,
+                "unit": "boolean",
+                "updatedAt": 0
             }
         }
     }

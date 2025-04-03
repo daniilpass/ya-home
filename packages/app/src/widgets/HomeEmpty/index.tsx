@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material'
 
-import { Plan } from '@homemap/shared';
+import { DEFAULT_PLAN, Plan } from '@homemap/shared';
 
 import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { routes } from '../../app/router';
 import ApiClient from '../../api';
 import { store } from '../../store';
 
-import { DEFAULT_PLAN } from './constants';
 export const HomeEmpty = () => {
     const navigate = useNavigate();
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);

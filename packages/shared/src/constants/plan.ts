@@ -1,4 +1,4 @@
-import { Plan } from '@homemap/shared';
+import { Plan } from '../types';
 
 export const DEFAULT_PLAN: Plan = {
     id: 0,

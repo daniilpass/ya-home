@@ -4,6 +4,8 @@ import { IS_DEMO } from '../../configuration';
 import { reloadWithReset } from '../../serviceWorker/tools';
 import Toolbar from '../../common/components/Toolbar';
 
+import './style.css';
+
 const DemoBanner = () => {
     if (!IS_DEMO) {
         return null;
@@ -14,7 +16,7 @@ const DemoBanner = () => {
     }
 
     return (
-        <Toolbar position="top" withBorder>
+        <Toolbar position="top" withBorder className='demo-banner'>
             <Box sx={{
                 p: 1,
                 display: 'flex',
@@ -23,7 +25,7 @@ const DemoBanner = () => {
                 gap: 2,
                 width: '100%'
             }}>
-                Вы находитесь в демо режиме
+                Демо режим
                 <Button variant="outlined" onClick={handleClickReset} size="small">Сброс изменений</Button>
             </Box>
         </Toolbar>

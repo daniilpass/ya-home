@@ -1,10 +1,11 @@
 import cloneDeep from 'lodash.clonedeep'
-import { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, isSwitchableDevice, Plan, PlanInfo } from '@homemap/shared';
+import { Collection, DEFAULT_PLAN, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, DeviceSubtypes, DeviceTypes, isSwitchableDevice, Plan, PlanInfo } from '@homemap/shared';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: "json" };
 import { default as planResponseJson } from '../responses/plan.json' assert { type: "json" };
 import { default as devicesResponseJson } from '../responses/devices.json' assert { type: "json" };
 import { createJsonResponse, getRequestBody } from './tools';
+import { DeviceSensor } from '@homemap/shared/src/types/home/devices/DeviceSensor';
 
 export class ResponseFactory {
     static readonly instance = new ResponseFactory();
@@ -13,24 +14,37 @@ export class ResponseFactory {
     planUrlPattern = /api\/plan\/\d*/;
     devicesUrlPattern = /api\/devices$/;
     deviceActionUrlPattern = /api\/devices\/actions$/;
-    updateInterval: number = 3000;
-    lastUpdate: number;
-    devicesResponse: Collection<Device>;
-    planResponse: Plan;
-    planListResponse: Collection<PlanInfo>;
+
+    switchableUpdateInterval: number = 3000;
+    switchableLastUpdate: number = 0;
+
+    motionUpdateInterval: number = 30000;
+    motionLastUpdate: number = 0;
+    planMotionSensorIds: string[] = [];
+
+    devicesResponse: Collection<Device> = {};
+    planResponse: Plan = DEFAULT_PLAN;
+    planListResponse: Collection<PlanInfo> = {};
 
     constructor() {        
-        this.lastUpdate = Date.now();
-        this.planListResponse = cloneDeep(planListResponseJson);
-        this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
+        this.setup();
     }
 
-    reset() {
-        this.lastUpdate = Date.now();
+    setup() {
+        this.switchableLastUpdate = Date.now();
+        this.motionLastUpdate = 0;
         this.planListResponse = cloneDeep(planListResponseJson);
         this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
         this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
+
+        for(const device of Object.values(this.devicesResponse)) {
+            if (device.type === DeviceTypes.Sensor && device.subtype === DeviceSubtypes.Motion) {
+                const minutesAgo = Math.random() * 15;
+                const msAgo = minutesAgo * 60 * 1000;
+                device.state.motion!.updatedAt = Date.now() - msAgo;
+                this.planMotionSensorIds.push(device.id);
+            }
+        }
     }
 
     async makeResponse(event: FetchEvent): Promise<Response> {
@@ -79,8 +93,8 @@ export class ResponseFactory {
     }
     
     private createDevicesResponse() {
-        if (Date.now() - this.lastUpdate > this.updateInterval) {
-            this.lastUpdate = Date.now();
+        if (Date.now() - this.switchableLastUpdate > this.switchableUpdateInterval) {
+            this.switchableLastUpdate = Date.now();
             const deviceIds = Object.keys(this.planResponse.devices);
             const deviceToUpdateId = deviceIds[Math.floor(Math.random() * deviceIds.length)];
             const deviceToUpdate = this.devicesResponse[deviceToUpdateId];
@@ -94,11 +108,20 @@ export class ResponseFactory {
                 }
             }
         }
+
+        if (Date.now() - this.motionLastUpdate > this.motionUpdateInterval) {
+            this.motionLastUpdate = Date.now();
+            const sensorIds = this.planMotionSensorIds;
+            const deviceToUpdateId = sensorIds[Math.floor(Math.random() * sensorIds.length)];
+            const deviceToUpdate = this.devicesResponse[deviceToUpdateId] as DeviceSensor;
+            deviceToUpdate.state.motion!.updatedAt = Date.now();
+        }
+
         return createJsonResponse(this.devicesResponse);
     }
     
     private async createDeviceActionsResponse(payload: DeviceAction) {
-        this.lastUpdate = Date.now();
+        this.switchableLastUpdate = Date.now();
     
         const keys = Object.keys(payload.state);
         keys.forEach((key) => {

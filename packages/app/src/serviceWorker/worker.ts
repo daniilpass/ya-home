@@ -28,6 +28,6 @@ self.addEventListener('fetch', async (event) => {
 
 self.addEventListener('message', async (event) => {
     if (event.data && event.data.type === MESSAGES.RESET) {
-        responseFactory.reset();
+        responseFactory.setup();
     }
 });
