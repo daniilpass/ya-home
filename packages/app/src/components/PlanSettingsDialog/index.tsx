@@ -5,7 +5,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconBut
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { COLORS, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, Plan, Point, Size } from '@homemap/shared';
+import { COLORS, MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, MAX_IMAGE_WIDTH_PX, MAX_PLAN_SIDE_PX, Plan, Point, Size } from '@homemap/shared';
 
 import PointInput from '../../common/components/PointInput';
 import ColorPickerButton from '../../common/components/ColorPickerButton';
@@ -72,9 +72,9 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
 
             const imageDataURL = await readFileAsDataURL(file);
 
-            const isValid = await isValidImage(imageDataURL);
+            const isValid = await isValidImage(imageDataURL, { maxWidth: MAX_IMAGE_WIDTH_PX, maxHeight: MAX_IMAGE_HEIGHT_PX });
             if (!isValid) {
-                dispatch.alerts.warning('Неподдерживаемый тип изображения');
+                dispatch.alerts.warning('Неподдерживаемое изображение');
                 e.target.value = '';
                 return;
             }
@@ -93,10 +93,17 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         const imageEl = e.target as HTMLImageElement;
+
         setBackgroundNaturalSize({
             width: imageEl.naturalWidth,
             height: imageEl.naturalHeight,
-        });        
+        });    
+        
+        onChange({
+            ...value,
+            width: imageEl.naturalWidth,
+            height: imageEl.naturalHeight,
+        });
     }
 
     const handleClickFitToBackground = () => {
@@ -170,7 +177,8 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                             marginTop: 1,
                             textAlign: 'center',
                         }}>
-                            Размером до {MAX_IMAGE_SIZE_MB}мб
+                            Вес до {MAX_IMAGE_SIZE_MB} МБ<br />
+                            Размер до {MAX_IMAGE_WIDTH_PX}x{MAX_IMAGE_HEIGHT_PX} точек
                         </Typography>
                     </PropertiesGroup>
                     
@@ -193,6 +201,8 @@ const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
                             labelX='ширина'
                             labelY='высота'
                             vertical
+                            max={MAX_PLAN_SIDE_PX}
+                            min={0}
                         />
                         <Button
                             variant="outlined"
