@@ -1,4 +1,4 @@
-import { MAX_IMAGE_SIZE_BYTES } from '@homemap/shared';
+import { MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_WIDTH_PX } from '@homemap/shared';
 
 import { AppError } from '../../../errors';
 import { uuid } from '../../../utils/uuid';
@@ -24,7 +24,14 @@ export const assertImageSize = (sizeBytes: number) => {
     }
 }
 
+export const assertImageDimensions= ({ width, height }: FileImage) => {
+    if (width > MAX_IMAGE_WIDTH_PX || height > MAX_IMAGE_HEIGHT_PX) {
+        throw new AppError(`Max allowed dimensions: ${MAX_IMAGE_WIDTH_PX}x${MAX_IMAGE_HEIGHT_PX}`);
+    }
+}
+
 export const assertImage = (image: FileImage) => {
     assertImageMime(image.meta.mime);
     assertImageSize(image.size);
+    assertImageDimensions(image);
 }

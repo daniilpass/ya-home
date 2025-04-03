@@ -21,10 +21,12 @@
       "required": ["color"]
     },
     "width": {
-      "type": "number"
+      "type": "number",
+      "minimum": 0
     },
     "height": {
-      "type": "number"
+      "type": "number",
+      "minimum": 0
     },
     "devices": {
       "type": "object",
