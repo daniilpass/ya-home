@@ -1,6 +1,7 @@
 import { log, error } from './tools';
 
-const SW_URL = `${process.env.PUBLIC_URL}/service-worker.js`;
+// TODO: check and fix this
+const SW_URL = `/service-worker.js`;
 
 const supported = () => "serviceWorker" in navigator;
 

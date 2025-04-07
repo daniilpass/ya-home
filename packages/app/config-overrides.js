@@ -31,7 +31,7 @@ const addFallbackOverride = (config) => {
 }
 
 const addServiceWorkerEntry = (config) => {
-    if (process.env.REACT_APP_DEMO) {
+    if (import.meta.env.VITE_APP_DEMO) {
         config.entry = {
             main: './src/index.tsx',
             sw: {
