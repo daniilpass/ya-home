@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "npx tsc --build --verbose",
-    "start": "node --experimental-specifier-resolution=node build/index.js",
+    "start": "tsc -b && node --import=tsx src/index.ts",
     "watch": "SET NODE_ENV=development && npx tsx watch src/index.ts"
   },
   "dependencies": {

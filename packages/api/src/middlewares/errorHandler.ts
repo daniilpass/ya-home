@@ -28,7 +28,7 @@ const getErrorJson = (error: Error): ErrorJson => {
         case error instanceof SchemaValidationError:            
             return { 
                 error: error.message,
-                schemaErrors: error.schemaErrorsShort,
+                schemaErrors: (error as SchemaValidationError).schemaErrorsShort,
             };
         case error instanceof AppError:
             return { error: error.message };
