@@ -8,7 +8,7 @@ import {DragEvent, useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 import SwitchableElement from './Switchable';
 import SensorElement from './Sensor';
-import './style.scss';
+import './style.css';
 
 type Props = {
     type: DeviceTypes;

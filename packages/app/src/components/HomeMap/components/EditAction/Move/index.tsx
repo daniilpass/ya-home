@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef} from 'react';
+import { COLORS } from '@homemap/shared';
+
 import { EDIT_ACTION_SIZE } from '../../../constants';
-import colors from '../../../../../common/styles/colors.module.scss';
 import { useDrag, DragEvent } from '../../../hooks/useDrag';
 
 import './styles.css';
@@ -15,7 +16,7 @@ type Props = {
 }
 
 const fillOpacity = 0.8;
-const strokeColor = colors.primaryDark;
+const strokeColor = COLORS.primaryDark;
 
 const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Props) => {
     const moveRef = useRef<SVGGElement>(null);

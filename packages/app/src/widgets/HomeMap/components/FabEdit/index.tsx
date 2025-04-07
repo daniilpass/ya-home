@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 
-import './style.scss'
+import './style.css'
 import { routes } from '../../../../app/router';
 
 export type FabEditProps = {

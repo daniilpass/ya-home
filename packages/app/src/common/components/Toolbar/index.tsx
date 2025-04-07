@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import cx from 'classnames';
 
-import './style.scss';
+import './style.css';
 
 type Props = {
     className?: string;

@@ -9,7 +9,7 @@ import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
 import { DragEvent } from '../../hooks/useDrag';
 
-import './style.scss';
+import './style.css';
 
 type Props = {
     element: PlanDevice;

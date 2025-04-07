@@ -5,7 +5,7 @@ import { DeviceIcon } from '../../../../DeviceIcon';
 import { ForeignObjectWrapper } from '../../ForeignObjectWrapper';
 
 import { SensorInformer } from './Informer';
-import './style.scss';
+import './style.css';
 
 export type SensorElementProps = {
     position: Point;

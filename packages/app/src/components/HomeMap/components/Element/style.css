@@ -1,5 +1,3 @@
-@import '../../../../common/styles/colors.module.scss';
-
 .element--movable {
     cursor: move;
 }
@@ -11,7 +9,7 @@
 @media (hover: hover) {
     .element--selectable:hover {
         cursor: pointer;
-        outline: solid 2px $primary-dark;
+        outline: solid 2px var(--color-primary-dark);
         outline-offset: 6px;
     }
 }

@@ -15,7 +15,7 @@ import HomeMap from '../HomeMap';
 import { useDispatch } from '../../store/hooks';
 import { PropertiesGroup } from '../FormProperties/PropertiesGroup';
 
-import './style.scss';
+import './style.css';
 import { isValidImage } from '../../utils/image';
 
 export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;

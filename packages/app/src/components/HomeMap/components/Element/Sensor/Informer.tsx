@@ -4,7 +4,7 @@ import { THIN_SPACE } from '../../../../../constants/symbols';
 import { DeviceIcon } from '../../../../DeviceIcon';
 import { getSensorStateIcon, getDeviceUnitTitle, getSensorColor, getSensorStateValue } from '../../../../../utils/device';
 
-import './style.scss';
+import './style.css';
 
 type SensorInformerProps = {
     type: DeviceStateKeys;
