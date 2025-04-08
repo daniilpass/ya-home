@@ -1,7 +1,6 @@
 import { log, error } from './tools';
 
-// TODO: check and fix this
-const SW_URL = `/service-worker.js`;
+const SW_URL = '/service-worker.js';
 
 const supported = () => "serviceWorker" in navigator;
 
