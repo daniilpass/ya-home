@@ -1,5 +1,5 @@
 # Set base image
-FROM node:17.9.1-bullseye-slim
+FROM node:22.14.0-bullseye
 
 # Set wodking directory
 WORKDIR /server

@@ -1,5 +1,5 @@
 # App (based on node image)
-FROM node:17.9.1-bullseye-slim as build
+FROM node:22.14.0-bullseye as build
 
 # Set wodking directory
 WORKDIR /web
@@ -26,7 +26,7 @@ FROM nginx:1.24.0-bullseye
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy app artifacts
-COPY --from=build /web/packages/app/build /usr/share/nginx/html
+COPY --from=build /web/packages/app/dist /usr/share/nginx/html
 
 # Expose nginx port 
 EXPOSE 80

@@ -28,3 +28,5 @@ yarn-error.log*
 notes.txt
 
 .vscode
+
+# tsconfig.tsbuildinfo

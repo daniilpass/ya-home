@@ -12,6 +12,7 @@
         "noEmit": true,
         "jsx": "react-jsx",
         "types": ["vite/client"],
+        "outDir": "./build",
     },
     "include": [
         "src",
