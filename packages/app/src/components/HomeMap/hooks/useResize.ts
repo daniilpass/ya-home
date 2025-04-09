@@ -17,8 +17,8 @@ type DragOptions = {
 }
 
 export const useResize = (
-    wrapperRef: RefObject<HTMLDivElement>,
-    layoutRef: RefObject<SVGSVGElement>,
+    wrapperRef: RefObject<HTMLDivElement | null>,
+    layoutRef: RefObject<SVGSVGElement | null>,
     configuration?: {
         allowScale?: boolean,
         allowInitialScale?: boolean,

@@ -44,7 +44,7 @@ const HomeEditor = ({ planId }: Props) => {
     const [mapReady, setMapReady] = useState<boolean>(false);
     // Plan state
     const [plan, setPlan] = useState<Plan>();
-    const mapTransform = useRef<{scale: number, bounds: DOMRect} | undefined>();
+    const mapTransform = useRef<{scale: number, bounds: DOMRect} | undefined>(null);
 
     // Devices state
     const [allDevices, setAllDevices] = useState<Collection<Device>>({});

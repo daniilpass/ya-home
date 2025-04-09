@@ -31,7 +31,7 @@ const getDistance = (
 ): number => Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     
 export const usePinchScale = (
-    wrapperRef: RefObject<HTMLDivElement>,
+    wrapperRef: RefObject<HTMLDivElement | null>,
     onScale: (dircetion: 'up' | 'down', distance: number) => void,
     onScaleStart: () => void,
     disabled?: boolean,
