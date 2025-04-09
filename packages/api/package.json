@@ -16,7 +16,6 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.14.0",
     "@types/split": "^1.0.5",
-    "@types/uuid": "^9.0.8",
     "axios": "^1.8.4",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
@@ -31,7 +30,7 @@
     "sequelize": "^6.37.7",
     "split": "^1.0.1",
     "sqlite3": "^5.1.7",
-    "uuid": "^9.0.1",
+    "uuid": "^11.1.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
