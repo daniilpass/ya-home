@@ -34,6 +34,16 @@ services:
       - app-network
     ports:
       - "8888:80"
+  demo:
+    container_name: homemap-demo
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.demo
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - "8889:80"
   metabase:
     image: metabase/metabase:latest
     container_name: homemap-metabase
