@@ -6,9 +6,8 @@ import { join } from "node:path";
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
-    console.log('HELLO', mode, JSON.stringify(env, null, 2));
+
     return {
-        base: '',
         plugins: [
             react(),
             viteTsconfigPaths(),
