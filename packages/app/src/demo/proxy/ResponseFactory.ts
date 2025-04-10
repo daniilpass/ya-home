@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash.clonedeep'
 import { Collection, DEFAULT_PLAN, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, DeviceSubtypes, DeviceTypes, isSwitchableDevice, Plan, PlanInfo } from '@homemap/shared';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: "json" };
@@ -33,9 +32,9 @@ export class ResponseFactory {
     setup() {
         this.switchableLastUpdate = Date.now();
         this.motionLastUpdate = 0;
-        this.planListResponse = cloneDeep(planListResponseJson);
-        this.planResponse = cloneDeep(planResponseJson) as unknown as Plan;
-        this.devicesResponse = cloneDeep(devicesResponseJson) as unknown as Collection<Device>;
+        this.planListResponse = structuredClone(planListResponseJson);
+        this.planResponse = structuredClone(planResponseJson) as unknown as Plan;
+        this.devicesResponse = structuredClone(devicesResponseJson) as unknown as Collection<Device>;
 
         for(const device of Object.values(this.devicesResponse)) {
             if (device.type === DeviceTypes.Sensor && device.subtype === DeviceSubtypes.Motion) {

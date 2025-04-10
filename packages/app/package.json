@@ -10,8 +10,6 @@
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
     "@rematch/core": "^2.2.0",
-    "@types/lodash.clonedeep": "^4.5.9",
-    "@types/lodash.omit": "^4.5.9",
     "@types/node": "22.14.0",
     "@types/react": "^19.1.0",
     "@types/react-color": "^3.0.13",
@@ -20,16 +18,12 @@
     "classnames": "^2.5.1",
     "csstype": "^3.1.3",
     "jsonschema": "^1.5.0",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.isequal": "^4.5.0",
-    "lodash.omit": "^4.5.0",
     "react": "^19.1.0",
     "react-color": "^2.19.3",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^5.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.0",
-    "sass": "^1.86.3",
     "uuid": "^11.1.0",
     "vite": "^6.2.5",
     "vite-tsconfig-paths": "^5.1.4"
@@ -62,7 +56,6 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash.isequal": "^4.5.8",
     "cross-env": "^7.0.3",
     "typescript": "^5.8.3",
     "use-resize-observer": "^9.1.0"

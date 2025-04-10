@@ -1,12 +1,5 @@
 
-import isEqual from 'lodash.isequal';
-
 import { DeviceState } from '@homemap/shared';
-import omit from 'lodash.omit';
-
-const ignorableStateProps = [
-    'updatedAt'
-]
 
 // Compare meaningful  properties of state
 export const stateIsEqual = (elementState: DeviceState | undefined, deviceState: DeviceState) => {
@@ -22,12 +15,8 @@ export const stateIsEqual = (elementState: DeviceState | undefined, deviceState:
     }
 
     for (const stateKey of elementStateKeys) {
-        const statePropertyIsEqual = isEqual(
-            omit(elementState[stateKey], ignorableStateProps),
-            omit(deviceState[stateKey], ignorableStateProps),
-        );
-
-        if (!statePropertyIsEqual) {
+        const stateValueIsEqual = elementState[stateKey]?.value === deviceState[stateKey]?.value
+        if (!stateValueIsEqual) {
             return false;
         }
     }
