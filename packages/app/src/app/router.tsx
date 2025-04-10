@@ -10,6 +10,7 @@ import ViewPage from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/AuthPage';
+import { PageSuspense } from '../components/PageSuspense';
 
 export const routes = {
     root: '/',
@@ -21,19 +22,19 @@ export const routes = {
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout />}>
-            <Route path={routes.root} element={<MainPage />} />
+            <Route path={routes.root} element={<PageSuspense><MainPage /></PageSuspense>} />
 
             <Route path={routes.view}>
-                <Route path=":id" element={<ViewPage />} />
+                <Route path=":id" element={<PageSuspense><ViewPage /></PageSuspense>} />
             </Route>
 
             <Route path={routes.edit}>
-                <Route path=":id" element={<EditPage />} />
+                <Route path=":id" element={<PageSuspense><EditPage /></PageSuspense>} />
             </Route>
 
-            <Route path={routes.auth} element={<AuthPage />} />
+            <Route path={routes.auth} element={<PageSuspense><AuthPage /></PageSuspense>} />
 
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="*" element={<PageSuspense><NotFoundPage /></PageSuspense>} />
         </Route>
     )
 );

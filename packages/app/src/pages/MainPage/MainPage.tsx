@@ -11,7 +11,7 @@ import { useDispatch } from '../../store/hooks';
 
 import './style.css';
 
-const MainPage = () => {
+export const MainPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -43,5 +43,3 @@ const MainPage = () => {
         </div>
     );
 }
-
-export default MainPage;
