@@ -9,7 +9,7 @@ import HomeMap, { MapTransform } from '../../components/HomeMap';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
-import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { PlanSettingsDialog, DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { getDeviceDefaultIcon } from '../../utils/device';
 
 import actions from './actions';

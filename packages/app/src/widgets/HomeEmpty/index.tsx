@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material'
 
 import { DEFAULT_PLAN, Plan } from '@homemap/shared';
 
-import PlanSettingsDialog, { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { PlanSettingsDialog, DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
 import { routes } from '../../app/router';
 import ApiClient from '../../api';
 import { store } from '../../store';
