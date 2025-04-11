@@ -1,0 +1,12 @@
+.popover {
+    overflow: hidden;
+}
+
+.colorPicker > * {
+    border-radius: 0 !important;
+}
+
+.colorInput {
+    width: calc(100% - 16px);
+    margin: 8px;
+}

@@ -1,8 +1,8 @@
-import { RGBColor } from 'react-color';
+import { RgbColor  } from 'react-colorful';
 
 const colorThreshold = 255 / 2;
 
-export const rgbToHex = (color: RGBColor) => {
+export const rgbToHex = (color: RgbColor) => {
     return "#" + (
         (1 << 24) |
         (color.r << 16) |
@@ -20,7 +20,7 @@ export const hexToRgb = (color: string) => {
     }
 }
 
-export const getContrastColorRGB = (color: RGBColor): RGBColor => {
+export const getContrastColorRGB = (color: RgbColor): RgbColor => {
     const v = (color.r + color.g + color.b) / 3 > colorThreshold ? 0 : 255;
     return { r: v, g: v, b: v };
 }

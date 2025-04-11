@@ -1,7 +1,6 @@
 
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
-import { ColorResult } from 'react-color';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { Box, Button, DialogContent, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, MAX_IMAGE_WIDTH_PX, MAX_PLAN_SIDE_PX, Point, Size } from '@homemap/shared';
@@ -21,12 +20,12 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
     const [backgroundNaturalSize, setBackgroundNaturalSize] = useState<Size>();
     const dispatch = useDispatch();
 
-    const handleColorChange = (color: ColorResult) => {
+    const handleColorChange = (color: string) => {
         onChange({
             ...value,
             background: {
                 ...value.background,
-                color: color.hex,
+                color,
             }
         });
     }

@@ -1,18 +1,20 @@
 
 import React, { useEffect, useState } from 'react';
-import { ChromePicker, ColorChangeHandler, ColorResult } from 'react-color';
-import { Popover, SxProps, Theme } from '@mui/material';
+import { HexColorPicker, HexColorInput } from 'react-colorful';
+
+import { Popover, SxProps, TextField, Theme } from '@mui/material';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 
 import ColorButton from './ColorButton';
 import { getContrastColorHEX } from './utils';
 
+import classes from './style.module.css';
+
 type Props = {
     color: string;
     sx?: SxProps<Theme>;
-    onChange?: ColorChangeHandler | undefined;
+    onChange?: (color: string) => void;
 }
-
 
 const ColorPickerButton = ({ color, sx, onChange }: Props) => {
     const [pickerAnchor, setPickerAnchor] = React.useState<HTMLButtonElement | null>(null);
@@ -23,10 +25,6 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
     useEffect(() => {
         setTextColor(getContrastColorHEX(color));
     }, [color])
-
-    const hanldeColorChange = (color: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(color, event);
-    }
 
     const handlePickerOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setPickerAnchor(event.currentTarget);
@@ -52,6 +50,9 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
                 {color}
             </ColorButton>
             <Popover
+                classes={{
+                    paper: classes.popover
+                }}
                 open={pickerOpen}
                 onClose={handlePickerClose}
                 anchorEl={pickerAnchor}
@@ -60,11 +61,8 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
                     horizontal: 'left',
                 }}
             >
-                <ChromePicker 
-                    color={color}
-                    onChange={hanldeColorChange}
-                    disableAlpha
-                />                
+                <HexColorPicker className={classes.colorPicker} color={color} onChange={onChange} />
+                <HexColorInput className={classes.colorInput} color={color} prefixed onChange={onChange} />
             </Popover>
         </>
     )
