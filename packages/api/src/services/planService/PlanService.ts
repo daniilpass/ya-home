@@ -6,7 +6,6 @@ import { parseBase64DataUrl } from '../../utils/dataUrl';
 import { logger } from '../../utils';
 import { PlanEntity } from '../../dal/entities';
 import { mapToRecord } from '../../mappers';
-
 import MediaStorage from '../mediaStorage';
 
 const PLAN_LIMIT = 1;

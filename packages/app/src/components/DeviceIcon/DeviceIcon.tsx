@@ -1,5 +1,7 @@
 import type { FC } from 'react';
+
 import type { SxProps, Theme } from '@mui/material';
+
 import type { DeviceIconType } from '@homemap/shared';
 import { deviceIcons } from '@homemap/shared';
 

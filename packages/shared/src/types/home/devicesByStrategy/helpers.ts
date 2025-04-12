@@ -1,5 +1,6 @@
 import type { Device } from '../devices';
 import type { DeviceTypes } from '../deviceTypes/DeviceTypes';
+
 import type { SwitchableDevice, SwitchableDeviceTypes } from './SwitchableDevice';
 import { switchableDeviceTypes } from './SwitchableDevice';
 

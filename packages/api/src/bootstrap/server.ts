@@ -1,9 +1,9 @@
 import express from 'express';
+
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 
 import { PORT } from '../constants';
-
 import { devicesRouter, loginRouter, planRouter, statsRouter, mediaRouter, authRouter } from '../routes';
 import { auth, errorHandler, requestLogger, requestStatistics } from '../middlewares';
 import { logger } from '../utils';

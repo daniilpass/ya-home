@@ -2,9 +2,8 @@
 import type { Request, Response } from 'express';
 
 import YaService from '../yaService';
+
 import { signJWT, encryptToken, getYaToken, getUserJwt, patchRequestUserInfo, setYaToken, setUserJwt, tokenFromEncryptedString, verifyJWT } from './helpers';
-
-
 import { JwtMissingError, TokenMissingError } from './errors';
 
 const issueUserJwt = async (req: Request, res: Response) => {

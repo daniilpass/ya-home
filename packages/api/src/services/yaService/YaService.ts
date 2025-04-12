@@ -1,6 +1,7 @@
 import type { Request } from 'express';
 
 import type { Collection, Device, DeviceAction, DeviceActionResult, Token } from '@homemap/shared';
+
 import { YaClient } from '../../yaClient';
 import type { YaLoginInfo } from '../../yaClient/model/YaLoginInfo';
 import type { YaUserInfoResponse } from '../../yaClient/model/responses/YaUserInfoResponse';

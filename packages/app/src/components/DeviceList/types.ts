@@ -1,4 +1,5 @@
 import type { MouseEvent as ReactMouseEvent } from 'react';
+
 import type { ListProps } from '@mui/material';
 
 import type { Collection, Device } from '@homemap/shared';

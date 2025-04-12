@@ -1,7 +1,9 @@
-import type { Size } from '@homemap/shared';
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
+
 import useResizeObserver from 'use-resize-observer';
+
+import type { Size } from '@homemap/shared';
 
 export type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement> & {
     rootClassName?: string;

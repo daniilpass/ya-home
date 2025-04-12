@@ -1,6 +1,7 @@
-import cx from 'classnames';
 import type {FC} from 'react';
 import { useCallback, useEffect, useRef } from 'react';
+
+import cx from 'classnames';
 
 import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 import { DeviceTypes, MouseButton, isSwitchableDeviceType } from '@homemap/shared';
@@ -9,6 +10,7 @@ import {useTransformContext} from '../../providers/TransformContextProvider';
 import type {DragEvent} from '../../hooks/useDrag';
 import { useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
+
 import SwitchableElement from './Switchable';
 import SensorElement from './Sensor';
 import './style.css';

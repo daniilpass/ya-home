@@ -1,4 +1,5 @@
 import path from 'path';
+
 import { Sequelize } from 'sequelize';
 
 import { PlanEntity } from '../dal/entities';

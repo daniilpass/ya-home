@@ -12,10 +12,10 @@ import SyncIcon from '@mui/icons-material/Sync';
 import { COLORS } from '@homemap/shared';
 
 import ExportIcon from '../../../../common/components/Icons/ExportIcon';
+import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
 
 import type { EditorTopbarProps } from './types';
 import { PlanActionsEnum } from './types';
-import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
 import { MenuItem } from './components/Menu';
 
 export const EditorTopbarMenu = ({ actionsInProgress, onItemClick }: EditorTopbarProps) => {

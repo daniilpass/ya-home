@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 import { logger } from '../utils';
 
 logger.info('[config] Load environment variables from .env');

@@ -1,4 +1,5 @@
 import type { Device, DeviceState, DeviceSubtypes, DeviceTypes } from '@homemap/shared';
+
 import type {Substate} from './Substate';
 
 export type Element = {

@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 import './style.css';
 import RouterLinkButton from '../../common/components/RouterLinkButton';
+
 import { useAuth, useAuthUrl, useSearchParamsCode } from './hooks';
 
 export const AuthPage = () => {

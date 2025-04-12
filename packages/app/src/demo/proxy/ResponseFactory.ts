@@ -1,11 +1,12 @@
 import type { Collection, Device, DeviceAction, DeviceActionResult, DeviceStateKeys, Plan, PlanInfo } from '@homemap/shared';
 import { DEFAULT_PLAN, DeviceSubtypes, DeviceTypes, isSwitchableDevice } from '@homemap/shared';
+import type { DeviceSensor } from '@homemap/shared/src/types/home/devices/DeviceSensor';
 
 import { default as planListResponseJson } from '../responses/planList.json' assert { type: 'json' };
 import { default as planResponseJson } from '../responses/plan.json' assert { type: 'json' };
 import { default as devicesResponseJson } from '../responses/devices.json' assert { type: 'json' };
+
 import { createJsonResponse, getRequestBody } from './tools';
-import type { DeviceSensor } from '@homemap/shared/src/types/home/devices/DeviceSensor';
 
 export class ResponseFactory {
     static readonly instance = new ResponseFactory();

@@ -1,5 +1,5 @@
-import type { Bounds, Device, PlanDevice, Point } from '@homemap/shared';
-import type { DeviceIconType } from '@homemap/shared';
+import type { Bounds, Device, PlanDevice, Point, DeviceIconType } from '@homemap/shared';
+
 
 import { getMagnetPoints, limitPosition, applyPositionDiff } from '../tools';
 

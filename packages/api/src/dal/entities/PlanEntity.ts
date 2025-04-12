@@ -1,5 +1,6 @@
 import type { CreationOptional, InferAttributes, InferCreationAttributes} from 'sequelize';
 import { Model } from 'sequelize';
+
 import type { Plan, PlanInfo } from '@homemap/shared';
 
 import MediaStorage from '../../services/mediaStorage';

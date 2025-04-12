@@ -4,13 +4,14 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom';
 
-import RootLayout from './RootLayout';
 import MainPage from '../pages/MainPage';
 import ViewPage from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/AuthPage';
 import { PageSuspense } from '../components/PageSuspense';
+
+import RootLayout from './RootLayout';
 
 export const routes = {
     root: '/',

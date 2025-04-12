@@ -1,5 +1,6 @@
 import type { Point } from '../../geom';
 import type { Device } from '../devices';
+
 import type { PlanDeviceArea } from './PlanDeviceArea';
 
 export type PlanDevice = 

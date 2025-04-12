@@ -7,7 +7,6 @@ import '@fontsource/roboto/700.css';
 
 import { IS_DEMO } from './configuration';
 import * as serviceWorker from './serviceWorker';
-
 import App from './app';
 import './index.css';
 

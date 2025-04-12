@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
+
 import type { ExpiringToken} from '@homemap/shared';
 import { USER_JWT_KEY, YA_TOKEN_KEY } from '@homemap/shared';
+
 import type { RequestUserInfo } from '../types';
 
 const setServerCookie = (res: Response, name: string, value: unknown, maxAgeSec: number) => {

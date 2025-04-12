@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { useDispatch } from '../../store/hooks';
 
 const ErrorFallback = () => {

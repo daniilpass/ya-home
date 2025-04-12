@@ -9,14 +9,16 @@ import {
     useRef,
     useState,
 } from 'react';
+
 import cx from 'classnames';
 
 import type { Plan, PlanDevice, Point } from '@homemap/shared';
+
 import type { Element } from '../../services/mapService/model/Element';
-import { useResize } from './hooks/useResize';
-import ElementGroup from './components/ElementGroup';
 import { useDispatch } from '../../store/hooks';
 
+import { useResize } from './hooks/useResize';
+import ElementGroup from './components/ElementGroup';
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 import type { DragEvent } from './hooks/useDrag';

@@ -4,6 +4,7 @@ import { DeviceUnits } from '@homemap/shared';
 import type { YaDeviceProperty, YaDevicePropertyEvent, YaDevicePropertyFloat } from '../yaClient/model/YaDeviceProperty';
 import { YaDevicePropertyType } from '../yaClient/model/YaDevicePropertyType';
 import { YaDevicePropertyInstance } from '../yaClient/model/YaDevicePropertyInstance';
+
 import { mapYaDeviceUnitToDeviceUnit } from './mapYaDeviceUnitToDeviceUnit';
 
 const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDevicePropertyEvent): DeviceState | null => {

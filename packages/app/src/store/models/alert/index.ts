@@ -1,8 +1,9 @@
 import { createModel } from '@rematch/core';
 import { v4 as uuid4 } from 'uuid';
 
-import type { AlertSettings, AlertState } from './types';
 import type { RootModel } from '../root';
+
+import type { AlertSettings, AlertState } from './types';
 
 const INITIAL_STATE: AlertState = {
     queue: [],

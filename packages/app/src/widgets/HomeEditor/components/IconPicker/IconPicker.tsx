@@ -1,7 +1,9 @@
 
 import { useCallback, useMemo } from 'react';
+
 import type { SelectChangeEvent } from '@mui/material';
 import { MenuItem, Select } from '@mui/material';
+
 import type { DeviceIconType } from '@homemap/shared';
 import { COLORS } from '@homemap/shared';
 

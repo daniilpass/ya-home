@@ -1,5 +1,6 @@
 import type { RematchRootState, RematchDispatch } from '@rematch/core';
 import { init } from '@rematch/core';
+
 import type { RootModel } from './models';
 import { models } from './models';
 

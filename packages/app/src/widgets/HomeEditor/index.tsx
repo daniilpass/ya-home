@@ -1,5 +1,6 @@
 import type { MouseEvent as ReactMouseEvent} from 'react';
 import {useEffect, useState, useMemo, useCallback, useRef} from 'react';
+
 import { useNavigate, useBlocker } from 'react-router-dom';
 import { Box } from '@mui/material';
 
@@ -22,7 +23,6 @@ import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
 import { DeviceToolbar } from './components/DeviceToolbar';
 import type { PlanActionEvent  } from './components/EditorTopbar';
 import { EditorTopbar, PlanActionsEnum  } from './components/EditorTopbar';
-
 import { LinearProgress } from './components/LinearProgress';
 import './style.css';
 

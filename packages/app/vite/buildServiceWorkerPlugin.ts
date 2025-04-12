@@ -1,6 +1,7 @@
+import { join } from 'node:path';
+
 import type { Plugin } from 'vite';
 import { buildSync } from 'esbuild';
-import { join } from 'node:path';
 
 export function buildServiceWorker(mode: string, env: Record<string, string>): Plugin | undefined {
     if (!env.VITE_APP_DEMO) {

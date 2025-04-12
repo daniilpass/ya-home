@@ -1,4 +1,5 @@
 import { LOGGER_ENABLED } from '../configuration';
+
 import { MESSAGES } from './types';
 
 export const log = (message?: unknown, ...optionalParams: unknown[]) => LOGGER_ENABLED && console.log('[SW]', message, ...optionalParams);

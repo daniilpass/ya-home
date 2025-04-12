@@ -1,14 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { HexColorPicker, HexColorInput } from 'react-colorful';
 
+import { HexColorPicker, HexColorInput } from 'react-colorful';
 import type { SxProps, Theme } from '@mui/material';
 import { Popover } from '@mui/material';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 
 import ColorButton from './ColorButton';
 import { getContrastColorHEX } from './utils';
-
 import classes from './style.module.css';
 
 type Props = {

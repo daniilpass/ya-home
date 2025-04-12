@@ -1,5 +1,6 @@
 import type {FC} from 'react';
 import { useCallback} from 'react';
+
 import cx from 'classnames';
 
 import type { PlanDevice, DeviceIconType } from '@homemap/shared';

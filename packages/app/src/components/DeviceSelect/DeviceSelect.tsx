@@ -1,10 +1,13 @@
+import { memo, useCallback, useMemo } from 'react';
+
 import type { SelectChangeEvent, SelectProps } from '@mui/material';
 import { ListItemText, MenuItem, Select } from '@mui/material';
+
 import type { Collection } from '@homemap/shared';
 
-import type { DeviceSelectItem } from './types';
-import { memo, useCallback, useMemo } from 'react';
 import { deviceTypeToName } from '../../utils/device';
+
+import type { DeviceSelectItem } from './types';
 
 import './DeviceSelect.css';
 

@@ -7,6 +7,7 @@ import AppLoader from '../../components/AppLoader';
 import HomeMap from '../../components/HomeMap';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
+
 import FabEdit from './components/FabEdit';
 
 export type Props = {

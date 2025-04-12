@@ -1,6 +1,7 @@
 
 import type { ChangeEvent, SyntheticEvent} from 'react';
 import { useState } from 'react';
+
 import { Box, Button, DialogContent, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -14,8 +15,8 @@ import { readFileAsDataURL } from '../../utils/file';
 import HomeMap from '../HomeMap';
 import { useDispatch } from '../../store/hooks';
 import { PropertiesGroup } from '../FormProperties/PropertiesGroup';
-
 import { isValidImage } from '../../utils/image';
+
 import type { DialogContentProps } from './types';
 
 export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {

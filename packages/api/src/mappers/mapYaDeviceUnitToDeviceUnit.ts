@@ -1,4 +1,5 @@
 import { DeviceUnits } from '@homemap/shared';
+
 import { YaDeviceUnit } from '../yaClient/model/YaDeviceUnit';
 
 export const mapYaDeviceUnitToDeviceUnit = (yaDeviceUnit: YaDeviceUnit): DeviceUnits => {

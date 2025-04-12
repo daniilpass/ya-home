@@ -1,4 +1,5 @@
 import type { MouseEvent as ReactMouseEvent } from 'react';
+
 import { List } from '@mui/material';
 
 import DeviceListItem from './DeviceListItem';

@@ -1,4 +1,5 @@
 import type {FC} from 'react';
+
 import type { SvgIconOwnProps } from '@mui/material';
 import { SvgIcon } from '@mui/material';
 

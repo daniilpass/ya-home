@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+
 import cx from 'classnames';
 
 import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';

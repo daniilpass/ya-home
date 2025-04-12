@@ -1,4 +1,5 @@
 import { DeviceTypes, DeviceSubtypes } from '@homemap/shared';
+
 import { YaDeviceType } from '../yaClient/model/YaDeviceType';
 
 export const mapYaDeviceTypeToDeviceType = (type: YaDeviceType): DeviceTypes => {
