@@ -6,7 +6,7 @@ import { deviceIcons, DeviceIconType } from '@homemap/shared';
 
 import { PropertiesGroup } from '../../../../components/FormProperties/PropertiesGroup';
 import PointInput from '../../../../common/components/PointInput';
-import PointsList from '../../../../common/components/PointsList';
+import { PointsList } from '../../../../common/components/PointsList';
 import actions from '../../actions';
 import { IconPicker } from '../IconPicker';
 

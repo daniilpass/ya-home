@@ -52,7 +52,7 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
         flexDirection: vertical ? 'column' : 'row',
     }
 
-    const inputProps ={ inputProps: { min, max } };
+    const inputProps = { inputProps: { min, max } };
     return (
         <Box className='point-input' sx={style}>
             <TextField
