@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import { Backdrop, Box } from '@mui/material';
 
 import Loader from '../../common/components/Loader';
@@ -14,6 +14,14 @@ const AppLoader: FC<Props> = ({
     isLoading,
     opacity = 'full',
 }) => {
+    const [display, setDisplay] = useState(true);
+
+    useEffect(() => {
+        if (isLoading) {
+            setDisplay(true);
+        }
+    }, [isLoading]);
+
     return (
         <Backdrop
             sx={{
@@ -22,17 +30,20 @@ const AppLoader: FC<Props> = ({
             }}
             open={isLoading}
             transitionDuration={transitionDuration}
+            onTransitionEnd={() => setDisplay(false)}
             appear={false}
         >
-            <Box sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <Loader color='white' />
-            </Box>
+            {display && (
+                <Box sx={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <Loader color='white' />
+                </Box>
+            )}
         </Backdrop>
     )
 }
