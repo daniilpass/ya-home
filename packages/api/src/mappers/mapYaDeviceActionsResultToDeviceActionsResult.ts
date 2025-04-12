@@ -1,6 +1,6 @@
-import { DeviceActionResult } from '@homemap/shared';
+import type { DeviceActionResult } from '@homemap/shared';
 
-import { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult';
+import type { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult';
 import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
 import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 

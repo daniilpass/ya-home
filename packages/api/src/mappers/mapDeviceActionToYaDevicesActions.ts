@@ -1,5 +1,5 @@
-import { DeviceAction, DeviceState, Entries } from '@homemap/shared';
-import { YaDeviceAction, YaDeviceActions } from '../yaClient/model/YaDeviceActions';
+import type { DeviceAction, DeviceState, Entries } from '@homemap/shared';
+import type { YaDeviceAction, YaDeviceActions } from '../yaClient/model/YaDeviceActions';
 import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
 import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 

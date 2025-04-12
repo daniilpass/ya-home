@@ -1,6 +1,7 @@
-import { Device, DeviceSubtypes, DeviceTypes } from '@homemap/shared';
+import type { Device} from '@homemap/shared';
+import { DeviceSubtypes, DeviceTypes } from '@homemap/shared';
 
-import { YaDevice } from '../yaClient/model/YaDevice';
+import type { YaDevice } from '../yaClient/model/YaDevice';
 import { mapYaCapabilitiesToState } from './mapYaCapabilitiesToState';
 import { mapYaPropertiesToState } from './mapYaPropertiesToState';
 import { mapYaDeviceTypeToDeviceType, mapYaDeviceTypeToSubtype } from './deviceType';

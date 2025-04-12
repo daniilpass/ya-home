@@ -1,8 +1,8 @@
 import { createModel } from '@rematch/core';
 
-import { RootModel } from '../root';
+import type { RootModel } from '../root';
 
-import { DialogSettings, DialogState } from './types';
+import type { DialogSettings, DialogState } from './types';
 
 const INITIAL_STATE: DialogState = {
     active: undefined,

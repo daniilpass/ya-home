@@ -1,6 +1,6 @@
-import { DeviceState } from '../deviceStates';
-import { DeviceTypes } from '../deviceTypes';
-import { DeviceBase } from './DeviceBase';
+import type { DeviceState } from '../deviceStates';
+import type { DeviceTypes } from '../deviceTypes';
+import type { DeviceBase } from './DeviceBase';
 
 export type DeviceUnknown = DeviceBase & {
     type: DeviceTypes.Unknown;

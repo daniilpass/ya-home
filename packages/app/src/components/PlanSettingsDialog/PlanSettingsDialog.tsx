@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { COLORS } from '@homemap/shared';
 
 import { PlanSettingsDialogContent } from './PlanSettingsDialogContent';
-import { DialogValue, DialogProps } from './types';
+import type { DialogValue, DialogProps } from './types';
 
 export const PlanSettingsDialog = ({
     value,

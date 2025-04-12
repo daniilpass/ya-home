@@ -1,8 +1,9 @@
-import {FC, useCallback, useMemo} from 'react';
+import type {FC} from 'react';
+import { useCallback, useMemo} from 'react';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-import { Point } from '@homemap/shared';
+import type { Point } from '@homemap/shared';
 
 import { PointsListItem } from './PointsListItem';
 import './styles.css';

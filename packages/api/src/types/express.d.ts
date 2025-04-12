@@ -1,4 +1,4 @@
-import { RequestUserInfo } from '../services/authService';
+import type { RequestUserInfo } from '../services/authService';
 
 declare global {
     namespace Express {

@@ -1,6 +1,7 @@
-import { Device } from '../devices';
-import { DeviceTypes } from '../deviceTypes/DeviceTypes';
-import { SwitchableDevice, switchableDeviceTypes, SwitchableDeviceTypes } from './SwitchableDevice';
+import type { Device } from '../devices';
+import type { DeviceTypes } from '../deviceTypes/DeviceTypes';
+import type { SwitchableDevice, SwitchableDeviceTypes } from './SwitchableDevice';
+import { switchableDeviceTypes } from './SwitchableDevice';
 
 export const isSwitchableDevice = (device: Device) : device is SwitchableDevice => {
     return isSwitchableDeviceType(device.type);

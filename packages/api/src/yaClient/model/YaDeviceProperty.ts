@@ -1,6 +1,6 @@
-import { YaDevicePropertyParametersEvent, YaDevicePropertyParametersFloat } from './YaDevicePropertyParameters';
-import { YaDevicePropertyState } from './YaDevicePropertyState';
-import { YaDevicePropertyType } from './YaDevicePropertyType';
+import type { YaDevicePropertyParametersEvent, YaDevicePropertyParametersFloat } from './YaDevicePropertyParameters';
+import type { YaDevicePropertyState } from './YaDevicePropertyState';
+import type { YaDevicePropertyType } from './YaDevicePropertyType';
 
 type YaDevicePropertyBase = {
     state: YaDevicePropertyState;

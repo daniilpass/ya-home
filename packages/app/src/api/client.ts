@@ -1,9 +1,9 @@
 
-import { Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
+import type { Collection, Device, DeviceAction, Plan, PlanInfo } from '@homemap/shared';
 
 import {API_BASE_URL} from '../configuration';
 
-import {Endpoint} from './configuration/types';
+import type {Endpoint} from './configuration/types';
 import {DEFAULT_HEADERS, ENDPOINTS} from './configuration';
 
 const requestRaw = async <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {

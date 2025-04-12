@@ -1,4 +1,5 @@
-import { MenuItem as MuiMenuItem, MenuItemProps as MuiMenuItemProps } from '@mui/material';
+import type { MenuItemProps as MuiMenuItemProps } from '@mui/material';
+import { MenuItem as MuiMenuItem } from '@mui/material';
 
 import LoadingButton from '../../../../../../common/components/LoadingButton';
 

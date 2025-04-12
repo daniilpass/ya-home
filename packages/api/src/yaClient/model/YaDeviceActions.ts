@@ -1,4 +1,4 @@
-import { YaDeviceCapability } from './YaDeviceCapability';
+import type { YaDeviceCapability } from './YaDeviceCapability';
 
 export type YaDeviceAction = Omit<YaDeviceCapability, 'state_changed_at'>
 

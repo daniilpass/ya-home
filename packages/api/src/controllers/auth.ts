@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
 import YaService from '../services/yaService';
 import AuthService from '../services/authService';

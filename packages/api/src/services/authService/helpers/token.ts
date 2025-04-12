@@ -1,4 +1,4 @@
-import { ExpiringToken, Token } from '@homemap/shared';
+import type { ExpiringToken, Token } from '@homemap/shared';
 
 import { decryptByClientSecret, encryptByClientSecret } from '../../../utils/crypto';
 

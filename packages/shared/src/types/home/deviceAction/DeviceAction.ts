@@ -1,4 +1,4 @@
-import { DeviceStateKeys } from '../deviceStates';
+import type { DeviceStateKeys } from '../deviceStates';
 
 export type DeviceActionState = Partial<Record<DeviceStateKeys, unknown>>;
 

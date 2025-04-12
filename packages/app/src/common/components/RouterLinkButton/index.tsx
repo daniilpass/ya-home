@@ -1,6 +1,8 @@
-import { Button, ButtonProps } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
+import { Button } from '@mui/material';
 import styled from '@emotion/styled';
-import { Link, LinkProps } from 'react-router-dom';
+import type { LinkProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type RouterLinkButtonProps = Omit<LinkProps, 'LinkComponent'> & ButtonProps;
 

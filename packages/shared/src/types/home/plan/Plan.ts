@@ -1,6 +1,6 @@
-import { Collection } from '../../global';
-import { PlanBackground } from './PlanBackground';
-import { PlanDevice } from './PlanDevice';
+import type { Collection } from '../../global';
+import type { PlanBackground } from './PlanBackground';
+import type { PlanDevice } from './PlanDevice';
 
 export type Plan = {
     id: number;

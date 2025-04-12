@@ -1,12 +1,12 @@
-import {FC} from 'react';
+import type {FC} from 'react';
 import cx from 'classnames';
 
-import { DeviceState, Point } from '@homemap/shared';
+import type { DeviceState, Point } from '@homemap/shared';
 
 import {pointsToPathDirections} from '../../tools';
 import { Substate } from '../../../../services/mapService/model/Substate';
 import {EditActionMove} from '../EditAction';
-import {DragEvent } from '../../hooks/useDrag';
+import type {DragEvent } from '../../hooks/useDrag';
 
 import './styles.css';
 

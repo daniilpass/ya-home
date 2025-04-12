@@ -1,10 +1,13 @@
 import cx from 'classnames';
-import {FC, useCallback, useEffect, useRef } from 'react';
+import type {FC} from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { DeviceState, DeviceTypes, MouseButton, Point, isSwitchableDeviceType, DeviceIconType } from '@homemap/shared';
+import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
+import { DeviceTypes, MouseButton, isSwitchableDeviceType } from '@homemap/shared';
 
 import {useTransformContext} from '../../providers/TransformContextProvider';
-import {DragEvent, useDrag} from '../../hooks/useDrag';
+import type {DragEvent} from '../../hooks/useDrag';
+import { useDrag} from '../../hooks/useDrag';
 import {EditActionMove} from '../EditAction';
 import SwitchableElement from './Switchable';
 import SensorElement from './Sensor';

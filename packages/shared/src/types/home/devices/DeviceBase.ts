@@ -1,4 +1,4 @@
-import { DeviceSubtypes } from '../deviceTypes';
+import type { DeviceSubtypes } from '../deviceTypes';
 
 export type DeviceBase = {
     id: string;

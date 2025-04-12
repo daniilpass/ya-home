@@ -1,9 +1,11 @@
 
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import type { ChangeEvent, SyntheticEvent} from 'react';
+import { useState } from 'react';
 import { Box, Button, DialogContent, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, MAX_IMAGE_WIDTH_PX, MAX_PLAN_SIDE_PX, Point, Size } from '@homemap/shared';
+import type { Point, Size } from '@homemap/shared';
+import { MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB, MAX_IMAGE_WIDTH_PX, MAX_PLAN_SIDE_PX } from '@homemap/shared';
 
 import PointInput from '../../common/components/PointInput';
 import ColorPickerButton from '../../common/components/ColorPickerButton';
@@ -14,7 +16,7 @@ import { useDispatch } from '../../store/hooks';
 import { PropertiesGroup } from '../FormProperties/PropertiesGroup';
 
 import { isValidImage } from '../../utils/image';
-import { DialogContentProps } from './types';
+import type { DialogContentProps } from './types';
 
 export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProps) => {
     const [backgroundNaturalSize, setBackgroundNaturalSize] = useState<Size>();

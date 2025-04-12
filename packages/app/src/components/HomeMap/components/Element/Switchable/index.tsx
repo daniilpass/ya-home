@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import cx from 'classnames'
 
-import { DeviceState, Point, DeviceIconType } from '@homemap/shared';
+import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 
 import {Substate} from '../../../../../services/mapService/model/Substate';
 import {useTransformContext} from '../../../providers/TransformContextProvider';

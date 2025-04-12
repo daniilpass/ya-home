@@ -1,9 +1,9 @@
 import {logger} from '../../common/tools';
 
-import {Element} from './model/Element';
+import type {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import {SYNC_TYMEOUT, STATE_SYNCED} from './constants';
-import { Collection, Device } from '@homemap/shared';
+import type { Collection, Device } from '@homemap/shared';
 import { stateIsEqual } from './helpers';
 
 class MapState {

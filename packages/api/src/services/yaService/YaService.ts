@@ -1,12 +1,12 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 
-import { Collection, Device, DeviceAction, DeviceActionResult, Token } from '@homemap/shared';
+import type { Collection, Device, DeviceAction, DeviceActionResult, Token } from '@homemap/shared';
 import { YaClient } from '../../yaClient';
-import { YaLoginInfo } from '../../yaClient/model/YaLoginInfo';
-import { YaUserInfoResponse } from '../../yaClient/model/responses/YaUserInfoResponse';
+import type { YaLoginInfo } from '../../yaClient/model/YaLoginInfo';
+import type { YaUserInfoResponse } from '../../yaClient/model/responses/YaUserInfoResponse';
 import { mapDeviceActionToYaDevicesActions, mapToRecord, mapYaDeviceActionsResultToDeviceActionsResult, mapYaDeviceToDevice } from '../../mappers';
-import { YaDevicesActionsRequest } from '../../yaClient/model/requests/YaDevicesActionsRequest';
-import { YaDevicesActionsResponse } from '../../yaClient/model/responses/YaDevicesActionsResponse';
+import type { YaDevicesActionsRequest } from '../../yaClient/model/requests/YaDevicesActionsRequest';
+import type { YaDevicesActionsResponse } from '../../yaClient/model/responses/YaDevicesActionsResponse';
 import { cache } from '../../utils/cache';
 
 export class YaService {

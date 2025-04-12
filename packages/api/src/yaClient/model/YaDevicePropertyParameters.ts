@@ -1,5 +1,5 @@
-import { YaDevicePropertyInstance } from './YaDevicePropertyInstance';
-import { YaDeviceUnit } from './YaDeviceUnit';
+import type { YaDevicePropertyInstance } from './YaDevicePropertyInstance';
+import type { YaDeviceUnit } from './YaDeviceUnit';
 
 export type YaDevicePropertyParametersFloat = {
     instance: YaDevicePropertyInstance;

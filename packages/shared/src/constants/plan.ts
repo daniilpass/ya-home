@@ -1,4 +1,4 @@
-import { Plan } from '../types';
+import type { Plan } from '../types';
 
 export const DEFAULT_PLAN: Plan = {
     id: 0,

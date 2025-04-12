@@ -1,13 +1,14 @@
+import type {
+    DeviceStateType,
+    DeviceIconType} from '@homemap/shared';
 import { 
     DeviceStateKeys,
-    DeviceStateType,
     DeviceSubtypes,
     DeviceTypes,
     DeviceUnits,
     MotionValue,
     UNICODE,
-    deviceIcons,
-    DeviceIconType,
+    deviceIcons
 } from '@homemap/shared';
 
 import { defaultSensorColor, recentMotionIntervalMs } from './constants';

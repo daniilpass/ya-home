@@ -1,4 +1,4 @@
-import { DeviceState } from '../deviceStates';
+import type { DeviceState } from '../deviceStates';
 
 type DeviceActionStatus = {
     [K in keyof DeviceState]: 'DONE' | 'ERROR';

@@ -1,5 +1,6 @@
-import { CreationOptional, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { Plan, PlanInfo } from '@homemap/shared';
+import type { CreationOptional, InferAttributes, InferCreationAttributes} from 'sequelize';
+import { Model } from 'sequelize';
+import type { Plan, PlanInfo } from '@homemap/shared';
 
 import MediaStorage from '../../services/mediaStorage';
 

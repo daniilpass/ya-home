@@ -17,6 +17,7 @@ export default defineConfig([
             'react/react-in-jsx-scope': 'off',
             '@typescript-eslint/no-unused-vars': 'error',
             '@typescript-eslint/ban-ts-comment': 'off',
+            '@typescript-eslint/consistent-type-imports': 'error',
             'quotes': [2, 'single', { 'avoidEscape': true }],
             'jsx-quotes': [2, 'prefer-double'],
         }

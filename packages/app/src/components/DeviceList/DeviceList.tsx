@@ -1,8 +1,8 @@
-import { MouseEvent as ReactMouseEvent } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
 import { List } from '@mui/material'
 
 import DeviceListItem from './DeviceListItem';
-import { DeviceListProps } from './types';
+import type { DeviceListProps } from './types';
 
 const DeviceList = ({ items, selectedItemId, withTooltip, onItemClick, sx }: DeviceListProps) => {
     const handleItemClick = (id: string, event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {

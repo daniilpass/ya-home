@@ -1,5 +1,5 @@
 import { uuid } from '../../../utils/uuid';
-import { UserFile } from '../types/UserFile';
+import type { UserFile } from '../types/UserFile';
 
 import { createUserDir, mimeToExtension, writeUserFile } from './fs';
 import { metaToBuffer } from './meta';

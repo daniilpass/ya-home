@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { Bounds, DeviceTypes, PlanDevice, Point } from '@homemap/shared';
-import { deviceIcons, DeviceIconType } from '@homemap/shared';
+import type { Bounds, PlanDevice, Point } from '@homemap/shared';
+import { DeviceTypes } from '@homemap/shared';
+import type { DeviceIconType } from '@homemap/shared';
+import { deviceIcons } from '@homemap/shared';
 
 import { PropertiesGroup } from '../../../../components/FormProperties/PropertiesGroup';
 import PointInput from '../../../../common/components/PointInput';

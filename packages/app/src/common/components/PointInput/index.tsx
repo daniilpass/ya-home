@@ -1,7 +1,8 @@
-import { ChangeEvent, FC} from 'react';
-import { Box, SxProps, TextField, Theme } from '@mui/material';
+import type { ChangeEvent, FC} from 'react';
+import type { SxProps, Theme } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 
-import { Point } from '@homemap/shared';
+import type { Point } from '@homemap/shared';
 
 type Props = {
     value: Point;

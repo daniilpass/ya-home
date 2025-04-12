@@ -1,4 +1,4 @@
-import { PlanBackground } from './PlanBackground';
+import type { PlanBackground } from './PlanBackground';
 
 export type PlanInfo = {
     id: number;

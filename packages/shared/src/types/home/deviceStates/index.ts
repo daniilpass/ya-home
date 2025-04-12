@@ -1,5 +1,5 @@
-import { DeviceUnits } from '../DeviceUnits';
-import { MotionValue } from './types';
+import type { DeviceUnits } from '../DeviceUnits';
+import type { MotionValue } from './types';
 
 export { MotionValue } from './types';
 

@@ -1,4 +1,4 @@
-import { DeviceStateKeys, DeviceStateType } from '@homemap/shared';
+import type { DeviceStateKeys, DeviceStateType } from '@homemap/shared';
 
 import { THIN_SPACE } from '../../../../../constants/symbols';
 import { DeviceIcon } from '../../../../DeviceIcon';

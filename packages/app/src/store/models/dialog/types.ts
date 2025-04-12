@@ -1,4 +1,4 @@
-import { DialogProps } from '../../../common/components/Dialog';
+import type { DialogProps } from '../../../common/components/Dialog';
 
 export type DialogSettings = Pick<DialogProps, 'content' | 'open'> & {
     type: 'error' | 'crash';

@@ -1,5 +1,6 @@
-import {FC} from 'react';
-import { SvgIcon, SvgIconOwnProps } from '@mui/material';
+import type {FC} from 'react';
+import type { SvgIconOwnProps } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 
 import './style.css';
 

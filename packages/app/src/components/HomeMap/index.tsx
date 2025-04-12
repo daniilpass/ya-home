@@ -1,7 +1,8 @@
-import {
+import type {
     CSSProperties,
     FC,
-    SyntheticEvent,
+    SyntheticEvent} from 'react';
+import {
     useCallback,
     useEffect,
     useMemo,
@@ -10,15 +11,15 @@ import {
 } from 'react';
 import cx from 'classnames';
 
-import { Plan, PlanDevice, Point } from '@homemap/shared';
-import { Element } from '../../services/mapService/model/Element';
+import type { Plan, PlanDevice, Point } from '@homemap/shared';
+import type { Element } from '../../services/mapService/model/Element';
 import { useResize } from './hooks/useResize';
 import ElementGroup from './components/ElementGroup';
 import { useDispatch } from '../../store/hooks';
 
 import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
-import { DragEvent } from './hooks/useDrag';
+import type { DragEvent } from './hooks/useDrag';
 import { normilizePosition } from './tools';
 
 export type MapTransform = {

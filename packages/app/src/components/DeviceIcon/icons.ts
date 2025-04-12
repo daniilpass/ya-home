@@ -13,7 +13,8 @@ import WbIridescentIcon from '@mui/icons-material/WbIridescent';
 import WindPowerIcon from '@mui/icons-material/WindPower';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 
-import { deviceIcons, DeviceIconType } from '@homemap/shared';
+import type { DeviceIconType } from '@homemap/shared';
+import { deviceIcons } from '@homemap/shared';
 
 type IconsType = {
     [key in DeviceIconType]: unknown

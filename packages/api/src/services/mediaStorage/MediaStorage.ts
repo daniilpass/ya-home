@@ -1,4 +1,4 @@
-import { UserFile } from './types/UserFile';
+import type { UserFile } from './types/UserFile';
 import { assertImage, assertMediaId, deleteUserFile, findUserFile, imageFromBuffer, saveUserFile } from './helpers';
 
 const saveMedia = async (userId: string, file: UserFile): Promise<string> => {

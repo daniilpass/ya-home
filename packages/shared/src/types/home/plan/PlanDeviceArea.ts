@@ -1,4 +1,4 @@
-import { Point } from '../../geom';
+import type { Point } from '../../geom';
 
 export type PlanDeviceArea = {
     bulbsLinePoints?: Point[];

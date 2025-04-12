@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { ListItemButton, ListItemText, Tooltip, } from '@mui/material';
 
 import { deviceTypeToName } from '../../utils/device';
-import { DeviceListItemProps } from './types';
+import type { DeviceListItemProps } from './types';
 
 const DeviceListItem = ({ item, selected, withTooltip, onClick }: DeviceListItemProps) => {
     const itemComponent = useMemo(() => (

@@ -1,7 +1,7 @@
 import DialogComponent from '../../common/components/Dialog';
 import { useDispatch } from '../../store/hooks';
 
-import { DialogProps } from './types';
+import type { DialogProps } from './types';
 
 const ErrorDialog = ({ dialog }: DialogProps) => {
     const dispatch = useDispatch();

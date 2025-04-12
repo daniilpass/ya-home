@@ -1,4 +1,4 @@
-import { RgbColor  } from 'react-colorful';
+import type { RgbColor  } from 'react-colorful';
 
 const colorThreshold = 255 / 2;
 

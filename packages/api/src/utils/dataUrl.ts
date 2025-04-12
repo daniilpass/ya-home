@@ -1,4 +1,4 @@
-import { UserFile } from '../services/mediaStorage/types/UserFile';
+import type { UserFile } from '../services/mediaStorage/types/UserFile';
 
 const dataUrlBase64Regex = /^(data){1}:(?<mime>[a-zA-Z/]+){1};(base64),(?<data>.*)/;
 

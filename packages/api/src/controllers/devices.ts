@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-import { Collection, Device, DeviceActionResult } from '@homemap/shared';
+import type { Collection, Device, DeviceActionResult } from '@homemap/shared';
 
 import YaService from '../services/yaService';
 import ValidationService from '../services/validationService';

@@ -1,4 +1,4 @@
-import { Point } from '@homemap/shared';
+import type { Point } from '@homemap/shared';
 
 enum SVG_PATH_ACTIONS {
     MOVE_TO = 'M',

@@ -1,4 +1,4 @@
-import { AlertProps } from '../../../common/components/Alert';
+import type { AlertProps } from '../../../common/components/Alert';
 
 export type AlertSettings = 
     & Pick<AlertProps, 'severity' | 'variant'> 

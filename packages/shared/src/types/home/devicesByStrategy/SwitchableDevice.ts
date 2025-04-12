@@ -1,5 +1,5 @@
-import { DeviceBase } from '../devices/DeviceBase';
-import { DeviceStateOnOf } from '../deviceStates';
+import type { DeviceBase } from '../devices/DeviceBase';
+import type { DeviceStateOnOf } from '../deviceStates';
 import { DeviceTypes } from '../deviceTypes/DeviceTypes';
 
 export const switchableDeviceTypes = [

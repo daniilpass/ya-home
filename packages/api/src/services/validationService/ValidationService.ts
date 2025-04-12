@@ -1,4 +1,5 @@
-import { DeviceAction, Plan, schemas } from '@homemap/shared';
+import type { DeviceAction, Plan} from '@homemap/shared';
+import { schemas } from '@homemap/shared';
 
 import { jsonValidator } from '../../utils/jsonValidator';
 import { SchemaValidationError } from '../../errors';

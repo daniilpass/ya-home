@@ -1,6 +1,7 @@
-import {FC, ReactNode} from 'react'
+import type {FC, ReactNode} from 'react'
 
-import {State, TransformContext} from './context';
+import type {State} from './context';
+import { TransformContext} from './context';
 
 type Props = {
     value: State,

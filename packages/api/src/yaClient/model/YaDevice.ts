@@ -1,6 +1,6 @@
-import { YaDeviceCapability } from './YaDeviceCapability';
-import { YaDeviceProperty } from './YaDeviceProperty';
-import { YaDeviceType } from './YaDeviceType';
+import type { YaDeviceCapability } from './YaDeviceCapability';
+import type { YaDeviceProperty } from './YaDeviceProperty';
+import type { YaDeviceType } from './YaDeviceType';
 
 export type YaDevice = {
     id: string;

@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-import { Collection, Plan, PlanInfo } from '@homemap/shared';
+import type { Collection, Plan, PlanInfo } from '@homemap/shared';
 
 import PlanService from '../services/planService';
 import ValidationService from '../services/validationService';

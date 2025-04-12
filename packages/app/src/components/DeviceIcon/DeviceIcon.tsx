@@ -1,6 +1,7 @@
-import { FC } from 'react';
-import { SxProps, Theme } from '@mui/material';
-import { deviceIcons, DeviceIconType } from '@homemap/shared';
+import type { FC } from 'react';
+import type { SxProps, Theme } from '@mui/material';
+import type { DeviceIconType } from '@homemap/shared';
+import { deviceIcons } from '@homemap/shared';
 
 import { Icons } from './icons';
 

@@ -1,5 +1,5 @@
 
-import { DeviceState } from '@homemap/shared';
+import type { DeviceState } from '@homemap/shared';
 
 // Compare meaningful  properties of state
 export const stateIsEqual = (elementState: DeviceState | undefined, deviceState: DeviceState) => {

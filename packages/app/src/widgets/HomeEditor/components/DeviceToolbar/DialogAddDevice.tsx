@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 
-import { Collection, Device, DeviceTypes, PlanDevice } from '@homemap/shared';
+import type { Collection, Device, PlanDevice } from '@homemap/shared';
+import { DeviceTypes } from '@homemap/shared';
 
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'

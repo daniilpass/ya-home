@@ -1,7 +1,7 @@
 import { Jimp } from 'jimp';
 
 import { AppError } from '../../../errors';
-import { FileImage } from '../types/FileImage';
+import type { FileImage } from '../types/FileImage';
 
 const errorUnsupportedImage = 'Unsupported image';
 const errorCantReadImage = "Can't read image";

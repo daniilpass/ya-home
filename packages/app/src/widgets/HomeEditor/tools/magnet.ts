@@ -1,4 +1,4 @@
-import { Point, PlanDevice } from '@homemap/shared';
+import type { Point, PlanDevice } from '@homemap/shared';
 
 const MAGNET_RADIUS = 10;
 

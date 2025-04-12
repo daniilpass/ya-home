@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 
-import { ExpiringToken } from '@homemap/shared';
+import type { ExpiringToken } from '@homemap/shared';
 
 import { JWT_MAX_AGE, YAPI_CLIENT_SECRET } from '../../../constants';
-import { UserJwt } from '../types';
+import type { UserJwt } from '../types';
 
 export function signJWT(userInfo: UserJwt): ExpiringToken {
     return {

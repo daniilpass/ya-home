@@ -6,7 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { Bounds, Collection, COLORS, Device, PlanDevice } from '@homemap/shared';
+import type { Bounds, Collection, Device, PlanDevice } from '@homemap/shared';
+import { COLORS } from '@homemap/shared';
 
 import DeviceProperties from '../DeviceProperties'
 import Toolbar from '../../../../common/components/Toolbar';

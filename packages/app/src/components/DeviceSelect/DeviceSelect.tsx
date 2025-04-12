@@ -1,7 +1,8 @@
-import { ListItemText, MenuItem, Select, SelectChangeEvent, SelectProps } from '@mui/material'
-import { Collection } from '@homemap/shared';
+import type { SelectChangeEvent, SelectProps } from '@mui/material';
+import { ListItemText, MenuItem, Select } from '@mui/material'
+import type { Collection } from '@homemap/shared';
 
-import { DeviceSelectItem } from './types';
+import type { DeviceSelectItem } from './types';
 import { memo, useCallback, useMemo } from 'react';
 import { deviceTypeToName } from '../../utils/device';
 

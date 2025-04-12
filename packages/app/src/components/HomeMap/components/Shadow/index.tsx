@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
-import { DeviceState, Point } from '@homemap/shared';
+import type { DeviceState, Point } from '@homemap/shared';
 
-import { DragEvent } from '../../hooks/useDrag';
+import type { DragEvent } from '../../hooks/useDrag';
 import { EditActionMove } from '../EditAction';
 
 import './styles.css';

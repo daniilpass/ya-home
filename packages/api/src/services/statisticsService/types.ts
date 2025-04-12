@@ -1,4 +1,4 @@
-import { StatUserRequest } from '../../dal/entities/StatUserRequest';
+import type { StatUserRequest } from '../../dal/entities/StatUserRequest';
 
 export type UserRequestInfo = Pick<StatUserRequest,
    | 'userId'

@@ -1,4 +1,4 @@
-import { Bounds, PlanDevice, Point } from '@homemap/shared';
+import type { Bounds, PlanDevice, Point } from '@homemap/shared';
 
 import { ELEMENT_RADIUS } from '../../../components/HomeMap/constants';
 import { applyPositionDiff, getMagnetPoints, getNewPointsForLine, limitPosition, limitPositions } from '../tools';

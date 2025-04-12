@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "npx tsc --build",
-    "lint": "npx eslint"
+    "lint": "npx eslint",
+    "lint-fix": "npx eslint --fix"
   }
 }

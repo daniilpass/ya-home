@@ -1,4 +1,4 @@
-import { FileMeta } from '../types/FileMeta';
+import type { FileMeta } from '../types/FileMeta';
 
 const metaToArray = (fileMeta: FileMeta) => [
     fileMeta.mime,

@@ -1,4 +1,4 @@
-import { Collection, Plan, PlanInfo } from '@homemap/shared';
+import type { Collection, Plan, PlanInfo } from '@homemap/shared';
 
 import { PlanRepository } from '../../dal/repositories';
 import { AppError, NotFoundError } from '../../errors';

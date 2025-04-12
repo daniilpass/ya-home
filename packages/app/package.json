@@ -32,7 +32,8 @@
     "build": "tsc -b && vite build",
     "start-demo": "tsc -b && cross-env VITE_APP_DEMO=true vite",
     "build-demo": "tsc -b && cross-env VITE_APP_DEMO=true vite build",
-    "lint": "npx eslint"
+    "lint": "npx eslint",
+    "lint-fix": "npx eslint --fix"
   },
   "eslintConfig": {
     "extends": [

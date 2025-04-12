@@ -1,4 +1,4 @@
-import { Point, Bounds,  Offset } from '@homemap/shared';
+import type { Point, Bounds,  Offset } from '@homemap/shared';
 
 export const limitPosition = ([x, y]: Point, bounds: Partial<Bounds>): Point => {
     const maxX = bounds.right ?? Number.POSITIVE_INFINITY;

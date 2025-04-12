@@ -1,6 +1,7 @@
 
 
-import { ChangeEvent, useRef, useState } from 'react';
+import type { ChangeEvent} from 'react';
+import { useRef, useState } from 'react';
 
 import { Divider, IconButton, Menu } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -12,7 +13,8 @@ import { COLORS } from '@homemap/shared';
 
 import ExportIcon from '../../../../common/components/Icons/ExportIcon';
 
-import { PlanActionsEnum, EditorTopbarProps } from './types'
+import type { EditorTopbarProps } from './types';
+import { PlanActionsEnum } from './types'
 import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
 import { MenuItem } from './components/Menu';
 

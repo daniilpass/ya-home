@@ -1,7 +1,7 @@
 import DialogComponent from '../../common/components/Dialog';
 import { routes } from '../../app/router';
 
-import { DialogProps } from './types';
+import type { DialogProps } from './types';
 
 const CrashDialog = ({ dialog }: DialogProps) => {
     const handleSubmit = () => {

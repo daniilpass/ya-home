@@ -1,7 +1,7 @@
-import { MouseEvent as ReactMouseEvent } from 'react';
-import { ListProps } from '@mui/material';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import type { ListProps } from '@mui/material';
 
-import { Collection, Device } from '@homemap/shared';
+import type { Collection, Device } from '@homemap/shared';
 
 export type onDeviceListItemClick = (id: string, event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void
 

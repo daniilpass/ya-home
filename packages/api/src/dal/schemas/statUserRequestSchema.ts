@@ -1,4 +1,5 @@
-import { DataTypes, ModelAttributes } from 'sequelize';
+import type { ModelAttributes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 export const statUserRequestSchema: ModelAttributes = {
     id: {

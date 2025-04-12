@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material'
 
-import { DEFAULT_PLAN, Plan } from '@homemap/shared';
+import type { Plan } from '@homemap/shared';
+import { DEFAULT_PLAN } from '@homemap/shared';
 
-import { PlanSettingsDialog, DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import type { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { PlanSettingsDialog } from '../../components/PlanSettingsDialog';
 import { routes } from '../../app/router';
 import ApiClient from '../../api';
 import { store } from '../../store';

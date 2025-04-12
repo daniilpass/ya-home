@@ -1,4 +1,4 @@
-import { Point } from '@homemap/shared';
+import type { Point } from '@homemap/shared';
 
 const getNormilizedDirection = (p1: Point, p2: Point): Point => {
     const vector = [p1[0] - p2[0], p1[1] - p2[1]];

@@ -3,7 +3,7 @@ import { STAT_BATCH_SIZE, STAT_FLUSH_INTERVAL } from '../../constants';
 import { StatUserRequest } from '../../dal/entities';
 import { logger } from '../../utils';
 import { getErrorMessage } from '../../utils/errors';
-import { UserRequestInfo } from './types';
+import type { UserRequestInfo } from './types';
 
 export class StatisticsService {
     private userRequestBatch: FlushableCollection<UserRequestInfo>;

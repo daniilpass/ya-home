@@ -1,4 +1,5 @@
-import { Alert as MuiAlert, AlertProps as MuiAlertProps, Snackbar, SnackbarCloseReason } from '@mui/material';
+import type { AlertProps as MuiAlertProps, SnackbarCloseReason } from '@mui/material';
+import { Alert as MuiAlert, Snackbar } from '@mui/material';
 
 export type AlertProps = {
     content?: string;

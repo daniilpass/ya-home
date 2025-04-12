@@ -1,4 +1,4 @@
-import { YaDeviceCapabilityInstance } from './YaDeviceCapabilityInstance';
+import type { YaDeviceCapabilityInstance } from './YaDeviceCapabilityInstance';
 
 type YaDeviceCapabilityStateActionResult = {
     status: 'DONE' | 'ERROR';

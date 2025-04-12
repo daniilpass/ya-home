@@ -1,4 +1,4 @@
-import { Plan } from '@homemap/shared';
+import type { Plan } from '@homemap/shared';
 
 export type DialogValue= Pick<Plan, 'width' | 'height' | 'background'>;
 

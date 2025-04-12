@@ -1,11 +1,12 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 import { YAPI_CLIENT_ID, YAPI_CLIENT_SECRET, YAPI_IOT_BASE_URL, YAPI_LOGIN_BASE_URL, YAPI_OAUTH_BASE_URL, YAPI_OAUTH_REDIRECT_URL } from '../constants';
-import { YaUserInfoResponse } from './model/responses/YaUserInfoResponse';
-import { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest';
-import { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse';
-import { YaTokenResponse } from './model/responses/YaTokenResponse';
-import { YaLoginInfo } from './model/YaLoginInfo';
+import type { YaUserInfoResponse } from './model/responses/YaUserInfoResponse';
+import type { YaDevicesActionsRequest } from './model/requests/YaDevicesActionsRequest';
+import type { YaDevicesActionsResponse } from './model/responses/YaDevicesActionsResponse';
+import type { YaTokenResponse } from './model/responses/YaTokenResponse';
+import type { YaLoginInfo } from './model/YaLoginInfo';
 import { logger } from '../utils';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
 import { BadRequestError } from '../errors';

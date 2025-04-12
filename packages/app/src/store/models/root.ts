@@ -1,4 +1,4 @@
-import { Models } from '@rematch/core';
+import type { Models } from '@rematch/core';
 
 import { alerts } from './alert';
 import { dialog } from './dialog';

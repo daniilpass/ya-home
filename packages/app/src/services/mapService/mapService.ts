@@ -1,4 +1,5 @@
-import { Collection, isSwitchableDeviceType } from '@homemap/shared';
+import type { Collection} from '@homemap/shared';
+import { isSwitchableDeviceType } from '@homemap/shared';
 
 import { Logger } from '../../common/tools';
 import ApiClient from '../../api';
@@ -6,7 +7,7 @@ import {API_POLL_INTERVAL, API_SYNC_TIMEOUT} from '../../configuration';
 
 import MapState from './mapState';
 import {UNKNOWN_STATE} from './constants';
-import {Element} from './model/Element';
+import type {Element} from './model/Element';
 import {Substate} from './model/Substate';
 import { store } from '../../store';
 import { PollingState } from './types';

@@ -9,7 +9,8 @@ import LoadingButton from '../../../../common/components/LoadingButton';
 import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 import { EditorTopbarMenu } from './EditorTopbarMenu';
-import { EditorTopbarProps, PlanActionsEnum, } from './types'
+import type { EditorTopbarProps} from './types';
+import { PlanActionsEnum, } from './types'
 import './EditorTopbar.css';
 
 export const EditorTopbar = ({ actionsInProgress, onItemClick }: EditorTopbarProps) => {

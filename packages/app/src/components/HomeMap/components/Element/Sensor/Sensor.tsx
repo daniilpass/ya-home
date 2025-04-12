@@ -1,4 +1,5 @@
-import { DeviceState, DeviceStateKeys, DeviceStateType, Point, deviceIcons } from '@homemap/shared';
+import type { DeviceState, DeviceStateKeys, DeviceStateType, Point} from '@homemap/shared';
+import { deviceIcons } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
 import { DeviceIcon } from '../../../../DeviceIcon';

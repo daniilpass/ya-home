@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Plan } from '@homemap/shared';
+import type { Plan } from '@homemap/shared';
 
 import { useMapService } from '../../hooks/useMapService';
 import AppLoader from '../../components/AppLoader';

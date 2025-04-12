@@ -1,13 +1,14 @@
-import {FC, useCallback} from 'react';
+import type {FC} from 'react';
+import { useCallback} from 'react';
 import cx from 'classnames';
 
-import { PlanDevice, DeviceIconType } from '@homemap/shared';
+import type { PlanDevice, DeviceIconType } from '@homemap/shared';
 
-import { Element } from '../../../../services/mapService/model/Element';
+import type { Element } from '../../../../services/mapService/model/Element';
 import Shadow from '../Shadow';
 import BulbsLine from '../BulbsLine';
 import ElementComponent from '../Element';
-import { DragEvent } from '../../hooks/useDrag';
+import type { DragEvent } from '../../hooks/useDrag';
 
 import './style.css';
 

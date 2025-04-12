@@ -3,7 +3,7 @@ import { MAX_IMAGE_HEIGHT_PX, MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_WIDTH_PX } from '@
 import { AppError } from '../../../errors';
 import { uuid } from '../../../utils/uuid';
 import { SUPPORTED_IMAGE_MIME } from '../constants';
-import { FileImage } from '../types/FileImage';
+import type { FileImage } from '../types/FileImage';
 
 export const assertMediaId = (mediaId: string) => {
     if (!uuid.validate(mediaId)) {

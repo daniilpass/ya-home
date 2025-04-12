@@ -1,4 +1,4 @@
-import { UserFile } from '../types/UserFile';
+import type { UserFile } from '../types/UserFile';
 
 import { readUserFile } from './fs';
 import { metaFromBuffer } from './meta';

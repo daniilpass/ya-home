@@ -1,22 +1,27 @@
-import {useEffect, useState, useMemo, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react';
+import type { MouseEvent as ReactMouseEvent} from 'react';
+import {useEffect, useState, useMemo, useCallback, useRef} from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import { Bounds, Collection, Device, DeviceTypes, Plan, PlanDevice, Point } from '@homemap/shared';
+import type { Bounds, Collection, Device, Plan, PlanDevice, Point } from '@homemap/shared';
+import { DeviceTypes } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
-import HomeMap, { MapTransform } from '../../components/HomeMap';
+import type { MapTransform } from '../../components/HomeMap';
+import HomeMap from '../../components/HomeMap';
 import ApiClient from '../../api';
 import { useDispatch } from '../../store/hooks';
 import { routes } from '../../app/router';
-import { PlanSettingsDialog, DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import type { DialogValue as PlanSettingsValue } from '../../components/PlanSettingsDialog';
+import { PlanSettingsDialog } from '../../components/PlanSettingsDialog';
 import { getDeviceDefaultIcon } from '../../utils/device';
 
 import actions from './actions';
 import { exportPlan, importPlan, toRelativePosition } from './tools';
 import UnsavedChangesDialog from './components/UnsavedChangesDIalog';
 import { DeviceToolbar } from './components/DeviceToolbar';
-import { EditorTopbar,PlanActionsEnum, PlanActionEvent  } from './components/EditorTopbar';
+import type { PlanActionEvent  } from './components/EditorTopbar';
+import { EditorTopbar,PlanActionsEnum  } from './components/EditorTopbar';
 
 import { LinearProgress } from './components/LinearProgress';
 import './style.css';

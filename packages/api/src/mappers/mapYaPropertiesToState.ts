@@ -1,6 +1,7 @@
-import { DeviceState, DeviceUnits, MotionValue } from '@homemap/shared';
+import type { DeviceState, MotionValue } from '@homemap/shared';
+import { DeviceUnits } from '@homemap/shared';
 
-import { YaDeviceProperty, YaDevicePropertyEvent, YaDevicePropertyFloat } from '../yaClient/model/YaDeviceProperty';
+import type { YaDeviceProperty, YaDevicePropertyEvent, YaDevicePropertyFloat } from '../yaClient/model/YaDeviceProperty';
 import { YaDevicePropertyType } from '../yaClient/model/YaDevicePropertyType';
 import { YaDevicePropertyInstance } from '../yaClient/model/YaDevicePropertyInstance';
 import { mapYaDeviceUnitToDeviceUnit } from './mapYaDeviceUnitToDeviceUnit';

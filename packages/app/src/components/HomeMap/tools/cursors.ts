@@ -1,4 +1,4 @@
-import { Property } from 'csstype';
+import type { Property } from 'csstype';
 
 export const setCursor = (cursor: Property.Cursor) => {
     document.body.style.cursor = cursor;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Collection, PlanInfo } from '@homemap/shared';
+import type { Collection, PlanInfo } from '@homemap/shared';
 
 import ApiClient from '../../api';
 import AppLoader from '../../components/AppLoader';

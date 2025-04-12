@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef} from 'react';
 import { COLORS } from '@homemap/shared';
 
 import { EDIT_ACTION_SIZE } from '../../../constants';
-import { useDrag, DragEvent } from '../../../hooks/useDrag';
+import type { DragEvent } from '../../../hooks/useDrag';
+import { useDrag } from '../../../hooks/useDrag';
 
 import './styles.css';
 
