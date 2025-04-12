@@ -28,7 +28,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "tsc -b && vite build",
     "start-demo": "tsc -b && cross-env VITE_APP_DEMO=true vite",
     "build-demo": "tsc -b && cross-env VITE_APP_DEMO=true vite build",

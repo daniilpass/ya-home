@@ -24,6 +24,7 @@ import TransformContextProvider from './providers/TransformContextProvider';
 import './style.css';
 import type { DragEvent } from './hooks/useDrag';
 import { normilizePosition } from './tools';
+import { Canvas } from './canvasRenderer';
 
 export type MapTransform = {
     scale: number;
@@ -36,7 +37,7 @@ export type Props = {
     background: Plan['background'];
     width: Plan['width'];
     height: Plan['height'];
-    elements?: Record<string, PlanDevice>;
+    elements?: Plan['devices'];
     editableElement?: PlanDevice;
     editElementDrag?: boolean;
     isEditorMode?: boolean;
@@ -121,6 +122,8 @@ const HomeMap: FC<Props> = ({
             naturalWidth: width,
             naturalHeight: height,
         });
+
+    useEffect(() => onReady?.(), [])
 
     const handleBackgroundReady = useCallback(() => {
         if (isBackgroundReadyRef.current) {
@@ -263,12 +266,12 @@ const HomeMap: FC<Props> = ({
     }, [elements, editableElementId]);
 
     const wrapperStyle: CSSProperties = {
-        backgroundColor: background.color,
+        // backgroundColor: background.color,
         ...styles?.wrapper,
     };
 
     const layoutStyle: CSSProperties = {
-        backgroundColor: background.color,
+        // backgroundColor: background.color,
         transform: `scale(${scale}) rotate(${rotate}deg) translate(${translate[0]}px, ${translate[1]}px)`,
         width: width,
         height: height,
@@ -283,51 +286,53 @@ const HomeMap: FC<Props> = ({
     }, classes?.layout);
 
 
-    const sortedElemensDOM = useMemo(() => sortedElements.map(([id, element]) => (
-        <ElementGroup
-            key={id}
-            element={element}
-            data={data?.[id]}
-            isEditMode={id === editableElementId}
-            selectable={isEditorMode}
-            onElementClick={handleElementClick}
-            onElementDrag={handleElementDrag}
-            onElementDragEnd={handleElementDragEnd}
-            onBulbsLinePointDrag={handleBulbsLinePointDrag}
-            onShadowPointDrag={handleShadowPointDrag}
-            onShadowMaskPointDrag={handleShadowMaskPointDrag}
-        />
-    )), [
-        data, editableElementId, isEditorMode, sortedElements,
-        handleBulbsLinePointDrag,
-        handleElementClick,
-        handleElementDrag,
-        handleElementDragEnd,
-        handleShadowMaskPointDrag,
-        handleShadowPointDrag, 
-    ]);
+    // const sortedElemensDOM = useMemo(() => sortedElements.map(([id, element]) => (
+    //     <ElementGroup
+    //         key={id}
+    //         element={element}
+    //         data={data?.[id]}
+    //         isEditMode={id === editableElementId}
+    //         selectable={isEditorMode}
+    //         onElementClick={handleElementClick}
+    //         onElementDrag={handleElementDrag}
+    //         onElementDragEnd={handleElementDragEnd}
+    //         onBulbsLinePointDrag={handleBulbsLinePointDrag}
+    //         onShadowPointDrag={handleShadowPointDrag}
+    //         onShadowMaskPointDrag={handleShadowMaskPointDrag}
+    //     />
+    // )), [
+    //     data, editableElementId, isEditorMode, sortedElements,
+    //     handleBulbsLinePointDrag,
+    //     handleElementClick,
+    //     handleElementDrag,
+    //     handleElementDragEnd,
+    //     handleShadowMaskPointDrag,
+    //     handleShadowPointDrag, 
+    // ])
 
     return (
         <TransformContextProvider value={{ scale, rotate, editElementDrag }}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
+                    <Canvas background={background} width={width} height={height} elements={elements} />
+
                     {/* Background image */}
-                    {!isBackgroundError && background.image && (
+                    {/* {!isBackgroundError && background.image && (
                         <img
                             src={background.image}
                             onLoad={handleBackgroundLoad}
                             onError={handleBackgroundError}
                         ></img>
-                    )}
+                    )} */}
 
                     {/* Background image fallback*/}
-                    {isBackgroundError && (
+                    {/* {isBackgroundError && (
                         <div className="map-layout__image-fallback"></div>
-                    )}
+                    )} */}
 
                     {/* Map */}
                     <svg className="map-layout__svg" ref={svgRef}>
-                        {sortedElemensDOM}
+                        {/* {sortedElemensDOM} */}
                         {editableElement && (
                             <ElementGroup
                                 key={editableElement.id}
