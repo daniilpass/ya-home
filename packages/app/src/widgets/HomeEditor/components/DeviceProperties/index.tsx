@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -19,7 +18,8 @@ export type Props = {
     onDelete: (deviceId: string) => void;
 }
 
-// TODO: оптимизировать, при драге свойства обновляются - компонент ререндерится
+const iconOptions = Object.values(deviceIcons);
+
 const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Props) => {
     /**
      * Device hanlders
@@ -28,16 +28,16 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
     const handleDevicePositionChange = (position: Point, isMagnetic: boolean = false) => {
         const updatedDevice = actions.updateDevicePosition(device, position, bounds, isMagnetic);
         onChange(updatedDevice);
-    }
+    };
 
     const handleDeviceDelete = () => {
         onDelete(device.id);
-    }
+    };
 
     const handleDeviceIconChanged = (icon: DeviceIconType) => {
         const updatedDevice = actions.updateDeviceIcon(device, icon);
         onChange(updatedDevice);
-    }
+    };
 
     /**
      * Bulbs hanlders
@@ -46,17 +46,17 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
     const handleBulbsLinePointChange = (index: number, position: Point, isMagnetic: boolean = false) => {
         const updatedDevice = actions.updateDeviceBulbsPoint(device, index, position, bounds, isMagnetic);
         onChange(updatedDevice);
-    }
+    };
 
     const handleBulbsLinePointDelete = (index: number) => {
         const updatedDevice = actions.deleteDeviceBulbsPoint(device, index);
         onChange(updatedDevice);
-    }
+    };
 
     const handleBulbsLinePointAdd = () => {
         const updatedDevice = actions.addDeviceBulbsPoint(device, bounds);
         onChange(updatedDevice);
-    }
+    };
 
     /**
      * Shadow hanlders
@@ -65,17 +65,17 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
     const handleShadowPointChange = (index: number, position: Point, isMagnetic: boolean = false) => {
         const updatedDevice = actions.updateDeviceShadowPoint(device, index, position, bounds, isMagnetic);
         onChange(updatedDevice);
-    }
+    };
 
     const handleShadowPointDelete = (index: number) => {
         const updatedDevice = actions.deleteDeviceShadowPoint(device, index);
         onChange(updatedDevice);
-    }
+    };
 
     const handleShadowPointAdd = () => {
         const updatedDevice = actions.addDeviceShadowPoint(device, bounds);
         onChange(updatedDevice);
-    }
+    };
 
     /**
      * ShadowMask hanlders
@@ -84,17 +84,17 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
     const handleShadowMaskPointChange = (index: number, position: Point, isMagnetic: boolean = false) => {
         const updatedDevice = actions.updateDeviceShadowMaskPoint(device, index, position, bounds, isMagnetic);
         onChange(updatedDevice);
-    }
+    };
     
     const handleShadowMaskPointDelete = (index: number) => {
         const updatedDevice = actions.deleteDeviceShadowMaskPoint(device, index);
         onChange(updatedDevice);
-    }
+    };
 
     const handleShadowMaskPointAdd = () => {
         const updatedDevice = actions.addDeviceShadowMaskPoint(device, bounds);
         onChange(updatedDevice);
-    }
+    };
 
     const isShowLightProperties = device.type === DeviceTypes.Light || device.type === DeviceTypes.Switch;
 
@@ -108,7 +108,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                 )}
                 <Button
                     startIcon={<DeleteIcon />}
-                    onClick={() => handleDeviceDelete()}
+                    onClick={handleDeviceDelete}
                 >
                     Удалить
                 </Button>
@@ -118,7 +118,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                 <PropertiesGroup title="Иконка">
                     <IconPicker
                         value={device.icon as DeviceIconType}
-                        options={Object.values(deviceIcons)}
+                        options={iconOptions}
                         onChange={handleDeviceIconChanged}
                     />
                 </PropertiesGroup>
@@ -127,7 +127,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
             <PropertiesGroup title="Позиция">
                 <PointInput
                     value={device.position}
-                    onChange={(value) => handleDevicePositionChange(value)}
+                    onChange={handleDevicePositionChange}
                 />
             </PropertiesGroup>
 
@@ -136,9 +136,9 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                     <PropertiesGroup title="Линия ламп">
                         <PointsList
                             value={device.area?.bulbsLinePoints || []}
-                            onChange={(index, value) => handleBulbsLinePointChange(index, value)}
-                            onAdd={() => handleBulbsLinePointAdd()}
-                            onDelete={(index) => handleBulbsLinePointDelete(index)}
+                            onChange={handleBulbsLinePointChange}
+                            onAdd={handleBulbsLinePointAdd}
+                            onDelete={handleBulbsLinePointDelete}
                         />
                     </PropertiesGroup>
 
@@ -146,18 +146,18 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                     <PropertiesGroup title="Тень">
                         <PointsList
                             value={device.area?.shadowPoints || []}
-                            onChange={(index, value) => handleShadowPointChange(index, value)}
-                            onAdd={() => handleShadowPointAdd()}
-                            onDelete={(index) => handleShadowPointDelete(index)}
+                            onChange={handleShadowPointChange}
+                            onAdd={handleShadowPointAdd}
+                            onDelete={handleShadowPointDelete}
                         />
                     </PropertiesGroup>
 
                     <PropertiesGroup title="Маска тени">
                         <PointsList
                             value={device.area?.shadowMaskPoints || []}
-                            onChange={(index, value) => handleShadowMaskPointChange(index, value)}
-                            onAdd={() => handleShadowMaskPointAdd()}
-                            onDelete={(index) => handleShadowMaskPointDelete(index)}
+                            onChange={handleShadowMaskPointChange}
+                            onAdd={handleShadowMaskPointAdd}
+                            onDelete={handleShadowMaskPointDelete}
                         />
                     </PropertiesGroup>
                 </>
@@ -166,4 +166,4 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
     )
 }
 
-export default memo(DeviceProperties);
+export default DeviceProperties;
