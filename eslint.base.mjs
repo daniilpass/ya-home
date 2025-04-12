@@ -20,6 +20,9 @@ export default defineConfig([
             '@typescript-eslint/consistent-type-imports': 'error',
             'semi': ['error', 'always'],
             'no-extra-semi': 'error',
+            'no-unexpected-multiline': 'error',
+            'semi-spacing': 'error',
+            'comma-spacing': 'error',
             'quotes': [2, 'single', { 'avoidEscape': true }],
             'jsx-quotes': [2, 'prefer-double'],
         }

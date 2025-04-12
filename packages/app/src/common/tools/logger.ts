@@ -10,22 +10,22 @@ export class Logger {
         console.debug(`[${this.name}] ${message}`, ...data);
     }
 
-    info(message: string,...data: unknown[]) {
+    info(message: string, ...data: unknown[]) {
         if (!this.enabled) return;
         console.info(`[${this.name}] ${message}`, ...data);
     }
 
-    log(message: string,...data: unknown[]) {
+    log(message: string, ...data: unknown[]) {
         if (!this.enabled) return;
         console.log(`[${this.name}] ${message}`, ...data);
     }
 
-    warn(message: string,...data: unknown[]) {
+    warn(message: string, ...data: unknown[]) {
         if (!this.enabled) return;
         console.warn(`[${this.name}] ${message}`, ...data);
     }
 
-    error(message: string,...data: unknown[]) {
+    error(message: string, ...data: unknown[]) {
         if (!this.enabled) return;
         console.error(`[${this.name}] ${message}`, ...data);
     }

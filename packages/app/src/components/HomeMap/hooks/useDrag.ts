@@ -102,7 +102,7 @@ export const useDrag = ({
                 return;
             }
 
-            const extendedEvent: DragEvent = Object.assign(dragEvent,{
+            const extendedEvent: DragEvent = Object.assign(dragEvent, {
                 clientXDiff: clientXStart - dragEvent.clientX,
                 clientYDiff: clientYStart - dragEvent.clientY,
                 pageXDiff: pageXStart - dragEvent.pageX,
