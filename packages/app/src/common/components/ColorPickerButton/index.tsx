@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 
-import { Popover, SxProps, TextField, Theme } from '@mui/material';
+import { Popover, SxProps, Theme } from '@mui/material';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 
 import ColorButton from './ColorButton';

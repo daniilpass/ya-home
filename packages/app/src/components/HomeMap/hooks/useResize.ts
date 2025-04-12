@@ -57,7 +57,10 @@ export const useResize = (
 
         if (allowScale) {
             setScale(scale);
-            !allowZoom && setMinScale(scale);
+
+            if (!allowZoom) {
+                setMinScale(scale);
+            }
         }
     }, [allowZoom, naturalHeight, naturalWidth])
 
@@ -99,7 +102,7 @@ export const useResize = (
             return;
         }
 
-        const handleZoom = (e: any) => {
+        const handleZoom = (e: WheelEvent) => {
             const delta = Math.sign(e.deltaY) * scale * SCALE_FACTOR;
             const newScale = Math.min(Math.max(minScale, scale - delta), MAX_SCALE);
             setScale(newScale);
@@ -150,7 +153,7 @@ export const useResize = (
         pinchScale.current = scale;
     }, [scale]);
 
-    const onPinchScale = useCallback((direction: string, distance: number) => {
+    const onPinchScale = useCallback((direction: string) => {
         const scale = pinchScale.current; // hide state
         const sign = direction === 'up' ? -1 : 1;
         const delta = sign * scale * PINCH_SCALE_FACTOR;

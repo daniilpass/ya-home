@@ -4,10 +4,9 @@ import { YaDeviceProperty, YaDevicePropertyEvent, YaDevicePropertyFloat } from '
 import { YaDevicePropertyType } from '../yaClient/model/YaDevicePropertyType';
 import { YaDevicePropertyInstance } from '../yaClient/model/YaDevicePropertyInstance';
 import { mapYaDeviceUnitToDeviceUnit } from './mapYaDeviceUnitToDeviceUnit';
-import { logger } from '../utils';
 
 const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDevicePropertyEvent): DeviceState | null => {
-    let state: DeviceState = {};
+    const state: DeviceState = {};
     const unit: DeviceUnits = 'unit' in property.parameters ? mapYaDeviceUnitToDeviceUnit(property.parameters.unit) : DeviceUnits.Default;
     const updatedAt: number = property.last_updated * 1000;
 
@@ -42,7 +41,7 @@ const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDeviceProperty
 }
 
 export const mapYaPropertiesToState = (yaProperties: YaDeviceProperty[]): DeviceState => {
-    let state: DeviceState = {};
+    const state: DeviceState = {};
 
     for (const property of yaProperties) {
         if (property.state?.value === undefined) {

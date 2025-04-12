@@ -34,7 +34,7 @@ export const PlanSettingsDialog = ({
         onSubmit(dialogValue);
     }
 
-    const handleClose = (_?: {}, reason?: 'backdropClick' | 'escapeKeyDown') => {
+    const handleClose = (_: React.MouseEvent, reason?: 'backdropClick' | 'escapeKeyDown') => {
         if (reason === 'backdropClick') {
             return;
         }

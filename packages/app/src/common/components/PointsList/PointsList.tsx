@@ -1,5 +1,5 @@
 import {FC, useCallback, useMemo} from 'react';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Point } from '@homemap/shared';

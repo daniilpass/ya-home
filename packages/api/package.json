@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx tsc --build --verbose",
     "start": "tsc -b && node --import=tsx src/index.ts",
-    "watch": "SET NODE_ENV=development && npx tsx watch src/index.ts"
+    "watch": "SET NODE_ENV=development && npx tsx watch src/index.ts",
+    "lint": "npx eslint"
   },
   "dependencies": {
     "@homemap/shared": "^1.0.0",

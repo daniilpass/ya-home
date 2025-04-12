@@ -27,7 +27,7 @@ export const readFileAsText= (file: File): Promise<string> => {
     return readFile(file, 'text');     
 }
 
-export const saveFile = (data: any, filename: string, type: string) => {
+export const saveFile = (data: BlobPart, filename: string, type: string) => {
     const file = new Blob([data], {type: type});
     const a = document.createElement('a');
     a.href= URL.createObjectURL(file);

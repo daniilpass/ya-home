@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { Collection, Plan, PlanInfo } from '@homemap/shared';
 
 import { PlanRepository } from '../../dal/repositories';
@@ -35,6 +34,7 @@ export class PlanService {
     }
     
     async createUserPlan(userId: string, planPayload: Plan): Promise<Plan> {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id: _, ...planJson } = planPayload;
     
         // Find existing user plans
@@ -56,6 +56,7 @@ export class PlanService {
     }
     
     async updateUserPlan(userId: string, planId: number, planPayload: Plan) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id: _, ...planJson }: Plan = planPayload;
         const existingPlan = await PlanRepository.getUserPlanById(userId, planId);
     

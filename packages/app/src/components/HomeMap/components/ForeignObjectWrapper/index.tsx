@@ -6,6 +6,7 @@ import useResizeObserver from "use-resize-observer";
 export type ForeignObjectWrapperProps = React.SVGProps<SVGForeignObjectElement> & {
     rootClassName?: string;
     rootStyle?: React.CSSProperties;
+    style?: React.CSSProperties;
     onFit?: (rect: Size) => void;
 };
 
@@ -13,6 +14,7 @@ export const ForeignObjectWrapper = ({
     children,
     rootClassName,
     rootStyle,
+    style,
     onFit,
     ...props
 }: ForeignObjectWrapperProps) => {
@@ -38,7 +40,7 @@ export const ForeignObjectWrapper = ({
         <foreignObject
             {...props}
             style={{
-                ...props.style,
+                ...style,
                 width: size.width,
                 height: size.height,
                 overflow: 'visible',

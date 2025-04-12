@@ -16,7 +16,7 @@ import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import { deviceIcons, DeviceIconType } from '@homemap/shared';
 
 type IconsType = {
-    [key in DeviceIconType]: any;
+    [key in DeviceIconType]: unknown
 };
 
 export const Icons: IconsType = {

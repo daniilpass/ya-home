@@ -67,7 +67,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                     image: imageDataURL,
                 }
             });
-        } catch (e) {
+        } catch {
             dispatch.alerts.error('Ошибка при чтении изображения');
         }
     }

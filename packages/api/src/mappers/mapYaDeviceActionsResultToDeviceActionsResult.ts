@@ -1,11 +1,11 @@
-import { DeviceActionResult, DeviceState } from '@homemap/shared';
+import { DeviceActionResult } from '@homemap/shared';
 
 import { YaDeviceActionsResult } from '../yaClient/model/YaDeviceActionsResult';
 import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
 import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
 export const mapYaDeviceActionsResultToDeviceActionsResult = (yaActionsResult: YaDeviceActionsResult): DeviceActionResult => {
-    let actionResult: DeviceActionResult = {
+    const actionResult: DeviceActionResult = {
         id: yaActionsResult.id,
         status: {},
     };

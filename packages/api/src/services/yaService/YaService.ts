@@ -38,7 +38,10 @@ export class YaService {
         if (!result) {
             const response: YaUserInfoResponse = await this.yaClient.getUserInfo();
             result = mapToRecord(response.devices, 'id', mapYaDeviceToDevice);
-            this.cacheDevicesKey && cache.set<Collection<Device>>(this.cacheDevicesKey, result);
+    
+            if (this.cacheDevicesKey) {
+                cache.set<Collection<Device>>(this.cacheDevicesKey, result);
+            }
         }
         
         return result;

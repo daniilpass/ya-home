@@ -15,7 +15,7 @@ export type SensorElementProps = {
     onClick?: () => void;
 }
 
-export const SensorElement = ({ position, state, substate, onClick }: SensorElementProps) => {
+export const SensorElement = ({ position, state, onClick }: SensorElementProps) => {
     const { rotate } = useTransformContext();
 
     const elementStyle = {

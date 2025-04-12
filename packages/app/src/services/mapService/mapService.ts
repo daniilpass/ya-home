@@ -90,7 +90,7 @@ class MapService {
     }
 
     private handleUpdate() {
-        this.onUpdate && this.onUpdate(this.state.elements);
+        this.onUpdate?.(this.state.elements);
     }
 
     private async getAndUpdateElementsState() {

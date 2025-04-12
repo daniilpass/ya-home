@@ -12,7 +12,7 @@ export type DragEvent = PointerEvent & {
     pageYDiff: number;
 };
 
-export type onDragCallback = (e: DragEvent, options?: any) => void;
+export type onDragCallback = (e: DragEvent, options?: unknown) => void;
 
 export type UseDragParams = {
     button?: MouseButton,
@@ -32,7 +32,7 @@ export const useDrag = ({
     onDrag,
     onDragEnd,
 }: UseDragParams) => {
-    const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: any) => {
+    const onDragStart = useCallback((dragStartEvent: DragStartEvent, options?: unknown) => {
         let lastDragEvent: DragEvent | undefined;
         let lastDragEventTime = Date.now();
         let dragFreeze = true;

@@ -25,7 +25,7 @@ export const EditorTopbarMenu = ({ actionsInProgress, onItemClick }: EditorTopba
         setMenuAnchor(e.currentTarget)
     }
 
-    const closeMenu = (e: React.MouseEvent<HTMLElement>) => {
+    const closeMenu = () => {
         setMenuAnchor(null)
     }
 

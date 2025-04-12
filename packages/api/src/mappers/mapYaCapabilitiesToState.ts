@@ -5,7 +5,7 @@ import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapability
 import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
 export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): DeviceState => {
-    let state: DeviceState = {};
+    const state: DeviceState = {};
 
     for (const capability of yaCapabilites) {
         if (capability.state?.value === undefined) {

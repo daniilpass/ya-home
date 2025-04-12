@@ -8,15 +8,19 @@
         "api": "npm run watch -w ./packages/api",
         "build-api": "npm run build -w ./packages/api",
         "start-api": "npm run start -w ./packages/api",
-
         "app": "npm run start -w ./packages/app",
         "build-app": "npm run build -w ./packages/app",
-
         "build-all": "npm run build-api && npm run build-app",
-
         "build-shared": "npm run build -w ./packages/shared",
-
         "demo": "npm run start-demo -w ./packages/app",
-        "build-demo": "npm run build-demo -w ./packages/app"
+        "build-demo": "npm run build-demo -w ./packages/app",
+        "lint": "npm run lint -w ./packages/api & npm run lint -w ./packages/app & npm run lint -w ./packages/shared"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.24.0",
+        "eslint": "^9.24.0",
+        "eslint-plugin-react": "^7.37.5",
+        "globals": "^16.0.0",
+        "typescript-eslint": "^8.29.1"
     }
 }

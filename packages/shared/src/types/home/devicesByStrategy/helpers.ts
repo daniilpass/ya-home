@@ -7,5 +7,5 @@ export const isSwitchableDevice = (device: Device) : device is SwitchableDevice 
 }
 
 export const isSwitchableDeviceType = (deviceType: DeviceTypes): deviceType is SwitchableDeviceTypes => {
-    return switchableDeviceTypes.includes(deviceType as any);
+    return switchableDeviceTypes.includes(deviceType as SwitchableDeviceTypes);
 }

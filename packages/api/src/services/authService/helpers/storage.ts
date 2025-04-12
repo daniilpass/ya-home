@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ExpiringToken, USER_JWT_KEY, YA_TOKEN_KEY } from '@homemap/shared';
 import { RequestUserInfo } from '../types';
 
-const setServerCookie = (res: Response, name: string, value: any, maxAgeSec: number) => {
+const setServerCookie = (res: Response, name: string, value: unknown, maxAgeSec: number) => {
     res.cookie(name, value, { maxAge: maxAgeSec * 1000, httpOnly: true, secure: true, sameSite: 'strict' })
 }
 

@@ -162,7 +162,7 @@ const HomeMap: FC<Props> = ({
     }
 
     const handleElementClick = useCallback((id: string) => {
-        onElementClick && onElementClick(id);
+        onElementClick?.(id);
     }, [onElementClick]);
 
     const handleElementDrag = useCallback((id: string, { pageXDiff, pageYDiff }: DragEvent) => {

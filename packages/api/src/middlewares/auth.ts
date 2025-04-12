@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 
-import { logger } from '../utils';
-import AuthService, { JwtMissingError } from '../services/authService';
+import AuthService from '../services/authService';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         AuthService.verifyAuth(req);
         next();
-    } catch (error: unknown) {
+    } catch {
         res.status(401).end();
     }
 }

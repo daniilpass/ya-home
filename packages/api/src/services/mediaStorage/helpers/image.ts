@@ -30,7 +30,7 @@ export const imageFromBuffer = async (buffer: Buffer): Promise<FileImage> => {
         }
     
         return imageInfo;
-    } catch (error) {
+    } catch {
         throw new AppError(errorCantReadImage);
     }
 }

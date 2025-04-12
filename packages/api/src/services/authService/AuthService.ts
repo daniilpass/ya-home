@@ -1,6 +1,5 @@
 
 import { Request, Response } from 'express';
-import { AuthResult, ExpiringToken, Token } from '@homemap/shared';
 
 import YaService from '../yaService';
 import { signJWT, encryptToken, getYaToken, getUserJwt, patchRequestUserInfo, setYaToken, setUserJwt, tokenFromEncryptedString, verifyJWT } from './helpers';

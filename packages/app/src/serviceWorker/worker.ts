@@ -7,14 +7,14 @@ import { MESSAGES } from './types';
 export {};
 declare let self: ServiceWorkerGlobalScope;
 
-let responseFactory = new ResponseFactory();
+const responseFactory = new ResponseFactory();
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', () => {
     // Needs to activate updated SW immediately
     self.skipWaiting(); 
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', () => {
     // Needs to activate updated SW immediately
     return self.clients.claim();
 });

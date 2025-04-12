@@ -1,4 +1,4 @@
-import {ChangeEvent, FC} from 'react';
+import { ChangeEvent, FC} from 'react';
 import { Box, SxProps, TextField, Theme } from '@mui/material';
 
 import { Point } from '@homemap/shared';

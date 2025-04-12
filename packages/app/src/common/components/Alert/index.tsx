@@ -20,7 +20,7 @@ export const Alert = ({
     onExited,
 }: AlertProps) => {
 
-    const handleClose = (_: any, reason?: SnackbarCloseReason) => {
+    const handleClose = (_: unknown, reason?: SnackbarCloseReason) => {
         if (reason === 'clickaway' || reason === 'escapeKeyDown') {
             return;
         }

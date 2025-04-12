@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { AppError } from '../errors/AppError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { SchemaValidationError } from '../errors/SchemaValidationError';
@@ -37,7 +37,7 @@ const getErrorJson = (error: Error): ErrorJson => {
     }
 }
 
-export const errorHandler = (error: Error, _req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler = (error: Error, _req: Request, res: Response) => {
     res.status(getErrorStatusCode(error));
     res.json(getErrorJson(error));
 }

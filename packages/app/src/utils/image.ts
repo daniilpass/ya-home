@@ -13,7 +13,7 @@ const defaultOptions: ImageOptions = {
 }
 
 export const isValidImage = (src: string, options?: Partial<ImageOptions>): Promise<boolean> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const image = new Image();
         const asserts = {
             ...defaultOptions,

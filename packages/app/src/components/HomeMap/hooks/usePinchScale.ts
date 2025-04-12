@@ -1,15 +1,8 @@
 import {RefObject, useLayoutEffect, useCallback, useRef} from 'react';
 
-import { Point } from '@homemap/shared';
-
 import {DragEvent, useDrag} from './useDrag';
 
 const MOVE_BOUND = 1;
-
-type DragOptions = { 
-    scale: number,
-    translate: Point,
-}
 
 type PointerInfo = {
     primary: boolean;
@@ -40,7 +33,7 @@ export const usePinchScale = (
     const secondaryPointer = useRef<PointerInfo | null>(null);
 
     // Drag
-    const onDrag = useCallback((e: DragEvent, options: DragOptions) => {
+    const onDrag = useCallback((e: DragEvent) => {
         // It takes two touches to zoom
         if (!primaryPointer.current || !secondaryPointer.current) {
             return;

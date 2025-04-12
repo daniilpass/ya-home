@@ -76,7 +76,7 @@ const HomeEditor = ({ planId }: Props) => {
     const sensorsData = useMemo<Collection<Device>>(() => {
         return Object.fromEntries(
             Object.entries(allDevices)
-                .filter(([id, device]) => device.type === DeviceTypes.Sensor)
+                .filter(([, device]) => device.type === DeviceTypes.Sensor)
         );
     }, [allDevices]);
 
@@ -228,7 +228,7 @@ const HomeEditor = ({ planId }: Props) => {
             const importedPlan = await importPlan(file);
             setPlan(importedPlan);
             dispatch.alerts.success('План загружен. Не забудьте сохранить изменения.');
-        } catch (e) {
+        } catch {
             dispatch.alerts.error('Ошибка при импорте');
         }
     }
