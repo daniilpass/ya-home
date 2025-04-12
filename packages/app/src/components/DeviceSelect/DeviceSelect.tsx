@@ -58,7 +58,7 @@ const DeviceSelect = ({ items, selectedItemId, onChange, sx }: DeviceSelectProps
             displayEmpty
             renderValue={renderSelectedValue}
             onChange={handleChange}
-            className='device-select'
+            className="device-select"
             classes={{
                 select: 'device-select__select'
             }}

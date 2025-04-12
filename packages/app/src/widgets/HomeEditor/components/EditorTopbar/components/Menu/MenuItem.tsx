@@ -17,7 +17,7 @@ export const MenuItem = ({
     ...other
 }: MenuItemProps) => {
     return (
-        <MuiMenuItem className='menu-item' {...other}>
+        <MuiMenuItem className="menu-item" {...other}>
             <LoadingButton
                 component="label"
                 startIcon={icon}

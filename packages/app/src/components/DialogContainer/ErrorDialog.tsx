@@ -16,7 +16,7 @@ const ErrorDialog = ({ dialog }: DialogProps) => {
             type="error"
             title="Ошибка"
             content={dialog?.content}
-            labelClose='Закрыть'
+            labelClose="Закрыть"
             onClose={handleClose}
         />
     );

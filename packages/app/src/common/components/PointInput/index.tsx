@@ -54,11 +54,11 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
 
     const inputProps = { inputProps: { min, max } };
     return (
-        <Box className='point-input' sx={style}>
+        <Box className="point-input" sx={style}>
             <TextField
                 value={Math.floor(x).toString()}
                 onChange={handleChangeX}
-                label={labelX ?? "x"}
+                label={labelX ?? 'x'}
                 type="number"
                 size="small"
                 InputProps={inputProps}
@@ -66,7 +66,7 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
             <TextField
                 value={Math.floor(y).toString()}
                 onChange={handleChangeY}
-                label={labelY ?? "y"}
+                label={labelY ?? 'y'}
                 type="number"
                 size="small"
                 InputProps={inputProps}

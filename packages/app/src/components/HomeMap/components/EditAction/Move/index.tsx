@@ -52,7 +52,7 @@ const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Pr
     return (
         <g 
             ref={moveRef}
-            className='edit-action__move'
+            className="edit-action__move"
         >
             <svg
                 width={EDIT_ACTION_SIZE}

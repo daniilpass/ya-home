@@ -2,7 +2,7 @@ import { log, error } from './tools';
 
 const SW_URL = '/service-worker.js';
 
-const supported = () => "serviceWorker" in navigator;
+const supported = () => 'serviceWorker' in navigator;
 
 const registerServiceWorker = async (swUrl: string): Promise<void> => {
     if (!supported()) {
@@ -10,15 +10,15 @@ const registerServiceWorker = async (swUrl: string): Promise<void> => {
     }
 
     try {
-        log(`Registering service worker`);
+        log('Registering service worker');
         const registration = await navigator.serviceWorker.register(swUrl);
 
         if (registration.installing) {
-            log("Service worker installing");
+            log('Service worker installing');
         } else if (registration.waiting) {
-            log("Service worker installed");
+            log('Service worker installed');
         } else if (registration.active) {
-            log("Service worker active");
+            log('Service worker active');
         }
     } catch (err) {
         error(`Service worker registration failed: ${err}`)
@@ -28,7 +28,7 @@ const registerServiceWorker = async (swUrl: string): Promise<void> => {
 
 export const register = (): Promise<void> => {
     return new Promise<void>((resolve, reject) => {
-        window.addEventListener("load", () => {
+        window.addEventListener('load', () => {
             registerServiceWorker(SW_URL)
                 .then(resolve)
                 .catch(reject);
@@ -42,7 +42,7 @@ export const unregister = async () => {
     }
 
     try {
-        log(`Unregistering service worker, don't forget to close all application tabs`);
+        log("Unregistering service worker, don't forget to close all application tabs");
         const registrations = await navigator.serviceWorker.getRegistrations();
         for(const registration of registrations) {
             await registration.unregister();

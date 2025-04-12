@@ -3,7 +3,7 @@ import { RgbColor  } from 'react-colorful';
 const colorThreshold = 255 / 2;
 
 export const rgbToHex = (color: RgbColor) => {
-    return "#" + (
+    return '#' + (
         (1 << 24) |
         (color.r << 16) |
         (color.g << 8) |

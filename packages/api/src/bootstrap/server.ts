@@ -9,7 +9,7 @@ import { auth, errorHandler, requestLogger, requestStatistics } from '../middlew
 import { logger } from '../utils';
 
 export const bootstrapServer = () => {
-    logger.info("[server] Configure express");
+    logger.info('[server] Configure express');
 
     const app = express();
 

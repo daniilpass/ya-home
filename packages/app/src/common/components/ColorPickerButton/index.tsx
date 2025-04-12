@@ -42,8 +42,8 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
                 bgColor={color}
                 textColor={textColor}
                 onClick={handlePickerOpen}
-                size='large'
-                variant='contained'
+                size="large"
+                variant="contained"
                 startIcon={<FormatColorFillIcon />}
                 sx={sx}
             >

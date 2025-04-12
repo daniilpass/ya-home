@@ -1,4 +1,4 @@
-import { createModel } from "@rematch/core";
+import { createModel } from '@rematch/core';
 import { v4 as uuid4 } from 'uuid';
 
 import { AlertSettings, AlertState } from './types';

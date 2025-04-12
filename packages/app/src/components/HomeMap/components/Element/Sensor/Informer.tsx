@@ -20,10 +20,10 @@ export const SensorInformer = ({ type, state }: SensorInformerProps) => {
     const sensorColor = getSensorColor(type, state);
 
     return (
-        <div className='informer'>
+        <div className="informer">
             {sensorIcon && <DeviceIcon name={sensorIcon} sx={{fill: sensorColor}}/>}
             <div 
-                className='informer__value'
+                className="informer__value"
                 style={{
                     color: sensorColor,
                 }}

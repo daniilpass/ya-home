@@ -18,8 +18,8 @@ const CrashDialog = ({ dialog }: DialogProps) => {
             type="error"
             title="Ошибка"
             content={dialog?.content}
-            labelSubmit='На главную'
-            labelClose='Перезагрузить'
+            labelSubmit="На главную"
+            labelClose="Перезагрузить"
             onSubmit={handleSubmit}
             onClose={handleClose}
         />

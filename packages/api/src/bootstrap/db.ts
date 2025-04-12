@@ -8,7 +8,7 @@ import { DB_STORAGE_PATH } from '../constants';
 import { StatUserRequest } from '../dal/entities/StatUserRequest';
 
 export const bootstrapDatabase = async () => {
-    logger.info("[database] Configure database");
+    logger.info('[database] Configure database');
 
     // Create Sequelize instance
     const sequelize = new Sequelize({
@@ -22,10 +22,10 @@ export const bootstrapDatabase = async () => {
     StatUserRequest.init(statUserRequestSchema, { sequelize, modelName: 'statUserRequest' })
     
     // Sync models
-    logger.info("[database] Sync all defined models started");
+    logger.info('[database] Sync all defined models started');
     
     await sequelize.sync();
     
-    logger.info("[database] Sync all defined models completed");
+    logger.info('[database] Sync all defined models completed');
 }
 

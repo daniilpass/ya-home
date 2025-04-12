@@ -34,11 +34,11 @@ const Shadow: FC<Props> = ({
 
     return (
         <>
-            <polygon className='element-shadow' points={svgShadowPoints} mask={mask} />
+            <polygon className="element-shadow" points={svgShadowPoints} mask={mask} />
             {svgMaskPoints && (
                 <mask id={maskId}>
-                    <polygon points={svgShadowPoints} fill='white' />
-                    <polygon points={svgMaskPoints} fill='black' />
+                    <polygon points={svgShadowPoints} fill="white" />
+                    <polygon points={svgMaskPoints} fill="black" />
                 </mask>
             )}
             {isEditMode && points.map(([x, y], index) => (

@@ -1,10 +1,10 @@
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores } from 'eslint/config';
 
-import baseConfig from "../../eslint.base.mjs";
+import baseConfig from '../../eslint.base.mjs';
 
 export default defineConfig([
     globalIgnores([
-        "appData/",
+        'appData/',
     ]),
 	{
 		extends: [baseConfig],

@@ -1,8 +1,8 @@
 const readFile = (file: Blob, outFromat: 'dataUrl' | 'text'): Promise<string> => {
     return new Promise((resolve, reject) => {
         const fileReader = new FileReader();
-        fileReader.onerror = () => reject(`Ошибка чтения файла`);
-        fileReader.onabort = () => reject(`Чтение файла было прервано`);
+        fileReader.onerror = () => reject('Ошибка чтения файла');
+        fileReader.onabort = () => reject('Чтение файла было прервано');
 
         switch(outFromat) {
             case 'dataUrl': {

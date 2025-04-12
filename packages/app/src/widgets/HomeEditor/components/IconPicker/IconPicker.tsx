@@ -31,9 +31,9 @@ export const IconPicker = ({
     }, [onChange]);
 
     return (
-        <div className='icon-picker'>
+        <div className="icon-picker">
             <Select
-                className='icon-picker__input'
+                className="icon-picker__input"
                 classes={{
                     select: 'icon-picker__input-select'
                 }}

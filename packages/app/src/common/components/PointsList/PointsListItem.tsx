@@ -21,7 +21,7 @@ export const PointsListItem = ({
     onDelete,
 }: PointsListItemProps) => {
     return (
-        <div className='points-list_item'>
+        <div className="points-list_item">
             <PointInput value={value} onChange={(value) => onChange(index, value)} />
             <IconButton onClick={() => onDelete(index)}>
                 <DeleteIcon />

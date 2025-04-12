@@ -2,6 +2,6 @@ import { AppError } from './AppError';
 
 export class BadRequestError extends AppError {
     constructor(message?: string) {
-        super(message ?? `Bad request`);
+        super(message ?? 'Bad request');
     }
 }

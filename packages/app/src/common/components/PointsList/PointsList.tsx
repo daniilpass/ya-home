@@ -33,7 +33,7 @@ export const PointsList: FC<Props> = ({value, onChange, onAdd, onDelete}) => {
     }, [value, onChange, onDelete]);
 
     return (
-        <div className='points-list'>
+        <div className="points-list">
             {valueInputs}
             <Button startIcon={<AddIcon />} onClick={onAddClick}>Добавить</Button>
         </div>

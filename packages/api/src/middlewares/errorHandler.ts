@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import { AppError } from '../errors/AppError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { SchemaValidationError } from '../errors/SchemaValidationError';

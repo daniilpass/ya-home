@@ -3,7 +3,7 @@ import { Jimp } from 'jimp';
 import { AppError } from '../../../errors';
 import { FileImage } from '../types/FileImage';
 
-const errorUnsupportedImage = "Unsopported image";
+const errorUnsupportedImage = 'Unsupported image';
 const errorCantReadImage = "Can't read image";
 
 export const imageFromBuffer = async (buffer: Buffer): Promise<FileImage> => {

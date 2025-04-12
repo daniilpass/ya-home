@@ -40,14 +40,14 @@ const SwitchableElement: FC<Props> = ({ position, icon, state, substate, onClick
             onClick={onClick}
         >
             <circle
-                className='element-shape'
+                className="element-shape"
                 cx={position[0]}
                 cy={position[1]}
                 r={ELEMENT_RADIUS}
             />
             {icon && (
                 <svg
-                    className='element-icon'
+                    className="element-icon"
                     x={position[0] - ICON_SIZE / 2}
                     y={position[1] - ICON_SIZE / 2}
                     width={ICON_SIZE} 

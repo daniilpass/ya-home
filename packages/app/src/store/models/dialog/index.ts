@@ -1,4 +1,4 @@
-import { createModel } from "@rematch/core";
+import { createModel } from '@rematch/core';
 
 import { RootModel } from '../root';
 

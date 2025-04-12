@@ -63,7 +63,7 @@ export const HomeEmpty = () => {
             <PlanSettingsDialog
                 open={planSettingsOpen}
                 value={planSettingsValue!}
-                labelSubmit='Создать'
+                labelSubmit="Создать"
                 onClose={handleCloseSettingsDialog}
                 onSubmit={handleSubmitSettingsDialog}
             />

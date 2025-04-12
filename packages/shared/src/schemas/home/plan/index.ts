@@ -1,6 +1,6 @@
 import { MAX_PLAN_SIDE_PX } from '../../../constants';
 
-import { default as planSchemaRaw } from './plan.json' assert { type: "json" };
+import { default as planSchemaRaw } from './plan.json' assert { type: 'json' };
 
 export const planSchema = {
     ...planSchemaRaw,

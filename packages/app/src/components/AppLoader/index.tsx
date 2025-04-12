@@ -41,7 +41,7 @@ const AppLoader: FC<Props> = ({
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
-                    <Loader color='white' />
+                    <Loader color="white" />
                 </Box>
             )}
         </Backdrop>

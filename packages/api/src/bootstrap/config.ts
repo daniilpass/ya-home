@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import { logger } from '../utils';
 
-logger.info("[config] Load environment variables from .env");
+logger.info('[config] Load environment variables from .env');
 dotenv.config();
 
 if (process.env.NODE_ENV) {

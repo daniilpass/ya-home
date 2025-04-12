@@ -16,7 +16,7 @@ const DemoBanner = () => {
     }
 
     return (
-        <Toolbar position="top" withBorder className='demo-banner'>
+        <Toolbar position="top" withBorder className="demo-banner">
             <Box sx={{
                 p: 1,
                 display: 'flex',

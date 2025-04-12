@@ -142,10 +142,10 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                     <PropertiesGroup title="Изображение">
                         <Button
                             component="label"
-                            variant='contained'
+                            variant="contained"
                             startIcon={<CloudUploadIcon />}
                             sx={{width: '100%'}}
-                            size='large'
+                            size="large"
                         >
                             Загрузить
                             <VisuallyHiddenInput
@@ -179,8 +179,8 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                         <PointInput
                             value={dimensions}
                             onChange={handleDimensionsChange}
-                            labelX='ширина'
-                            labelY='высота'
+                            labelX="ширина"
+                            labelY="высота"
                             vertical
                             max={MAX_PLAN_SIDE_PX}
                             min={0}

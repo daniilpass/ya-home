@@ -27,7 +27,7 @@ const Dialog = ({
         <MuiDialog
             open={open}
             fullWidth
-            maxWidth='sm'
+            maxWidth="sm"
         >
             <DialogTitle>
                 {title}

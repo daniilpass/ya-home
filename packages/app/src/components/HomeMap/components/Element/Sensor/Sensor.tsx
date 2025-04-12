@@ -29,7 +29,7 @@ export const SensorElement = ({ position, state, onClick }: SensorElementProps) 
         <ForeignObjectWrapper
             x={position[0]}
             y={position[1]}
-            rootClassName='sensor'
+            rootClassName="sensor"
             rootStyle={elementStyle}
             onClick={onClick}
         >

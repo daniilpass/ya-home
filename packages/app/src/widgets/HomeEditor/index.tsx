@@ -366,7 +366,7 @@ const HomeEditor = ({ planId }: Props) => {
     return ( <>
             <AppLoader isLoading={isLoading || !mapReady} />
             {plan && (
-                <div className='editor-root'>
+                <div className="editor-root">
                     <Box>
                         {actionsInProgress.length > 0 && <LinearProgress />}
                         <EditorTopbar
