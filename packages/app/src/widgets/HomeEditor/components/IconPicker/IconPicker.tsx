@@ -5,7 +5,7 @@ import { MenuItem, Select } from '@mui/material';
 import type { DeviceIconType } from '@homemap/shared';
 import { COLORS } from '@homemap/shared';
 
-import { DeviceIcon } from '../../../../components/DeviceIcon'
+import { DeviceIcon } from '../../../../components/DeviceIcon';
 
 import './IconPicker.css';
 
@@ -25,7 +25,7 @@ export const IconPicker = ({
             <MenuItem key={option} value={option}>
                 <DeviceIcon name={option} sx={{ fill: COLORS.primary }}/>
             </MenuItem>
-        ))
+        ));
     }, [options]);
 
     const handleChange = useCallback((event: SelectChangeEvent<DeviceIconType>) => {
@@ -50,5 +50,5 @@ export const IconPicker = ({
                 {iconOptions}
             </Select>
         </div>
-    )
-}
+    );
+};

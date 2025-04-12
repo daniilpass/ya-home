@@ -6,4 +6,4 @@ export const LinearProgress = () => (
             <MuiLinearProgress />
         </Box>
     </Box>
-)
+);

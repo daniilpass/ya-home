@@ -5,7 +5,7 @@ export enum PlanActionsEnum {
     Import = 'import',
     ExitToView = 'exitToView',
     SyncDevices = 'syncDevices',
-};
+}
 
 export type PlanActionEvent = {
     type: PlanActionsEnum;

@@ -6,11 +6,11 @@ import type { DialogProps } from './types';
 const CrashDialog = ({ dialog }: DialogProps) => {
     const handleSubmit = () => {
         window.location.href = routes.root;
-    }
+    };
 
     const handleClose = () => {
         window.location.reload();
-    }
+    };
 
     return (
         <DialogComponent
@@ -24,6 +24,6 @@ const CrashDialog = ({ dialog }: DialogProps) => {
             onClose={handleClose}
         />
     );
-}
+};
 
 export default CrashDialog;

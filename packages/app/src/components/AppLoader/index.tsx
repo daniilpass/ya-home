@@ -46,7 +46,7 @@ const AppLoader: FC<Props> = ({
                 </Box>
             )}
         </Backdrop>
-    )
-}
+    );
+};
 
 export default AppLoader;

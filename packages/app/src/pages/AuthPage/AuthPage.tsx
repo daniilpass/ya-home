@@ -22,7 +22,7 @@ export const AuthPage = () => {
             </Box>
         </div>
     );
-}
+};
 
 const AuthNeeded = () => {
     const authUrl = useAuthUrl();
@@ -41,8 +41,8 @@ const AuthNeeded = () => {
 
             }
         </>
-    )
-}
+    );
+};
 
 const AuthInProgress = ({ authCode }: { authCode: string }) => {
     useAuth(authCode);
@@ -51,5 +51,5 @@ const AuthInProgress = ({ authCode }: { authCode: string }) => {
         <Typography component="h1" variant="h5" align="center" marginBottom={1}>
             Идет авторизация
         </Typography>
-    )
-}
+    );
+};

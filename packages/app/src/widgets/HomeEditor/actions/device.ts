@@ -14,7 +14,7 @@ export const addDevice = (device: Device, properties: Pick<PlanDevice, 'icon' | 
     };
 
     return newDevice;
-}
+};
 
 export const updateDevicePosition = (device: PlanDevice, newPosition: Point, bounds: Partial<Bounds>, isMagnetic?: boolean): PlanDevice => {
     const [magnetX, magnetY] = isMagnetic
@@ -25,16 +25,16 @@ export const updateDevicePosition = (device: PlanDevice, newPosition: Point, bou
         ...device,
         position: limitPosition([magnetX ?? newPosition[0], magnetY ?? newPosition[1]], bounds),
     };
-}
+};
 
 export const updateDevicePositionByDiff = (device: PlanDevice, positionDiff: Point, bounds: Partial<Bounds>, isMagnetic?: boolean): PlanDevice => {
     const newPosition = applyPositionDiff(device.position, positionDiff);
     return updateDevicePosition(device, newPosition, bounds, isMagnetic);
-}
+};
 
 export const updateDeviceIcon = (device: PlanDevice, newIcon: DeviceIconType): PlanDevice => {
     return {
         ...device,
         icon: newIcon,
     };
-}
+};

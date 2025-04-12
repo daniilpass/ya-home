@@ -14,7 +14,7 @@ export const mapYaDeviceToDevice = (yaDevice: YaDevice): Device => {
     const state = {
         ...capabilitiesState,
         ...propertiesState,
-    }
+    };
 
     if (Object.keys(state).length === 0) {
         type = DeviceTypes.Unknown;
@@ -28,4 +28,4 @@ export const mapYaDeviceToDevice = (yaDevice: YaDevice): Device => {
         subtype,
         state,
     };
-}
+};

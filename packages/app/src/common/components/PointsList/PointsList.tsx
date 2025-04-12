@@ -30,7 +30,7 @@ export const PointsList: FC<Props> = ({value, onChange, onAdd, onDelete}) => {
                 onChange={onChange}
                 onDelete={onDelete}
             />
-        ))
+        ));
     }, [value, onChange, onDelete]);
 
     return (
@@ -38,5 +38,5 @@ export const PointsList: FC<Props> = ({value, onChange, onAdd, onDelete}) => {
             {valueInputs}
             <Button startIcon={<AddIcon />} onClick={onAddClick}>Добавить</Button>
         </div>
-    )
-}
+    );
+};

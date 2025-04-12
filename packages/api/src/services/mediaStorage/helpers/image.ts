@@ -27,10 +27,10 @@ export const imageFromBuffer = async (buffer: Buffer): Promise<FileImage> => {
                 mime,
                 name: '',
             }
-        }
+        };
     
         return imageInfo;
     } catch {
         throw new AppError(errorCantReadImage);
     }
-}
+};

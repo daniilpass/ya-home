@@ -8,7 +8,7 @@ const ErrorDialog = ({ dialog }: DialogProps) => {
 
     const handleClose = () => {
         dispatch.dialog.close();
-    }
+    };
 
     return (
         <DialogComponent
@@ -20,6 +20,6 @@ const ErrorDialog = ({ dialog }: DialogProps) => {
             onClose={handleClose}
         />
     );
-}
+};
 
 export default ErrorDialog;

@@ -10,7 +10,7 @@ const defaultOptions: ImageOptions = {
     maxWidth: Number.POSITIVE_INFINITY,
     minHeight: 0,
     maxHeight: Number.POSITIVE_INFINITY,
-}
+};
 
 export const isValidImage = (src: string, options?: Partial<ImageOptions>): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -18,23 +18,23 @@ export const isValidImage = (src: string, options?: Partial<ImageOptions>): Prom
         const asserts = {
             ...defaultOptions,
             ...options,
-        }
+        };
 
         image.onload = function() {
             const isValidWidth = image.width >= asserts.minWidth && image.width <= asserts.maxWidth;
             const isValidHeight  = image.height >= asserts.minHeight && image.height <= asserts.maxHeight;
             const isValid = isValidWidth && isValidHeight; 
             resolve(isValid);
-        }
+        };
 
         image.onerror = function() {
             resolve(false);
-        }
+        };
 
         image.onabort = function() {
             resolve(false);
-        }
+        };
 
         image.src = src;
     });  
-}
+};

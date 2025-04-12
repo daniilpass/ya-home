@@ -11,4 +11,4 @@ export const getUserInfo = async (req: Request, res: Response, next: NextFunctio
     } catch (error) {
         next(error);
     }
-}
+};

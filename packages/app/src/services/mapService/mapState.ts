@@ -53,7 +53,7 @@ class MapState {
              * Some logging
              */
             if (!_stateIsEqual && syncTimeElpased >= this.syncTimeout) {
-                logger.warn(SYNC_TYMEOUT, id)
+                logger.warn(SYNC_TYMEOUT, id);
             }
 
             if (element.substate !== Substate.Synced && _stateIsEqual) {
@@ -80,7 +80,7 @@ class MapState {
             element.state = {
                 ...(element.state || {}),
                 ...options.state,
-            }
+            };
         }
 
         if (options.substate) {

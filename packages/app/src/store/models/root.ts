@@ -11,4 +11,4 @@ export interface RootModel extends Models<RootModel> {
 export const models: RootModel = {
     alerts,
     dialog,
-}
+};

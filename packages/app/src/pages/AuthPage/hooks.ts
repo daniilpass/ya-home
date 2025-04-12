@@ -21,12 +21,12 @@ export const useAuthUrl = () => {
     }, [dispatch]);
 
     return url;
-}
+};
 
 export const useSearchParamsCode = () => {
     const [searchParams] = useSearchParams();
     return searchParams.get('code');
-}
+};
 
 export const useAuth = (code: string) => {
     const dispatch = useDispatch();
@@ -42,4 +42,4 @@ export const useAuth = (code: string) => {
                 dispatch.dialog.crash('Не удалось авторизоваться');
             });
     }, [code, dispatch, navigate]);
-}
+};

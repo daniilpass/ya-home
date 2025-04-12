@@ -19,4 +19,4 @@ export const statUserRequestSchema: ModelAttributes = {
         type: DataTypes.STRING,
         allowNull: true,
     }
-}
+};

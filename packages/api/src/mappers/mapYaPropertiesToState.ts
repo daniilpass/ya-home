@@ -17,7 +17,7 @@ const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDeviceProperty
                 value: Number(property.state.value),
                 unit,
                 updatedAt,
-            }
+            };
             break;
         }
         case YaDevicePropertyInstance.Temperature: {
@@ -25,7 +25,7 @@ const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDeviceProperty
                 value: Number(property.state.value),
                 unit,
                 updatedAt,
-            }
+            };
             break;
         }
         case YaDevicePropertyInstance.Motion: {
@@ -33,13 +33,13 @@ const mapYaPropertyToState = (property: YaDevicePropertyFloat | YaDeviceProperty
                 value: <MotionValue>property.state.value,
                 unit,
                 updatedAt,
-            }
+            };
             break;
         }
     }
 
     return state;
-}
+};
 
 export const mapYaPropertiesToState = (yaProperties: YaDeviceProperty[]): DeviceState => {
     const state: DeviceState = {};
@@ -62,4 +62,4 @@ export const mapYaPropertiesToState = (yaProperties: YaDeviceProperty[]): Device
     }
 
     return state;
-}
+};

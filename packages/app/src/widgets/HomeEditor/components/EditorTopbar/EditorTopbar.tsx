@@ -4,13 +4,13 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SaveIcon from '@mui/icons-material/Save';
 import { COLORS } from '@homemap/shared';
 
-import Toolbar from '../../../../common/components/Toolbar'
+import Toolbar from '../../../../common/components/Toolbar';
 import LoadingButton from '../../../../common/components/LoadingButton';
 import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 import { EditorTopbarMenu } from './EditorTopbarMenu';
 import type { EditorTopbarProps} from './types';
-import { PlanActionsEnum, } from './types'
+import { PlanActionsEnum, } from './types';
 import './EditorTopbar.css';
 
 export const EditorTopbar = ({ actionsInProgress, onItemClick }: EditorTopbarProps) => {
@@ -43,5 +43,5 @@ export const EditorTopbar = ({ actionsInProgress, onItemClick }: EditorTopbarPro
 
             <EditorTopbarMenu actionsInProgress={actionsInProgress} onItemClick={onItemClick} />
         </Toolbar>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
 import type { MouseEvent as ReactMouseEvent } from 'react';
-import { List } from '@mui/material'
+import { List } from '@mui/material';
 
 import DeviceListItem from './DeviceListItem';
 import type { DeviceListProps } from './types';
@@ -7,7 +7,7 @@ import type { DeviceListProps } from './types';
 const DeviceList = ({ items, selectedItemId, withTooltip, onItemClick, sx }: DeviceListProps) => {
     const handleItemClick = (id: string, event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
         onItemClick(id, event);
-    }
+    };
 
     return (
         <>
@@ -25,7 +25,7 @@ const DeviceList = ({ items, selectedItemId, withTooltip, onItemClick, sx }: Dev
                 }
             </List>
         </>
-    )
-}
+    );
+};
 
 export default DeviceList;

@@ -19,6 +19,6 @@ const UnsavedChangesDialog = ({ open, onSubmit, onClose }: UnsavedChangesDialogP
             onClose={onClose}
         />
     );
-}
+};
 
 export default UnsavedChangesDialog;

@@ -14,7 +14,7 @@ export const getAuthUrl = async (req: Request, res: Response, next: NextFunction
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const auth = async (req: Request<unknown, unknown, unknown, QueryParams>, res: Response, next: NextFunction) => {
     try {
@@ -23,7 +23,7 @@ export const auth = async (req: Request<unknown, unknown, unknown, QueryParams>,
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const refresh = async (req: Request<unknown, unknown, unknown, QueryParams>, res: Response, next: NextFunction) => {
     try {
@@ -32,4 +32,4 @@ export const refresh = async (req: Request<unknown, unknown, unknown, QueryParam
     } catch (error) {
         next(error);
     }
-}
+};

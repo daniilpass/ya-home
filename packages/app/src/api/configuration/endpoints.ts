@@ -42,6 +42,6 @@ const ENDPOINTS = {
         method: 'HEAD',
         url: '/auth/refresh',
     },
-}
+};
 
 export default ENDPOINTS;

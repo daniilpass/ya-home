@@ -4,4 +4,4 @@ export enum DeviceTypes {
     Light = 'light',
     Sensor = 'sensor',
     Socket = 'socket',
-};
+}

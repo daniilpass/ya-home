@@ -20,7 +20,7 @@ winston.addColors(colors);
 
 const format = winston.format.combine(
     winston.format(info => {
-        info.level = info.level.toUpperCase()
+        info.level = info.level.toUpperCase();
         return info;
     })(),
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),

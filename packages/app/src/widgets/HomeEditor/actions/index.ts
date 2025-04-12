@@ -24,6 +24,6 @@ const actions = {
     updateDeviceShadowMaskPointByDiff,
     deleteDeviceShadowMaskPoint,
     addDeviceShadowMaskPoint,
-}
+};
 
 export default actions;

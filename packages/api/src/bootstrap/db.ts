@@ -19,7 +19,7 @@ export const bootstrapDatabase = async () => {
     
     // Init model
     PlanEntity.init(planSchema, { sequelize, modelName: 'plan' });
-    StatUserRequest.init(statUserRequestSchema, { sequelize, modelName: 'statUserRequest' })
+    StatUserRequest.init(statUserRequestSchema, { sequelize, modelName: 'statUserRequest' });
     
     // Sync models
     logger.info('[database] Sync all defined models started');
@@ -27,5 +27,5 @@ export const bootstrapDatabase = async () => {
     await sequelize.sync();
     
     logger.info('[database] Sync all defined models completed');
-}
+};
 

@@ -1,4 +1,4 @@
-import type {FC, ReactNode} from 'react'
+import type {FC, ReactNode} from 'react';
 
 import type {State} from './context';
 import { TransformContext} from './context';
@@ -13,5 +13,5 @@ export const TransformContextProvider: FC<Props> = ({value, children}) => {
         <TransformContext.Provider value={value}>
             {children}
         </TransformContext.Provider>
-    )
-}
+    );
+};

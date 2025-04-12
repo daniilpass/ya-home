@@ -1,4 +1,4 @@
-import type { YaDeviceCapabilityType } from './YaDeviceCapabilityType'
+import type { YaDeviceCapabilityType } from './YaDeviceCapabilityType';
 import type { YaDeviceCapabilityState } from './YaDeviceCapabilityState';
 
 export type YaDeviceCapability = {

@@ -9,4 +9,4 @@ export const planSchema: ModelAttributes = {
     },
     userId: DataTypes.STRING,
     json: DataTypes.JSON,
-}
+};

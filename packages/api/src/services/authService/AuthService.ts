@@ -13,7 +13,7 @@ const issueUserJwt = async (req: Request, res: Response) => {
 
     const userJwt = signJWT({ yaUserId });
     setUserJwt(res, userJwt);
-}
+};
 
 export const authByCode = async (req: Request, res: Response, code: string) => {
     const yaToken = await new YaService(req).getToken(code);
@@ -23,7 +23,7 @@ export const authByCode = async (req: Request, res: Response, code: string) => {
     setYaToken(res, yaTokenExpiring);
 
     await issueUserJwt(req, res);
-}
+};
 
 export const refreshAuth = async (req: Request, res: Response) => {
     // TODO: refresh ya token if needed
@@ -31,7 +31,7 @@ export const refreshAuth = async (req: Request, res: Response) => {
     patchRequestUserInfo(req, { yaToken });
 
     await issueUserJwt(req, res);
-}
+};
 
 export const verifyAuth = (req: Request) => {
     const yaToken = verifyToken(req);
@@ -41,7 +41,7 @@ export const verifyAuth = (req: Request) => {
         yaUserId: userJwt.yaUserId,
         yaToken,
     });
-}
+};
 
 const verifyToken = (req: Request) => {
     const yaTokenString = getYaToken(req);
@@ -51,7 +51,7 @@ const verifyToken = (req: Request) => {
     }
 
     return tokenFromEncryptedString(yaTokenString);
-}
+};
 
 const verifyJwt = (req: Request) => {
     const userJwtString = getUserJwt(req);
@@ -61,4 +61,4 @@ const verifyJwt = (req: Request) => {
     }
 
     return verifyJWT(userJwtString);
-}
+};

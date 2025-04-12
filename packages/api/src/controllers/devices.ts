@@ -13,7 +13,7 @@ export const getDevices = async (req: Request, res: Response, next: NextFunction
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const postDevicesActions = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -25,4 +25,4 @@ export const postDevicesActions = async (req: Request, res: Response, next: Next
     } catch (error) {
         next(error);
     }
-}
+};

@@ -14,5 +14,5 @@ export const parseBase64DataUrl = (dataUrl: string): UserFile | null => {
             mime: match.groups!['mime'],
             name: '',
         },
-    }
-}
+    };
+};

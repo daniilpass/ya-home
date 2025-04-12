@@ -27,5 +27,5 @@ export const MenuItem = ({
                 { children } 
             </LoadingButton>
         </MuiMenuItem>
-    )
-}
+    );
+};

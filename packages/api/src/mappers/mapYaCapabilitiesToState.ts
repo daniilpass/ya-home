@@ -22,7 +22,7 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
                         value: Boolean(capability.state.value),
                         unit: DeviceUnits.Boolean,
                         updatedAt,
-                    }
+                    };
                 }
                 break;
             }
@@ -32,7 +32,7 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
                         value: Number(capability.state.value),
                         unit: DeviceUnits.Percent,
                         updatedAt,
-                    }
+                    };
                 }
                 break;
             }
@@ -40,4 +40,4 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
     }
 
     return state;
-}
+};

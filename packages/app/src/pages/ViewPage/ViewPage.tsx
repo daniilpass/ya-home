@@ -14,5 +14,5 @@ export const ViewPage = () => {
             <HomeMap planId={Number(id)} />
         </div>
     );
-}
+};
 

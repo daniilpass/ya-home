@@ -7,13 +7,13 @@ import { getErrorMessage } from '../utils/errors';
 const getXForwardedFor = (req: Request) => {
     const xffHeader = req.headers['x-forwarded-for'];
     return Array.isArray(xffHeader) ? xffHeader[0] : xffHeader;
-}
+};
 const getUserAddress = (req: Request) => {
     let ip = getXForwardedFor(req) || req.connection.remoteAddress || req.socket.remoteAddress || '';
     ip = ip.split(',')[0]; // take first ip in chain
     ip = ip.split(':').slice(-1)[0]; // delete subnet prexis, e.g. ::ffff:
     return ip;
-}
+};
 
 const getStatisctics = (req: Request, res: Response, requestStart: number) => {
     return {
@@ -26,8 +26,8 @@ const getStatisctics = (req: Request, res: Response, requestStart: number) => {
         duration: Math.ceil(Date.now() - requestStart),
         userAddress: getUserAddress(req),
         userAgent: req.get('User-Agent') ?? null,
-    }
-}
+    };
+};
 
 export const requestStatistics = (req: Request, res: Response, next: NextFunction) => {
     const requestStart = Date.now();
@@ -42,4 +42,4 @@ export const requestStatistics = (req: Request, res: Response, next: NextFunctio
     });
 
     next();
-}
+};

@@ -70,7 +70,7 @@ class MapService {
         } else if (this.pollingState === PollingState.Stopped) {
             this.start();
         }
-    }
+    };
 
     private async tick() {
         this.logger.debug('tick');
@@ -100,7 +100,7 @@ class MapService {
             .then((data) => {
                 this.state.updateElements(data);
             }).catch(() => {
-                this.state.updateElements({})
+                this.state.updateElements({});
             });
     }
 
@@ -118,7 +118,7 @@ class MapService {
         const prevState = {
             state: device.state,
             substate: device.substate,
-        }
+        };
 
         let updatePromise: Promise<void> | undefined;
 

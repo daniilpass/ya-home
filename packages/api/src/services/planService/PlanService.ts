@@ -101,5 +101,5 @@ export class PlanService {
         } else {
             return existingImage;
         }
-    }
+    };
 }

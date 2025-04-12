@@ -42,7 +42,7 @@ export class YaClient {
     private logRequest = (config: InternalAxiosRequestConfig) => {
         config.headers['request-time'] = performance.now();
         return config;
-    }
+    };
 
     private logResponse = (response: AxiosResponse) => {
         const method = response.config.method?.toUpperCase();
@@ -54,7 +54,7 @@ export class YaClient {
         logger.debug(`[yaClient] ${method}\t${url}\t${status}\t${contentLength} bytes\t${responseTime}ms`);
 
         return response;
-    }
+    };
 
     private handleError = (error: Error | AxiosError): never => {
         if (axios.isAxiosError(error)) {
@@ -62,7 +62,7 @@ export class YaClient {
         }
     
         throw error;
-    }
+    };
 
     private handleAxiosError = ({ message, response }: AxiosError): never => {
         if (response?.status === 401) {
@@ -70,7 +70,7 @@ export class YaClient {
         }
         
         throw new BadRequestError(message);
-    }
+    };
 
     getAuthUrl() {
         const redirectParams = YAPI_OAUTH_REDIRECT_URL ? `&redirect_uri=${YAPI_OAUTH_REDIRECT_URL}` : '';

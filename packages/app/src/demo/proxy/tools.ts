@@ -8,7 +8,7 @@ export const createJsonResponse = (data: unknown) => {
         },
     );
     return response;
-}
+};
 
 export const getRequestBody = async <T>(event: FetchEvent) => {
     try {
@@ -17,4 +17,4 @@ export const getRequestBody = async <T>(event: FetchEvent) => {
     } catch {
         return null;
     }
-}
+};

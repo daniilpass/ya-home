@@ -40,7 +40,7 @@ const BulbsLine: FC<Props> = ({ points, state, substate, isEditMode, onPointDrag
                 />
             ))}
         </>
-    )
-}
+    );
+};
 
 export default BulbsLine;

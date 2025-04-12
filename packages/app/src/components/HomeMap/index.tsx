@@ -147,20 +147,20 @@ const HomeMap: FC<Props> = ({
         if (!svgRef.current || !onTansform) {
             return;
         }
-        onTansform({scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect()})
+        onTansform({scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect()});
     }, [scale, rotate, translate, svgRef, onTansform]);
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         onBackgroundLoad?.(e);
         handleBackgroundReady();
-    }
+    };
 
     const handleBackgroundError = (e: SyntheticEvent<HTMLImageElement>) => {
         dispatch.alerts.error('Ошибка загрузки фона');
         setIsBackgroundError(true);
         onBackgroundError?.(e);
         handleBackgroundReady();
-    }
+    };
 
     const handleElementClick = useCallback((id: string) => {
         onElementClick?.(id);
@@ -172,7 +172,7 @@ const HomeMap: FC<Props> = ({
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onElementDrag(id, position);
-    }, [onElementDrag, scale])
+    }, [onElementDrag, scale]);
 
     const handleElementDragEnd = useCallback((id: string, { pageXDiff, pageYDiff }: DragEvent) => {
         if (!onElementDragEnd) {
@@ -180,7 +180,7 @@ const HomeMap: FC<Props> = ({
         }
         const position = normilizePosition(pageXDiff, pageYDiff, scale);
         onElementDragEnd(id, position);
-    }, [onElementDragEnd, scale])
+    }, [onElementDragEnd, scale]);
 
     const handleBulbsLinePointDrag = useCallback((id: string, index: number, { pageXDiff, pageYDiff, }: DragEvent) => {
         if (!onBulbsLinePointDrag) {
@@ -233,7 +233,7 @@ const HomeMap: FC<Props> = ({
     const editableElementId = editableElement?.id;
 
     const sortedElements = useMemo(() => {
-        const elementsEntries = Object.entries(elements)
+        const elementsEntries = Object.entries(elements);
     
         // TODO: implement z-index for plan devices
         // First render elements with shadow
@@ -241,13 +241,13 @@ const HomeMap: FC<Props> = ({
             const aDevice = a[1];
             const bDevice = b[1];
             if (aDevice.area?.shadowPoints && bDevice.area?.shadowPoints) {
-                return 0
+                return 0;
             } else if (aDevice.area?.shadowPoints) {
                 return -1;
             } else {
                 return 1;
             }
-        })
+        });
 
         // In edit mode, hide the edit element.
         if (editableElementId) {
@@ -262,7 +262,7 @@ const HomeMap: FC<Props> = ({
     const wrapperStyle: CSSProperties = {
         backgroundColor: background.color,
         ...styles?.wrapper,
-    }
+    };
 
     const layoutStyle: CSSProperties = {
         backgroundColor: background.color,
@@ -271,7 +271,7 @@ const HomeMap: FC<Props> = ({
         height: height,
         flexShrink: 0,
         overflow: 'hidden',
-    }
+    };
 
     const wrapperClassName = cx('map-wrapper', classes?.wrapper);
 
@@ -302,7 +302,7 @@ const HomeMap: FC<Props> = ({
         handleElementDragEnd,
         handleShadowMaskPointDrag,
         handleShadowPointDrag, 
-    ])
+    ]);
 
     return (
         <TransformContextProvider value={{scale, rotate, editElementDrag}}>
@@ -346,7 +346,7 @@ const HomeMap: FC<Props> = ({
                 </div>
             </div>
         </TransformContextProvider>
-    )
-}
+    );
+};
 
 export default HomeMap;

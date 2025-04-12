@@ -16,7 +16,7 @@ export const mapDeviceActionToYaDevicesActions = (deviceAction: DeviceAction): Y
                         instance: YaDeviceCapabilityInstance.On,
                         value: stateValue,
                     },
-                })
+                });
                 break;
             default:
                 break;
@@ -26,5 +26,5 @@ export const mapDeviceActionToYaDevicesActions = (deviceAction: DeviceAction): Y
     return {
         id: deviceAction.id,
         actions,
-    }
-}
+    };
+};

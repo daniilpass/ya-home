@@ -26,7 +26,7 @@ export const Alert = ({
             return;
         }
         onClose?.();
-    }
+    };
 
     return (
         <Snackbar
@@ -54,4 +54,4 @@ export const Alert = ({
         </MuiAlert>
         </Snackbar>
     );
-}
+};

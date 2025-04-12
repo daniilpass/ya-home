@@ -9,11 +9,11 @@ const AlertContainer = () => {
 
     const handleClose = (id: string) => {
         dispatch.alerts.close(id);
-    }
+    };
 
     const handleExited = (id: string) => {
         dispatch.alerts.exited(id);
-    }
+    };
 
     return (
         <Box sx={{
@@ -41,6 +41,6 @@ const AlertContainer = () => {
             }
         </Box>
     );
-}
+};
 
 export default AlertContainer;

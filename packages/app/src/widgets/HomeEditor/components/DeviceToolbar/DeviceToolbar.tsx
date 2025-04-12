@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import type { Bounds, Collection, Device, PlanDevice } from '@homemap/shared';
 import { COLORS } from '@homemap/shared';
 
-import DeviceProperties from '../DeviceProperties'
+import DeviceProperties from '../DeviceProperties';
 import Toolbar from '../../../../common/components/Toolbar';
 import DeviceSelect from '../../../../components/DeviceSelect';
 import { useIsMobile } from '../../../../hooks/useIsMobile';
@@ -53,8 +53,8 @@ export const DeviceToolbar = ({
     }, [isMobile]);
 
     const toggleMobileEditMode = useCallback(() => {
-        setIsMobileEditMode(!isMobileEditMode)
-    }, [isMobileEditMode])
+        setIsMobileEditMode(!isMobileEditMode);
+    }, [isMobileEditMode]);
 
     /**
      * Modal logic
@@ -72,7 +72,7 @@ export const DeviceToolbar = ({
     const handleOnAddDevice = useCallback((deviceId: string, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         addDeviceModalClose();
         onAddDevice(deviceId, e);
-    }, [addDeviceModalClose, onAddDevice])
+    }, [addDeviceModalClose, onAddDevice]);
 
     const className = cx('toolbar-device', {
         'toolbar-device--mobile': isMobile,
@@ -146,4 +146,4 @@ export const DeviceToolbar = ({
             />
         </Toolbar>
     );
-}
+};

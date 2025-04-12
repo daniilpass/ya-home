@@ -29,10 +29,10 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
         }
 
         onChange(value);
-    }
+    };
 
     const handleChangeX = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(event.target.value)
+        const value = Number(event.target.value);
         if (max !== undefined && value > max) {
             return;
         }
@@ -51,7 +51,7 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
         display: 'flex',
         gap: vertical ? 1 : 0.5,
         flexDirection: vertical ? 'column' : 'row',
-    }
+    };
 
     const inputProps = { inputProps: { min, max } };
     return (
@@ -73,7 +73,7 @@ const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, ma
                 InputProps={inputProps}
             />
         </Box>
-    )
-}
+    );
+};
 
 export default PointInput;

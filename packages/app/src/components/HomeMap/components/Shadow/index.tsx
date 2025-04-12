@@ -62,7 +62,7 @@ const Shadow: FC<Props> = ({
                 />
             ))}
         </>
-    )
-}
+    );
+};
 
 export default Shadow;

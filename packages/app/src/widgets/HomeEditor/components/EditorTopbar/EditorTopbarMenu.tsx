@@ -14,7 +14,7 @@ import { COLORS } from '@homemap/shared';
 import ExportIcon from '../../../../common/components/Icons/ExportIcon';
 
 import type { EditorTopbarProps } from './types';
-import { PlanActionsEnum } from './types'
+import { PlanActionsEnum } from './types';
 import VisuallyHiddenInput from '../../../../common/components/VisuallyHiddenInput';
 import { MenuItem } from './components/Menu';
 
@@ -24,18 +24,18 @@ export const EditorTopbarMenu = ({ actionsInProgress, onItemClick }: EditorTopba
     const menuOpen = Boolean(menuAnchor);
 
     const openMenu = (e: React.MouseEvent<HTMLElement>) => {
-        setMenuAnchor(e.currentTarget)
-    }
+        setMenuAnchor(e.currentTarget);
+    };
 
     const closeMenu = () => {
-        setMenuAnchor(null)
-    }
+        setMenuAnchor(null);
+    };
 
     const handleClickSettings = () => onItemClick({ type: PlanActionsEnum.Settings });
 
     const handleClickImport = () => {
         fileInputRef.current?.click();
-    }
+    };
 
     const handleChangeImportFile = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -48,7 +48,7 @@ export const EditorTopbarMenu = ({ actionsInProgress, onItemClick }: EditorTopba
             file
         });
         e.target.value = '';
-    }
+    };
 
     const handleClickExport = () => onItemClick({ type: PlanActionsEnum.Export });
 
@@ -93,5 +93,5 @@ export const EditorTopbarMenu = ({ actionsInProgress, onItemClick }: EditorTopba
                 onChange={handleChangeImportFile}
             />
         </>
-    )
-}
+    );
+};

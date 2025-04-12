@@ -21,7 +21,7 @@ const getErrorStatusCode = (error: Error): number => {
         default:
             return 500;
     }
-}
+};
 
 const getErrorJson = (error: Error): ErrorJson => {
     switch (true) {
@@ -35,9 +35,9 @@ const getErrorJson = (error: Error): ErrorJson => {
         default:
             return { error: error.message, stack: error.stack };
     }
-}
+};
 
 export const errorHandler = (error: Error, _req: Request, res: Response) => {
     res.status(getErrorStatusCode(error));
     res.json(getErrorJson(error));
-}
+};

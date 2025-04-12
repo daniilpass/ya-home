@@ -24,6 +24,6 @@ const Toolbar = ({ className, position, withBorder, children }: Props) => {
             {children}
         </div>
     );
-}
+};
 
 export default Toolbar;

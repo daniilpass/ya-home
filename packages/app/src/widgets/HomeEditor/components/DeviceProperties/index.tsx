@@ -165,7 +165,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                 </>
             )}
         </>
-    )
-}
+    );
+};
 
 export default DeviceProperties;

@@ -6,7 +6,7 @@ import type { DialogSettings, DialogState } from './types';
 
 const INITIAL_STATE: DialogState = {
     active: undefined,
-}
+};
 
 export const dialog = createModel<RootModel>()({
     state: INITIAL_STATE,

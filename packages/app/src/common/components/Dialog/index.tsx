@@ -40,7 +40,7 @@ const Dialog = ({
                 {onClose && <Button onClick={onClose}>{labelClose}</Button>}
             </DialogActions>
         </MuiDialog>
-    )
-}
+    );
+};
 
 export default Dialog;

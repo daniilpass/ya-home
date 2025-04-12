@@ -60,6 +60,6 @@ const HomeMapWidget = ({ planId }: Props) => {
             )}
         </>
     );
-}
+};
 
 export default HomeMapWidget;

@@ -27,5 +27,5 @@ export const PointsListItem = ({
                 <DeleteIcon />
             </IconButton >
         </div>
-    )
-}
+    );
+};

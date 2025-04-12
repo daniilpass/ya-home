@@ -25,4 +25,4 @@ export const getUserMedia = async (req: Request<{id: string}>, res: Response, ne
     } catch (error) {
         next(error);
     }
-}
+};

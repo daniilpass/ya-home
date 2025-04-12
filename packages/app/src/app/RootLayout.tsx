@@ -15,6 +15,6 @@ const RootLayout = () => {
             </ErrorBoundary>
         </>     
     );
-}
+};
 
 export default RootLayout;

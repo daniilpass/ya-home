@@ -17,15 +17,15 @@ const readFile = (file: Blob, outFromat: 'dataUrl' | 'text'): Promise<string> =>
             }
         }
     });  
-}
+};
 
 export const readFileAsDataURL = (file: File): Promise<string> => {  
     return readFile(file, 'dataUrl');   
-}
+};
 
 export const readFileAsText= (file: File): Promise<string> => {   
     return readFile(file, 'text');     
-}
+};
 
 export const saveFile = (data: BlobPart, filename: string, type: string) => {
     const file = new Blob([data], {type: type});

@@ -3,4 +3,4 @@ export enum DeviceSubtypes {
     Climate = 'climate',
     None = 'none',
     Unknown = 'unknown',
-};
+}

@@ -9,6 +9,6 @@ const ErrorFallback = () => {
     }, [dispatch]);
 
     return <div></div>;
-}
+};
 
 export default ErrorFallback;

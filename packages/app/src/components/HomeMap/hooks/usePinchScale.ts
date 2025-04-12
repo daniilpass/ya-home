@@ -18,7 +18,7 @@ const pointerEventToInfo = (e: PointerEvent): PointerInfo  => ({
         primary: e.isPrimary,
         x: e.x,
         y: e.y,
-})
+});
 
 const getDistance = (
     { x: x1, y: y1 }: PointerInfo | PointerEvent,
@@ -91,12 +91,12 @@ export const usePinchScale = (
 
             onScaleStart?.();
             onDragStart(e);
-        }
+        };
         
         wrapper.addEventListener('pointerdown', handleDragStart);
 
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
-        }
+        };
     }, [wrapperRef, onDragStart, onScaleStart, disabled]);
-}
+};

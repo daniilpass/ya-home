@@ -8,7 +8,7 @@ const metaToArray = (fileMeta: FileMeta) => [
 const metaFromArray = (metaArray: string[]): FileMeta => ({
     mime: metaArray[0],
     name: metaArray[1],
-})
+});
 
 export const metaToBuffer = (fileMeta: FileMeta) => Buffer.from(metaToArray(fileMeta).join('\r\n'));
 

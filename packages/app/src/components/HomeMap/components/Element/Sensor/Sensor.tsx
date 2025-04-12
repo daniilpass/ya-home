@@ -21,7 +21,7 @@ export const SensorElement = ({ position, state, onClick }: SensorElementProps) 
 
     const elementStyle = {
         transform: `rotate(${-rotate}deg)`,
-    }
+    };
 
     const stateEntries = Object.entries(state) as [DeviceStateKeys, DeviceStateType][];
     const isNoData = stateEntries.length === 0;
@@ -50,5 +50,5 @@ export const SensorElement = ({ position, state, onClick }: SensorElementProps) 
                 )}
             </>
         </ForeignObjectWrapper>
-    )
-}
+    );
+};

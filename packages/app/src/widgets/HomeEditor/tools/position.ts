@@ -10,7 +10,7 @@ export const limitPosition = ([x, y]: Point, bounds: Partial<Bounds>): Point => 
         Math.min(maxX, Math.max(minX, x)),
         Math.min(maxY, Math.max(minY, y)),
     ];
-}
+};
 
 export const limitPositions = (points: Point[], bounds: Partial<Bounds>): Point[] => points.map(p => limitPosition(p, bounds));
 
@@ -18,9 +18,9 @@ export const toRelativePosition = (position: Point, offset: Offset, scale: numbe
     return [
         (position[0] - offset.left) / scale,
         (position[1] - offset.top) / scale,
-    ]
-}
+    ];
+};
 
 export const applyPositionDiff = (position: Point, diff: Point): Point => (
     [position[0] - diff[0], position[1] - diff[1]]
-)
+);

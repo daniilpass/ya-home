@@ -63,7 +63,7 @@ const HomeEditor = ({ planId }: Props) => {
         if (selectedPlanDevice?.id) {
             setSelectedPlanDevice(plan?.devices[selectedPlanDevice.id]);
         }
-    }, [plan?.devices, selectedPlanDevice?.id])
+    }, [plan?.devices, selectedPlanDevice?.id]);
 
     // Plan settings dialog state
     const [planSettingsOpen, setPlanSettingsOpen] = useState<boolean>(false);
@@ -140,11 +140,11 @@ const HomeEditor = ({ planId }: Props) => {
         const index = actionsInProgressRef.current.findIndex(x => x === e.type);
         actionsInProgressRef.current.splice(index, 1);
         setActionsInProgress([...actionsInProgressRef.current]);
-    }
+    };
 
     const handleExitToView = () => {
         navigate(`${routes.view}/${planId}`);
-    }
+    };
 
     /**
      * Plan handlers
@@ -169,7 +169,7 @@ const HomeEditor = ({ planId }: Props) => {
         } catch {
             dispatch.alerts.error('Ошибка при сохранении');
         }
-    }
+    };
 
     const handleSyncDevices = async () => {
         if (!plan) {
@@ -198,10 +198,10 @@ const HomeEditor = ({ planId }: Props) => {
                         type: device.type,
                         subtype: device.subtype,
                     }
-                }
+                };
 
                 Object.assign(updatedPlan.devices, updatedDevice);
-            })
+            });
 
             // Update state
             setPlan(updatedPlan);
@@ -210,7 +210,7 @@ const HomeEditor = ({ planId }: Props) => {
         } catch {
             dispatch.alerts.error('Ошибка при синхронизации');
         }
-    }
+    };
 
     const handleExport = async () => {
         if (!plan) {
@@ -222,7 +222,7 @@ const HomeEditor = ({ planId }: Props) => {
         } catch {
             dispatch.alerts.error('Ошибка при экспорте');
         }
-    }
+    };
 
     const handleImport = async (file: File) => {
         if (!plan) {
@@ -236,7 +236,7 @@ const HomeEditor = ({ planId }: Props) => {
         } catch {
             dispatch.alerts.error('Ошибка при импорте');
         }
-    }
+    };
 
     /**
      * Plan settings dialog
@@ -244,11 +244,11 @@ const HomeEditor = ({ planId }: Props) => {
     const handleShowSettings = () => {
         setPlanSettingsValue(plan);
         setPlanSettingsOpen(true);
-    }
+    };
 
     const handleCloseSettings = async () => {
         setPlanSettingsOpen(false);
-    }
+    };
 
     const handleChangePlanSettings = async (value: PlanSettingsValue) => {
         const updatedPlan = {
@@ -261,13 +261,13 @@ const HomeEditor = ({ planId }: Props) => {
         };
         setPlanSettingsOpen(false);
         setPlan(updatedPlan);
-    }
+    };
 
     /**
      * Map handlers
      */
     const handleTransform = useCallback(({scale, bounds}: MapTransform) => {
-        mapTransform.current = {scale, bounds}
+        mapTransform.current = {scale, bounds};
     }, []);
 
     /**
@@ -283,12 +283,12 @@ const HomeEditor = ({ planId }: Props) => {
     }, [planDevices, setPlanDevices]);
 
     const handleDeleteDevice = useCallback((deviceId: string) => {
-        const updatedplanDevices = {...planDevices}
+        const updatedplanDevices = {...planDevices};
         delete updatedplanDevices[deviceId];
         setPlanDevices(updatedplanDevices);
         setSelectedPlanDevice(undefined);
         setHasUnsavedChanges(true);
-    }, [planDevices, setPlanDevices])
+    }, [planDevices, setPlanDevices]);
 
     const handleAddDevice = useCallback((id: string, e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
         const { bounds, scale } = mapTransform.current || {};
@@ -323,25 +323,25 @@ const HomeEditor = ({ planId }: Props) => {
     const handleClickDevice = useCallback((id: string) => {
         setSelectedPlanDevice(planDevices[id]);
         setSelectedPlanDeviceDrag(false);
-    }, [planDevices])
+    }, [planDevices]);
 
     /**
      * Drag hanlders
      */
     const handleDragDevice = useCallback((id: string, positionDiff: Point) => {
-        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true)
+        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true);
         setSelectedPlanDevice(updatedDevice);
     }, [planBounds, planDevices]);
 
     const handleDragDeviceEnd = useCallback((id: string, positionDiff: Point) => {
-        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true)
+        const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true);
         handleChangeDevice(updatedDevice);
     }, [handleChangeDevice, planBounds, planDevices]);
 
     const handleBulbsLinePointDrag = useCallback((id: string, index: number, position: Point) => {
         const updatedDevice = actions.updateDeviceBulbsPointByDiff(planDevices[id], index, position, planBounds, true);
         setSelectedPlanDevice(updatedDevice);
-    }, [planBounds, planDevices])
+    }, [planBounds, planDevices]);
     
     const handleBulbsLinePointDragEnd = useCallback((id: string, index: number, position: Point) => {
         const updatedDevice = actions.updateDeviceBulbsPointByDiff(planDevices[id], index, position, planBounds, true);
@@ -439,7 +439,7 @@ const HomeEditor = ({ planId }: Props) => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
 export default HomeEditor;

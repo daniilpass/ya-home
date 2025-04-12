@@ -8,4 +8,4 @@ export const mapYaDeviceUnitToDeviceUnit = (yaDeviceUnit: YaDeviceUnit): DeviceU
         case YaDeviceUnit.Kelvin: return DeviceUnits.Kelvin;
         default: return DeviceUnits.Default;
     }
-}
+};

@@ -13,7 +13,7 @@ export const exportPlan = async (plan: Plan) => {
         background: {
             ...plan.background,
         }
-    }
+    };
 
     const bgImage = planToExport.background.image;
     if (bgImage && !bgImage.startsWith(dataUrlPrefix)) {
@@ -21,7 +21,7 @@ export const exportPlan = async (plan: Plan) => {
     }
 
     saveFile(JSON.stringify(planToExport, null, 2), 'plan.json', 'application/json');
-}
+};
 
 export const importPlan = async (file: File): Promise<Plan> => {
     const planJSON = await readFileAsText(file);
@@ -31,4 +31,4 @@ export const importPlan = async (file: File): Promise<Plan> => {
         throw new Error('Неизвестный файл');
     }
     return plan;
-}
+};

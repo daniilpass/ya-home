@@ -21,7 +21,7 @@ const registerServiceWorker = async (swUrl: string): Promise<void> => {
             log('Service worker active');
         }
     } catch (err) {
-        error(`Service worker registration failed: ${err}`)
+        error(`Service worker registration failed: ${err}`);
         throw new Error('Service worker registration failed');
     }
 };

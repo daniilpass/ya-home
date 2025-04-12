@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material';
 
 import type { Plan } from '@homemap/shared';
 import { DEFAULT_PLAN } from '@homemap/shared';
@@ -19,11 +19,11 @@ export const HomeEmpty = () => {
     const handleShowSettingsDialog = () => {
         setPlanSettingsValue(DEFAULT_PLAN);
         setPlanSettingsOpen(true);
-    }
+    };
 
     const handleCloseSettingsDialog = () => {
         setPlanSettingsOpen(false);
-    }
+    };
 
     const handleSubmitSettingsDialog = async (value: PlanSettingsValue) => {
         const plan: Plan = {
@@ -38,11 +38,11 @@ export const HomeEmpty = () => {
 
         try {
             const { id } = await ApiClient.createPlan(plan);
-            navigate(`${routes.edit}/${id}`)
+            navigate(`${routes.edit}/${id}`);
         } catch {
             store.dispatch.alerts.error('Ошибка при создании');
         }
-    }
+    };
 
     return (
         <Box sx={{
@@ -70,5 +70,5 @@ export const HomeEmpty = () => {
                 onSubmit={handleSubmitSettingsDialog}
             />
         </Box>
-    )
-}
+    );
+};

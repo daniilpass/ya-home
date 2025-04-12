@@ -28,4 +28,4 @@ swReadyPromise
     })
     .catch((error) => {
         document.getElementById('root')!.innerText = error.message ?? 'Ошибка загрузка ServiceWorker';
-    })
+    });

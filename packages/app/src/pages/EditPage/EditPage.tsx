@@ -14,5 +14,5 @@ export const EditPage = () => {
             <HomeEditor planId={Number(id)} />
         </div>
     );
-}
+};
 

@@ -68,8 +68,8 @@ export const useDrag = ({
                 lastDragEventTime = now;
             }
 
-            return false
-        }
+            return false;
+        };
 
         const checkMultiTouch = (dragEvent: PointerEvent) => {
             if (!dragEvent.isPrimary && !multiTouch) {
@@ -77,7 +77,7 @@ export const useDrag = ({
             }
 
             return false;
-        }
+        };
 
 
         const checkFreezeZone = (dragEvent: PointerEvent) => {
@@ -95,7 +95,7 @@ export const useDrag = ({
 
             dragFreeze = false;
             return false;
-        }
+        };
 
         const handleDrag = (dragEvent: PointerEvent) => {
             if (checkThrottle() || checkMultiTouch(dragEvent) || checkFreezeZone(dragEvent)) {
@@ -112,7 +112,7 @@ export const useDrag = ({
             lastDragEvent = extendedEvent;
 
             onDrag(extendedEvent, options);
-        }
+        };
 
         const endDrag = () => {
             if (lastDragEvent && onDragEnd) {
@@ -129,7 +129,7 @@ export const useDrag = ({
             document.removeEventListener('pointerup', endDrag);
             document.removeEventListener('pointercancel', endDrag);
             document.removeEventListener('wheel', endDrag);
-        }
+        };
 
         const preventMultiTouch = (e: PointerEvent ) => {
             if (multiTouch) {
@@ -139,7 +139,7 @@ export const useDrag = ({
             if (!e.isPrimary) {
                 endDrag();
             }
-        }
+        };
 
         const preventOtherPoinerEvents = (e: Event) => {
             // If no drag - allow event
@@ -148,7 +148,7 @@ export const useDrag = ({
             }
 
             e.stopPropagation();
-        }
+        };
 
         document.addEventListener('click', preventOtherPoinerEvents, true);
         document.addEventListener('pointerdown', preventMultiTouch);
@@ -159,4 +159,4 @@ export const useDrag = ({
     }, [button, onDrag, onDragEnd, strict, multiTouch]);
 
     return onDragStart;
-}
+};

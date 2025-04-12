@@ -25,7 +25,7 @@ export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreation
                     : undefined
                 ),
             }
-        }
+        };
     }
 
     toModelShort (): PlanInfo {
@@ -41,6 +41,6 @@ export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreation
                     : undefined
                 ),
             }
-        }
+        };
     }
 }

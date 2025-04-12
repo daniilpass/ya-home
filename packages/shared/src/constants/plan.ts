@@ -8,4 +8,4 @@ export const DEFAULT_PLAN: Plan = {
         color: '#97cbfe',
     },
     devices: {},
-}
+};

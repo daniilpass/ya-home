@@ -125,7 +125,7 @@ const ElementGroup: FC<Props> = ({
                 onDragEnd={handleElementDragEnd}
             />
         </g>
-    )
-}
+    );
+};
 
 export default ElementGroup;

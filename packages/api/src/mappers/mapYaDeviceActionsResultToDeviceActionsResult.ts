@@ -32,4 +32,4 @@ export const mapYaDeviceActionsResultToDeviceActionsResult = (yaActionsResult: Y
     }
 
     return actionResult;
-}
+};

@@ -105,7 +105,7 @@ export class ResponseFactory {
                         ...deviceToUpdate.state.on!,
                         value: !deviceToUpdate.state.on!.value,
                     }
-                }
+                };
             }
         }
 
@@ -132,7 +132,7 @@ export class ResponseFactory {
                 // @ts-expect-error
                 value: payload.state[key],
             };
-        })
+        });
     
         // prepare response
         const response: DeviceActionResult = {

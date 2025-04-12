@@ -18,4 +18,4 @@ export const saveUserFile = async (userId: string, file: UserFile): Promise<stri
     await writeUserFile(userId, fileId, fileBuffer, metaBuffer);
 
     return fileId;
-}
+};

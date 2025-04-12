@@ -9,4 +9,4 @@ export const reloadWithReset = () => {
         type: MESSAGES.RESET
     });
     window.location.reload();
-}
+};

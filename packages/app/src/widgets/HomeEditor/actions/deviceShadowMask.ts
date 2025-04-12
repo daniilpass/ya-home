@@ -24,7 +24,7 @@ export const updateDeviceShadowMaskPoint = (device: PlanDevice, itemIndex: numbe
             shadowMaskPoints: updatedDeviceAreaShadowMaskPoints,
         }
     };
-}
+};
 
 export const updateDeviceShadowMaskPointByDiff = (device: PlanDevice, itemIndex: number, positionDiff: Point, bounds: Partial<Bounds>, isMagnetic?: boolean): PlanDevice => {
     if (!device.area?.shadowMaskPoints) {
@@ -34,7 +34,7 @@ export const updateDeviceShadowMaskPointByDiff = (device: PlanDevice, itemIndex:
     const originPosition = device.area.shadowMaskPoints[itemIndex];
     const newPosition = applyPositionDiff(originPosition, positionDiff);
     return updateDeviceShadowMaskPoint(device, itemIndex, newPosition, bounds, isMagnetic);
-}
+};
 
 export const deleteDeviceShadowMaskPoint = (device: PlanDevice, itemIndex: number): PlanDevice  => {
     if (!device.area?.shadowMaskPoints) {
@@ -52,7 +52,7 @@ export const deleteDeviceShadowMaskPoint = (device: PlanDevice, itemIndex: numbe
             shadowMaskPoints: updatedDeviceAreaShadowMaskPoints,
         }
     };
-}
+};
 
 export const addDeviceShadowMaskPoint = (device: PlanDevice, bounds: Partial<Bounds>): PlanDevice => {
     const shadowMaskPoints = device.area?.shadowMaskPoints || [];
@@ -66,4 +66,4 @@ export const addDeviceShadowMaskPoint = (device: PlanDevice, bounds: Partial<Bou
             shadowMaskPoints: updatedDeviceAreaShadowMaskPoints,
         }
     };
-}
+};

@@ -18,11 +18,11 @@ export const useMapService = (plan: Plan | undefined) => {
         mapServiceRef.current = new MapService(devices);
         mapServiceRef.current.onUpdate = (updatedData) => {
             setData({...updatedData});
-        }
+        };
         mapServiceRef.current.start();
         return () => {
             mapServiceRef.current?.finalize();
-        }
+        };
     }, [plan]);
 
     const actionSwitch = (id: string) => {
@@ -33,4 +33,4 @@ export const useMapService = (plan: Plan | undefined) => {
         data,
         actionSwitch,
     ] as const;
-}
+};

@@ -42,4 +42,4 @@ export const MainPage = () => {
             { isEmpty && <HomeEmpty /> }
         </div>
     );
-}
+};

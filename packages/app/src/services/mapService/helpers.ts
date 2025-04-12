@@ -8,18 +8,18 @@ export const stateIsEqual = (elementState: DeviceState | undefined, deviceState:
     }
 
     const elementStateKeys = Object.keys(elementState) as Array<keyof DeviceState>;
-    const deviceStateKeys = Object.keys(elementState) as Array<keyof DeviceState>;;
+    const deviceStateKeys = Object.keys(elementState) as Array<keyof DeviceState>;
 
     if (elementStateKeys.length !== deviceStateKeys.length) {
         return false;
     }
 
     for (const stateKey of elementStateKeys) {
-        const stateValueIsEqual = elementState[stateKey]?.value === deviceState[stateKey]?.value
+        const stateValueIsEqual = elementState[stateKey]?.value === deviceState[stateKey]?.value;
         if (!stateValueIsEqual) {
             return false;
         }
     }
 
     return true;
-}
+};

@@ -8,12 +8,12 @@ const DialogContainer = () => {
 
     switch (dialog?.type) {
         case 'error':
-            return <ErrorDialog dialog={dialog} />
+            return <ErrorDialog dialog={dialog} />;
         case 'crash':
-            return <CrashDialog dialog={dialog} />
+            return <CrashDialog dialog={dialog} />;
         default:
             return null;
     }
-}
+};
 
 export default DialogContainer;

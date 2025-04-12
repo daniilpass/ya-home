@@ -4,4 +4,4 @@ export const getErrorMessage = (error: unknown) => {
     }
 
     return 'Unknown error';
-}
+};

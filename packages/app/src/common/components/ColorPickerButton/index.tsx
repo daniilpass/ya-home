@@ -25,15 +25,15 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
     
     useEffect(() => {
         setTextColor(getContrastColorHEX(color));
-    }, [color])
+    }, [color]);
 
     const handlePickerOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setPickerAnchor(event.currentTarget);
-    }
+    };
 
     const handlePickerClose = () => {
         setPickerAnchor(null);
-    }
+    };
 
     const pickerOpen = !!pickerAnchor;
 
@@ -66,7 +66,7 @@ const ColorPickerButton = ({ color, sx, onChange }: Props) => {
                 <HexColorInput className={classes.colorInput} color={color} prefixed onChange={onChange} />
             </Popover>
         </>
-    )
-}
+    );
+};
 
 export default ColorPickerButton;

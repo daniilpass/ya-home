@@ -26,7 +26,7 @@ export const sensorSubtypeToName = (subtype: DeviceSubtypes) => {
             return 'Датчик';
     }
 
-}
+};
 
 export const deviceTypeToName = (type: DeviceTypes, subtype: DeviceSubtypes) => {
     switch (type) {
@@ -42,14 +42,14 @@ export const deviceTypeToName = (type: DeviceTypes, subtype: DeviceSubtypes) => 
         default:
             return 'Неизвестное устройство';
     }
-}
+};
 
 export const getDeviceUnitTitle = (unit: DeviceUnits) => {
     switch (unit) {
         case DeviceUnits.Celsius:
-            return UNICODE.celsius
+            return UNICODE.celsius;
         case DeviceUnits.Kelvin:
-            return UNICODE.kelvin
+            return UNICODE.kelvin;
         case DeviceUnits.Percent:
             return '%';
         case DeviceUnits.Boolean:
@@ -57,7 +57,7 @@ export const getDeviceUnitTitle = (unit: DeviceUnits) => {
         default:
             return '';
     }
-}
+};
 
 export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefined => {
     switch (type) {
@@ -72,7 +72,7 @@ export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefi
         default:
             return deviceIcons.Unknown;
     }
-}
+};
 
 export const getSensorStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | null => {
     switch (stateKey) {
@@ -85,7 +85,7 @@ export const getSensorStateIcon = (stateKey: DeviceStateKeys): DeviceIconType | 
         default:
             return deviceIcons.Sensor;
     }
-}
+};
 
 const roundSensorValue = (value: number) => Math.round(value * 10) / 10;
 
@@ -108,7 +108,7 @@ const getMotionsSensorValue = (state: DeviceStateType<MotionValue>) => {
             return UNICODE.enDash;
     }
     
-}
+};
 
 export const getSensorStateValue = (stateKey: DeviceStateKeys, state: DeviceStateType): unknown => {
     switch (stateKey) {
@@ -122,7 +122,7 @@ export const getSensorStateValue = (stateKey: DeviceStateKeys, state: DeviceStat
         default:
             return state.value;
     }
-}
+};
 
 export const getSensorColor = (stateKey: DeviceStateKeys, state: DeviceStateType) => {
     switch (stateKey) {
@@ -142,4 +142,4 @@ export const getSensorColor = (stateKey: DeviceStateKeys, state: DeviceStateType
         default:
             return defaultSensorColor;
     }
-}
+};

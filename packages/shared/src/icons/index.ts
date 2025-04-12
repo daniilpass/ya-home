@@ -27,7 +27,7 @@ enum DeviceIconSensors {
 enum DeviceIconExtra {
     Blank = 'blank',
     Unknown = 'unknown',
-};
+}
 
 export const deviceIcons = {
     ...DeviceIconLight,

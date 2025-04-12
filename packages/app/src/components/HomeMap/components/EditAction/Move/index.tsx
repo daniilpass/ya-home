@@ -46,8 +46,8 @@ const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Pr
         element?.addEventListener('pointerdown', handlePointerDown);
 
         return () => {
-            element?.removeEventListener('pointerdown', handlePointerDown)
-        }
+            element?.removeEventListener('pointerdown', handlePointerDown);
+        };
     }, [draggable, handlePointerDown]);
 
     return (
@@ -77,7 +77,7 @@ const EditActionMove = ({ x, y, index, draggable = true, onDrag, onDragEnd }: Pr
                 </g>
             </svg>
         </g>
-    )
+    );
 };
 
 export default EditActionMove;

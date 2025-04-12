@@ -26,7 +26,7 @@ const requestRaw = async <TResponse, TPayload = unknown>(endpoint: Endpoint, pay
 
         return response.json().catch(() => {});
     }).then(data => data as TResponse);
-}
+};
 
 const request = async <TResponse, TPayload = unknown>(endpoint: Endpoint, payload?: TPayload, params?: Record<string, string | number>) => {
     return requestRaw<TResponse, TPayload>(endpoint, payload, params)
@@ -48,11 +48,11 @@ const request = async <TResponse, TPayload = unknown>(endpoint: Endpoint, payloa
             const error = `${status}: ${statusText}`;
             throw error;
         });
-}
+};
 
 const ping = () => {
-    request(ENDPOINTS.ping)
-}
+    request(ENDPOINTS.ping);
+};
 
 const lightToggle = (deviceId: string, value: boolean) => {
     return request<void, DeviceAction>(ENDPOINTS.action, {
@@ -61,49 +61,49 @@ const lightToggle = (deviceId: string, value: boolean) => {
             on: value,
         },
     });
-}
+};
 
 const lightOn = (deviceId: string) => {
     return lightToggle(deviceId, true);
-}
+};
 
 const lightOff = (deviceId: string) => {
     return lightToggle(deviceId, false);
-}
+};
 
 const getDevices = (): Promise<Collection<Device>> => {
     return request<Collection<Device>>(ENDPOINTS.devices);
-}
+};
 
 const getPlan = (planId: number): Promise<Plan>  => {
     return request<Plan>(ENDPOINTS.getPlanById, null, {
         id: planId
     });
-}
+};
 
 const getPlans = (): Promise<Collection<PlanInfo>>  => {
     return request<Collection<PlanInfo>>(ENDPOINTS.getPlans);
-}
+};
 
 const updatePlan = (planId: number, plan: Plan): Promise<Plan> => {
     return request<Plan>(ENDPOINTS.updatePlan, plan, {
         id: planId
     });
-}
+};
 
 const createPlan = (plan: Plan): Promise<Plan> => {
     return request<Plan>(ENDPOINTS.createPlan, plan);
-}
+};
 
 const getAuthUrl = () => {
     return request<string>(ENDPOINTS.getAuthUrl);
-}
+};
 
 const auth = (code: string) => {
     return request<void>(ENDPOINTS.auth, null, {
         code,
     });
-}
+};
 
 const ApiClient = {
     ping,
@@ -117,6 +117,6 @@ const ApiClient = {
     createPlan,
     getAuthUrl,
     auth,
-}
+};
 
 export default ApiClient;

@@ -14,4 +14,4 @@ export const findUserFile = async (userId: string, fileId: string): Promise<User
     } catch {
         return null;
     }
-}
+};

@@ -4,4 +4,4 @@ import type { Dispatch, RootState } from './store';
 
 export const useDispatch = useDispatchRedux.withTypes<Dispatch>();
 
-export const useSelector = useSelectorRedux.withTypes<RootState>()
+export const useSelector = useSelectorRedux.withTypes<RootState>();

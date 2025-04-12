@@ -9,16 +9,16 @@ const validatePlan = (plan: Plan) => {
     if (!valid) {
         throw new SchemaValidationError(errors);
     }
-}
+};
 
 const validateDeviceAction = (action: DeviceAction) => {
     const { valid, errors } = jsonValidator.validate(action, schemas.deviceActionSchema);
     if (!valid) {
         throw new SchemaValidationError(errors);
     }
-}
+};
 
 export const ValidationService = {
     validatePlan,
     validateDeviceAction,
-}
+};

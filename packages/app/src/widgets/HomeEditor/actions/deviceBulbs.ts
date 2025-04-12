@@ -25,7 +25,7 @@ export const updateDeviceBulbsPoint = (device: PlanDevice, itemIndex: number, ne
             bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
         }
     };
-}
+};
 
 export const updateDeviceBulbsPointByDiff = (device: PlanDevice, itemIndex: number, positionDiff: Point, bounds: Partial<Bounds>, isMagnetic?: boolean): PlanDevice => {
     if (!device.area?.bulbsLinePoints) {
@@ -34,14 +34,14 @@ export const updateDeviceBulbsPointByDiff = (device: PlanDevice, itemIndex: numb
     const originPosition = device.area.bulbsLinePoints[itemIndex];
     const newPosition = applyPositionDiff(originPosition, positionDiff);
     return updateDeviceBulbsPoint(device, itemIndex, newPosition, bounds, isMagnetic);
-}
+};
 
 export const deleteDeviceBulbsPoint= (device: PlanDevice, itemIndex: number): PlanDevice => {
     if (!device.area?.bulbsLinePoints) {
         return device;
     }
 
-    const updatedDeviceAreaBulbsLinePoints = [...device.area.bulbsLinePoints]
+    const updatedDeviceAreaBulbsLinePoints = [...device.area.bulbsLinePoints];
     updatedDeviceAreaBulbsLinePoints.splice(itemIndex, 1);
 
     return {
@@ -51,12 +51,12 @@ export const deleteDeviceBulbsPoint= (device: PlanDevice, itemIndex: number): Pl
             bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
         }
     };
-}
+};
 
 export const addDeviceBulbsPoint = (device: PlanDevice, bounds: Partial<Bounds>): PlanDevice => {
     const bulbsPoints = device.area?.bulbsLinePoints || [];
     const newPoints = limitPositions(getNewPointsForLine(bulbsPoints, device.position, ELEMENT_RADIUS * 3), bounds);
-    const updatedDeviceAreaBulbsLinePoints = [...bulbsPoints, ...newPoints]
+    const updatedDeviceAreaBulbsLinePoints = [...bulbsPoints, ...newPoints];
 
     return {
         ...device,
@@ -65,4 +65,4 @@ export const addDeviceBulbsPoint = (device: PlanDevice, bounds: Partial<Bounds>)
             bulbsLinePoints: updatedDeviceAreaBulbsLinePoints,
         }
     };
-}
+};

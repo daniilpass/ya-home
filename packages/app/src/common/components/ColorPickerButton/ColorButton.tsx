@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 type Props = {
     bgColor: string;

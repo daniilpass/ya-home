@@ -13,7 +13,7 @@ const DemoBanner = () => {
 
     const handleClickReset = () => {
         reloadWithReset();
-    }
+    };
 
     return (
         <Toolbar position="top" withBorder className="demo-banner">
@@ -30,6 +30,6 @@ const DemoBanner = () => {
             </Box>
         </Toolbar>
     );
-}
+};
 
 export default DemoBanner;

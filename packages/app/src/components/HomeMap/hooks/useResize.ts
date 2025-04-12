@@ -55,7 +55,7 @@ export const useResize = (
         );
         if (allowRotate) {
             setRotate(rotate);
-        };
+        }
 
         if (allowScale) {
             setScale(scale);
@@ -64,7 +64,7 @@ export const useResize = (
                 setMinScale(scale);
             }
         }
-    }, [allowZoom, naturalHeight, naturalWidth])
+    }, [allowZoom, naturalHeight, naturalWidth]);
 
     // Scale'n'Rotate initial
     useLayoutEffect(() => {
@@ -93,8 +93,8 @@ export const useResize = (
         resizeObserver.observe(wrapper);
 
         return () => {
-            resizeObserver.unobserve(wrapper)
-        }
+            resizeObserver.unobserve(wrapper);
+        };
     }, [allowScale, allowRotate, wrapperRef, handleResize]);
 
     // Zoom
@@ -108,13 +108,13 @@ export const useResize = (
             const delta = Math.sign(e.deltaY) * scale * SCALE_FACTOR;
             const newScale = Math.min(Math.max(minScale, scale - delta), MAX_SCALE);
             setScale(newScale);
-        }
+        };
         
         wrapper.addEventListener(WHEEL_EVENT, handleZoom, { passive: true });
 
         return () => {
             wrapper.removeEventListener(WHEEL_EVENT, handleZoom);
-        }
+        };
     }, [wrapperRef, scale, minScale, allowZoom]);
 
     // Drag
@@ -137,13 +137,13 @@ export const useResize = (
 
         const handleDragStart = (e: PointerEvent) => {
             onDragStart(e, { scale, translate });
-        }
+        };
         
         wrapper.addEventListener('pointerdown', handleDragStart);
         return () => {
             wrapper.removeEventListener('pointerdown', handleDragStart);
-        }
-    }, [allowDrag, wrapperRef, layoutRef, onDragStart, scale, translate])
+        };
+    }, [allowDrag, wrapperRef, layoutRef, onDragStart, scale, translate]);
 
 
     /**
@@ -169,4 +169,4 @@ export const useResize = (
     usePinchScale(wrapperRef, onPinchScale, onPinchScaleStart, !allowZoom);
 
     return [scale, rotate, translate] as const;
-}
+};

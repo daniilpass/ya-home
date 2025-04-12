@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import cx from 'classnames'
+import cx from 'classnames';
 
 import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 
@@ -57,7 +57,7 @@ const SwitchableElement: FC<Props> = ({ position, icon, state, substate, onClick
                 </svg>
             )}
         </g>
-    )
-}
+    );
+};
 
 export default SwitchableElement;

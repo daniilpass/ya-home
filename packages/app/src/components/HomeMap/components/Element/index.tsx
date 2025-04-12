@@ -42,7 +42,7 @@ const Element: FC<Props> = ({
                 button: MouseButton.LEFT,
                 clientX: bounds.left + bounds.width / 2,
                 clientY: bounds.top + bounds.height / 2,
-            })
+            });
             onDragStart(event);
         }
     }, [moveRef, isEditMode, editElementDrag, onDragStart]);
@@ -69,9 +69,9 @@ const Element: FC<Props> = ({
         element?.addEventListener('pointerdown', handlePointerDown);
 
         return () => {
-            element?.removeEventListener('pointerdown', handlePointerDown)
-        }
-    }, [handlePointerDown])
+            element?.removeEventListener('pointerdown', handlePointerDown);
+        };
+    }, [handlePointerDown]);
 
     return (
         <g
@@ -105,7 +105,7 @@ const Element: FC<Props> = ({
             )}
         </g>
         
-    )
-}
+    );
+};
 
 export default Element;

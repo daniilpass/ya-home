@@ -31,7 +31,7 @@ const DeviceListItem = ({ item, selected, withTooltip, onClick }: DeviceListItem
             </Tooltip>
         )
         : itemComponent
-    )
-}
+    );
+};
 
 export default DeviceListItem;

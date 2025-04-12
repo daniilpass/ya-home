@@ -1,5 +1,5 @@
 import type { SelectChangeEvent, SelectProps } from '@mui/material';
-import { ListItemText, MenuItem, Select } from '@mui/material'
+import { ListItemText, MenuItem, Select } from '@mui/material';
 import type { Collection } from '@homemap/shared';
 
 import type { DeviceSelectItem } from './types';
@@ -24,7 +24,7 @@ const MenuItemContent = ({ item }: { item: DeviceSelectItem}) => (
         }}
         secondary={deviceTypeToName(item.type, item.subtype)}
     />
-)
+);
 
 const SelectValue = ({ item }: { item?: DeviceSelectItem}) => (
     <ListItemText
@@ -35,7 +35,7 @@ const SelectValue = ({ item }: { item?: DeviceSelectItem}) => (
             overflow: 'hidden',
         }}
     />
-)
+);
 
 
 const DeviceSelect = ({ items, selectedItemId, onChange, sx }: DeviceSelectProps) => {
@@ -48,7 +48,7 @@ const DeviceSelect = ({ items, selectedItemId, onChange, sx }: DeviceSelectProps
             <MenuItem key={id} value={id}>
                 <MenuItemContent item={items[id]} />
             </MenuItem>
-        ))
+        ));
     }, [items]);
 
     const renderSelectedValue = useCallback((value: string) => <SelectValue item={items[value]}/>, [items]);
@@ -70,7 +70,7 @@ const DeviceSelect = ({ items, selectedItemId, onChange, sx }: DeviceSelectProps
         >
             {itmes}
         </Select>
-    )
-}
+    );
+};
 
 export default memo(DeviceSelect);

@@ -54,5 +54,5 @@ export const ForeignObjectWrapper = ({
                 {children}
             </div>
         </foreignObject>
-    )
-}
+    );
+};

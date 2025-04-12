@@ -17,7 +17,7 @@ export const routes = {
     view: '/view',
     edit: '/edit',
     auth: '/auth',
-}
+};
 
 export const router = createBrowserRouter(
     createRoutesFromElements(

@@ -28,18 +28,18 @@ export const PlanSettingsDialog = ({
 
     const handleDialogValueChange = (newDialogValue: DialogValue) => {
         setDialogValue(newDialogValue);
-    }
+    };
 
     const handleSubmit = () => {
         onSubmit(dialogValue);
-    }
+    };
 
     const handleClose = (_: React.MouseEvent, reason?: 'backdropClick' | 'escapeKeyDown') => {
         if (reason === 'backdropClick') {
             return;
         }
         onClose();
-    }
+    };
 
     return (
         <Dialog
@@ -75,5 +75,5 @@ export const PlanSettingsDialog = ({
                 {!hideClose && <Button onClick={handleClose}>{labelClose ?? 'Отмена'}</Button>}
             </DialogActions>
         </Dialog>
-    )
-}
+    );
+};

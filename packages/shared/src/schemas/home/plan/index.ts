@@ -15,4 +15,4 @@ export const planSchema = {
             maximum: MAX_PLAN_SIDE_PX,
         }
     }
-}
+};

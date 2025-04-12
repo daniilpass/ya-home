@@ -12,7 +12,7 @@ const getMagnetPoint = (x: number, y: number, anchorX: number, anchorY: number, 
         magnetY = anchorY;
     }
     return [magnetX, magnetY];
-}
+};
 
 const getMagnetPointsForAnchors = (
     position: Point,
@@ -41,7 +41,7 @@ const getMagnetPointsForAnchors = (
     }
 
     return [magnetX, magnetY];
-}
+};
 
 export const getMagnetPoints = (
     point: Point,

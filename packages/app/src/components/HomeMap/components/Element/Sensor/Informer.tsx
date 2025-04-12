@@ -33,5 +33,5 @@ export const SensorInformer = ({ type, state }: SensorInformerProps) => {
                 {sensorUnit}
             </div>
         </div>
-    )
+    );
 };

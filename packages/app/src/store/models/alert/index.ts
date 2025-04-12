@@ -6,7 +6,7 @@ import type { RootModel } from '../root';
 
 const INITIAL_STATE: AlertState = {
     queue: [],
-}
+};
 
 const MAX_QUEUE_LENGTH = 3;
 
@@ -18,7 +18,7 @@ export const alerts = createModel<RootModel>()({
                 queue: [
                     ...state.queue,
                 ],
-            }
+            };
 
             if (state.queue.length >= MAX_QUEUE_LENGTH) {
                 // Find first (oldest) not closed and close
@@ -26,7 +26,7 @@ export const alerts = createModel<RootModel>()({
                 cloneState.queue[itemIndex] = {
                     ...cloneState.queue[itemIndex],
                     open: false,
-                }
+                };
             }
 
             return {
@@ -46,20 +46,20 @@ export const alerts = createModel<RootModel>()({
                 queue: [
                     ...state.queue,
                 ],
-            }
+            };
 
             const itemIndex = state.queue.findIndex(x => x.id === id);
             cloneState.queue[itemIndex] = {
                 ...cloneState.queue[itemIndex],
                 open: false,
-            }
+            };
 
             return cloneState;
         },
         delete(state, id: string): AlertState {
             const cloneState = {
                 queue: state.queue.filter(x => x.id !== id),
-            }
+            };
 
             return cloneState;
         }

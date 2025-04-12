@@ -19,7 +19,7 @@ export const getUserPlans = async (req: Request, res: Response, next: NextFuncti
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const getUserPlanById = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
@@ -35,7 +35,7 @@ export const getUserPlanById = async (req: Request<{id: string}>, res: Response,
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const createUserPlan = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -52,7 +52,7 @@ export const createUserPlan = async (req: Request, res: Response, next: NextFunc
     } catch (error) {
         next(error);
     }
-}
+};
 
 export const updateUserPlan = async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
     try {
@@ -70,4 +70,4 @@ export const updateUserPlan = async (req: Request<{id: string}>, res: Response, 
     } catch (error) {
         next(error);
     }
-}
+};

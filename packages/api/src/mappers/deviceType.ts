@@ -16,7 +16,7 @@ export const mapYaDeviceTypeToDeviceType = (type: YaDeviceType): DeviceTypes => 
         default:
             return DeviceTypes.Unknown;
     }
-}
+};
 
 export const mapYaDeviceTypeToSubtype = (type: YaDeviceType): DeviceSubtypes => {
     switch (type) {
@@ -31,4 +31,4 @@ export const mapYaDeviceTypeToSubtype = (type: YaDeviceType): DeviceSubtypes => 
         default:
             return DeviceSubtypes.Unknown;
     }
-}
+};

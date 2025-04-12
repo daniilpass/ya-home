@@ -30,7 +30,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                 color,
             }
         });
-    }
+    };
 
     const handleDimensionsChange = (dimensions: Point) => {
         onChange({
@@ -38,7 +38,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
             width: dimensions[0],
             height: dimensions[1],
         });
-    }
+    };
 
     const handleImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         try {
@@ -72,7 +72,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
         } catch {
             dispatch.alerts.error('Ошибка при чтении изображения');
         }
-    }
+    };
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
         const imageEl = e.target as HTMLImageElement;
@@ -87,7 +87,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
             width: imageEl.naturalWidth,
             height: imageEl.naturalHeight,
         });
-    }
+    };
 
     const handleClickFitToBackground = () => {
         if (!backgroundNaturalSize) {
@@ -99,7 +99,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
             width: backgroundNaturalSize.width,
             height: backgroundNaturalSize.height,
         });
-    }
+    };
 
     const dimensions: Point = [value.width, value.height];
     const color = value.background.color;
@@ -199,5 +199,5 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                 </Box>
             </Box>
         </DialogContent>
-    )
-}
+    );
+};

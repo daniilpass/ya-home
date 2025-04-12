@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 
-import './style.css'
+import './style.css';
 import { routes } from '../../../../app/router';
 
 export type FabEditProps = {
@@ -13,8 +13,8 @@ const FabEdit = ({ planId }: FabEditProps) => {
     const navigate = useNavigate();
 
     const handleClickEdit = () => {
-        navigate(`${routes.edit}/${planId}`)
-    }
+        navigate(`${routes.edit}/${planId}`);
+    };
 
     return (
         <Fab
@@ -27,6 +27,6 @@ const FabEdit = ({ planId }: FabEditProps) => {
             <EditIcon />
         </Fab>
     );
-}
+};
 
 export default FabEdit;
