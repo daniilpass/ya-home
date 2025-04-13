@@ -1,9 +1,9 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { Plan } from '@homemap/shared';
 
 import MapService from '../services/mapService';
-import type {Element} from '../services/mapService/model/Element';
+import type { Element } from '../services/mapService/model/Element';
 
 export const useMapService = (plan: Plan | undefined) => {
     const mapServiceRef = useRef<MapService | null>(null);
@@ -17,7 +17,7 @@ export const useMapService = (plan: Plan | undefined) => {
         const { devices } = plan;
         mapServiceRef.current = new MapService(devices);
         mapServiceRef.current.onUpdate = (updatedData) => {
-            setData({...updatedData});
+            setData({ ...updatedData });
         };
         mapServiceRef.current.start();
         return () => {

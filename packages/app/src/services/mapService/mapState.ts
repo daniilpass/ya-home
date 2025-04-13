@@ -1,10 +1,10 @@
 import type { Collection, Device } from '@homemap/shared';
 
-import {logger} from '../../common/tools';
+import { logger } from '../../common/tools';
 
-import type {Element} from './model/Element';
-import {Substate} from './model/Substate';
-import {SYNC_TYMEOUT, STATE_SYNCED} from './constants';
+import type { Element } from './model/Element';
+import { Substate } from './model/Substate';
+import { SYNC_TYMEOUT, STATE_SYNCED } from './constants';
 import { stateIsEqual } from './helpers';
 
 class MapState {

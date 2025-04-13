@@ -19,7 +19,7 @@ const FabEdit = ({ planId }: FabEditProps) => {
     return (
         <Fab
             className="fab-edit"
-            sx={{position: 'fixed'}}
+            sx={{ position: 'fixed' }}
             color="primary"
             size="small"
             onClick={handleClickEdit}

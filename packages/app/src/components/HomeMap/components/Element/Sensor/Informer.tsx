@@ -21,7 +21,7 @@ export const SensorInformer = ({ type, state }: SensorInformerProps) => {
 
     return (
         <div className="informer">
-            {sensorIcon && <DeviceIcon name={sensorIcon} sx={{fill: sensorColor}}/>}
+            {sensorIcon && <DeviceIcon name={sensorIcon} sx={{ fill: sensorColor }}/>}
             <div 
                 className="informer__value"
                 style={{

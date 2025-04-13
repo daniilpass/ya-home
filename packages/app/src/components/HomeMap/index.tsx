@@ -1,7 +1,8 @@
 import type {
     CSSProperties,
     FC,
-    SyntheticEvent} from 'react';
+    SyntheticEvent
+} from 'react';
 import {
     useCallback,
     useEffect,
@@ -149,7 +150,7 @@ const HomeMap: FC<Props> = ({
         if (!svgRef.current || !onTansform) {
             return;
         }
-        onTansform({scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect()});
+        onTansform({ scale, rotate, translate, bounds: svgRef.current.getBoundingClientRect() });
     }, [scale, rotate, translate, svgRef, onTansform]);
 
     const handleBackgroundLoad = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -307,7 +308,7 @@ const HomeMap: FC<Props> = ({
     ]);
 
     return (
-        <TransformContextProvider value={{scale, rotate, editElementDrag}}>
+        <TransformContextProvider value={{ scale, rotate, editElementDrag }}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
                     {/* Background image */}

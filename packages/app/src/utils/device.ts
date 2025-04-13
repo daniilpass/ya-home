@@ -1,6 +1,7 @@
 import type {
     DeviceStateType,
-    DeviceIconType} from '@homemap/shared';
+    DeviceIconType
+} from '@homemap/shared';
 import { 
     DeviceStateKeys,
     DeviceSubtypes,

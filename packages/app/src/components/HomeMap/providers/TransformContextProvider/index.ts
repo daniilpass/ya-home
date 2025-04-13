@@ -1,4 +1,4 @@
-import {TransformContextProvider} from './provider';
+import { TransformContextProvider } from './provider';
 
-export {useTransformContext} from './hooks';
+export { useTransformContext } from './hooks';
 export default TransformContextProvider;

@@ -50,6 +50,11 @@ export default defineConfig([
                     'pathGroupsExcludedImportTypes': ['builtin'],
                 },
             ],
+            'object-curly-newline': ['error', {
+                multiline: true,
+                consistent: true,
+            }],
+            'object-curly-spacing':['error', 'always']
         },
         settings: {
             'import/resolver': {

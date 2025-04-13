@@ -1,10 +1,10 @@
-import type {RefObject} from 'react';
-import { useState, useLayoutEffect, useCallback, useRef} from 'react';
+import type { RefObject } from 'react';
+import { useState, useLayoutEffect, useCallback, useRef } from 'react';
 
 import type { Point } from '@homemap/shared';
 
-import type {DragEvent} from './useDrag';
-import { useDrag} from './useDrag';
+import type { DragEvent } from './useDrag';
+import { useDrag } from './useDrag';
 import { usePinchScale } from './usePinchScale';
 
 const WHEEL_EVENT = 'wheel';

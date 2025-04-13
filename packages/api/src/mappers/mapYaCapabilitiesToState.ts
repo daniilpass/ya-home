@@ -1,4 +1,4 @@
-import type { DeviceState} from '@homemap/shared';
+import type { DeviceState } from '@homemap/shared';
 import { DeviceUnits } from '@homemap/shared';
 
 import type { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';

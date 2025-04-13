@@ -4,9 +4,9 @@ import cx from 'classnames';
 
 import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 
-import {Substate} from '../../../../../services/mapService/model/Substate';
-import {useTransformContext} from '../../../providers/TransformContextProvider';
-import {ELEMENT_RADIUS, ICON_SIZE} from '../../../constants';
+import { Substate } from '../../../../../services/mapService/model/Substate';
+import { useTransformContext } from '../../../providers/TransformContextProvider';
+import { ELEMENT_RADIUS, ICON_SIZE } from '../../../constants';
 import { DeviceIcon } from '../../../../DeviceIcon';
 
 import './styles.css';

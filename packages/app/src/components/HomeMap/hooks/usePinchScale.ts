@@ -1,8 +1,8 @@
-import type {RefObject} from 'react';
-import { useLayoutEffect, useCallback, useRef} from 'react';
+import type { RefObject } from 'react';
+import { useLayoutEffect, useCallback, useRef } from 'react';
 
-import type {DragEvent} from './useDrag';
-import { useDrag} from './useDrag';
+import type { DragEvent } from './useDrag';
+import { useDrag } from './useDrag';
 
 const MOVE_BOUND = 1;
 

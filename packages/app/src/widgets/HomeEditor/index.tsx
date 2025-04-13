@@ -1,5 +1,5 @@
-import type { MouseEvent as ReactMouseEvent} from 'react';
-import {useEffect, useState, useMemo, useCallback, useRef} from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 
 import { useNavigate, useBlocker } from 'react-router-dom';
 import { Box } from '@mui/material';
@@ -266,8 +266,8 @@ const HomeEditor = ({ planId }: Props) => {
     /**
      * Map handlers
      */
-    const handleTransform = useCallback(({scale, bounds}: MapTransform) => {
-        mapTransform.current = {scale, bounds};
+    const handleTransform = useCallback(({ scale, bounds }: MapTransform) => {
+        mapTransform.current = { scale, bounds };
     }, []);
 
     /**
@@ -283,7 +283,7 @@ const HomeEditor = ({ planId }: Props) => {
     }, [planDevices, setPlanDevices]);
 
     const handleDeleteDevice = useCallback((deviceId: string) => {
-        const updatedplanDevices = {...planDevices};
+        const updatedplanDevices = { ...planDevices };
         delete updatedplanDevices[deviceId];
         setPlanDevices(updatedplanDevices);
         setSelectedPlanDevice(undefined);

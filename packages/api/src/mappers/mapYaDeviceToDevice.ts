@@ -1,4 +1,4 @@
-import type { Device} from '@homemap/shared';
+import type { Device } from '@homemap/shared';
 import { DeviceSubtypes, DeviceTypes } from '@homemap/shared';
 
 import type { YaDevice } from '../yaClient/model/YaDevice';

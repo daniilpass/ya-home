@@ -1,4 +1,4 @@
-import {LOGGER_ENABLED} from '../../configuration';
+import { LOGGER_ENABLED } from '../../configuration';
 
 export class Logger {
     enabled = LOGGER_ENABLED;

@@ -1,6 +1,6 @@
 import { validate } from 'jsonschema';
 
-import type { Plan} from '@homemap/shared';
+import type { Plan } from '@homemap/shared';
 import { schemas } from '@homemap/shared';
 
 import { imageUrlToDataURL, readFileAsText, saveFile } from '../../../utils/file';

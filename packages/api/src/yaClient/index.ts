@@ -33,7 +33,7 @@ export class YaClient {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                ...(token ? {'Authorization': `OAuth ${token}` } : undefined),
+                ...(token ? { 'Authorization': `OAuth ${token}` } : undefined),
             }
         });
         this.loginClient.interceptors.request.use(this.logRequest);

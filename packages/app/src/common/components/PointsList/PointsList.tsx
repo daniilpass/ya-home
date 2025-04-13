@@ -1,5 +1,5 @@
-import type {FC} from 'react';
-import { useCallback, useMemo} from 'react';
+import type { FC } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,7 +16,7 @@ type Props = {
     onDelete: (index: number) => void;
 }
 
-export const PointsList: FC<Props> = ({value, onChange, onAdd, onDelete}) => {
+export const PointsList: FC<Props> = ({ value, onChange, onAdd, onDelete }) => {
     const onAddClick = useCallback(
         () => onAdd?.(value.length > 0 ? value[value.length - 1] : [0, 0]),
         [onAdd, value],

@@ -1,5 +1,5 @@
 
-import type { ChangeEvent, SyntheticEvent} from 'react';
+import type { ChangeEvent, SyntheticEvent } from 'react';
 import { useState } from 'react';
 
 import { Box, Button, DialogContent, Typography } from '@mui/material';
@@ -147,7 +147,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                             component="label"
                             variant="contained"
                             startIcon={<CloudUploadIcon />}
-                            sx={{width: '100%'}}
+                            sx={{ width: '100%' }}
                             size="large"
                         >
                             Загрузить
@@ -170,7 +170,7 @@ export const PlanSettingsDialogContent = ({ value, onChange }: DialogContentProp
                         <ColorPickerButton
                             color={color}
                             onChange={handleColorChange}
-                            sx={{width: '100%'}}
+                            sx={{ width: '100%' }}
                         />
                     </PropertiesGroup>
                 </Box>

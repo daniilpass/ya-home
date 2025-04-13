@@ -1,4 +1,4 @@
-import type { DeviceState, DeviceStateKeys, DeviceStateType, Point} from '@homemap/shared';
+import type { DeviceState, DeviceStateKeys, DeviceStateType, Point } from '@homemap/shared';
 import { deviceIcons } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
@@ -45,7 +45,7 @@ export const SensorElement = ({ position, state, onClick }: SensorElementProps) 
                 {isNoData && (
                     <DeviceIcon
                         name={deviceIcons.Sensor}
-                        sx={{fill: 'white', verticalAlign: 'middle'}}
+                        sx={{ fill: 'white', verticalAlign: 'middle' }}
                     />
                 )}
             </>

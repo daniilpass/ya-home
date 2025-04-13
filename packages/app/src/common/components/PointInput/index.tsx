@@ -1,4 +1,4 @@
-import type { ChangeEvent, FC} from 'react';
+import type { ChangeEvent, FC } from 'react';
 
 import type { SxProps, Theme } from '@mui/material';
 import { Box, TextField } from '@mui/material';
@@ -15,7 +15,7 @@ type Props = {
     max?: number;
 }
 
-const PointInput: FC<Props> = ({value: [x, y], labelX, labelY, vertical, min, max, onChange}) => {
+const PointInput: FC<Props> = ({ value: [x, y], labelX, labelY, vertical, min, max, onChange }) => {
     const handleChange = (value: Point) => {
         if (!onChange) {
             return;

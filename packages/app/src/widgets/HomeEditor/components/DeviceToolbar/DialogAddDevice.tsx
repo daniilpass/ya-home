@@ -60,7 +60,7 @@ const DialogAddDevice = ({
                 <DeviceList
                     items={supportedDevicesNotOnMap}
                     onItemClick={onAdd}
-                    sx={{padding: 0, width: 400 }}
+                    sx={{ padding: 0, width: 400 }}
                 />
             </DialogContent>
         </Dialog>

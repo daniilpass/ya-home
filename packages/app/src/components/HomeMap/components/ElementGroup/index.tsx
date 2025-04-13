@@ -1,5 +1,5 @@
-import type {FC} from 'react';
-import { useCallback} from 'react';
+import type { FC } from 'react';
+import { useCallback } from 'react';
 
 import cx from 'classnames';
 
@@ -44,9 +44,9 @@ const ElementGroup: FC<Props> = ({
     onShadowMaskPointDrag,
     onShadowMaskPointDragEnd,
 }) => {
-    const {id, type, position, icon, area} = element;
-    const {shadowPoints, shadowMaskPoints, bulbsLinePoints} = area || {};
-    const {state, substate} = data || {};
+    const { id, type, position, icon, area } = element;
+    const { shadowPoints, shadowMaskPoints, bulbsLinePoints } = area || {};
+    const { state, substate } = data || {};
 
     const rootClassName = cx({
         'group--edit': isEditMode,

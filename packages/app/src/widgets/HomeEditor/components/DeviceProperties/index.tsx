@@ -102,7 +102,7 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
 
     return (
         <>
-            <Box sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+            <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 {!hideTitle && (
                     <Typography component="h1" variant="h5" align="center" marginBottom={1}>
                         {device.name}

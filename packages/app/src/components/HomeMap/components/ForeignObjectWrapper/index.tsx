@@ -20,9 +20,9 @@ export const ForeignObjectWrapper = ({
     onFit,
     ...props
 }: ForeignObjectWrapperProps) => {
-    const [size, setSize] = useState<Size>({ width: 1, height: 1});
+    const [size, setSize] = useState<Size>({ width: 1, height: 1 });
     const childRef = useRef<HTMLDivElement>(null);
-    const { width, height} = useResizeObserver<HTMLDivElement>({ ref: childRef });
+    const { width, height } = useResizeObserver<HTMLDivElement>({ ref: childRef });
 
     useLayoutEffect(() => {
         if (!childRef.current) {

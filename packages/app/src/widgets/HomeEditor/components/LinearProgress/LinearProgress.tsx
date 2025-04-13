@@ -1,4 +1,4 @@
-import { Box, LinearProgress as MuiLinearProgress} from '@mui/material';
+import { Box, LinearProgress as MuiLinearProgress } from '@mui/material';
 
 export const LinearProgress = () => (
     <Box sx={{ width: '100%', position: 'relative' }}>

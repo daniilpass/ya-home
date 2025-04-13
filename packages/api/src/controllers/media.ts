@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import MediaStorage from '../services/mediaStorage';
-import { NotFoundError} from '../errors';
+import { NotFoundError } from '../errors';
 import { MIME } from '../services/mediaStorage/constants';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
 

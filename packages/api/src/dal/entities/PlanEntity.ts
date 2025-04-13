@@ -1,4 +1,4 @@
-import type { CreationOptional, InferAttributes, InferCreationAttributes} from 'sequelize';
+import type { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { Model } from 'sequelize';
 
 import type { Plan, PlanInfo } from '@homemap/shared';

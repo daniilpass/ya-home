@@ -1,4 +1,4 @@
-import type { CreationOptional, InferAttributes, InferCreationAttributes} from 'sequelize';
+import type { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { Model } from 'sequelize';
 
 export class StatUserRequest extends Model<InferAttributes<StatUserRequest>, InferCreationAttributes<StatUserRequest>> {

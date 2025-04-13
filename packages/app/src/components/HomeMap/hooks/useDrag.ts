@@ -1,5 +1,5 @@
-import type {PointerEvent as ReactPointerEvent} from 'react';
-import { useCallback} from 'react';
+import type { PointerEvent as ReactPointerEvent } from 'react';
+import { useCallback } from 'react';
 
 import { MouseButton } from '@homemap/shared';
 

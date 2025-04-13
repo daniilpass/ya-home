@@ -9,6 +9,6 @@ export class SchemaValidationError extends AppError {
     constructor(schemaErrors: ValidationError[], message?: string) {
         super(message || 'Schema is invalid');
         this.schemaErrors = schemaErrors;
-        this.schemaErrorsShort = schemaErrors.map(({argument, message, path}) => ({argument, message, path}));
+        this.schemaErrorsShort = schemaErrors.map(({ argument, message, path }) => ({ argument, message, path }));
     }
 }
