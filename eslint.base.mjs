@@ -54,7 +54,12 @@ export default defineConfig([
                 multiline: true,
                 consistent: true,
             }],
-            'object-curly-spacing':['error', 'always']
+            'object-curly-spacing':['error', 'always'],
+            'key-spacing': 'error',
+            'indent': ['error', 4, {
+                SwitchCase: 1,
+            }],
+            'brace-style': ['error', '1tbs']
         },
         settings: {
             'import/resolver': {

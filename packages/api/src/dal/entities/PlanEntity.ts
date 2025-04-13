@@ -22,8 +22,8 @@ export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreation
                 ...this.json.background,
                 ...(
                     this.json.background.image 
-                    ? { image: MediaStorage.getMediaUrl(this.json.background.image) } 
-                    : undefined
+                        ? { image: MediaStorage.getMediaUrl(this.json.background.image) } 
+                        : undefined
                 ),
             }
         };
@@ -38,8 +38,8 @@ export class PlanEntity extends Model<InferAttributes<PlanEntity>, InferCreation
                 ...this.json.background,
                 ...(
                     this.json.background.image 
-                    ? { image: MediaStorage.getMediaUrl(this.json.background.image) } 
-                    : undefined
+                        ? { image: MediaStorage.getMediaUrl(this.json.background.image) } 
+                        : undefined
                 ),
             }
         };

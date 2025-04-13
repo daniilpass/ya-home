@@ -14,10 +14,10 @@ type PointerInfo = {
 }
 
 const pointerEventToInfo = (e: PointerEvent): PointerInfo  => ({
-        id: e.pointerId,
-        primary: e.isPrimary,
-        x: e.x,
-        y: e.y,
+    id: e.pointerId,
+    primary: e.isPrimary,
+    x: e.x,
+    y: e.y,
 });
 
 const getDistance = (

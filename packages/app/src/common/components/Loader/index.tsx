@@ -17,7 +17,8 @@ const Loader: FC<Props> = ({
     const iconColor = color === 'white' ? undefined : color; 
 
     return (
-        <SvgIcon sx={{
+        <SvgIcon
+            sx={{
                 fontSize: size,
                 color: color,
             }}

@@ -8,12 +8,12 @@ export default defineConfig([
         'service-worker.js',
     ]),
     pluginReact.configs.flat.recommended,
-	{
+    {
         settings: {
             react: {
                 version: 'detect'
             }
         },
-		extends: [baseConfig],
-	},
+        extends: [baseConfig],
+    },
 ]);

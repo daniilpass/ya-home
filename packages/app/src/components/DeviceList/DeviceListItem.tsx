@@ -26,12 +26,12 @@ const DeviceListItem = ({ item, selected, withTooltip, onClick }: DeviceListItem
 
     return (
         withTooltip
-        ? (
-            <Tooltip title={item.name} placement="right" arrow>
-                {itemComponent}
-            </Tooltip>
-        )
-        : itemComponent
+            ? (
+                <Tooltip title={item.name} placement="right" arrow>
+                    {itemComponent}
+                </Tooltip>
+            )
+            : itemComponent
     );
 };
 

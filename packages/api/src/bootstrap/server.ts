@@ -42,6 +42,6 @@ export const bootstrapServer = () => {
     app.use(errorHandler);
 
     app.listen(PORT, () => {
-      logger.info(`[server] Server is running at http://localhost:${PORT}`);
+        logger.info(`[server] Server is running at http://localhost:${PORT}`);
     });
 };

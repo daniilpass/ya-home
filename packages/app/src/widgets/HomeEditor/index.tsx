@@ -369,76 +369,76 @@ const HomeEditor = ({ planId }: Props) => {
     }, [handleChangeDevice, planBounds, planDevices]);
 
     return ( <>
-            <AppLoader isLoading={isLoading || !mapReady} />
-            {plan && (
-                <div className="editor-root">
-                    <Box>
-                        {actionsInProgress.length > 0 && <LinearProgress />}
-                        <EditorTopbar
-                            actionsInProgress={actionsInProgress}
-                            onItemClick={handleClickPlanAction}
-                        />
-                        <DeviceToolbar
-                            devices={allDevices}
-                            devicesOnPlan={planDevices}
-                            selectedDevice={selectedPlanDevice}
-                            planBounds={planBounds}
-                            onSelectDevice={handleSelectDevice}
-                            onAddDevice={handleAddDevice}
-                            onChangeDevice={handleChangeDevice}
-                            onDeleteDevice={handleDeleteDevice}
-                        />
-                    </Box>
-
-                    <HomeMap
-                        data={sensorsData}
-                        background={plan.background}
-                        width={plan.width}
-                        height={plan.height}
-                        elements={planDevices}
-                        allowZoom={true}
-                        allowDrag={true}
-                        allowInitialScale={true}
-                        editableElement={selectedPlanDevice}
-                        editElementDrag={selectedPlanDeviceDrag}
-                        isEditorMode={true}
-                        onElementClick={handleClickDevice}
-                        onElementDrag={handleDragDevice}
-                        onElementDragEnd={handleDragDeviceEnd}
-                        onBulbsLinePointDrag={handleBulbsLinePointDrag}
-                        onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
-                        onShadowPointDrag={handleShadowPointDrag}
-                        onShadowPointDragEnd={handleShadowPointDragEnd}
-                        onShadowMaskPointDrag={handleShadowMaskPointDrag}
-                        onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
-                        onTansform={handleTransform}
-                        onReady={() => setMapReady(true)}
-                        classes={{
-                            wrapper: 'editor_map-wrapper',
-                            layout: 'editor_map-layout',
-                        }}
-                        styles={{
-                            wrapper: {
-                                backgroundColor: undefined,
-                            }
-                        }}
+        <AppLoader isLoading={isLoading || !mapReady} />
+        {plan && (
+            <div className="editor-root">
+                <Box>
+                    {actionsInProgress.length > 0 && <LinearProgress />}
+                    <EditorTopbar
+                        actionsInProgress={actionsInProgress}
+                        onItemClick={handleClickPlanAction}
                     />
-
-                    <PlanSettingsDialog
-                        open={planSettingsOpen}
-                        onClose={handleCloseSettings}
-                        value={planSettingsValue!}
-                        onSubmit={handleChangePlanSettings}
+                    <DeviceToolbar
+                        devices={allDevices}
+                        devicesOnPlan={planDevices}
+                        selectedDevice={selectedPlanDevice}
+                        planBounds={planBounds}
+                        onSelectDevice={handleSelectDevice}
+                        onAddDevice={handleAddDevice}
+                        onChangeDevice={handleChangeDevice}
+                        onDeleteDevice={handleDeleteDevice}
                     />
+                </Box>
 
-                    <UnsavedChangesDialog
-                        open={blocker.state === 'blocked'}
-                        onSubmit={blocker.proceed!}
-                        onClose={blocker.reset!}
-                    />
-                </div>
-            )}
-        </>
+                <HomeMap
+                    data={sensorsData}
+                    background={plan.background}
+                    width={plan.width}
+                    height={plan.height}
+                    elements={planDevices}
+                    allowZoom={true}
+                    allowDrag={true}
+                    allowInitialScale={true}
+                    editableElement={selectedPlanDevice}
+                    editElementDrag={selectedPlanDeviceDrag}
+                    isEditorMode={true}
+                    onElementClick={handleClickDevice}
+                    onElementDrag={handleDragDevice}
+                    onElementDragEnd={handleDragDeviceEnd}
+                    onBulbsLinePointDrag={handleBulbsLinePointDrag}
+                    onBulbsLinePointDragEnd={handleBulbsLinePointDragEnd}
+                    onShadowPointDrag={handleShadowPointDrag}
+                    onShadowPointDragEnd={handleShadowPointDragEnd}
+                    onShadowMaskPointDrag={handleShadowMaskPointDrag}
+                    onShadowMaskPointDragEnd={handleShadowMaskPointDragEnd}
+                    onTansform={handleTransform}
+                    onReady={() => setMapReady(true)}
+                    classes={{
+                        wrapper: 'editor_map-wrapper',
+                        layout: 'editor_map-layout',
+                    }}
+                    styles={{
+                        wrapper: {
+                            backgroundColor: undefined,
+                        }
+                    }}
+                />
+
+                <PlanSettingsDialog
+                    open={planSettingsOpen}
+                    onClose={handleCloseSettings}
+                    value={planSettingsValue!}
+                    onSubmit={handleChangePlanSettings}
+                />
+
+                <UnsavedChangesDialog
+                    open={blocker.state === 'blocked'}
+                    onSubmit={blocker.proceed!}
+                    onClose={blocker.reset!}
+                />
+            </div>
+        )}
+    </>
     );
 };
 

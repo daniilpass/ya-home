@@ -93,17 +93,17 @@ const roundSensorValue = (value: number) => Math.round(value * 10) / 10;
 const getMotionsSensorValue = (state: DeviceStateType<MotionValue>) => {
     switch (state.value) {
         case MotionValue.detected: 
-            { 
-                const startOfTheDay = getStartOfTheDay();
-                const eventDate = new Date(state.updatedAt);
-                const detectedToday = eventDate >= startOfTheDay;
-                // const recentMotion = Date.now() - state.updatedAt <= recentMotionIntervalMs;
-                if (detectedToday) {
-                    return getTimeString(eventDate);
-                } else {
-                    return getDateString(eventDate);
-                }
+        { 
+            const startOfTheDay = getStartOfTheDay();
+            const eventDate = new Date(state.updatedAt);
+            const detectedToday = eventDate >= startOfTheDay;
+            // const recentMotion = Date.now() - state.updatedAt <= recentMotionIntervalMs;
+            if (detectedToday) {
+                return getTimeString(eventDate);
+            } else {
+                return getDateString(eventDate);
             }
+        }
         case MotionValue.notDetected:
         default:
             return UNICODE.enDash;
@@ -128,14 +128,14 @@ export const getSensorStateValue = (stateKey: DeviceStateKeys, state: DeviceStat
 export const getSensorColor = (stateKey: DeviceStateKeys, state: DeviceStateType) => {
     switch (stateKey) {
         case DeviceStateKeys.Motion:
-            {
-                const recentMotion = Date.now() - state.updatedAt <= recentMotionIntervalMs;
-                if (recentMotion) {
-                    return '#92ff92';
-                }
-                return defaultSensorColor;
-
+        {
+            const recentMotion = Date.now() - state.updatedAt <= recentMotionIntervalMs;
+            if (recentMotion) {
+                return '#92ff92';
             }
+            return defaultSensorColor;
+
+        }
         case DeviceStateKeys.Temperature:
         case DeviceStateKeys.On:
         case DeviceStateKeys.Brightness:

@@ -6,7 +6,7 @@ export default defineConfig([
     globalIgnores([
         'appData/',
     ]),
-	{
-		extends: [baseConfig],
-	},
+    {
+        extends: [baseConfig],
+    },
 ]);

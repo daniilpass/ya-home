@@ -44,14 +44,14 @@ export const Alert = ({
                 onExited
             }}
         >
-        <MuiAlert
-            onClose={handleClose}
-            severity={severity}
-            variant={variant}
-            sx={{ width: '100%' }}
-        >
-            {content}
-        </MuiAlert>
+            <MuiAlert
+                onClose={handleClose}
+                severity={severity}
+                variant={variant}
+                sx={{ width: '100%' }}
+            >
+                {content}
+            </MuiAlert>
         </Snackbar>
     );
 };

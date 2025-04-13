@@ -5,7 +5,7 @@ import type { RootModel } from './models';
 import { models } from './models';
 
 export const store = init({
-	models,
+    models,
 });
 
 export type Store = typeof store;
