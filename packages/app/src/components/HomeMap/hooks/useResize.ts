@@ -118,14 +118,18 @@ export const useResize = (
     }, [wrapperRef, scale, minScale, allowZoom]);
 
     // Drag
-    const onDrag = useCallback((e: DragEvent, options: DragOptions) => {
+    const onDrag = useCallback((e: DragEvent, options?: DragOptions) => {
+        if (!options) {
+            return;
+        }
+
         setTranslate([
             options.translate[0] - (e.pageXDiff / options.scale),
             options.translate[1] - (e.pageYDiff / options.scale),
         ]);
     }, []);
 
-    const onDragStart = useDrag({ onDrag });
+    const onDragStart = useDrag<DragOptions>({ onDrag });
 
     useLayoutEffect(() => {
         const wrapper = wrapperRef.current;

@@ -12,12 +12,13 @@ import LightIcon from '@mui/icons-material/Light';
 import WbIridescentIcon from '@mui/icons-material/WbIridescent';
 import WindPowerIcon from '@mui/icons-material/WindPower';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
+import type SvgIcon from '@mui/material/SvgIcon';
 
 import type { DeviceIconType } from '@homemap/shared';
 import { deviceIcons } from '@homemap/shared';
 
 type IconsType = {
-    [key in DeviceIconType]: unknown
+    [key in DeviceIconType]: typeof SvgIcon;
 };
 
 export const Icons: IconsType = {
