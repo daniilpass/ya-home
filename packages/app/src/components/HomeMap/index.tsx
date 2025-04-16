@@ -315,7 +315,15 @@ const HomeMap: FC<Props> = ({
         <TransformContextProvider value={{ scale, rotate, editElementDrag }}>
             <div className={wrapperClassName} style={wrapperStyle} ref={wrapperRef}>
                 <div className={layoutClassName} style={layoutStyle} ref={layoutRef}>
-                    <Canvas background={background} width={width} height={height} elements={elements} />
+                    <Canvas
+                        background={background}
+                        width={width}
+                        height={height}
+                        elements={{
+                            ...elements,
+                            ...(editableElement ? { [editableElement.id]: editableElement } : undefined)
+                        }}
+                    />
 
                     {/* Background image */}
                     {/* {!isBackgroundError && background.image && (

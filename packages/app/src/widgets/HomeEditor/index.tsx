@@ -330,8 +330,7 @@ const HomeEditor = ({ planId }: Props) => {
      */
     const handleDragDevice = useCallback((id: string, positionDiff: Point) => {
         const updatedDevice = actions.updateDevicePositionByDiff(planDevices[id], positionDiff, planBounds, true);
-        handleChangeDevice(updatedDevice);
-        //setSelectedPlanDevice(updatedDevice);
+        setSelectedPlanDevice(updatedDevice);
     }, [planBounds, planDevices]);
 
     const handleDragDeviceEnd = useCallback((id: string, positionDiff: Point) => {

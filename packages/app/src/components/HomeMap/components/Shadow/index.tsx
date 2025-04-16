@@ -20,27 +20,15 @@ type Props = {
 }
 
 const Shadow: FC<Props> = ({
-    id, points, maskPoints, state, isEditMode,
+    points, maskPoints, state, isEditMode,
     onPointDrag, onPointDragEnd, onMaskPointDrag, onMaskPointDragEnd
 }) => {
     if (state?.on?.value) {
         return null;
     }
 
-    const svgShadowPoints = points.flat().join(',');
-    const svgMaskPoints = maskPoints?.flat().join(',');
-    const maskId = `shadow-mask-${id}`;
-    const mask =  svgMaskPoints && `url(#${maskId})`;
-
     return (
         <>
-            <polygon className="element-shadow" points={svgShadowPoints} mask={mask} />
-            {svgMaskPoints && (
-                <mask id={maskId}>
-                    <polygon points={svgShadowPoints} fill="white" />
-                    <polygon points={svgMaskPoints} fill="black" />
-                </mask>
-            )}
             {isEditMode && points.map(([x, y], index) => (
                 <EditActionMove
                     key={index}
