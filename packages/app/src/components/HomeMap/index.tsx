@@ -239,6 +239,7 @@ const HomeMap: FC<Props> = ({
     const editableElementId = editableElement?.id;
 
     const sortedElements = useMemo(() => {
+        return [];
         const elementsEntries = Object.entries(elements);
     
         // TODO: implement z-index for plan devices
