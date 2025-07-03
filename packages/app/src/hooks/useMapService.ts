@@ -1,29 +1,36 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { Plan } from '@homemap/shared';
 
 import MapService from '../services/mapService';
 import type { Element } from '../services/mapService/model/Element';
 
-export const useMapService = (plan: Plan | undefined) => {
+export const useMapService = (plan: Plan) => {
+    const isMountedRef = useRef<boolean>(false); 
     const mapServiceRef = useRef<MapService | null>(null);
     const [data, setData] = useState<Record<string, Element>>();
 
-    useEffect(() => {
-        if (!plan) {
-            return;
+    useMemo(() => {
+        if (mapServiceRef.current) {
+            mapServiceRef.current.finalize();
+            mapServiceRef.current = null;
         }
 
         const { devices } = plan;
+
         mapServiceRef.current = new MapService(devices);
         mapServiceRef.current.onUpdate = (updatedData) => {
-            setData({ ...updatedData });
+            if (isMountedRef.current) {
+                setData({ ...updatedData });
+            }
         };
         mapServiceRef.current.start();
-        return () => {
-            mapServiceRef.current?.finalize();
-        };
     }, [plan]);
+
+    useLayoutEffect(() => {
+        isMountedRef.current = true;
+        setData({ ...mapServiceRef.current?.elements });
+    }, []);
 
     const actionSwitch = (id: string) => {
         mapServiceRef.current?.actionSwitch(id);

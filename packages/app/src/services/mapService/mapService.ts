@@ -24,16 +24,20 @@ class MapService {
 
     onUpdate?: (elements: Record<string, Element>) => void;
 
+    get elements() {
+        return this.state.elements;
+    }
+
     constructor(
         elements: Collection<Element> = {},
     ) {
         this.pollInterval = API_POLL_INTERVAL;
         this.state = new MapState(elements, API_SYNC_TIMEOUT);
-
-        this.subscribeToEvents();
     }
 
     async start() {
+        this.subscribeToEvents();
+
         this.pollingState = PollingState.Started;
 
         this.handleUpdate();
@@ -75,7 +79,7 @@ class MapService {
     private async tick() {
         this.logger.debug('tick');
     
-        await this.getAndUpdateElementsState();
+        await this.updateElementsState();
     
         this.handleUpdate();
 
@@ -94,7 +98,7 @@ class MapService {
         this.onUpdate?.(this.state.elements);
     }
 
-    private async getAndUpdateElementsState() {
+    async updateElementsState() {
         await ApiClient
             .getDevices()
             .then((data) => {
