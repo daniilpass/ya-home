@@ -4,8 +4,8 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom';
 
-import MainPage from '../pages/MainPage';
-import ViewPage from '../pages/ViewPage';
+import MainPage, { mainPageLoader } from '../pages/MainPage';
+import ViewPage, { viewPageLoader } from '../pages/ViewPage';
 import EditPage from '../pages/EditPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/AuthPage';
@@ -23,10 +23,10 @@ export const routes = {
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout />}>
-            <Route path={routes.root} element={<PageSuspense><MainPage /></PageSuspense>} />
+            <Route path={routes.root} loader={mainPageLoader} element={<PageSuspense><MainPage /></PageSuspense>} />
 
             <Route path={routes.view}>
-                <Route path=":id" element={<PageSuspense><ViewPage /></PageSuspense>} />
+                <Route path=":id" loader={viewPageLoader} element={<PageSuspense><ViewPage /></PageSuspense>} />
             </Route>
 
             <Route path={routes.edit}>
