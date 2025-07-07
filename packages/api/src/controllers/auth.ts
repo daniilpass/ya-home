@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import YaService from '../services/yaService';
-import AuthService from '../services/authService';
+import AuthService, { TokenMissingError } from '../services/authService';
 
 type QueryParams = {
     code: string;
@@ -30,6 +30,10 @@ export const refresh = async (req: Request<unknown, unknown, unknown, QueryParam
         await AuthService.refreshAuth(req as Request, res);
         res.status(200).send();
     } catch (error) {
-        next(error);
+        if (error instanceof TokenMissingError) {
+            res.status(401).end();
+        } else {
+            next(error);
+        }
     }
 };
