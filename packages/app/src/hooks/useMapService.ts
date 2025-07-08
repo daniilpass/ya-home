@@ -28,6 +28,15 @@ export const useMapService = (plan: Plan) => {
     }, [plan]);
 
     useLayoutEffect(() => {
+        return () => {
+            if (mapServiceRef.current) {
+                mapServiceRef.current.finalize();
+                mapServiceRef.current = null;
+            }
+        };
+    }, []);
+
+    useLayoutEffect(() => {
         isMountedRef.current = true;
         setData({ ...mapServiceRef.current?.elements });
     }, []);
