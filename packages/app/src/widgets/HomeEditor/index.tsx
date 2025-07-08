@@ -5,7 +5,6 @@ import { useNavigate, useBlocker } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import type { Bounds, Collection, Device, Plan, PlanDevice, Point } from '@homemap/shared';
-import { DeviceTypes } from '@homemap/shared';
 
 import AppLoader from '../../components/AppLoader';
 import type { MapTransform } from '../../components/HomeMap';
@@ -78,11 +77,24 @@ const HomeEditor = ({ planId }: Props) => {
         bottom: plan?.height,
     }), [plan?.width, plan?.height]);
 
-    const sensorsData = useMemo<Collection<Device>>(() => {
-        return Object.fromEntries(
-            Object.entries(allDevices)
-                .filter(([, device]) => device.type === DeviceTypes.Sensor)
-        );
+    const data = useMemo<Collection<Device>>(() => {
+        /*Data without "on" state*/
+        const mappedData = Object.entries(allDevices)
+            .map(([id, device]) => 
+                [id, {
+                    ...device,
+                    state: {
+                        ...device.state,
+                        ...('on' in device.state ? {
+                            on: {
+                                ...device.state.on,
+                                value: false,
+                            }
+                        } : undefined),
+                    }
+                }]
+            );
+        return Object.fromEntries(mappedData);
     }, [allDevices]);
 
     useEffect(() => {
@@ -391,7 +403,7 @@ const HomeEditor = ({ planId }: Props) => {
                 </Box>
 
                 <HomeMap
-                    data={sensorsData}
+                    data={data}
                     background={plan.background}
                     width={plan.width}
                     height={plan.height}

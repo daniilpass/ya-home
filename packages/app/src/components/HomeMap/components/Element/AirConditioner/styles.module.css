@@ -1,0 +1,13 @@
+.acBackground {
+    fill: rgba(29, 29, 66, .5);
+    stroke: rgb(128, 128, 128);
+    stroke-width: 2px;
+}
+
+.acInfoBackground {
+    fill: none;
+}
+
+.acInfoText {
+    fill: #ffffff;
+}

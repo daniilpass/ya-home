@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import cx from 'classnames';
 
 import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
-import { DeviceTypes, MouseButton, isSwitchableDeviceType } from '@homemap/shared';
+import { DeviceTypes, MouseButton } from '@homemap/shared';
 
 import { useTransformContext } from '../../providers/TransformContextProvider';
 import type { DragEvent } from '../../hooks/useDrag';
@@ -13,6 +13,7 @@ import { EditActionMove } from '../EditAction';
 
 import SwitchableElement from './Switchable';
 import SensorElement from './Sensor';
+import { AirConditioner } from './AirConditioner';
 import './style.css';
 
 type Props = {
@@ -29,15 +30,17 @@ type Props = {
 }
 
 const getElementComponent = (type: DeviceTypes) => {
-    if (isSwitchableDeviceType(type)) {
-        return SwitchableElement;
+    switch (type) {
+        case DeviceTypes.AC:
+            return AirConditioner;
+        case DeviceTypes.Sensor:
+            return SensorElement;
+        case DeviceTypes.Light:
+        case DeviceTypes.Switch:
+        case DeviceTypes.Socket:
+        default:
+            return SwitchableElement;
     }
-
-    if (type === DeviceTypes.Sensor ) {
-        return SensorElement;
-    }
-
-    return SwitchableElement;
 };
 
 const Element: FC<Props> = ({

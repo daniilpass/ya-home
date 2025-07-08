@@ -118,6 +118,7 @@ const getMotionsSensorValue = (state: DeviceStateType<MotionValue>) => {
 export const getSensorStateValue = (stateKey: DeviceStateKeys, state: DeviceStateType): unknown => {
     switch (stateKey) {
         case DeviceStateKeys.Temperature:
+        case DeviceStateKeys.TargetTemperature:
             return roundSensorValue(+state.value!);
         case DeviceStateKeys.Motion:
             return getMotionsSensorValue(state as DeviceStateType<MotionValue>);
