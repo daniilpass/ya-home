@@ -39,6 +39,8 @@ export const deviceTypeToName = (type: DeviceTypes, subtype: DeviceSubtypes) => 
             return 'Розетка';
         case DeviceTypes.Sensor:
             return sensorSubtypeToName(subtype);
+        case DeviceTypes.AC:
+            return 'Кондиционер';
         case DeviceTypes.Unknown:
         default:
             return 'Неизвестное устройство';
@@ -69,6 +71,8 @@ export const getDeviceDefaultIcon = (type: DeviceTypes): DeviceIconType | undefi
             return deviceIcons.Sensor;
         case DeviceTypes.Socket:
             return deviceIcons.Socket;
+        case DeviceTypes.AC:
+            return deviceIcons.AC;
         case DeviceTypes.Unknown:
         default:
             return deviceIcons.Unknown;

@@ -15,6 +15,7 @@ enum DeviceIconMedia {
 }
 enum DeviceIconHousehold {
     Fan = 'fan',
+    AC = 'ac',
 }
 
 enum DeviceIconSensors {

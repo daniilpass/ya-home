@@ -6,6 +6,7 @@ export const switchableDeviceTypes = [
     DeviceTypes.Light,
     DeviceTypes.Switch,
     DeviceTypes.Socket,
+    DeviceTypes.AC,
 ] as const;
 
 export type SwitchableDeviceTypes = typeof switchableDeviceTypes[number];

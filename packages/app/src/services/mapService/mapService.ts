@@ -138,7 +138,7 @@ class MapService {
                     substate: Substate.Pending,
                 });
 
-                updatePromise = ApiClient.lightOff(deviceId);
+                updatePromise = ApiClient.actionOff(deviceId);
                 break;
             case false:
                 this.state.updateElement(deviceId, {
@@ -151,7 +151,7 @@ class MapService {
                     substate: Substate.Pending,
                 });
 
-                updatePromise = ApiClient.lightOn(deviceId);
+                updatePromise = ApiClient.actionOn(deviceId);
                 break;
             default:
                 this.logger.error(UNKNOWN_STATE, device.state);

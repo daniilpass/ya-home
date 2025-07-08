@@ -28,6 +28,18 @@ type Props = {
     onDragEnd?: (event: DragEvent) => void;
 }
 
+const getElementComponent = (type: DeviceTypes) => {
+    if (isSwitchableDeviceType(type)) {
+        return SwitchableElement;
+    }
+
+    if (type === DeviceTypes.Sensor ) {
+        return SensorElement;
+    }
+
+    return SwitchableElement;
+};
+
 const Element: FC<Props> = ({
     type, position, icon, state, substate, isEditMode, selectable,
     onClick, onDrag, onDragEnd,
@@ -75,28 +87,21 @@ const Element: FC<Props> = ({
         };
     }, [handlePointerDown]);
 
+    const Component = getElementComponent(type);
+
     return (
         <g
             ref={moveRef}
             className={rootClassName}
         >
-            {isSwitchableDeviceType(type) && (
-                <SwitchableElement
-                    position={position}
-                    icon={icon as DeviceIconType}
-                    state={state}
-                    substate={substate}
-                    onClick={onClick}
-                />
-            )}
-            {type === DeviceTypes.Sensor && (
-                <SensorElement
-                    position={position}
-                    state={state ?? {}}
-                    substate={substate}
-                    onClick={onClick}
-                />
-            )}
+            <Component
+                position={position}
+                icon={icon as DeviceIconType}
+                state={state ?? {}}
+                substate={substate}
+                onClick={onClick}
+            />
+
             {isShowEditAction && (
                 <EditActionMove
                     index={0}

@@ -54,7 +54,7 @@ const ping = () => {
     request(ENDPOINTS.ping);
 };
 
-const lightToggle = (deviceId: string, value: boolean) => {
+const actionOnOf = (deviceId: string, value: boolean) => {
     return request<void, DeviceAction>(ENDPOINTS.action, {
         id: deviceId,
         state: {
@@ -63,12 +63,12 @@ const lightToggle = (deviceId: string, value: boolean) => {
     });
 };
 
-const lightOn = (deviceId: string) => {
-    return lightToggle(deviceId, true);
+const actionOn = (deviceId: string) => {
+    return actionOnOf(deviceId, true);
 };
 
-const lightOff = (deviceId: string) => {
-    return lightToggle(deviceId, false);
+const actionOff = (deviceId: string) => {
+    return actionOnOf(deviceId, false);
 };
 
 const getDevices = (): Promise<Collection<Device>> => {
@@ -107,9 +107,9 @@ const auth = (code: string) => {
 
 const ApiClient = {
     ping,
-    lightToggle,
-    lightOn,
-    lightOff,
+    actionOnOf,
+    actionOn,
+    actionOff,
     getDevices,
     getPlan,
     getPlans,
