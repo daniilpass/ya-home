@@ -8,6 +8,7 @@ export enum DeviceStateKeys {
     On = 'on',
     Brightness = 'brightness',
     Temperature = 'temperature',
+    TargetTemperature = 'targetTemperature',
     Humidity = 'humidity',
     Motion = 'motion',
 }
@@ -30,6 +31,10 @@ export type DeviceStateTemperature = {
     [DeviceStateKeys.Temperature]: DeviceStateType<number>;
 }
 
+export type DeviceStateTargetTemperature = {
+    [DeviceStateKeys.TargetTemperature]: DeviceStateType<number>;
+}
+
 export type DeviceStateHumidity = {
     [DeviceStateKeys.Humidity]: DeviceStateType<number>;
 }
@@ -43,5 +48,6 @@ export type DeviceState = Partial<
     DeviceStateBrightness &
     DeviceStateTemperature &
     DeviceStateHumidity &
-    DeviceStateMotion
+    DeviceStateMotion &
+    DeviceStateTargetTemperature
 >;

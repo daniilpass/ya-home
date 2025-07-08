@@ -13,7 +13,9 @@ export const mapYaDeviceTypeToDeviceType = (type: YaDeviceType): DeviceTypes => 
         case YaDeviceType.Sensor:
         case YaDeviceType.ClimateSensor:
         case YaDeviceType.MotionSensor:
-            return DeviceTypes.Sensor;   
+            return DeviceTypes.Sensor;
+        case YaDeviceType.ThermostatAC:
+            return DeviceTypes.AC;
         default:
             return DeviceTypes.Unknown;
     }
@@ -28,6 +30,7 @@ export const mapYaDeviceTypeToSubtype = (type: YaDeviceType): DeviceSubtypes => 
         case YaDeviceType.Light:
         case YaDeviceType.Switch:
         case YaDeviceType.Socket:
+        case YaDeviceType.ThermostatAC:
             return DeviceSubtypes.None;
         default:
             return DeviceSubtypes.Unknown;

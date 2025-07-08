@@ -5,6 +5,8 @@ import type { YaDeviceCapability } from '../yaClient/model/YaDeviceCapability';
 import { YaDeviceCapabilityInstance } from '../yaClient/model/YaDeviceCapabilityInstance';
 import { YaDeviceCapabilityType } from '../yaClient/model/YaDeviceCapabilityType';
 
+import { mapYaDeviceUnitToDeviceUnit } from './mapYaDeviceUnitToDeviceUnit';
+
 export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): DeviceState => {
     const state: DeviceState = {};
 
@@ -31,6 +33,13 @@ export const mapYaCapabilitiesToState = (yaCapabilites: YaDeviceCapability[]): D
                     state.brightness = {
                         value: Number(capability.state.value),
                         unit: DeviceUnits.Percent,
+                        updatedAt,
+                    };
+                } else if (capability.state.instance === YaDeviceCapabilityInstance.Temperature) {
+                    const unit: DeviceUnits = capability.parameters.unit ? mapYaDeviceUnitToDeviceUnit(capability.parameters.unit) : DeviceUnits.Default;
+                    state.targetTemperature = {
+                        value: Number(capability.state.value),
+                        unit,
                         updatedAt,
                     };
                 }

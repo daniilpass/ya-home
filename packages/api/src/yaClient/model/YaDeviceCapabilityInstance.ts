@@ -3,4 +3,5 @@
 export enum YaDeviceCapabilityInstance {
     On = 'on',
     Brightness = 'brightness',
+    Temperature = 'temperature',
 }

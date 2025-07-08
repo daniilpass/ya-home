@@ -5,5 +5,6 @@ export enum YaDeviceType {
     Sensor = 'devices.types.sensor',
     ClimateSensor = 'devices.types.sensor.climate',
     MotionSensor = 'devices.types.sensor.motion',
-    Socket = 'devices.types.socket'
+    Socket = 'devices.types.socket',
+    ThermostatAC = 'devices.types.thermostat.ac',
 }
