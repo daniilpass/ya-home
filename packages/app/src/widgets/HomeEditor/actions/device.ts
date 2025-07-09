@@ -1,4 +1,4 @@
-import type { Bounds, Device, PlanDevice, Point, DeviceIconType } from '@homemap/shared';
+import type { Bounds, Device, PlanDevice, Point, DeviceIconType, Orientation } from '@homemap/shared';
 
 
 import { getMagnetPoints, limitPosition, applyPositionDiff } from '../tools';
@@ -36,5 +36,12 @@ export const updateDeviceIcon = (device: PlanDevice, newIcon: DeviceIconType): P
     return {
         ...device,
         icon: newIcon,
+    };
+};
+
+export const updateDeviceOrientation = (device: PlanDevice, orientation: Orientation): PlanDevice => {
+    return {
+        ...device,
+        orientation,
     };
 };

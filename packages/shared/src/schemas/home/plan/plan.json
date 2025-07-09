@@ -50,6 +50,9 @@
           "position": {
             "$ref": "#/$defs/point"
           },
+          "orientation": {
+            "type": "string"
+          },
           "icon": {
             "type": "string"
           },

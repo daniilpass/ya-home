@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import type { Bounds, PlanDevice, Point, DeviceIconType } from '@homemap/shared';
+import type { Bounds, PlanDevice, Point, DeviceIconType, Orientation } from '@homemap/shared';
 import { DeviceTypes, deviceIcons } from '@homemap/shared';
 
 
@@ -11,6 +11,7 @@ import PointInput from '../../../../common/components/PointInput';
 import { PointsList } from '../../../../common/components/PointsList';
 import actions from '../../actions';
 import { IconPicker } from '../IconPicker';
+import { OrientationSelect } from '../OrientationSelect';
 
 export type Props = {
     device: PlanDevice,
@@ -29,6 +30,11 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
 
     const handleDevicePositionChange = (position: Point, isMagnetic: boolean = false) => {
         const updatedDevice = actions.updateDevicePosition(device, position, bounds, isMagnetic);
+        onChange(updatedDevice);
+    };
+
+    const handleDeviceOrientationChange = (orientation: Orientation) => {
+        const updatedDevice = actions.updateDeviceOrientation(device, orientation);
         onChange(updatedDevice);
     };
 
@@ -100,6 +106,8 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
 
     const isShowLightProperties = device.type === DeviceTypes.Light || device.type === DeviceTypes.Switch;
 
+    const isOrientationProperties = device.type === DeviceTypes.AC;
+
     return (
         <>
             <Box sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -132,6 +140,15 @@ const DeviceProperties = ({ device, bounds, hideTitle, onChange, onDelete }: Pro
                     onChange={handleDevicePositionChange}
                 />
             </PropertiesGroup>
+
+            {isOrientationProperties && (
+                <PropertiesGroup title="Ориентация">
+                    <OrientationSelect
+                        value={device.orientation}
+                        onChange={handleDeviceOrientationChange}
+                    />
+                </PropertiesGroup>
+            )}
 
             {isShowLightProperties && (
                 <>

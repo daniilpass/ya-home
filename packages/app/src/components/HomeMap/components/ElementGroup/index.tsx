@@ -44,7 +44,7 @@ const ElementGroup: FC<Props> = ({
     onShadowMaskPointDrag,
     onShadowMaskPointDragEnd,
 }) => {
-    const { id, type, position, icon, area } = element;
+    const { id, type, position, icon, area, orientation } = element;
     const { shadowPoints, shadowMaskPoints, bulbsLinePoints } = area || {};
     const { state, substate } = data || {};
 
@@ -116,6 +116,7 @@ const ElementGroup: FC<Props> = ({
             <ElementComponent
                 type={type}
                 position={position}
+                orientation={orientation}
                 icon={icon as DeviceIconType}
                 state={state}
                 substate={substate}

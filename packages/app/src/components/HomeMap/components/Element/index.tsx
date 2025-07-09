@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import cx from 'classnames';
 
-import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
+import type { DeviceState, Point, DeviceIconType, Orientation } from '@homemap/shared';
 import { DeviceTypes, MouseButton } from '@homemap/shared';
 
 import { useTransformContext } from '../../providers/TransformContextProvider';
@@ -19,6 +19,7 @@ import './style.css';
 type Props = {
     type: DeviceTypes;
     position: Point;
+    orientation?: Orientation;
     icon?: DeviceIconType;
     state?: DeviceState | null;
     substate?: string;
@@ -44,7 +45,7 @@ const getElementComponent = (type: DeviceTypes) => {
 };
 
 const Element: FC<Props> = ({
-    type, position, icon, state, substate, isEditMode, selectable,
+    type, position, orientation, icon, state, substate, isEditMode, selectable,
     onClick, onDrag, onDragEnd,
 }) => {
     const { editElementDrag } = useTransformContext();
@@ -99,6 +100,7 @@ const Element: FC<Props> = ({
         >
             <Component
                 position={position}
+                orientation={orientation}
                 icon={icon as DeviceIconType}
                 state={state ?? {}}
                 substate={substate}

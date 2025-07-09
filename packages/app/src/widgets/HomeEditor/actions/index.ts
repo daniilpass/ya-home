@@ -1,4 +1,4 @@
-import { addDevice, updateDeviceIcon, updateDevicePosition, updateDevicePositionByDiff } from './device';
+import { addDevice, updateDeviceIcon, updateDeviceOrientation, updateDevicePosition, updateDevicePositionByDiff } from './device';
 import { updateDeviceBulbsPoint, updateDeviceBulbsPointByDiff, deleteDeviceBulbsPoint, addDeviceBulbsPoint } from './deviceBulbs';
 import { updateDeviceShadowPoint, updateDeviceShadowPointByDiff, deleteDeviceShadowPoint, addDeviceShadowPoint } from './deviceShadow';
 import { updateDeviceShadowMaskPoint, updateDeviceShadowMaskPointByDiff, deleteDeviceShadowMaskPoint, addDeviceShadowMaskPoint } from './deviceShadowMask';
@@ -9,6 +9,7 @@ const actions = {
     updateDevicePosition,
     updateDevicePositionByDiff,
     updateDeviceIcon,
+    updateDeviceOrientation,
     // Device bulbs
     updateDeviceBulbsPoint,
     updateDeviceBulbsPointByDiff,
