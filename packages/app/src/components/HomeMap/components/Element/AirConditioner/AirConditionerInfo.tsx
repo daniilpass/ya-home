@@ -16,7 +16,7 @@ export const AirConditionerInfo = ({ position, state, orientation }: Pick<AirCon
     const sensorValue = sensorState && getSensorStateValue(DeviceStateKeys.TargetTemperature, sensorState)!.toString();
 
     const horizontal = orientation === Orientation.Horizontal;
-    const infoX = horizontal ? position[0] - ELEMENT_RADIUS : position[0];
+    const infoX = horizontal ? position[0] + ELEMENT_RADIUS : position[0];
     const infoY = horizontal ? position[1] : position[1] - ELEMENT_RADIUS;
     const infoDx = horizontal ? '-.1em' : undefined;
     const infoDy = '.3em';
