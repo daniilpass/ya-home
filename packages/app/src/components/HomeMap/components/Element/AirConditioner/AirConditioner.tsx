@@ -5,10 +5,9 @@ import { AirConditionerBackground } from './AirConditionerBackground';
 import { AirConditionerSwitch } from './AirConditionerSwitch';
 import { AirConditionerInfo } from './AirConditionerInfo';
 
-export const AirConditioner = ({ position, icon, state, substate, orientation, onClick }: AirConditionerProps) => {
-    console.log('HELLO AirConditioner', { orientation });
+export const AirConditioner = ({ position, icon, state, substate, orientation, onClick, onSelect }: AirConditionerProps) => {
     return (
-        <g>
+        <g onClick={onSelect}>
             <AirConditionerBackground position={position} orientation={orientation}/>
 
             <AirConditionerSwitch

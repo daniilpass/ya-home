@@ -49,6 +49,7 @@ export type Props = {
     allowDrag?: boolean;
     transition?: boolean;
     onElementClick?: (id: string) => void;
+    onElementSelect?: (id: string) => void;
     onElementDrag?: (id: string, position: Point) => void;
     onElementDragEnd?: (id: string, position: Point) => void;
     onBulbsLinePointDrag?: (id: string, index: number, position: Point) => void;
@@ -87,6 +88,7 @@ const HomeMap: FC<Props> = ({
     editElementDrag = false,
     isEditorMode,
     onElementClick,
+    onElementSelect,
     onElementDrag,
     onElementDragEnd,
     onBulbsLinePointDrag,
@@ -168,6 +170,10 @@ const HomeMap: FC<Props> = ({
     const handleElementClick = useCallback((id: string) => {
         onElementClick?.(id);
     }, [onElementClick]);
+
+    const handleElementSelect = useCallback((id: string) => {
+        onElementSelect?.(id);
+    }, [onElementSelect]);
 
     const handleElementDrag = useCallback((id: string, { pageXDiff, pageYDiff }: DragEvent) => {
         if (!onElementDrag) {
@@ -291,6 +297,7 @@ const HomeMap: FC<Props> = ({
             isEditMode={id === editableElementId}
             selectable={isEditorMode}
             onElementClick={handleElementClick}
+            onElementSelect={handleElementSelect}
             onElementDrag={handleElementDrag}
             onElementDragEnd={handleElementDragEnd}
             onBulbsLinePointDrag={handleBulbsLinePointDrag}
@@ -335,6 +342,7 @@ const HomeMap: FC<Props> = ({
                                 data={data?.[editableElement.id]}
                                 isEditMode={true}
                                 onElementClick={handleElementClick}
+                                onElementSelect={handleElementSelect}
                                 onElementDrag={handleElementDrag}
                                 onElementDragEnd={handleElementDragEnd}
                                 onBulbsLinePointDrag={handleBulbsLinePointDrag}

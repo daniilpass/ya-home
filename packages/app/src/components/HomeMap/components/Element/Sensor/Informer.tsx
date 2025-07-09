@@ -11,8 +11,6 @@ type SensorInformerProps = {
     state: DeviceStateType;
 }
 
-
-
 export const SensorInformer = ({ type, state }: SensorInformerProps) => {
     const sensorValue = getSensorStateValue(type, state)!.toString();
     const sensorUnit = getDeviceUnitTitle(state.unit);

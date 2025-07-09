@@ -332,11 +332,6 @@ const HomeEditor = ({ planId }: Props) => {
         setSelectedPlanDeviceDrag(false);
     }, [planDevices]);
 
-    const handleClickDevice = useCallback((id: string) => {
-        setSelectedPlanDevice(planDevices[id]);
-        setSelectedPlanDeviceDrag(false);
-    }, [planDevices]);
-
     /**
      * Drag hanlders
      */
@@ -414,7 +409,7 @@ const HomeEditor = ({ planId }: Props) => {
                     editableElement={selectedPlanDevice}
                     editElementDrag={selectedPlanDeviceDrag}
                     isEditorMode={true}
-                    onElementClick={handleClickDevice}
+                    onElementSelect={handleSelectDevice}
                     onElementDrag={handleDragDevice}
                     onElementDragEnd={handleDragDeviceEnd}
                     onBulbsLinePointDrag={handleBulbsLinePointDrag}

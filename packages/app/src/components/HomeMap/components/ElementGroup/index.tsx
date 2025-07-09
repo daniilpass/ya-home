@@ -19,6 +19,7 @@ type Props = {
     isEditMode?: boolean;
     selectable?: boolean;
     onElementClick?: (id: Element['id']) => void;
+    onElementSelect?: (id: Element['id']) => void;
     onElementDrag?: (id: Element['id'], event: DragEvent) => void;
     onElementDragEnd?: (id: Element['id'], event: DragEvent) => void;
     onBulbsLinePointDrag?: (id: Element['id'], index: number, event: DragEvent) => void;
@@ -35,6 +36,7 @@ const ElementGroup: FC<Props> = ({
     isEditMode,
     selectable,
     onElementClick,
+    onElementSelect,
     onElementDrag,
     onElementDragEnd,
     onBulbsLinePointDrag,
@@ -80,6 +82,10 @@ const ElementGroup: FC<Props> = ({
         onElementClick?.(element.id);
     }, [element.id, onElementClick]);
 
+    const handleElementSelect = useCallback(() => {
+        onElementSelect?.(element.id);
+    }, [element.id, onElementSelect]);
+
     const handleElementDrag = useCallback((event: DragEvent) => {
         onElementDrag?.(element.id, event);
     }, [element.id, onElementDrag]);
@@ -113,6 +119,7 @@ const ElementGroup: FC<Props> = ({
                     onPointDragEnd={handleBulbsLinePointDragEnd}
                 />
             )}
+
             <ElementComponent
                 type={type}
                 position={position}
@@ -123,6 +130,7 @@ const ElementGroup: FC<Props> = ({
                 isEditMode={isEditMode}
                 selectable={selectable}
                 onClick={handleElementClick}
+                onSelect={handleElementSelect}
                 onDrag={handleElementDrag}
                 onDragEnd={handleElementDragEnd}
             />

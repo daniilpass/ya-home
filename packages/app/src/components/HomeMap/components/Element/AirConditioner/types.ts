@@ -1,10 +1,4 @@
-import type { DeviceIconType, DeviceState, Orientation, Point } from '@homemap/shared';
+import type { ElementBaseProps } from '../types';
 
-export type AirConditionerProps = {
-    position: Point;
-    orientation?: Orientation;
-    icon?: DeviceIconType;
-    state: DeviceState;
-    substate?: string;
-    onClick?: () => void;
-}
+export type AirConditionerProps = ElementBaseProps;
+

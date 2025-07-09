@@ -1,23 +1,22 @@
-import type { DeviceState, DeviceStateKeys, DeviceStateType, Point } from '@homemap/shared';
+import type { DeviceStateKeys, DeviceStateType } from '@homemap/shared';
 import { deviceIcons } from '@homemap/shared';
 
 import { useTransformContext } from '../../../providers/TransformContextProvider';
 import { DeviceIcon } from '../../../../DeviceIcon';
 import { ForeignObjectWrapper } from '../../ForeignObjectWrapper';
+import type { ElementBaseProps } from '../types';
 
 import { SensorInformer } from './Informer';
+
 import './style.css';
 
-export type SensorElementProps = {
-    position: Point;
-    state: DeviceState;
-    // TODO: show pending and lost state
-    substate?: string;
-    onClick?: () => void;
-}
-
-export const SensorElement = ({ position, state, onClick }: SensorElementProps) => {
+export const SensorElement = ({ position, state, onClick, onSelect }: ElementBaseProps) => {
     const { rotate } = useTransformContext();
+
+    const handleRootClick = () => {
+        onClick?.();
+        onSelect?.();
+    };
 
     const elementStyle = {
         transform: `rotate(${-rotate}deg)`,
@@ -32,7 +31,7 @@ export const SensorElement = ({ position, state, onClick }: SensorElementProps) 
             y={position[1]}
             rootClassName="sensor"
             rootStyle={elementStyle}
-            onClick={onClick}
+            onClick={handleRootClick}
         >
             <>
                 {stateEntries.map(([stateKey, stateEntry]) => (

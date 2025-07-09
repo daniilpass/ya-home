@@ -26,6 +26,7 @@ type Props = {
     isEditMode?: boolean;
     selectable?: boolean;
     onClick?: () => void;
+    onSelect?: () => void;
     onDrag?: (event: DragEvent) => void;
     onDragEnd?: (event: DragEvent) => void;
 }
@@ -46,7 +47,7 @@ const getElementComponent = (type: DeviceTypes) => {
 
 const Element: FC<Props> = ({
     type, position, orientation, icon, state, substate, isEditMode, selectable,
-    onClick, onDrag, onDragEnd,
+    onClick, onSelect, onDrag, onDragEnd,
 }) => {
     const { editElementDrag } = useTransformContext();
     const onDragStart = useDrag({ onDrag, onDragEnd });
@@ -105,6 +106,7 @@ const Element: FC<Props> = ({
                 state={state ?? {}}
                 substate={substate}
                 onClick={onClick}
+                onSelect={onSelect}
             />
 
             {isShowEditAction && (

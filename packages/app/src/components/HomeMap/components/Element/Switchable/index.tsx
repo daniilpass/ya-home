@@ -1,25 +1,14 @@
-import type { FC } from 'react';
-
 import cx from 'classnames';
-
-import type { DeviceState, Point, DeviceIconType } from '@homemap/shared';
 
 import { Substate } from '../../../../../services/mapService/model/Substate';
 import { useTransformContext } from '../../../providers/TransformContextProvider';
 import { ELEMENT_RADIUS, ICON_SIZE } from '../../../constants';
 import { DeviceIcon } from '../../../../DeviceIcon';
+import type { ElementBaseProps } from '../types';
 
 import './styles.css';
 
-type Props = {
-    position: Point;
-    icon?: DeviceIconType;
-    state?: DeviceState | null;
-    substate?: string;
-    onClick?: () => void;
-}
-
-const SwitchableElement: FC<Props> = ({ position, icon, state, substate, onClick }) => {
+const SwitchableElement = ({ position, icon, state, substate, onClick, onSelect }: ElementBaseProps) => {
     const { rotate } = useTransformContext();
 
     const elementClassName = cx('element', {
@@ -34,11 +23,16 @@ const SwitchableElement: FC<Props> = ({ position, icon, state, substate, onClick
         transformOrigin: `${position[0]}px ${position[1]}px`,
     };
 
+    const handleRootClick = () => {
+        onClick?.();
+        onSelect?.();
+    };
+
     return (
         <g
             className={elementClassName}
             style={elementStyle}
-            onClick={onClick}
+            onClick={handleRootClick}
         >
             <circle
                 className="element-shape"
